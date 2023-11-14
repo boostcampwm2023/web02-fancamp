@@ -1,0 +1,29 @@
+#
+@server = http://localhost:3000
+
+### 회원가입 요청~
+POST {{server}}/auth/user/signup
+Content-Type: application/json
+
+{
+    "email" : "11@22",
+    "password": "string",
+    "username": "string",
+
+    // @IsString()
+    "profileImage": "string"
+}
+
+
+### 로그인 요청~
+POST {{server}}/auth/user/signin
+Content-Type: application/json
+
+{
+    "email" : "11@22",
+    "password": "string",
+}
+
+
+### 로그아웃 요청~
+GET {{server}}/auth/user/signout

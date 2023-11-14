@@ -7,11 +7,11 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 export class AuthService {
 
   create(createUserAuthDto: CreateUserAuthDto) {
-    return 'This action adds a new auth';
+    return createUserAuthDto;
   }
 
   signin(signinUserAuthDto: SigninUserAuthDto) {
-    return 'Signin';
+    return signinUserAuthDto;
   }
 
   signout() {
