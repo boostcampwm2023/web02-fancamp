@@ -14,4 +14,8 @@ export class UserRepository {
   createUser(createUserAuthDto: CreateUserAuthDto) {
     return this.usersRepository.save(createUserAuthDto);
   }
+
+  findUserByEmail(email: string) {
+    return this.usersRepository.findOneBy({ email });
+  }
 }
