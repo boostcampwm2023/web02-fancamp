@@ -2,16 +2,14 @@
 @server = http://localhost:3000
 
 ### 회원가입 요청~
-POST {{server}}/auth/user/signup
+POST {{server}}/auth/user
 Content-Type: application/json
 
 {
     "email" : "11@22",
-    "password": "string",
-    "username": "string",
-
-    // @IsString()
-    "profileImage": "string"
+    "password": "22",
+    "username": "33",
+    "profileImage": "44"
 }
 
 
