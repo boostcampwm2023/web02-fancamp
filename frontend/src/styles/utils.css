@@ -1,0 +1,14 @@
+.center {
+    transform: translate(-50%, -50%);
+    @apply relative top-[50%] left-[50%];
+}
+
+.h-center {
+    transform: translateX(-50%);
+    @apply relative left-[50%];
+}
+
+.v-center {
+    transform: translateY(-50%);
+    @apply relative top-[50%];
+}
