@@ -6,10 +6,11 @@ POST {{server}}/auth/user
 Content-Type: application/json
 
 {
-    "email" : "11@22",
+    "email" : "11@2233",
     "password": "22",
     "username": "33",
-    "profileImage": "44"
+    "profileImage": "44",
+    "isMaster": true
 }
 
 
