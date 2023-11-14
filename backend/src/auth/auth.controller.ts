@@ -19,6 +19,7 @@ export class AuthController {
   signin(@Body() signinUserAuthDto: SigninUserAuthDto) {
     return this.authService.signin(signinUserAuthDto);
   }
+
   @Get('/user/signout')
   signout() {
     return this.authService.signout();
