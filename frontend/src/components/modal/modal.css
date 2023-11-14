@@ -1,0 +1,13 @@
+.modal::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+    animation: modal__backdrop--smooth 0.2s ease-in-out forwards;
+}
+
+@keyframes modal__backdrop--smooth {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
