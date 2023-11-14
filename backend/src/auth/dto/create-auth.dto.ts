@@ -1,1 +1,14 @@
-export class CreateAuthDto {}
+export class CreateAuthDto {
+    // @IsEmail()
+    email: string;
+
+    // @IsString()
+    // @Length(4, 20)
+    password: string;
+
+    // @IsString()
+    username: string
+
+    // @IsString()
+    profileImage: string
+}
