@@ -1,0 +1,14 @@
+#
+@server = http://localhost:3000
+
+### 회원가입 요청~
+POST {{server}}/user
+Content-Type: application/json
+
+{
+    "email" : "11@232",
+    "password": "22",
+    "username": "33",
+    "profileImage": "44",
+    "isMaster": true
+}
