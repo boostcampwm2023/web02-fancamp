@@ -1,4 +1,4 @@
-export class CreateAuthDto {
+export class CreateUserAuthDto {
     // @IsEmail()
     email: string;
 
