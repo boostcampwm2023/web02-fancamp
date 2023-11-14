@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'TheJamsil';
+    src: url('/fonts/The Jamsil 3 Regular.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+.display-regular-20 {
+    font-family: 'TheJamsil', sans-serif;
+    font-size: 1.25rem;
+    line-height: 1.375rem;
+    font-weight: 400;
+}
+
+.display-regular-14 {
+    font-family: 'TheJamsil', sans-serif;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    font-weight: 400;
+}
+
+.display-regular-12 {
+    font-family: 'TheJamsil', sans-serif;
+    font-size: 0.75rem;
+    line-height: 0.875rem;
+    font-weight: 400;
+}

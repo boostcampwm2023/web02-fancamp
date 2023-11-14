@@ -1,0 +1,12 @@
+@import './fonts.css';
+@import './utils.css';
+@import '../components/modal/modal.css';
+@import '../components/button/submitButton.css';
+@import '../components/input/input.css';
+@import '../components/menu/menu.css';
+@import '../components/post/postCard.css';
+@import '../components/post/postGrid.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
