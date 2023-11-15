@@ -12,26 +12,30 @@ export class AuthController {
 
   @Post('/user')
   // @Redirect('/index', 301) //TODO: 홈으로 가게끄
-  create(
+  async create(
     @Body() createUserAuthDto: CreateUserAuthDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    return this.authService.create(createUserAuthDto, response);
+     const dto = await this.authService.create(createUserAuthDto, response);
+     response.cookie('email', dto.email).status(200).json(createUserAuthDto);
+
   }
 
   @Post('/user/signin')
-  signin(
+  async signin(
     @Body() signinUserAuthDto: SigninUserAuthDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    return this.authService.signin(signinUserAuthDto, response);
+    const dto = await this.authService.signin(signinUserAuthDto, response);
+    response.cookie('email', dto.email).status(200).json(signinUserAuthDto);
   }
 
   @Get('/user/signout')
-  signout(
+  async signout(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    return this.authService.signout(request.cookies['email'], response);
+    await this.authService.signout(request.cookies['email'], response);
+    response.clearCookie('email');
   }
 }
