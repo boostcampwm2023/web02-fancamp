@@ -14,6 +14,11 @@ async function bootstrap() {
     .addTag('swagger')
     .build();
 
+  app.enableCors({
+    origin:['http://localhost:5173', '*'], //origin이 *가 있으면 fetch옵션에 credential이 include일때 요청이 안옴.
+    credentials: true, // 인증 정보를 서버로 전송할 수 있도록 허용
+  });
+
   // config를 바탕으로 swagger document 생성
   const document = SwaggerModule.createDocument(app, config);
   // Swagger UI에 대한 path를 연결함

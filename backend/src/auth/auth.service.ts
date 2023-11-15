@@ -7,12 +7,11 @@ import { Response } from 'express';
 @Injectable()
 export class AuthService {
   private sessions = [];
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(private readonly userRepository: UserRepository) { }
 
   async create(createUserAuthDto: CreateUserAuthDto, response: Response) {
     const dto = await this.userRepository.createUser(createUserAuthDto);
     this.sessions.push(dto.email);
-    response.cookie('email', dto.email);
     return dto;
   }
 
@@ -22,8 +21,8 @@ export class AuthService {
     if (user && user.password === password) {
       //TODO: 비밀번호 암호화
       this.sessions.push(email);
-      response.cookie('email', email);
       return signinUserAuthDto;
+
     } else {
       throw new UnauthorizedException('login failed');
     }
@@ -33,7 +32,6 @@ export class AuthService {
     const index = this.sessions.indexOf(email);
     if (index > -1) {
       this.sessions.splice(index, 1);
-      response.clearCookie('email');
       return 'Signout';
     }
   }

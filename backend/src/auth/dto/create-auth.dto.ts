@@ -16,5 +16,9 @@ export class CreateUserAuthDto {
 
     // @IsString()
     @ApiProperty()
-    profileImage: string
+    profileImage: string;
+    
+    @ApiProperty()
+    isMaster: boolean;
 }
+
