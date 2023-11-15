@@ -1,0 +1,11 @@
+body {
+  overflow-y: scroll;
+}
+
+.content__wrapper {
+  @apply w-[55rem];
+}
+
+.content {
+  @apply w-[44.375rem];
+}
