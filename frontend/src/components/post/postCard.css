@@ -1,0 +1,21 @@
+.post__card {
+  @apply relative overflow-hidden cursor-pointer;
+}
+
+.post__card__image {
+  transition: all 0.2s ease-in-out;
+}
+
+.post__card:hover .post__card__image {
+  transform: scale(1.1);
+  filter: blur(0.125rem) brightness(30%);
+}
+
+.post__info {
+  transition: all 0.2s ease-in-out;
+  @apply absolute w-full h-full top-[0] flex flex-col justify-center items-center gap-sm opacity-0;
+}
+
+.post__card:hover .post__info {
+  @apply opacity-100;
+}
