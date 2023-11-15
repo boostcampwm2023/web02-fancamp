@@ -38,7 +38,7 @@ interface ButtonProps {
 
 const DemoPage = () => {
   return (
-    <div className="content flex flex-col relative h-center mt-10 gap-xl mt-xl mb-xl">
+    <div className="content flex flex-col gap-xl mt-xl mb-xl">
       <DropdownDemo />
       <GridDemo />
       <CheckboxDemo />
