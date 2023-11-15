@@ -28,10 +28,10 @@ jobs:
     - name: Deploy
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ SECRETS.SSH_HOST }}
-        username: ${{ SECRETS.SSH_USERNAME }}
-        password: ${{ SECRETS.SSH_PASSWORD }}
-        port: ${{ SECRETS.SSH_PORT }}
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        port: ${{ secrets.SSH_PORT }}
         script: |
           cd ~/web02-fancamp && git stash && git pull origin main
 
