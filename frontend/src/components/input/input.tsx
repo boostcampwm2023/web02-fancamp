@@ -1,8 +1,8 @@
 interface InputProps<State> {
-    type: React.HTMLInputTypeAttribute
-    placeholder?: string
-    setValue: React.Dispatch<React.SetStateAction<State>>
-    icon?: React.ReactNode
+  type: React.HTMLInputTypeAttribute
+  placeholder?: string
+  setValue: React.Dispatch<React.SetStateAction<State>>
+  icon?: React.ReactNode
 }
 
 /**
@@ -11,25 +11,20 @@ interface InputProps<State> {
  * @params icon 아이콘을 보낼 수 있음
  */
 const Input = <State,>({ type, setValue, placeholder, icon }: InputProps<State>) => {
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = event.currentTarget
-        setValue(value as State)
-    }
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.currentTarget
+    setValue(value as State)
+  }
 
-    return (
-        <div className="input__wrapper">
-            <div className="input__icon_wrapper">
-                {icon && icon}
-                <input
-                    type={type}
-                    className="input"
-                    placeholder={placeholder}
-                    onChange={handleOnChange}
-                />
-            </div>
-            <div className="input__border" />
-        </div>
-    )
+  return (
+    <div className="input__wrapper">
+      <div className="input__icon_wrapper">
+        {icon && icon}
+        <input type={type} className="input" placeholder={placeholder} onChange={handleOnChange} />
+      </div>
+      <div className="input__border" />
+    </div>
+  )
 }
 
 export default Input
