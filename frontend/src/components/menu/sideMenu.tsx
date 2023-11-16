@@ -25,7 +25,21 @@ const SideMenu = () => {
       <div className="flex flex-col gap-sm pt-sm pb-sm">
         <SideMenuLink to={'/auth/signin'} text="로그인" currentPath={location.pathname} />
         <SideMenuLink to={'/auth/signup'} text="회원가입" currentPath={location.pathname} />
-        <SideMenuLink to={'/camps/1/chat'} text="채팅" currentPath={location.pathname} />
+        <SideMenuLink
+          to={'/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/'}
+          text="캠프"
+          currentPath={location.pathname}
+        />
+        <SideMenuLink
+          to={'/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/chat'}
+          text="> 채팅"
+          currentPath={location.pathname}
+        />
+        <SideMenuLink
+          to={'/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post'}
+          text="> 포스트"
+          currentPath={location.pathname}
+        />
         <SideMenuLink
           to={'/components/demo'}
           text="컴포넌트 데모"

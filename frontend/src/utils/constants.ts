@@ -9,3 +9,18 @@ export const colors = {
   transparent: 'transparent',
   'surface-primary': '#FFFFFF',
 }
+
+export const campCategorys = [
+  {
+    text: '포스트',
+    path: 'post',
+  },
+  {
+    text: '커뮤니티',
+    path: 'community',
+  },
+  {
+    text: '채팅',
+    path: 'chat',
+  },
+]
