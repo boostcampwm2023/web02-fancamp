@@ -47,7 +47,7 @@ const SideMenuLink = ({ to, text, currentPath }: SideMenuLinkProps) => {
 }
 
 const Hr = () => {
-  return <hr className="border-0 h-[0.0625rem] bg-text-primary" />
+  return <hr className="border-0 h-[0.0625rem] bg-contour-primary" />
 }
 
 export default SideMenu

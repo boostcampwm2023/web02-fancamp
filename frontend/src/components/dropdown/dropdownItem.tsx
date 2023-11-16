@@ -9,7 +9,7 @@ interface DropdownItemProps {
 const DropdownItem = ({ text, icon, handleOnClick }: DropdownItemProps) => {
   return (
     <li
-      className="h-[2rem] flex items-center gap-xs pt-xs pb-xs pl-md pr-md cursor-pointer bg-surface-primary hover:bg-point-lavender"
+      className="h-[2rem] flex items-center gap-sm pt-xs pb-xs pl-md pr-md cursor-pointer bg-surface-primary hover:bg-point-lavender"
       onClick={() => handleOnClick(text)}
     >
       {icon && icon}

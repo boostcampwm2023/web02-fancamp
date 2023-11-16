@@ -33,6 +33,7 @@ export default {
       'point-yellow': '#FFC044',
       'point-blue': '#0087E9',
       'point-lavender': '#D4AAFF',
+      'point-red': '#FF5044',
       transparent: 'transparent',
       'surface-primary': '#FFFFFF',
       error: '#ff4d4d',
