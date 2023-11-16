@@ -22,6 +22,7 @@ import Grid from '../../components/grid/grid'
 import Dropdown from '../../components/dropdown/dropdown'
 import DropdownItem from '../../components/dropdown/dropdownItem'
 import Modal from '../../components/modal/modal'
+import LikeButton from '../../components/button/likeButton'
 
 interface SectionTitleProps {
   text: string
@@ -39,6 +40,7 @@ interface ButtonProps {
 const DemoPage = () => {
   return (
     <div className="content flex flex-col gap-xl mt-xl mb-xl">
+      <LikeButtonDemo />
       <DropdownDemo />
       <GridDemo />
       <CheckboxDemo />
@@ -352,6 +354,27 @@ const DropdownDemo = () => {
         </div>
         <SubmitButton text="확인" />
       </form>
+    </Section>
+  )
+}
+
+const LikeButtonDemo = () => {
+  const [like, setLike] = useState<boolean>(false)
+  const [likeCount, setLikeCount] = useState<number>(12)
+
+  const handleLike = () => {
+    setLike(!like)
+    setLikeCount(likeCount + (like ? -1 : +1))
+  }
+
+  return (
+    <Section>
+      <Text size={20}>Like Button</Text>
+      <LikeButton liked={like} onChange={handleLike}>
+        <Text size={12} classList="select-none">
+          좋아요 {likeCount}
+        </Text>
+      </LikeButton>
     </Section>
   )
 }
