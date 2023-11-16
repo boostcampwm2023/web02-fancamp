@@ -9,6 +9,7 @@ import { User } from './user/entities/user.entity';
 import { LoggerMiddleware } from './logger.middleware';
 import { CampModule } from './camp/camp.module';
 import { ChatGateway } from './chat/chat.gateway';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [UserModule, AuthModule,
@@ -29,6 +30,7 @@ import { ChatGateway } from './chat/chat.gateway';
       autoLoadEntities: true,
     }),
     CampModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService, ChatGateway],

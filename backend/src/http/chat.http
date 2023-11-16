@@ -1,0 +1,18 @@
+#
+@server = http://localhost:3000
+# @server = http://175.45.194.10:3000
+# @server = http://223.130.146.223:3000
+
+### 회원가입 요청~
+POST {{server}}/chat
+Content-Type: application/json
+
+{
+    "createdAt" : "2023-12-22",
+    "stringContent": "22",
+    "picContent": "33",
+    "sender": "1",
+    "masterId": "12"
+}
+
+
