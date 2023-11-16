@@ -29,5 +29,5 @@
 
 .input__border {
   transition: all 0.2s ease-in-out;
-  @apply border-b-sm border-text-primary;
+  @apply border-b-sm border-text-primary mb-4;
 }

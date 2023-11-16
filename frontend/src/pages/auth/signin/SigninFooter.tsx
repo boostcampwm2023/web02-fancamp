@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
+
 export default function SigninFooter() {
   return (
-    <div className='flex justify-center align-center gap-xs p-sm m-xs border border-text-secondary'>
+    <div className='flex justify-center align-center gap-xs p-[2rem] border display-regular-14'>
       <span>계정이 없으신가요? </span>
-      <a className='text-green-700' href='/auth/signup'>
+      <Link className='text-green-700 text-point-blue ml-2' to='/auth/signup'>
         회원가입
-      </a>
+      </Link>
     </div>
   );
 }

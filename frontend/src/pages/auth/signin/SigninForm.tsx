@@ -1,49 +1,80 @@
 import { useState } from 'react';
+import { login } from '../../../api/auth';
+import { useNavigate } from 'react-router-dom';
+import Input from '../../../components/input/input';
+import SubmitButton from '../../../components/button/submitButton';
+
+const emailRegex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
 export default function SigninForm() {
-  const [emailAddress, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
+  const [passwordError, setPasswordError] = useState(false);
+  const [loginError, setLoginError] = useState(false);
+  const navigate = useNavigate();
 
-  const handleEmailAddress = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setEmailAddress(e.target.value);
-
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (emailError || passwordError) {
+      return;
+    }
+    try {
+      await login(email, password);
+      navigate('/');
+    } catch (error) {
+      setPassword('');
+      setLoginError(true);
+    }
+  };
+
+  const handleBlurEmail = () => {
+    const isCorrectEmailFormat = emailRegex.test(email);
+    setEmailError(!isCorrectEmailFormat);
+    setLoginError(false);
+  };
+
+  const handleBlurPassword = () => {
+    const isCorrectPasswordLength =
+      password.length >= 4 && password.length <= 20;
+    setPasswordError(!isCorrectPasswordLength);
+    setLoginError(false);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col p-md m-sm gap-sm border'
+      className='flex flex-col p-[3rem] mb-4 gap-sm border'
     >
-      <label className='flex flex-col'>
-        <span>이메일</span>
-        <input
-          className='flex-1 mt-2 bg-gray-100 p-xs rounded'
-          value={emailAddress}
-          type='email'
-          placeholder='abc@email.com'
-          onChange={handleEmailAddress}
-        />
-      </label>
-      <label className='flex flex-col'>
-        <span>비밀번호</span>
-        <input
-          className='flex-1 mt-2 bg-gray-100 p-xs rounded'
-          value={password}
-          type='password'
-          onChange={handlePassword}
-        />
-      </label>
-      <button
-        className='text-white font-bold bg-point-green p-sm rounded'
-        type='submit'
-      >
-        로그인
-      </button>
+      <Input
+        label='이메일'
+        type='email'
+        setValue={setEmail}
+        placeholder='fancamp@naver.com'
+        onBlur={handleBlurEmail}
+      />
+      {emailError && (
+        <div className='display-regular-14 text-error mb-4'>
+          이메일의 형식이 맞지 않아요!
+        </div>
+      )}
+      <Input
+        label='비밀번호'
+        type='password'
+        setValue={setPassword}
+        onBlur={handleBlurPassword}
+      />
+      {passwordError && (
+        <div className='display-regular-14 text-error mb-4'>
+          비밀번호의 글자 수는 4~20 사이여야 합니다!
+        </div>
+      )}
+      <SubmitButton text='로그인' />
+      {loginError && (
+        <div className='display-regular-14 text-error mt-4'>
+          로그인에 실패했습니다!
+        </div>
+      )}
     </form>
   );
 }
