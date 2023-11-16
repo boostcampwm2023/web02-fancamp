@@ -12,6 +12,9 @@ export class User {
   password: string;
 
   @Column({ type: 'varchar', nullable: false })
+  username: string;
+
+  @Column({ type: 'varchar', nullable: false })
   profileImage: string;
 
   @Column({ type: 'boolean', nullable: false })
