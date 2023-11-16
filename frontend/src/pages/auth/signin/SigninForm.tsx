@@ -8,10 +8,12 @@ const emailRegex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
 export default function SigninForm() {
   const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState(false);
   const [password, setPassword] = useState('');
+
+  const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
-  const [loginError, setLoginError] = useState(false);
+  const [signinError, setSigninError] = useState(false);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,21 +26,21 @@ export default function SigninForm() {
       navigate('/');
     } catch (error) {
       setPassword('');
-      setLoginError(true);
+      setSigninError(true);
     }
   };
 
   const handleBlurEmail = () => {
     const isCorrectEmailFormat = emailRegex.test(email);
     setEmailError(!isCorrectEmailFormat);
-    setLoginError(false);
+    setSigninError(false);
   };
 
   const handleBlurPassword = () => {
     const isCorrectPasswordLength =
       password.length >= 4 && password.length <= 20;
     setPasswordError(!isCorrectPasswordLength);
-    setLoginError(false);
+    setSigninError(false);
   };
 
   return (
@@ -70,7 +72,7 @@ export default function SigninForm() {
         </div>
       )}
       <SubmitButton text='로그인' />
-      {loginError && (
+      {signinError && (
         <div className='display-regular-14 text-error mt-4'>
           로그인에 실패했습니다!
         </div>

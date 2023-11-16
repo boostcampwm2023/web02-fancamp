@@ -1,63 +1,101 @@
 import { useState } from 'react';
+import { signup } from '../../../api/auth';
+import { useNavigate } from 'react-router-dom';
+import Input from '../../../components/input/input';
+import SubmitButton from '../../../components/button/submitButton';
+
+const emailRegex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
 export default function SignupForm() {
-  const [emailAddress, setEmailAddress] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
 
-  const handleEmailAddress = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setEmailAddress(e.target.value);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [signupError, setSignupError] = useState(false);
 
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
+  const navigate = useNavigate();
 
-  const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setUsername(e.target.value);
+  const handleBlurEmail = () => {
+    const isCorrectEmailFormat = emailRegex.test(email);
+    setEmailError(!isCorrectEmailFormat);
+    setSignupError(false);
+  };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleBlurPassword = () => {
+    const isCorrectPasswordLength =
+      password.length >= 4 && password.length <= 20;
+    setPasswordError(!isCorrectPasswordLength);
+    setSignupError(false);
+  };
+
+  const handleBlurUsername = () => {
+    const isCorrectUsernameLength =
+      username.length >= 4 && username.length <= 20;
+    setUsernameError(!isCorrectUsernameLength);
+    setSignupError(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (emailError || passwordError || usernameError) {
+      return;
+    }
+    try {
+      await signup(email, password, username);
+      navigate('/');
+    } catch (error) {
+      setSignupError(true);
+    }
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col p-8 m-4 gap-4 border'
+      className='flex flex-col p-[3rem] mb-4 gap-4 border'
     >
-      <label className='flex flex-col'>
-        <span>이메일</span>
-        <input
-          className='flex-1 mt-2 bg-gray-100 p-2 rounded'
-          value={emailAddress}
-          type='email'
-          placeholder='abc@email.com'
-          onChange={handleEmailAddress}
-        />
-      </label>
-      <label className='flex flex-col'>
-        <span>비밀번호</span>
-        <input
-          className='flex-1 mt-2 bg-gray-100 p-2 rounded'
-          value={password}
-          type='password'
-          onChange={handlePassword}
-        />
-      </label>
-      <label className='flex flex-col'>
-        <span>닉네임</span>
-        <input
-          className='flex-1 mt-2 bg-gray-100 p-2 rounded'
-          value={username}
-          type='text'
-          placeholder='닉네임'
-          onChange={handleUsername}
-        />
-      </label>
-      <button
-        className='text-white font-bold bg-green-500 p-4 rounded'
-        type='submit'
-      >
-        가입
-      </button>
+      <Input
+        label='이메일'
+        type='email'
+        setValue={setEmail}
+        placeholder='fancamp@naver.com'
+        onBlur={handleBlurEmail}
+      />
+      {emailError && (
+        <div className='display-regular-14 text-error mb-4'>
+          이메일의 형식이 맞지 않아요!
+        </div>
+      )}
+      <Input
+        label='비밀번호'
+        type='password'
+        setValue={setPassword}
+        onBlur={handleBlurPassword}
+      />
+      {passwordError && (
+        <div className='display-regular-14 text-error mb-4'>
+          비밀번호의 글자 수는 4~20 사이여야 합니다!
+        </div>
+      )}
+      <Input
+        label='닉네임'
+        type='text'
+        setValue={setUsername}
+        onBlur={handleBlurUsername}
+      />
+      {usernameError && (
+        <div className='display-regular-14 text-error mb-4'>
+          닉네임의 글자 수는 4~20 사이여야 합니다!
+        </div>
+      )}
+      <SubmitButton text='회원가입' />
+      {signupError && (
+        <div className='display-regular-14 text-error mt-4'>
+          회원가입에 실패했습니다!
+        </div>
+      )}
     </form>
   );
 }
