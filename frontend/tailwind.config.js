@@ -15,7 +15,7 @@ export default {
       },
     },
     spacing: {
-      xs: '0.25rem', // 4px
+      xs: '0.25rem', // 5px
       sm: '0.5rem', // 8px
       md: '1rem', // 16px
       lg: '1.5rem', // 24px
@@ -34,4 +34,4 @@ export default {
     },
   },
   plugins: [],
-};
+}

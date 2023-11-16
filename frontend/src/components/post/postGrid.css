@@ -1,0 +1,4 @@
+.post__grid {
+  grid-template-columns: repeat(4, 1fr);
+  @apply grid w-full gap-sm;
+}

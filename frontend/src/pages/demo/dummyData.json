@@ -1,0 +1,70 @@
+{
+  "posts": [
+    {
+      "postId": "p-1",
+      "images": [
+        "https://images.pexels.com/photos/18888410/pexels-photo-18888410.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18888411/pexels-photo-18888411.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18888407/pexels-photo-18888407.jpeg?w=200&h=200&fit=crop&dpr=2"
+      ],
+      "username": "Nati",
+      "likeCount": 122,
+      "commentCount": 34
+    },
+    {
+      "postId": "p-2",
+      "images": [
+        "https://images.pexels.com/photos/18778343/pexels-photo-18778343.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18778342/pexels-photo-18778342.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18778341/pexels-photo-18778341.jpeg?w=200&h=200&fit=crop&dpr=2"
+      ],
+      "username": "Diego F. Parra",
+      "likeCount": 45,
+      "commentCount": 21
+    },
+    {
+      "postId": "p-3",
+      "images": [
+        "https://images.pexels.com/photos/19068093/pexels-photo-19068093.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/19068092/pexels-photo-19068092.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/19068091/pexels-photo-19068091.jpeg?w=200&h=200&fit=crop&dpr=2"
+      ],
+      "username": "Alina Chernii",
+      "likeCount": 134,
+      "commentCount": 54
+    },
+    {
+      "postId": "p-4",
+      "images": [
+        "https://images.pexels.com/photos/19112767/pexels-photo-19112767.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/19112765/pexels-photo-19112765.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/19112764/pexels-photo-19112764.jpeg?w=200&h=200&fit=crop&dpr=2"
+      ],
+      "username": "George Frewat",
+      "likeCount": 76,
+      "commentCount": 23
+    },
+    {
+      "postId": "p-5",
+      "images": [
+        "https://images.pexels.com/photos/18937207/pexels-photo-18937207.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18937206/pexels-photo-18937206.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18937205/pexels-photo-18937205.jpeg?w=200&h=200&fit=crop&dpr=2"
+      ],
+      "username": "Ebrart",
+      "likeCount": 23,
+      "commentCount": 12
+    },
+    {
+      "postId": "p-6",
+      "images": [
+        "https://images.pexels.com/photos/18926428/pexels-photo-18926428.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18926427/pexels-photo-18926427.jpeg?w=200&h=200&fit=crop&dpr=2",
+        "https://images.pexels.com/photos/18926248/pexels-photo-18926248.jpeg?w=200&h=200&fit=crop&dpr=2"
+      ],
+      "username": "Clément Proust",
+      "likeCount": 107,
+      "commentCount": 20
+    }
+  ]
+}
