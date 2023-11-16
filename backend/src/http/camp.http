@@ -1,0 +1,18 @@
+#
+@server = http://localhost:3000
+# @server = http://175.45.194.10:3000
+# @server = http://223.130.146.223:3000
+
+### 회원가입 요청~
+POST {{server}}/camp
+Content-Type: application/json
+
+{
+    "campName" : "11@2233",
+    "masterId": "22",
+    "bannerImage": "33"
+}
+
+###
+GET {{server}}/camp/22
+

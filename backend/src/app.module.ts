@@ -7,6 +7,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
 import { LoggerMiddleware } from './logger.middleware';
+import { CampModule } from './camp/camp.module';
+import { ChatGateway } from './chat/chat.gateway';
 
 @Module({
   imports: [UserModule, AuthModule,
@@ -26,9 +28,10 @@ import { LoggerMiddleware } from './logger.middleware';
       entities: [User],
       autoLoadEntities: true,
     }),
+    CampModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, ChatGateway],
 })
 
 export class AppModule implements NestModule{
