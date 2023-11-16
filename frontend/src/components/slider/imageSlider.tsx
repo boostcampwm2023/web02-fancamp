@@ -3,6 +3,7 @@ import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react'
 import RightArrowIcon from '../../assets/icons/rightArrowIcon.svg?react'
 import { pxToRem } from '../../utils/unit'
 import Text from '../text/text'
+import Image from '../image/Image'
 interface ImageSliderProps {
   images: string[]
 }
@@ -16,7 +17,9 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
 
   useEffect(() => {
     if (sliderRef.current) {
-      setSliderWidth(sliderRef.current.clientWidth)
+      setSliderWidth(
+        sliderRef.current.clientWidth || sliderRef.current.getBoundingClientRect().width
+      )
     }
   }, [])
 
@@ -32,14 +35,14 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
     <div className="image__slider__wrapper" ref={sliderRef}>
       <div
         className="image__slider__scroll"
-        style={{ transform: `translateX(${-imageIndex * pxToRem(sliderWidth)}rem)` }}
+        style={{ transform: `translateX(${-imageIndex * 37.5}rem)` }}
       >
         {images.map((image, index) => (
-          <img
+          <Image
             src={image}
             className="image__slider__image"
             key={`image-slider-${index}`}
-            style={{ width: `${pxToRem(sliderWidth)}rem` }}
+            style={{ width: `${37.5}rem` }}
           />
         ))}
       </div>
