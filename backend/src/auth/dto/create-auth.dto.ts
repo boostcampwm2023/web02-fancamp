@@ -1,24 +1,27 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsEmail, IsString, Length } from 'class-validator';
 
 export class CreateUserAuthDto {
-    // @IsEmail()
+    @IsEmail()
     @ApiProperty()
     email: string;
 
-    // @IsString()
-    // @Length(4, 20)
+    @IsString()
+    @Length(4, 20)
     @ApiProperty()
     password: string;
 
-    // @IsString()
+    @IsString()
     @ApiProperty()
     username: string
 
-    // @IsString()
+    @IsString()
     @ApiProperty()
-    profileImage: string;
-    
+    // TODO: default 값을 프로필 기본 이미지로 바꾸기
+    profileImage: string = "";
+
     @ApiProperty()
-    isMaster: boolean;
+    @IsBoolean()
+    isMaster: boolean = false;
 }
 

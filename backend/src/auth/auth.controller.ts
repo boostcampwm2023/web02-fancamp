@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserAuthDto } from './dto/create-auth.dto';
@@ -12,6 +12,7 @@ export class AuthController {
 
   @Post('/user')
   // @Redirect('/index', 301) //TODO: 홈으로 가게끄
+  @UsePipes(ValidationPipe)
   async create(
     @Body() createUserAuthDto: CreateUserAuthDto,
     @Res({ passthrough: true }) response: Response,
@@ -22,6 +23,7 @@ export class AuthController {
   }
 
   @Post('/user/signin')
+  @UsePipes(ValidationPipe)
   async signin(
     @Body() signinUserAuthDto: SigninUserAuthDto,
     @Res({ passthrough: true }) response: Response,
