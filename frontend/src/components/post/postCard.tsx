@@ -1,3 +1,4 @@
+import Image from '../image/Image'
 import Text from '../text/text'
 
 interface PostCardProps {
@@ -5,7 +6,7 @@ interface PostCardProps {
   likeCount: number
   commentCount: number
   postId: string
-  username: string
+  content: string
   handleOnClick: (postId: string) => void
 }
 
@@ -14,12 +15,18 @@ const PostCard = ({
   likeCount,
   commentCount,
   postId,
-  username,
+  content,
   handleOnClick,
 }: PostCardProps) => {
   return (
     <div className="post__card" onClick={() => handleOnClick(postId)}>
-      <img src={imageSrc} className="post__card__image" alt="" />
+      {imageSrc ? (
+        <Image src={imageSrc} className="post__card__image post__card--hover--filter" alt="" />
+      ) : (
+        <div className="post__card__content post__card--hover--filter">
+          <Text color="text-secondary">{content}</Text>
+        </div>
+      )}
       <div className="post__info">
         <Text size={12} color="surface-primary">
           좋아요 {likeCount}
