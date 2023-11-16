@@ -15,7 +15,11 @@ export default {
       },
     },
     spacing: {
-      xs: '0.25rem', // 5px
+      2: '0.5rem',
+      4: '1rem',
+      8: '2rem',
+      24: '6rem',
+      xs: '0.25rem', // 4px
       sm: '0.5rem', // 8px
       md: '1rem', // 16px
       lg: '1.5rem', // 24px
@@ -31,7 +35,8 @@ export default {
       'point-lavender': '#D4AAFF',
       transparent: 'transparent',
       'surface-primary': '#FFFFFF',
+      error: '#ff4d4d',
     },
   },
   plugins: [],
-}
+};
