@@ -1,11 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class Chat {
   @PrimaryGeneratedColumn()
   chatId: number;
 
-  @Column({ type: 'varchar', nullable: false })
+  @UpdateDateColumn({ name: 'updated _at' })
   createdAt: string; //TODO: time type으로 바꾸기
 
   @Column({ type: 'varchar', nullable: true })

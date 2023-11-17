@@ -9,6 +9,17 @@ export class ChatService {
   create(createChatDto: CreateChatDto) {
     return this.chatRepository.createChat(createChatDto);
   }
+
+  createFromSocket(message: string, sender: string, campId: string) {
+    //TODO: campID로 masterId 찾아서 저장.
+    const createDto: CreateChatDto = {
+      stringContent: message,
+      sender: sender,
+      masterId: campId,
+      picContent: '',
+    };
+    return this.chatRepository.createChat(createDto);
+  }
   // findAll() {
   //   return `This action returns all chat`;
   // }
