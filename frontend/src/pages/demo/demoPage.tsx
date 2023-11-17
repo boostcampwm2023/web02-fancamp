@@ -22,6 +22,7 @@ import Grid from '../../components/grid/grid';
 import Dropdown from '../../components/dropdown/dropdown';
 import DropdownItem from '../../components/dropdown/dropdownItem';
 import Modal from '../../components/modal/modal';
+import LikeButton from '../../components/button/likeButton';
 
 interface SectionTitleProps {
   text: string;
@@ -38,7 +39,8 @@ interface ButtonProps {
 
 const DemoPage = () => {
   return (
-    <div className='content flex flex-col gap-xl mt-xl mb-xl'>
+    <div className="content flex flex-col gap-xl">
+      <LikeButtonDemo />
       <DropdownDemo />
       <GridDemo />
       <CheckboxDemo />
@@ -69,11 +71,11 @@ const ModalDemo = () => {
   return (
     <Section>
       <Text size={20}>Modal</Text>
-      <Button text='열기' handleOnClick={handleModalOpen} />
+      <Button text="열기" handleOnClick={handleModalOpen} />
       <Modal isOpen={isModalOpen} setOpen={handleModalClose}>
-        <div className='flex flex-col items-center justify-evenly w-[10rem] h-[6rem]'>
+        <div className="flex h-[6rem] w-[10rem] flex-col items-center justify-evenly">
           <span>모달 테스트</span>
-          <Button text='닫기' handleOnClick={handleModalClose} />
+          <Button text="닫기" handleOnClick={handleModalClose} />
         </div>
       </Modal>
     </Section>
@@ -84,7 +86,7 @@ const SubmitButtonDemo = () => {
   return (
     <Section>
       <Text size={20}>Submit Button</Text>
-      <SubmitButton text='클릭' handleOnClick={() => alert('클릭')} />
+      <SubmitButton text="클릭" handleOnClick={() => alert('클릭')} />
     </Section>
   );
 };
@@ -97,17 +99,17 @@ const InputDemo = () => {
     <Section>
       <Text size={20}>Input</Text>
       <Input
-        label='이메일을 입력하세요'
-        type='text'
+        label="이메일을 입력하세요"
+        type="text"
         setValue={setEmail}
-        placeholder='이메일'
+        placeholder="이메일"
       />
       <Input
-        label='비밀번호를 입력하세요'
-        type='password'
+        label="비밀번호를 입력하세요"
+        type="password"
         setValue={setPassword}
         icon={<PasswordIcon />}
-        placeholder='비밀번호'
+        placeholder="비밀번호"
       />
       <SectionSpan text={email} />
       <SectionSpan text={password} />
@@ -139,16 +141,16 @@ const FadeDemo = () => {
   return (
     <Section>
       <Text size={20}>Transition Fade</Text>
-      <Button text='bottom up' handleOnClick={() => setDemo1(!showDemo1)} />
-      <div className='h-[2rem]'>
+      <Button text="bottom up" handleOnClick={() => setDemo1(!showDemo1)} />
+      <div className="h-[2rem]">
         <Fade fadeIn={bottomFadeinAnimation} fadeOut={bottomFadeoutAnimation}>
-          {showDemo1 && <SectionSpan text='텍스트' />}
+          {showDemo1 && <SectionSpan text="텍스트" />}
         </Fade>
       </div>
-      <Button text='left to right' handleOnClick={() => setDemo2(!showDemo2)} />
-      <div className='h-[2rem]'>
+      <Button text="left to right" handleOnClick={() => setDemo2(!showDemo2)} />
+      <div className="h-[2rem]">
         <Fade fadeIn={leftFadeinAnimation} fadeOut={leftFadeoutAnimation}>
-          {showDemo2 && <SectionSpan text='텍스트' />}
+          {showDemo2 && <SectionSpan text="텍스트" />}
         </Fade>
       </div>
     </Section>
@@ -175,7 +177,7 @@ const SwitchDemo = () => {
         categorys={categorys}
       />
       <Switch height={100} width={300} direction={direction} dynamic={oldIndex}>
-        <div className='flex flex-col justify-center items-center'>
+        <div className="flex flex-col items-center justify-center">
           <SectionSpan text={`현재 인덱스: ${index}`} />
         </div>
       </Switch>
@@ -203,16 +205,16 @@ const PostCardGridDemo = () => {
     <Section>
       <Text size={20}>Post Card</Text>
       <Modal isOpen={isModalOpen} setOpen={handleModalClose}>
-        <div className='flex'>
+        <div className="flex">
           {postData ? (
             <>
-              <div className='w-[37.5rem] h-[31.25rem]'>
+              <div className="h-[31.25rem] w-[37.5rem]">
                 <ImageSlider images={postData.images} />
               </div>
-              <div className='flex-1 flex flex-col'>
+              <div className="flex flex-1 flex-col">
                 <span>좋아요: {postData.likeCount}</span>
                 <span>코멘트: {postData.likeCount}</span>
-                <Button text='닫기' handleOnClick={handleModalClose} />
+                <Button text="닫기" handleOnClick={handleModalClose} />
               </div>
             </>
           ) : (
@@ -222,16 +224,16 @@ const PostCardGridDemo = () => {
       </Modal>
       <PostGrid>
         {DummyData.posts.map((post, index) => {
-          const { postId, username, images, likeCount, commentCount } = post;
+          const { postId, images, likeCount, commentCount } = post;
           return (
             <PostCard
               imageSrc={images[0]}
               likeCount={likeCount}
               commentCount={commentCount}
               postId={postId}
-              username={username}
               handleOnClick={handleModalOpen}
               key={`post-card-${index}`}
+              content={''}
             />
           );
         })}
@@ -250,7 +252,7 @@ const ImageSliderDemo = () => {
   return (
     <Section>
       <Text size={20}>Image Slide</Text>
-      <div className='w-[25rem] h-[18.75rem]'>
+      <div className="h-[18.75rem] w-[25rem]">
         <ImageSlider images={images} />
       </div>
     </Section>
@@ -272,11 +274,11 @@ const CheckboxDemo = () => {
   return (
     <Section>
       <Text size={20}>Checkbox</Text>
-      <form action='' onSubmit={handleSubmit} className='flex flex-col gap-sm'>
+      <form action="" onSubmit={handleSubmit} className="flex flex-col gap-sm">
         <Checkbox checked={checked} onChange={handleCheckbox}>
           <Text size={12}>체크하기</Text>
         </Checkbox>
-        <SubmitButton text='확인' />
+        <SubmitButton text="확인" />
       </form>
     </Section>
   );
@@ -301,15 +303,15 @@ const GridDemo = () => {
   return (
     <Section>
       <Text size={20}>Grid</Text>
-      <div className='flex gap-md'>
+      <div className="flex gap-md">
         <Button
-          text='섞기'
+          text="섞기"
           handleOnClick={() => {
             setItems(randomShuffleArray([...items]));
           }}
         />
         <Button
-          text='처음에 추가'
+          text="처음에 추가"
           handleOnClick={() => {
             const newItemId = `item-${count + 1}`;
             setItems([newItemId, ...items]);
@@ -317,7 +319,7 @@ const GridDemo = () => {
           }}
         />
         <Button
-          text='마지막에 추가'
+          text="마지막에 추가"
           handleOnClick={() => {
             const newItemId = `item-${count + 1}`;
             setItems([...items, newItemId]);
@@ -325,7 +327,7 @@ const GridDemo = () => {
           }}
         />
         <Button
-          text='처음 요소 삭제'
+          text="처음 요소 삭제"
           handleOnClick={() => {
             const newItems = items.slice(1);
             setItems(newItems);
@@ -353,8 +355,8 @@ const DropdownDemo = () => {
     <Section>
       <Text size={20}>Dropdown</Text>
       <form onSubmit={handleSubmit}>
-        <div className='w-[12rem] h-[3rem]'>
-          <Dropdown placeholder='옵션을 선택하세요.' value={value}>
+        <div className="h-[3rem] w-[12rem]">
+          <Dropdown placeholder="옵션을 선택하세요." value={value}>
             <DropdownItem
               text={'옵션1'}
               handleOnClick={handleSelectDropdown}
@@ -364,28 +366,49 @@ const DropdownDemo = () => {
             <DropdownItem text={'옵션3'} handleOnClick={handleSelectDropdown} />
           </Dropdown>
         </div>
-        <SubmitButton text='확인' />
+        <SubmitButton text="확인" />
       </form>
+    </Section>
+  );
+};
+
+const LikeButtonDemo = () => {
+  const [like, setLike] = useState<boolean>(false);
+  const [likeCount, setLikeCount] = useState<number>(12);
+
+  const handleLike = () => {
+    setLike(!like);
+    setLikeCount(likeCount + (like ? -1 : +1));
+  };
+
+  return (
+    <Section>
+      <Text size={20}>Like Button</Text>
+      <LikeButton liked={like} onChange={handleLike}>
+        <Text size={12} classList="select-none">
+          좋아요 {likeCount}
+        </Text>
+      </LikeButton>
     </Section>
   );
 };
 
 const Section = ({ children }: SectionProps) => {
   return (
-    <section className='p-[2rem] flex flex-col border border-text-secondary items-center gap-lg'>
+    <section className="flex flex-col items-center gap-lg border border-text-secondary p-[2rem]">
       {children}
     </section>
   );
 };
 
 const SectionSpan = ({ text }: SectionTitleProps) => {
-  return <span className='display-regular-12'>{text}</span>;
+  return <span className="display-regular-12">{text}</span>;
 };
 
 const Button = ({ text, handleOnClick }: ButtonProps) => {
   return (
     <button
-      className='display-regular-14 border-sm p-[0.25rem] bg-point-yellow'
+      className="display-regular-14 border-sm bg-point-yellow p-[0.25rem]"
       onClick={handleOnClick}
     >
       {text}

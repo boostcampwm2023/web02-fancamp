@@ -4,9 +4,10 @@ interface TextProps {
   children: React.ReactNode
   size?: 12 | 14 | 20
   color?: keyof typeof colors
+  classList?: string
 }
 
-const Text = ({ children, size = 14, color = 'text-primary' }: TextProps) => {
+const Text = ({ children, size = 14, color = 'text-primary', classList }: TextProps) => {
   const fontSizes = {
     12: 'display-regular-12',
     14: 'display-regular-14',
@@ -25,7 +26,11 @@ const Text = ({ children, size = 14, color = 'text-primary' }: TextProps) => {
     'surface-primary': 'text-surface-primary',
   }
 
-  return <span className={`${fontSizes[size]} ${fontColors[color]} test`}>{children}</span>
+  return (
+    <span className={`${fontSizes[size]} ${fontColors[color]} ${classList} smooth-transition`}>
+      {children}
+    </span>
+  )
 }
 
 export default Text

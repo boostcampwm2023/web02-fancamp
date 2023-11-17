@@ -1,19 +1,33 @@
 .post__card {
-  @apply relative overflow-hidden cursor-pointer;
+  @apply relative w-full h-full overflow-hidden cursor-pointer aspect-square border-sm border-text-primary;
 }
 
 .post__card__image {
-  transition: all 0.2s ease-in-out;
+  @apply aspect-square smooth-transition object-cover;
 }
 
-.post__card:hover .post__card__image {
+.post__card__content {
+  @apply relative w-full h-full smooth-transition overflow-hidden p-xl;
+}
+
+.post__card__content span {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
+
+.post__card:hover .post__card--hover--filter {
   transform: scale(1.1);
   filter: blur(0.125rem) brightness(30%);
 }
 
+.post__card:hover .post__card__content {
+  background-color: rgb(0, 0, 0, 0.7);
+}
+
 .post__info {
-  transition: all 0.2s ease-in-out;
-  @apply absolute w-full h-full top-[0] flex flex-col justify-center items-center gap-sm opacity-0;
+  @apply absolute w-full h-full top-[0] flex flex-col justify-center items-center gap-sm opacity-0 smooth-transition;
 }
 
 .post__card:hover .post__info {

@@ -7,5 +7,5 @@ body {
 }
 
 .content {
-  @apply relative w-[44.375rem] h-center;
+  @apply relative w-[44.375rem] h-center mt-xl mb-xl;
 }
