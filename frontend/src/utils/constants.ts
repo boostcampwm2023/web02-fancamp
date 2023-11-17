@@ -8,7 +8,7 @@ export const colors = {
   'point-lavender': '#D4AAFF',
   transparent: 'transparent',
   'surface-primary': '#FFFFFF',
-}
+};
 
 export const campCategorys = [
   {
@@ -23,4 +23,4 @@ export const campCategorys = [
     text: '채팅',
     path: 'chat',
   },
-]
+];

@@ -1,4 +1,4 @@
-export type AnimationObject = [Keyframe[], KeyframeAnimationOptions]
+export type AnimationObject = [Keyframe[], KeyframeAnimationOptions];
 
 export const rightFadeinAnimation = [
   [
@@ -6,7 +6,7 @@ export const rightFadeinAnimation = [
     { opacity: '1', transform: 'translateX(0px)', visibility: 'visible' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const rightFadeoutAnimation = [
   [
@@ -14,7 +14,7 @@ export const rightFadeoutAnimation = [
     { opacity: '0', transform: 'translateX(-10px)', visibility: 'hidden' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const leftFadeinAnimation = [
   [
@@ -22,7 +22,7 @@ export const leftFadeinAnimation = [
     { opacity: '1', transform: 'translateX(0px)', visibility: 'visible' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const leftFadeoutAnimation = [
   [
@@ -30,7 +30,7 @@ export const leftFadeoutAnimation = [
     { opacity: '0', transform: 'translateX(10px)', visibility: 'hidden' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const bottomFadeinAnimation = [
   [
@@ -38,7 +38,7 @@ export const bottomFadeinAnimation = [
     { opacity: '1', transform: 'translateY(0px)', visibility: 'visible' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const bottomFadeoutAnimation = [
   [
@@ -46,7 +46,7 @@ export const bottomFadeoutAnimation = [
     { opacity: '0', transform: 'translateY(-10px)', visibility: 'hidden' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const topFadeinAnimation = [
   [
@@ -54,7 +54,7 @@ export const topFadeinAnimation = [
     { opacity: '1', transform: 'translateY(0px)', visibility: 'visible' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const topFadeoutAnimation = [
   [
@@ -62,7 +62,7 @@ export const topFadeoutAnimation = [
     { opacity: '0', transform: 'translateY(10px)', visibility: 'hidden' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const opacityFadeinAnimation = [
   [
@@ -70,7 +70,7 @@ export const opacityFadeinAnimation = [
     { opacity: '1', visibility: 'visible' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;
 
 export const opacityFadeoutAnimation = [
   [
@@ -78,4 +78,4 @@ export const opacityFadeoutAnimation = [
     { opacity: '0', visibility: 'hidden' },
   ],
   { duration: 200, easing: 'ease-out', fill: 'forwards' },
-] as AnimationObject
+] as AnimationObject;

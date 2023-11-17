@@ -1,35 +1,36 @@
-import { useEffect, useRef, useState } from 'react'
-import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react'
-import RightArrowIcon from '../../assets/icons/rightArrowIcon.svg?react'
-import { pxToRem } from '../../utils/unit'
-import Text from '../text/text'
-import Image from '../image/Image'
+import { useEffect, useRef, useState } from 'react';
+import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react';
+import RightArrowIcon from '../../assets/icons/rightArrowIcon.svg?react';
+import { pxToRem } from '../../utils/unit';
+import Text from '../text/text';
+import Image from '../image/Image';
 interface ImageSliderProps {
-  images: string[]
+  images: string[];
 }
 
-type SlideDirection = 'PRE' | 'NEXT'
+type SlideDirection = 'PRE' | 'NEXT';
 
 const ImageSlider = ({ images }: ImageSliderProps) => {
-  const [imageIndex, setImageIndex] = useState(0)
-  const [sliderWidth, setSliderWidth] = useState(0)
-  const sliderRef = useRef<HTMLDivElement>(null)
+  const [imageIndex, setImageIndex] = useState(0);
+  const [sliderWidth, setSliderWidth] = useState(0);
+  const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (sliderRef.current) {
       setSliderWidth(
-        sliderRef.current.clientWidth || sliderRef.current.getBoundingClientRect().width
-      )
+        sliderRef.current.clientWidth ||
+          sliderRef.current.getBoundingClientRect().width,
+      );
     }
-  }, [])
+  }, []);
 
   const handleImageIndex = (direction: SlideDirection) => {
     if (direction === 'PRE' && imageIndex !== 0) {
-      setImageIndex(imageIndex - 1)
+      setImageIndex(imageIndex - 1);
     } else if (direction === 'NEXT' && imageIndex < images.length - 1) {
-      setImageIndex(imageIndex + 1)
+      setImageIndex(imageIndex + 1);
     }
-  }
+  };
 
   return (
     <div className="image__slider__wrapper" ref={sliderRef}>
@@ -47,10 +48,16 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
         ))}
       </div>
       <div className="image__slider__controller">
-        <button className="image__slider__button--pre" onClick={() => handleImageIndex('PRE')}>
+        <button
+          className="image__slider__button--pre"
+          onClick={() => handleImageIndex('PRE')}
+        >
           <LeftArrowIcon />
         </button>
-        <button className="image__slider__button--next" onClick={() => handleImageIndex('NEXT')}>
+        <button
+          className="image__slider__button--next"
+          onClick={() => handleImageIndex('NEXT')}
+        >
           <RightArrowIcon />
         </button>
         <div className="image__slider__index">
@@ -60,7 +67,7 @@ const ImageSlider = ({ images }: ImageSliderProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ImageSlider
+export default ImageSlider;

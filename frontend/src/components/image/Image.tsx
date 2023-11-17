@@ -1,16 +1,16 @@
-import { useRef } from 'react'
+import { useRef } from 'react';
 
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
 
 const Image = (props: ImageProps) => {
-  const imageRef = useRef<HTMLImageElement>(null)
+  const imageRef = useRef<HTMLImageElement>(null);
 
   const handleImageLoaded = () => {
     if (imageRef.current) {
-      imageRef.current.classList.remove('opacity-0')
-      imageRef.current.classList.add('smooth-transition')
+      imageRef.current.classList.remove('opacity-0');
+      imageRef.current.classList.add('smooth-transition');
     }
-  }
+  };
 
   return (
     <img
@@ -19,7 +19,7 @@ const Image = (props: ImageProps) => {
       ref={imageRef}
       onLoad={handleImageLoaded}
     />
-  )
-}
+  );
+};
 
-export default Image
+export default Image;

@@ -54,45 +54,45 @@ export default function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className='flex flex-col p-[3rem] mb-4 gap-4 border'
+      className="mb-4 flex flex-col gap-4 border p-[3rem]"
     >
       <Input
-        label='이메일'
-        type='email'
+        label="이메일"
+        type="email"
         setValue={setEmail}
-        placeholder='fancamp@naver.com'
+        placeholder="fancamp@naver.com"
         onBlur={handleBlurEmail}
       />
       {emailError && (
-        <div className='display-regular-14 text-error mb-4'>
+        <div className="display-regular-14 mb-4 text-error">
           이메일의 형식이 맞지 않아요!
         </div>
       )}
       <Input
-        label='비밀번호'
-        type='password'
+        label="비밀번호"
+        type="password"
         setValue={setPassword}
         onBlur={handleBlurPassword}
       />
       {passwordError && (
-        <div className='display-regular-14 text-error mb-4'>
+        <div className="display-regular-14 mb-4 text-error">
           비밀번호의 글자 수는 4~20 사이여야 합니다!
         </div>
       )}
       <Input
-        label='닉네임'
-        type='text'
+        label="닉네임"
+        type="text"
         setValue={setUsername}
         onBlur={handleBlurUsername}
       />
       {usernameError && (
-        <div className='display-regular-14 text-error mb-4'>
+        <div className="display-regular-14 mb-4 text-error">
           닉네임의 글자 수는 4~20 사이여야 합니다!
         </div>
       )}
-      <SubmitButton text='회원가입' />
+      <SubmitButton text="회원가입" />
       {signupError && (
-        <div className='display-regular-14 text-error mt-4'>
+        <div className="display-regular-14 mt-4 text-error">
           회원가입에 실패했습니다!
         </div>
       )}

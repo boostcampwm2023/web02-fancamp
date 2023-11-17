@@ -20,7 +20,7 @@ export async function login(email: string, password: string): Promise<any> {
 export async function signup(
   email: string,
   password: string,
-  username: string
+  username: string,
 ): Promise<any> {
   const response = await fetch('/api/auth/user', {
     method: 'POST',

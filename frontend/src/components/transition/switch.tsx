@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 import {
   leftFadeinAnimation,
   leftFadeoutAnimation,
@@ -8,15 +8,15 @@ import {
   topFadeoutAnimation,
   bottomFadeinAnimation,
   bottomFadeoutAnimation,
-} from './animation'
+} from './animation';
 
 interface TransitionProps {
-  children: React.ReactNode
-  width: number
-  height: number
-  classList?: string
-  direction?: 'right' | 'left' | 'bottom' | 'top'
-  dynamic?: any
+  children: React.ReactNode;
+  width: number;
+  height: number;
+  classList?: string;
+  direction?: 'right' | 'left' | 'bottom' | 'top';
+  dynamic?: any;
 }
 
 const Switch = ({
@@ -27,73 +27,73 @@ const Switch = ({
   direction = 'right',
   dynamic,
 }: TransitionProps) => {
-  const [currIndex, setCurrIndex] = useState<number>(0)
-  const [children1, setChildren1] = useState<React.ReactNode>(null)
-  const [children2, setChildren2] = useState<React.ReactNode>(null)
-  const ref1 = useRef<HTMLDivElement>(null)
-  const ref2 = useRef<HTMLDivElement>(null)
+  const [currIndex, setCurrIndex] = useState<number>(0);
+  const [children1, setChildren1] = useState<React.ReactNode>(null);
+  const [children2, setChildren2] = useState<React.ReactNode>(null);
+  const ref1 = useRef<HTMLDivElement>(null);
+  const ref2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (currIndex === 0) {
-      setCurrIndex(1)
-      setChildren1(children)
+      setCurrIndex(1);
+      setChildren1(children);
       if (ref1.current && ref2.current) {
         if (direction === 'right') {
           // @ts-ignore
-          ref1.current.animate(...rightFadeinAnimation)
+          ref1.current.animate(...rightFadeinAnimation);
           // @ts-ignore
-          ref2.current.animate(...rightFadeoutAnimation)
+          ref2.current.animate(...rightFadeoutAnimation);
         } else if (direction === 'left') {
           // @ts-ignore
-          ref1.current.animate(...leftFadeinAnimation)
+          ref1.current.animate(...leftFadeinAnimation);
           // @ts-ignore
-          ref2.current.animate(...leftFadeoutAnimation)
+          ref2.current.animate(...leftFadeoutAnimation);
         } else if (direction === 'bottom') {
           // @ts-ignore
-          ref1.current.animate(...bottomFadeinAnimation)
+          ref1.current.animate(...bottomFadeinAnimation);
           // @ts-ignore
-          ref2.current.animate(...bottomFadeoutAnimation)
+          ref2.current.animate(...bottomFadeoutAnimation);
         } else if (direction === 'top') {
           // @ts-ignore
-          ref1.current.animate(...topFadeinAnimation)
+          ref1.current.animate(...topFadeinAnimation);
           // @ts-ignore
-          ref2.current.animate(...topFadeoutAnimation)
+          ref2.current.animate(...topFadeoutAnimation);
         }
         ref2.current.addEventListener('animationend', () => {
-          setChildren2(null)
-        })
+          setChildren2(null);
+        });
       }
     } else {
-      setCurrIndex(0)
-      setChildren2(children)
+      setCurrIndex(0);
+      setChildren2(children);
       if (ref1.current && ref2.current) {
         if (direction === 'right') {
           // @ts-ignore
-          ref1.current.animate(...rightFadeoutAnimation)
+          ref1.current.animate(...rightFadeoutAnimation);
           // @ts-ignore
-          ref2.current.animate(...rightFadeinAnimation)
+          ref2.current.animate(...rightFadeinAnimation);
         } else if (direction === 'left') {
           // @ts-ignore
-          ref1.current.animate(...leftFadeoutAnimation)
+          ref1.current.animate(...leftFadeoutAnimation);
           // @ts-ignore
-          ref2.current.animate(...leftFadeinAnimation)
+          ref2.current.animate(...leftFadeinAnimation);
         } else if (direction === 'bottom') {
           // @ts-ignore
-          ref1.current.animate(...bottomFadeoutAnimation)
+          ref1.current.animate(...bottomFadeoutAnimation);
           // @ts-ignore
-          ref2.current.animate(...bottomFadeinAnimation)
+          ref2.current.animate(...bottomFadeinAnimation);
         } else if (direction === 'top') {
           // @ts-ignore
-          ref1.current.animate(...topFadeoutAnimation)
+          ref1.current.animate(...topFadeoutAnimation);
           // @ts-ignore
-          ref2.current.animate(...topFadeinAnimation)
+          ref2.current.animate(...topFadeinAnimation);
         }
         ref1.current.addEventListener('animationend', () => {
-          setChildren1(null)
-        })
+          setChildren1(null);
+        });
       }
     }
-  }, [dynamic || children])
+  }, [dynamic || children]);
 
   return (
     <div className={`relative ${classList}`} style={{ width, height }}>
@@ -104,7 +104,7 @@ const Switch = ({
         {children2}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Switch
+export default Switch;

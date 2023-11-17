@@ -1,5 +1,5 @@
 .input__wrapper {
-  @apply w-full flex flex-col;
+  @apply flex w-full flex-col;
 }
 
 .input__wrapper:focus-within .input__border {
@@ -29,5 +29,5 @@
 
 .input__border {
   transition: all 0.2s ease-in-out;
-  @apply border-b-sm border-text-primary mb-4;
+  @apply mb-4 border-b-sm border-text-primary;
 }

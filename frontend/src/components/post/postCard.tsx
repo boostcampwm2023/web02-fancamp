@@ -1,13 +1,13 @@
-import Image from '../image/Image'
-import Text from '../text/text'
+import Image from '../image/Image';
+import Text from '../text/text';
 
 interface PostCardProps {
-  imageSrc: string
-  likeCount: number
-  commentCount: number
-  postId: string
-  content: string
-  handleOnClick: (postId: string) => void
+  imageSrc: string;
+  likeCount: number;
+  commentCount: number;
+  postId: string;
+  content: string;
+  handleOnClick: (postId: string) => void;
 }
 
 const PostCard = ({
@@ -21,7 +21,11 @@ const PostCard = ({
   return (
     <div className="post__card" onClick={() => handleOnClick(postId)}>
       {imageSrc ? (
-        <Image src={imageSrc} className="post__card__image post__card--hover--filter" alt="" />
+        <Image
+          src={imageSrc}
+          className="post__card__image post__card--hover--filter"
+          alt=""
+        />
       ) : (
         <div className="post__card__content post__card--hover--filter">
           <Text color="text-secondary">{content}</Text>
@@ -36,7 +40,7 @@ const PostCard = ({
         </Text>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default PostCard
+export default PostCard;

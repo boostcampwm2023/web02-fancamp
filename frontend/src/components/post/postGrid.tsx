@@ -1,9 +1,9 @@
 interface PostGridProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const PostGrid = ({ children }: PostGridProps) => {
-  return <div className="post__grid">{children}</div>
-}
+  return <div className="post__grid">{children}</div>;
+};
 
-export default PostGrid
+export default PostGrid;

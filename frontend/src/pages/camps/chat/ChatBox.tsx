@@ -29,7 +29,7 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<Message[]>(mockData);
 
   return (
-    <div className='flex flex-col p-8 min-h-screen'>
+    <div className="flex min-h-screen flex-col p-8">
       <ChatBoxNavBar />
       <ChatBoxMessages messages={messages} />
       <ChatBoxInputBar setMessages={setMessages} />

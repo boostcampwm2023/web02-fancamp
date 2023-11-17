@@ -1,13 +1,13 @@
 .post__card {
-  @apply relative w-full h-full overflow-hidden cursor-pointer aspect-square border-sm border-text-primary;
+  @apply relative aspect-square h-full w-full cursor-pointer overflow-hidden border-sm border-text-primary;
 }
 
 .post__card__image {
-  @apply aspect-square smooth-transition object-cover;
+  @apply smooth-transition aspect-square object-cover;
 }
 
 .post__card__content {
-  @apply relative w-full h-full smooth-transition overflow-hidden p-xl;
+  @apply smooth-transition relative h-full w-full overflow-hidden p-xl;
 }
 
 .post__card__content span {
@@ -27,7 +27,7 @@
 }
 
 .post__info {
-  @apply absolute w-full h-full top-[0] flex flex-col justify-center items-center gap-sm opacity-0 smooth-transition;
+  @apply smooth-transition absolute top-[0] flex h-full w-full flex-col items-center justify-center gap-sm opacity-0;
 }
 
 .post__card:hover .post__info {

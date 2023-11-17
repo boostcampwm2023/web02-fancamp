@@ -25,14 +25,14 @@ export default function ChatBoxInputBar({ setMessages }: Props) {
   };
 
   return (
-    <form onSubmit={handleMessageSubmit} className='flex border rounded-full'>
+    <form onSubmit={handleMessageSubmit} className="flex rounded-full border">
       <input
-        className='w-full rounded-full'
+        className="w-full rounded-full"
         onChange={handleInputTextChange}
         value={inputText}
-        placeholder='메세지 입력...'
+        placeholder="메세지 입력..."
       />
-      <button className='' type='submit'>
+      <button className="" type="submit">
         전송
       </button>
     </form>
