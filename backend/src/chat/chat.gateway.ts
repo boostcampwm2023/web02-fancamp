@@ -14,29 +14,37 @@ export class ChatGateway {
 
   @SubscribeMessage('camperIn')
   handleCamperIn(socket: Socket, data: any): void {
-    console.log(`socket.id: ${socket.id} | data: ${JSON.stringify(data)}`);
+    console.log(
+      `캠퍼인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
+    );
     const { userId, campId } = data;
     socket.join(campId);
   }
 
   @SubscribeMessage('masterIn')
   handleMasterIn(socket: Socket, data: any): void {
-    console.log(`socket.id: ${socket.id} | data: ${JSON.stringify(data)}`);
+    console.log(
+      `마스터인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
+    );
     const { userId, campId } = data;
-    socket.join(campId);
+    socket.join([campId, `${campId}-detail`]);
   }
 
   @SubscribeMessage('camperMessage')
   handleCamperMessage(socket: Socket, data: any): void {
-    console.log(`socket.id: ${socket.id} | data: ${JSON.stringify(data)}`);
+    console.log(
+      `캠퍼메세지 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
+    );
     const { message, camperId, campId } = data; //TODO: 받아오는것도 DTO로.
     // this.chatService.createFromSocket(message, camperId, campId);
-    // socket.to(`${campId}-detail`).emit('message', message);
+    socket.to(`${campId}-detail`).emit('message', message);
   }
 
   @SubscribeMessage('masterMessage')
   handleMasterMessage(socket: Socket, data: any): void {
-    console.log(`socket.id: ${socket.id} | data: ${JSON.stringify(data)}`);
+    console.log(
+      `마스터메세지- socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
+    );
     const { message, masterId, campId } = data; //TODO: 받아오는것도 DTO로.
     // this.chatService.createFromSocket(message, masterId, campId);
     socket.broadcast.to(campId).emit('message', message);
