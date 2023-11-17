@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Nest Chat</title>
+  </head>
+  <body>
+    <h2>심플 채팅</h2>
+    <div id="chat"></div>
+    <!-- 채팅 메시지를 표시할 div -->
+
+    <div>
+      <!-- 채팅방 목록 -->
+      <h2>채팅방 목록</h2>
+      <ul id="rooms"></ul>
+    </div>
+
+    <input type="text" id="message" placeholder="메시지를 입력해주세요" />
+    <button onclick="sendMessageMaster()">전송</button>
+    <button onclick="sendMessageCamper()">캠퍼 전송</button>
+    <button onclick="inRoomMaster()">마스터가 방 들어가기</button>
+    <button onclick="inRoomCamper()">캠퍼가 방 들어가기</button>
+    <button onclick="outRoomMaster()">마스터가 방 나가기</button>
+    <button onclick="outRoomCamper()">캠퍼가 방 나가기</button>
+  </body>
+
+  <!-- jquery로드 -->
+  <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+  <!-- socket.io로드 -->
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script>
+    // socket.io 인스턴스 생성
+    // const socket = io('http://localhost:3000/chat');
+    // const roomSocket = io('http://localhost:3000/room');
+    // const nickname = prompt('닉네임을 입력해주세요.');
+
+    const userId = prompt('접속하는 ID 입력해주세요');
+    const campId = prompt('들어갈 캠프 ID 입력해주세요.');
+
+    // //서버 접속 확인을 위한 이벤트
+    // socket.on('connect', () => {
+    //   console.log('서버에 연결되었습니다.');
+    // });
+    let chatSocket;
+    //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
+    function sendMessageCamper() {
+      const message = $('#message').val();
+      $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
+      chatSocket.emit('camperMessage', { message, userId, campId }); //메시지 보낼 때 닉네임도 같이 전송
+    }
+
+    //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
+    function sendMessageMaster() {
+      const message = $('#message').val();
+      $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
+      chatSocket.emit('masterMessage', { message, userId, campId }); //메시지 보낼 때 닉네임도 같이 전송
+    }
+
+    //서버에서 message 이벤트가 오면 처리
+    socket.on('message', (message) => {
+      $('#chat').append(`<div>${message}</div>`);
+    });
+
+    function inRoomMaster() {
+      chatSocket = io('http://localhost:3000/chat');
+      chatSocket.emit('masterIn', { userId, campId });
+    }
+
+    function inRoomCamper() {
+      chatSocket = io('http://localhost:3000/chat');
+      chatSocket.emit('camperIn', { userId, campId });
+    }
+
+    function outRoomMaster() {
+      chatSocket.emit('masterOut', { userId });
+    }
+
+    function outRoomCamper() {
+      chatSocket.emit('camperOut', { userId, campId });
+    }
+    // roomSocket.on('rooms', (data) => {
+    //   console.log(data);
+    //   $('#rooms').empty(); //채팅방 갱신 시 일단 리스트 비움
+    //   data.forEach((room) => {
+    //     $('#rooms').append(
+    //       `<li>${room} <button onclick="joinRoom('${room}')">입장</button></li>`,
+    //     );
+    //   });
+    // });
+  </script>
+</html>
