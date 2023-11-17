@@ -1,16 +1,23 @@
-import ConfettiExplosion from 'react-confetti-explosion'
-import styles from './likeButton.module.css'
+import ConfettiExplosion from 'react-confetti-explosion';
+import styles from './likeButton.module.css';
 
 interface LikeButtonProps {
-  liked: boolean
-  onChange: () => void
-  children?: React.ReactNode
+  liked: boolean;
+  onChange: () => void;
+  children?: React.ReactNode;
 }
 
 const LikeButton = ({ liked, onChange, children }: LikeButtonProps) => {
   return (
-    <span className="relative flex items-center gap-sm cursor-pointer" onClick={onChange}>
-      <input type="checkbox" className={`${styles.checkbox__input} hidden`} checked={liked} />
+    <span
+      className="relative flex cursor-pointer items-center gap-sm"
+      onClick={onChange}
+    >
+      <input
+        type="checkbox"
+        className={`${styles.checkbox__input} hidden`}
+        checked={liked}
+      />
       <svg
         className={styles.checkbox__icon}
         width="16"
@@ -38,7 +45,7 @@ const LikeButton = ({ liked, onChange, children }: LikeButtonProps) => {
       </div>
       {children}
     </span>
-  )
-}
+  );
+};
 
-export default LikeButton
+export default LikeButton;

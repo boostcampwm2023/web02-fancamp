@@ -1,15 +1,20 @@
-import { Outlet, Route, createBrowserRouter, createRoutesFromElements } from 'react-router-dom'
-import Root from './root'
-import DemoPage from '../pages/demo/demoPage'
-import HomePage from '../pages/home/homePage'
-import SearchPage from '../pages/search/searchPage'
-import ExplorePage from '../pages/explore/explorePage'
-import SigninPage from '../pages/auth/signin'
-import SignupPage from '../pages/auth/signup'
-import ChatPage from '../pages/camps/chat'
-import PostPage from '../pages/camps/post/postPage'
-import CampPage from '../pages/camps/campPage'
-import CommunityPage from '../pages/camps/community/communityPage'
+import {
+  Outlet,
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from 'react-router-dom';
+import Root from './root';
+import DemoPage from '../pages/demo/demoPage';
+import HomePage from '../pages/home/homePage';
+import SearchPage from '../pages/search/searchPage';
+import ExplorePage from '../pages/explore/explorePage';
+import SigninPage from '../pages/auth/signin';
+import SignupPage from '../pages/auth/signup';
+import ChatPage from '../pages/camps/chat';
+import PostPage from '../pages/camps/post/postPage';
+import CampPage from '../pages/camps/campPage';
+import CommunityPage from '../pages/camps/community/communityPage';
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,8 +36,8 @@ export const router = createBrowserRouter(
         </Route>
         <Route path="/components/demo" element={<DemoPage />} />
       </Route>
-    </>
-  )
-)
+    </>,
+  ),
+);
 
-export default router
+export default router;

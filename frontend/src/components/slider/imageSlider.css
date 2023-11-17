@@ -1,10 +1,10 @@
 .image__slider__wrapper {
-  @apply relative w-full h-full overflow-x-hidden border-sm border-text-primary;
+  @apply relative h-full w-full overflow-x-hidden border-sm border-text-primary;
 }
 
 .image__slider__scroll {
   transition: transform 0.2s ease-in-out;
-  @apply w-max h-full flex;
+  @apply flex h-full w-max;
 }
 
 .image__slider__image {
@@ -13,19 +13,19 @@
 
 .image__slider__controller {
   transition: opacity 0.2s ease-in-out;
-  @apply absolute top-[0] bottom-[0] right-[0] left-[0] opacity-0;
+  @apply absolute bottom-[0] left-[0] right-[0] top-[0] opacity-0;
 }
 
 .image__slider__button--pre {
-  @apply absolute v-center left-[0] flex justify-center;
+  @apply v-center absolute left-[0] flex justify-center;
 }
 
 .image__slider__button--next {
-  @apply absolute v-center right-[0] flex justify-center;
+  @apply v-center absolute right-[0] flex justify-center;
 }
 
 .image__slider__index {
-  @apply absolute h-center bottom-sm flex justify-center border-sm border-text-primary p-xs bg-surface-primary;
+  @apply h-center absolute bottom-sm flex justify-center border-sm border-text-primary bg-surface-primary p-xs;
 }
 
 .image__slider__wrapper:hover .image__slider__controller {

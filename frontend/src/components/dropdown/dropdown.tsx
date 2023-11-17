@@ -1,35 +1,35 @@
-import { useEffect, useState } from 'react'
-import BottomArrowIcon from '../../assets/icons/bottomArrowIcon.svg?react'
-import Text from '../text/text'
+import { useEffect, useState } from 'react';
+import BottomArrowIcon from '../../assets/icons/bottomArrowIcon.svg?react';
+import Text from '../text/text';
 
 interface DropdownProps {
-  children: React.ReactNode
-  placeholder?: string
-  value: string | null
+  children: React.ReactNode;
+  placeholder?: string;
+  value: string | null;
 }
 
 const Dropdown = ({ children, placeholder, value }: DropdownProps) => {
-  const [showDropdown, setDropdown] = useState(false)
+  const [showDropdown, setDropdown] = useState(false);
 
   useEffect(() => {
     const handleHideDropdown = (event: any) => {
       if (event.target.closest('.dropdown__wrapper')) {
-        setDropdown(!showDropdown)
+        setDropdown(!showDropdown);
       } else {
-        setDropdown(false)
+        setDropdown(false);
       }
-    }
-    document.addEventListener('click', handleHideDropdown)
+    };
+    document.addEventListener('click', handleHideDropdown);
     return () => {
-      document.removeEventListener('click', handleHideDropdown)
-    }
-  }, [showDropdown])
+      document.removeEventListener('click', handleHideDropdown);
+    };
+  }, [showDropdown]);
 
   return (
     <div className="dropdown__wrapper relative">
       <button
         type="button"
-        className="w-full h-full flex items-center gap-xs p-xs border-md border-text-primary bg-surface-primary"
+        className="flex h-full w-full items-center gap-xs border-md border-text-primary bg-surface-primary p-xs"
       >
         <div className={`${showDropdown && 'rotate-180'}`}>
           <BottomArrowIcon />
@@ -39,12 +39,12 @@ const Dropdown = ({ children, placeholder, value }: DropdownProps) => {
         </Text>
       </button>
       {showDropdown && (
-        <ul className="absolute flex flex-col border-md border-text-primary bg-surface-primary z-50 w-full mt-[-0.125rem]">
+        <ul className="absolute z-50 mt-[-0.125rem] flex w-full flex-col border-md border-text-primary bg-surface-primary">
           {children}
         </ul>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Dropdown
+export default Dropdown;

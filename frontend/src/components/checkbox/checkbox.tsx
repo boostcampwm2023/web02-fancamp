@@ -1,7 +1,7 @@
 interface CheckboxProps {
-  checked: boolean
-  onChange: () => void
-  children?: React.ReactNode
+  checked: boolean;
+  onChange: () => void;
+  children?: React.ReactNode;
 }
 
 const Checkbox = ({ checked, onChange, children }: CheckboxProps) => {
@@ -11,7 +11,7 @@ const Checkbox = ({ checked, onChange, children }: CheckboxProps) => {
       <span className="checkbox__span"></span>
       {children}
     </span>
-  )
-}
+  );
+};
 
-export default Checkbox
+export default Checkbox;

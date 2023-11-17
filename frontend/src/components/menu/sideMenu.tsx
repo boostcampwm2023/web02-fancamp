@@ -1,30 +1,46 @@
-import { Link, useLocation } from 'react-router-dom'
-import Text from '../text/text'
+import { Link, useLocation } from 'react-router-dom';
+import Text from '../text/text';
 
 interface SideMenuLinkProps {
-  to: string
-  text: string
-  currentPath: string
+  to: string;
+  text: string;
+  currentPath: string;
 }
 
 const SideMenu = () => {
-  const location = useLocation()
+  const location = useLocation();
 
   return (
-    <div className="sticky top-[0] left-[0] z-10 w-[12.5rem] h-[100vh] flex flex-col">
+    <div className="sticky left-[0] top-[0] z-10 flex h-[100vh] w-[12.5rem] flex-col">
       <Link to={'/'}>
         <img src="/src/assets/icons/logo.png" alt="메인 로고" />
       </Link>
       <Hr />
-      <div className="flex flex-col gap-sm pt-sm pb-sm">
+      <div className="flex flex-col gap-sm pb-sm pt-sm">
         <SideMenuLink to={'/'} text="Home" currentPath={location.pathname} />
-        <SideMenuLink to={'/search'} text="Search" currentPath={location.pathname} />
-        <SideMenuLink to={'/explore'} text="Explore" currentPath={location.pathname} />
+        <SideMenuLink
+          to={'/search'}
+          text="Search"
+          currentPath={location.pathname}
+        />
+        <SideMenuLink
+          to={'/explore'}
+          text="Explore"
+          currentPath={location.pathname}
+        />
       </div>
       <Hr />
-      <div className="flex flex-col gap-sm pt-sm pb-sm">
-        <SideMenuLink to={'/auth/signin'} text="로그인" currentPath={location.pathname} />
-        <SideMenuLink to={'/auth/signup'} text="회원가입" currentPath={location.pathname} />
+      <div className="flex flex-col gap-sm pb-sm pt-sm">
+        <SideMenuLink
+          to={'/auth/signin'}
+          text="로그인"
+          currentPath={location.pathname}
+        />
+        <SideMenuLink
+          to={'/auth/signup'}
+          text="회원가입"
+          currentPath={location.pathname}
+        />
         <SideMenuLink
           to={'/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/'}
           text="캠프"
@@ -47,21 +63,24 @@ const SideMenu = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 const SideMenuLink = ({ to, text, currentPath }: SideMenuLinkProps) => {
   return (
-    <Link to={to} className="flex pl-md pr-md pt-sm pb-sm">
-      <Text size={14} color={to === currentPath ? 'text-primary' : 'text-secondary'}>
+    <Link to={to} className="flex pb-sm pl-md pr-md pt-sm">
+      <Text
+        size={14}
+        color={to === currentPath ? 'text-primary' : 'text-secondary'}
+      >
         {text}
       </Text>
     </Link>
-  )
-}
+  );
+};
 
 const Hr = () => {
-  return <hr className="border-0 h-[0.0625rem] bg-contour-primary" />
-}
+  return <hr className="h-[0.0625rem] border-0 bg-contour-primary" />;
+};
 
-export default SideMenu
+export default SideMenu;

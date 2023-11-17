@@ -34,5 +34,5 @@
 }
 
 .submit__button__content {
-  @apply flex items-center justify-center pt-[1rem] pb-[1rem] border-sm border-text-primary box-border bg-point-lavender;
+  @apply box-border flex items-center justify-center border-sm border-text-primary bg-point-lavender pb-[1rem] pt-[1rem];
 }

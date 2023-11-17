@@ -1,5 +1,5 @@
 .menu__wrapper {
-  @apply w-full flex flex-col items-center border-t-sm border-contour-primary;
+  @apply flex w-full flex-col items-center border-t-sm border-contour-primary;
 }
 
 .menu__animated__bar__wrapper {
@@ -8,7 +8,7 @@
 
 .menu__animated__bar {
   transition: all 0.2s ease-in-out;
-  @apply m-[-0.065rem] w-[5rem] h-[0.125rem] bg-text-primary;
+  @apply m-[-0.065rem] h-[0.125rem] w-[5rem] bg-text-primary;
 }
 
 .menu__button {

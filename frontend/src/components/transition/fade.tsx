@@ -1,39 +1,39 @@
-import { useEffect, useRef, useState } from 'react'
-import { AnimationObject } from './animation'
+import { useEffect, useRef, useState } from 'react';
+import { AnimationObject } from './animation';
 
 interface FadeProps {
-    children: React.ReactNode
-    fadeIn: AnimationObject
-    fadeOut: AnimationObject
+  children: React.ReactNode;
+  fadeIn: AnimationObject;
+  fadeOut: AnimationObject;
 }
 
 const Fade = (props: FadeProps) => {
-    const { children, fadeIn, fadeOut } = props
+  const { children, fadeIn, fadeOut } = props;
 
-    const [backupChildren, setBackupChildren] = useState<React.ReactNode>(null)
-    const fadeRef = useRef<HTMLDivElement>(null)
+  const [backupChildren, setBackupChildren] = useState<React.ReactNode>(null);
+  const fadeRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
-        if (fadeRef.current) {
-            if (children && !backupChildren) {
-                fadeRef.current.animate(...fadeIn)
-                setBackupChildren(children)
-            } else if (!children) {
-                fadeRef.current.animate(...fadeOut)
-                setTimeout(() => {
-                    setBackupChildren(null)
-                }, 200)
-            } else {
-                setBackupChildren(children)
-            }
-        }
-    }, [children])
+  useEffect(() => {
+    if (fadeRef.current) {
+      if (children && !backupChildren) {
+        fadeRef.current.animate(...fadeIn);
+        setBackupChildren(children);
+      } else if (!children) {
+        fadeRef.current.animate(...fadeOut);
+        setTimeout(() => {
+          setBackupChildren(null);
+        }, 200);
+      } else {
+        setBackupChildren(children);
+      }
+    }
+  }, [children]);
 
-    return (
-        <div className="relative w-full h-full" ref={fadeRef}>
-            {backupChildren}
-        </div>
-    )
-}
+  return (
+    <div className="relative h-full w-full" ref={fadeRef}>
+      {backupChildren}
+    </div>
+  );
+};
 
-export default Fade
+export default Fade;

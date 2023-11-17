@@ -1,10 +1,10 @@
 interface InputProps<State> {
-  type: React.HTMLInputTypeAttribute
-  label?: string
-  placeholder?: string
-  setValue: React.Dispatch<React.SetStateAction<State>>
-  icon?: React.ReactNode
-  onBlur?: () => void
+  type: React.HTMLInputTypeAttribute;
+  label?: string;
+  placeholder?: string;
+  setValue: React.Dispatch<React.SetStateAction<State>>;
+  icon?: React.ReactNode;
+  onBlur?: () => void;
 }
 
 /**
@@ -12,11 +12,18 @@ interface InputProps<State> {
  * @params setValue 외부에서 상태를 관리하기 위한 setState 함수
  * @params icon 아이콘을 보낼 수 있음
  */
-const Input = <State,>({ type, setValue, label, placeholder, icon, onBlur }: InputProps<State>) => {
+const Input = <State,>({
+  type,
+  setValue,
+  label,
+  placeholder,
+  icon,
+  onBlur,
+}: InputProps<State>) => {
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget
-    setValue(value as State)
-  }
+    const { value } = event.currentTarget;
+    setValue(value as State);
+  };
 
   return (
     <label className="input__wrapper">
@@ -33,7 +40,7 @@ const Input = <State,>({ type, setValue, label, placeholder, icon, onBlur }: Inp
       </div>
       <div className="input__border" />
     </label>
-  )
-}
+  );
+};
 
-export default Input
+export default Input;
