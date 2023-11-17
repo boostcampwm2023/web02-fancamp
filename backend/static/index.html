@@ -29,21 +29,13 @@
   <!-- socket.io로드 -->
   <script src="http://localhost:3000/socket.io/socket.io.js"></script>
   <script>
-    // socket.io 인스턴스 생성
-    // const socket = io('http://localhost:3000/chat');
-    // const roomSocket = io('http://localhost:3000/room');
-    // const nickname = prompt('닉네임을 입력해주세요.');
+    let chatSocket;
 
     const userId = prompt('접속하는 ID 입력해주세요');
     const campId = prompt('들어갈 캠프 ID 입력해주세요.');
-
-    // //서버 접속 확인을 위한 이벤트
-    // socket.on('connect', () => {
-    //   console.log('서버에 연결되었습니다.');
-    // });
-    let chatSocket;
     //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
     function sendMessageCamper() {
+      console.log('캠퍼 메세지 전송시작');
       const message = $('#message').val();
       $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
       chatSocket.emit('camperMessage', { message, userId, campId }); //메시지 보낼 때 닉네임도 같이 전송
@@ -51,24 +43,38 @@
 
     //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
     function sendMessageMaster() {
+      console.log('마스터 메세지 전송시작');
       const message = $('#message').val();
       $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
       chatSocket.emit('masterMessage', { message, userId, campId }); //메시지 보낼 때 닉네임도 같이 전송
     }
 
-    //서버에서 message 이벤트가 오면 처리
-    socket.on('message', (message) => {
-      $('#chat').append(`<div>${message}</div>`);
-    });
-
     function inRoomMaster() {
+      console.log('마스터 방 들어가기 시작');
       chatSocket = io('http://localhost:3000/chat');
       chatSocket.emit('masterIn', { userId, campId });
+
+      chatSocket.on('message', (message) => {
+        $('#chat').append(`<div>${message}</div>`);
+      });
+
+      chatSocket.on('connect', () => {
+        console.log('서버에 연결되었습니다.');
+      });
     }
 
     function inRoomCamper() {
+      console.log('캠퍼 방 들어가기 시작');
       chatSocket = io('http://localhost:3000/chat');
       chatSocket.emit('camperIn', { userId, campId });
+
+      chatSocket.on('message', (message) => {
+        $('#chat').append(`<div>${message}</div>`);
+      });
+
+      chatSocket.on('connect', () => {
+        console.log('서버에 연결되었습니다.');
+      });
     }
 
     function outRoomMaster() {
@@ -78,14 +84,5 @@
     function outRoomCamper() {
       chatSocket.emit('camperOut', { userId, campId });
     }
-    // roomSocket.on('rooms', (data) => {
-    //   console.log(data);
-    //   $('#rooms').empty(); //채팅방 갱신 시 일단 리스트 비움
-    //   data.forEach((room) => {
-    //     $('#rooms').append(
-    //       `<li>${room} <button onclick="joinRoom('${room}')">입장</button></li>`,
-    //     );
-    //   });
-    // });
   </script>
 </html>

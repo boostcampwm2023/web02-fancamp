@@ -8,7 +8,6 @@ import { ConfigModule } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
 import { LoggerMiddleware } from './logger.middleware';
 import { CampModule } from './camp/camp.module';
-import { ChatGateway } from './chat/chat.gateway';
 import { ChatModule } from './chat/chat.module';
 
 @Module({
@@ -35,7 +34,7 @@ import { ChatModule } from './chat/chat.module';
     ChatModule,
   ],
   controllers: [AppController],
-  providers: [AppService, ChatGateway],
+  providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
