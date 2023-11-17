@@ -24,6 +24,7 @@ export default {
       md: '1rem', // 16px
       lg: '1.5rem', // 24px
       xl: '2rem', // 32px
+      '2xl': '4rem', // 64px
     },
     colors: {
       'text-primary': '#111111',
@@ -39,5 +40,48 @@ export default {
       error: '#ff4d4d',
     },
   },
-  plugins: [],
+  plugins: [
+    ({ addComponents, addUtilities }) => {
+      addComponents({
+        '.content': {
+          '@apply w-[55rem] pl-[5.3125rem] pr-[5.3125rem] pt-2xl pb-2xl': {},
+        },
+      });
+      addUtilities({
+        '.display-regular-20': {
+          '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[400]':
+            {},
+        },
+        '.display-regular-14': {
+          '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[400]':
+            {},
+        },
+        '.display-regular-12': {
+          '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[400]':
+            {},
+        },
+        '.center': {
+          '@apply left-[50%] top-[50%]': {},
+          transform: 'translate(-50%, -50%)',
+        },
+        '.h-center': {
+          '@apply left-[50%]': {},
+          transform: 'translateX(-50%)',
+        },
+        '.v-center': {
+          '@apply top-[50%]': {},
+          transform: 'translateY(-50%)',
+        },
+        '.smooth-transition': {
+          transition: 'all 0.2s ease-in-out',
+        },
+        '.text-limit-line-5': {
+          overflow: 'hidden',
+          display: '-webkit-box',
+          '-webkit-line-clamp': '5',
+          '-webkit-box-orient': 'vertical',
+        },
+      });
+    },
+  ],
 };

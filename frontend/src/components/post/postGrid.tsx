@@ -3,7 +3,7 @@ interface PostGridProps {
 }
 
 const PostGrid = ({ children }: PostGridProps) => {
-  return <div className="post__grid">{children}</div>;
+  return <div className="grid w-full grid-cols-4 gap-sm">{children}</div>;
 };
 
 export default PostGrid;

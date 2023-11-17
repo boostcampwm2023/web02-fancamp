@@ -23,7 +23,7 @@ const CampPage = () => {
   }, [categoryIndex]);
 
   return (
-    <div className="content">
+    <div>
       <Text size={20}>CampPage</Text>
       <ContentMenu
         menuIndex={categoryIndex}

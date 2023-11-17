@@ -6,9 +6,16 @@ interface CheckboxProps {
 
 const Checkbox = ({ checked, onChange, children }: CheckboxProps) => {
   return (
-    <span className="checkbox__wrapper" onClick={onChange}>
-      <input type="checkbox" className="checkbox__input" checked={checked} />
-      <span className="checkbox__span"></span>
+    <span
+      className="flex cursor-pointer items-center gap-xs"
+      onClick={onChange}
+    >
+      <input type="checkbox" className="sr-only" />
+      <label
+        className={`relative inline-block h-[0.75rem] w-[0.75rem] border-sm border-text-primary ${
+          checked ? 'bg-point-yellow' : 'bg-surface-primary'
+        }`}
+      />
       {children}
     </span>
   );

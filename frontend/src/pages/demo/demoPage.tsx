@@ -23,6 +23,7 @@ import Dropdown from '../../components/dropdown/dropdown';
 import DropdownItem from '../../components/dropdown/dropdownItem';
 import Modal from '../../components/modal/modal';
 import LikeButton from '../../components/button/likeButton';
+import Button from '../../components/button/button';
 
 interface SectionTitleProps {
   text: string;
@@ -32,27 +33,21 @@ interface SectionProps {
   children: ReactNode;
 }
 
-interface ButtonProps {
-  text: string;
-  handleOnClick: () => void;
-}
-
 const DemoPage = () => {
   return (
-    <div className="content flex flex-col gap-xl">
+    <div className="flex flex-col gap-xl">
+      <ModalDemo />
       <LikeButtonDemo />
       <DropdownDemo />
       <GridDemo />
       <CheckboxDemo />
       <PostCardGridDemo />
       <ImageSliderDemo />
-      <ModalDemo />
       <SubmitButtonDemo />
       <InputDemo />
       <ContentMenuDemo />
       <FadeDemo />
       <SwitchDemo />
-      <GridDemo />
     </div>
   );
 };
@@ -71,11 +66,11 @@ const ModalDemo = () => {
   return (
     <Section>
       <Text size={20}>Modal</Text>
-      <Button text="열기" handleOnClick={handleModalOpen} />
+      <Button text="열기" onClick={handleModalOpen} />
       <Modal isOpen={isModalOpen} setOpen={handleModalClose}>
         <div className="flex h-[6rem] w-[10rem] flex-col items-center justify-evenly">
           <span>모달 테스트</span>
-          <Button text="닫기" handleOnClick={handleModalClose} />
+          <Button text="닫기" onClick={handleModalClose} />
         </div>
       </Modal>
     </Section>
@@ -86,7 +81,7 @@ const SubmitButtonDemo = () => {
   return (
     <Section>
       <Text size={20}>Submit Button</Text>
-      <SubmitButton text="클릭" handleOnClick={() => alert('클릭')} />
+      <SubmitButton text="클릭" onClick={() => alert('클릭')} />
     </Section>
   );
 };
@@ -141,13 +136,13 @@ const FadeDemo = () => {
   return (
     <Section>
       <Text size={20}>Transition Fade</Text>
-      <Button text="bottom up" handleOnClick={() => setDemo1(!showDemo1)} />
+      <Button text="bottom up" onClick={() => setDemo1(!showDemo1)} />
       <div className="h-[2rem]">
         <Fade fadeIn={bottomFadeinAnimation} fadeOut={bottomFadeoutAnimation}>
           {showDemo1 && <SectionSpan text="텍스트" />}
         </Fade>
       </div>
-      <Button text="left to right" handleOnClick={() => setDemo2(!showDemo2)} />
+      <Button text="left to right" onClick={() => setDemo2(!showDemo2)} />
       <div className="h-[2rem]">
         <Fade fadeIn={leftFadeinAnimation} fadeOut={leftFadeoutAnimation}>
           {showDemo2 && <SectionSpan text="텍스트" />}
@@ -214,7 +209,7 @@ const PostCardGridDemo = () => {
               <div className="flex flex-1 flex-col">
                 <span>좋아요: {postData.likeCount}</span>
                 <span>코멘트: {postData.likeCount}</span>
-                <Button text="닫기" handleOnClick={handleModalClose} />
+                <Button text="닫기" onClick={handleModalClose} />
               </div>
             </>
           ) : (
@@ -306,13 +301,13 @@ const GridDemo = () => {
       <div className="flex gap-md">
         <Button
           text="섞기"
-          handleOnClick={() => {
+          onClick={() => {
             setItems(randomShuffleArray([...items]));
           }}
         />
         <Button
           text="처음에 추가"
-          handleOnClick={() => {
+          onClick={() => {
             const newItemId = `item-${count + 1}`;
             setItems([newItemId, ...items]);
             setCount(count + 1);
@@ -320,7 +315,7 @@ const GridDemo = () => {
         />
         <Button
           text="마지막에 추가"
-          handleOnClick={() => {
+          onClick={() => {
             const newItemId = `item-${count + 1}`;
             setItems([...items, newItemId]);
             setCount(count + 1);
@@ -328,7 +323,7 @@ const GridDemo = () => {
         />
         <Button
           text="처음 요소 삭제"
-          handleOnClick={() => {
+          onClick={() => {
             const newItems = items.slice(1);
             setItems(newItems);
           }}
@@ -403,17 +398,6 @@ const Section = ({ children }: SectionProps) => {
 
 const SectionSpan = ({ text }: SectionTitleProps) => {
   return <span className="display-regular-12">{text}</span>;
-};
-
-const Button = ({ text, handleOnClick }: ButtonProps) => {
-  return (
-    <button
-      className="display-regular-14 border-sm bg-point-yellow p-[0.25rem]"
-      onClick={handleOnClick}
-    >
-      {text}
-    </button>
-  );
 };
 
 export default DemoPage;

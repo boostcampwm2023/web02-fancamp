@@ -1,36 +1,27 @@
-import { useRef } from 'react';
 import Text from '../text/text';
 
-interface SubmitButtonProps {
-  text: string;
-  width?: number;
-  height?: number;
-  handleOnClick?: () => void;
+interface SubmitButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text?: string;
 }
 
-/**
- * @param text 버튼의 텍스트
- */
-const SubmitButton = ({ text, handleOnClick }: SubmitButtonProps) => {
-  const submitButtonRef = useRef<HTMLButtonElement>(null);
+const buttonClassName =
+  'smooth-transition h-full w-full shadow-[0_0_0_0_#111111] ' +
+  'hover:translate-x-[-0.125rem] hover:translate-y-[-0.125rem] hover:shadow-[0.25rem_0.25rem_0_0_#111111] ';
+const buttonInnerClassName =
+  'box-border flex items-center justify-center border-sm border-text-primary bg-point-lavender pb-[1rem] pt-[1rem]';
 
-  const handleMouseOver = () => {
-    if (submitButtonRef.current) {
-      submitButtonRef.current.classList.add('submit__button--animation');
-    }
-  };
-
+const SubmitButton = (props: SubmitButtonProps) => {
   return (
     <button
+      {...props}
       type="submit"
-      className="submit__button"
-      ref={submitButtonRef}
-      onClick={handleOnClick}
-      onMouseOver={handleMouseOver}
+      className={buttonClassName + (props.className || '')}
+      onClick={props.onClick}
     >
-      <div className="submit__button__content">
+      <div className={buttonInnerClassName}>
         <Text size={14} color="text-primary">
-          {text}
+          {props.text}
         </Text>
       </div>
     </button>
