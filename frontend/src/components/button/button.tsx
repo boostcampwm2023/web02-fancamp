@@ -2,16 +2,18 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text?: string;
 }
 
-const Button = (props: ButtonProps) => {
-  const className =
-    'display-regular-14 border-sm bg-point-yellow p-[0.25rem] ' +
-    (props.className || '');
+function Button(props: ButtonProps) {
+  const { text, className, ...buttonProps } = props;
+
+  const buttonClassName = `display-regular-14 border-sm bg-point-yellow p-[0.25rem] ${
+    className || ''
+  }`;
 
   return (
-    <button {...props} className={className}>
-      {props.text}
+    <button {...buttonProps} type="button" className={buttonClassName}>
+      {text}
     </button>
   );
-};
+}
 
 export default Button;

@@ -26,7 +26,7 @@ const fontColors = {
   'surface-primary': 'text-surface-primary',
 };
 
-const Text = (props: TextProps) => {
+function Text(props: TextProps) {
   const { children, size, color, ...textProps } = props;
 
   return (
@@ -38,6 +38,6 @@ const Text = (props: TextProps) => {
       {children}
     </span>
   );
-};
+}
 
 export default Text;

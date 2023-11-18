@@ -11,7 +11,7 @@ const inputBorderClassName =
   'smooth-transition mb-4 border-b-sm border-text-primary ' +
   'group-focus-within:border-b-sm group-focus-within:border-point-blue';
 
-const Input = <State,>(props: InputProps<State>) => {
+function Input<State>(props: InputProps<State>) {
   const { label, icon, setValue, ...inputProps } = props;
 
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,8 +22,8 @@ const Input = <State,>(props: InputProps<State>) => {
   };
 
   return (
-    <label className="group flex w-full flex-col">
-      {label && <span className="display-regular-14 mb-2">{label}</span>}
+    <div className="group flex w-full flex-col">
+      {label && <span className="mb-2 display-regular-14">{label}</span>}
       <div className="flex flex-row items-center">
         {icon && icon}
         <input
@@ -37,8 +37,8 @@ const Input = <State,>(props: InputProps<State>) => {
         />
       </div>
       <div className={inputBorderClassName} />
-    </label>
+    </div>
   );
-};
+}
 
 export default Input;

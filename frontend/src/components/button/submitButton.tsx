@@ -11,21 +11,22 @@ const buttonClassName =
 const buttonInnerClassName =
   'box-border flex items-center justify-center border-sm border-text-primary bg-point-lavender pb-[1rem] pt-[1rem]';
 
-const SubmitButton = (props: SubmitButtonProps) => {
+function SubmitButton(props: SubmitButtonProps) {
+  const { text, className, ...submitButtonProps } = props;
+
   return (
     <button
-      {...props}
+      {...submitButtonProps}
       type="submit"
-      className={buttonClassName + (props.className || '')}
-      onClick={props.onClick}
+      className={buttonClassName + (className || '')}
     >
       <div className={buttonInnerClassName}>
         <Text size={14} color="text-primary">
-          {props.text}
+          {text}
         </Text>
       </div>
     </button>
   );
-};
+}
 
 export default SubmitButton;

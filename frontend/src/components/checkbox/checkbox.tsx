@@ -1,24 +1,26 @@
 interface CheckboxProps {
   checked: boolean;
-  onChange: () => void;
+  onClick: () => void;
   children?: React.ReactNode;
 }
 
-const Checkbox = ({ checked, onChange, children }: CheckboxProps) => {
+function Checkbox({ checked, onClick, children }: CheckboxProps) {
   return (
-    <span
+    <button
+      type="button"
       className="flex cursor-pointer items-center gap-xs"
-      onClick={onChange}
+      onClick={onClick}
     >
       <input type="checkbox" className="sr-only" />
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         className={`relative inline-block h-[0.75rem] w-[0.75rem] border-sm border-text-primary ${
           checked ? 'bg-point-yellow' : 'bg-surface-primary'
         }`}
       />
       {children}
-    </span>
+    </button>
   );
-};
+}
 
 export default Checkbox;

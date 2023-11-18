@@ -5,7 +5,7 @@ import Text from '../text/text';
 import Image from '../image/Image';
 
 interface ImageSliderProps {
-  width: number;
+  width?: number;
   images: string[];
 }
 
@@ -13,7 +13,7 @@ const sliderControllerClassName =
   'smooth-transition absolute bottom-[0] left-[0] right-[0] top-[0] h-full ' +
   'opacity-0 group-hover:opacity-100';
 
-const ImageSlider = ({ width = 37.5, images }: ImageSliderProps) => {
+function ImageSlider({ width = 37.5, images }: ImageSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -31,32 +31,36 @@ const ImageSlider = ({ width = 37.5, images }: ImageSliderProps) => {
       ref={sliderRef}
     >
       <div
-        className="smooth-transition flex h-full w-max"
+        className="flex h-full w-max smooth-transition"
         style={{ transform: `translateX(${-imageIndex * width}rem)` }}
       >
-        {images.map((image, index) => (
+        {images.map((image) => (
           <Image
             src={image}
             className="object-cover"
-            key={`image-slider-${index}`}
+            key={`image-slider-${image}`}
             style={{ width: `${width}rem` }}
           />
         ))}
       </div>
       <div className={sliderControllerClassName}>
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button
-          className="v-center absolute left-[0] flex justify-center"
+          type="button"
+          className="absolute left-[0] flex justify-center v-center"
           onClick={() => handleImageIndex('PRE')}
         >
           <LeftArrowIcon />
         </button>
+        {/* eslint-disable-next-line jsx-a11y/control-has-associated-label */}
         <button
-          className="v-center absolute right-[0] flex justify-center"
+          type="button"
+          className="absolute right-[0] flex justify-center v-center"
           onClick={() => handleImageIndex('NEXT')}
         >
           <RightArrowIcon />
         </button>
-        <div className="h-center absolute bottom-sm flex justify-center border-sm border-text-primary bg-surface-primary p-xs">
+        <div className="absolute bottom-sm flex justify-center border-sm border-text-primary bg-surface-primary p-xs h-center">
           <Text size={12} color="text-primary">
             {imageIndex + 1}/{images.length}
           </Text>
@@ -64,6 +68,6 @@ const ImageSlider = ({ width = 37.5, images }: ImageSliderProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default ImageSlider;

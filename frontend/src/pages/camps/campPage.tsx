@@ -1,10 +1,10 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import Text from '../../components/text/text';
 import ContentMenu from '../../components/menu/contentMenu';
-import { useEffect, useState } from 'react';
 import { campCategorys } from '../../utils/constants';
 
-const CampPage = () => {
+function CampPage() {
   const categorys = campCategorys.map((category) => category.text);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const { campId } = useParams();
@@ -33,6 +33,6 @@ const CampPage = () => {
       <Outlet />
     </div>
   );
-};
+}
 
 export default CampPage;

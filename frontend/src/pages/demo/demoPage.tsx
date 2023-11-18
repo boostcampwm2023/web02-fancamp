@@ -33,7 +33,7 @@ interface SectionProps {
   children: ReactNode;
 }
 
-const DemoPage = () => {
+function DemoPage() {
   return (
     <div className="flex flex-col gap-xl">
       <ModalDemo />
@@ -50,9 +50,9 @@ const DemoPage = () => {
       <SwitchDemo />
     </div>
   );
-};
+}
 
-const ModalDemo = () => {
+function ModalDemo() {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleModalOpen = () => {
@@ -75,18 +75,18 @@ const ModalDemo = () => {
       </Modal>
     </Section>
   );
-};
+}
 
-const SubmitButtonDemo = () => {
+function SubmitButtonDemo() {
   return (
     <Section>
       <Text size={20}>Submit Button</Text>
       <SubmitButton text="클릭" onClick={() => alert('클릭')} />
     </Section>
   );
-};
+}
 
-const InputDemo = () => {
+function InputDemo() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -110,9 +110,9 @@ const InputDemo = () => {
       <SectionSpan text={password} />
     </Section>
   );
-};
+}
 
-const ContentMenuDemo = () => {
+function ContentMenuDemo() {
   const categorys = ['카테고리1', '카테고리2', '카테고리3'];
   const [index, setIndex] = useState(0);
 
@@ -127,9 +127,9 @@ const ContentMenuDemo = () => {
       <SectionSpan text={`현재 인덱스: ${index}`} />
     </Section>
   );
-};
+}
 
-const FadeDemo = () => {
+function FadeDemo() {
   const [showDemo1, setDemo1] = useState(false);
   const [showDemo2, setDemo2] = useState(false);
 
@@ -150,9 +150,9 @@ const FadeDemo = () => {
       </div>
     </Section>
   );
-};
+}
 
-const SwitchDemo = () => {
+function SwitchDemo() {
   const categorys = ['카테고리1', '카테고리2', '카테고리3'];
   const [index, setIndex] = useState(0);
   const [oldIndex, setOldIndex] = useState(0);
@@ -171,16 +171,16 @@ const SwitchDemo = () => {
         setMenuIndex={setIndex}
         categorys={categorys}
       />
-      <Switch height={100} width={300} direction={direction} dynamic={oldIndex}>
+      <Switch direction={direction} dynamic={oldIndex}>
         <div className="flex flex-col items-center justify-center">
           <SectionSpan text={`현재 인덱스: ${index}`} />
         </div>
       </Switch>
     </Section>
   );
-};
+}
 
-const PostCardGridDemo = () => {
+function PostCardGridDemo() {
   const [isModalOpen, setModalOpen] = useState(false);
   const [postData, setPostData] = useState<any>(null);
 
@@ -218,7 +218,7 @@ const PostCardGridDemo = () => {
         </div>
       </Modal>
       <PostGrid>
-        {DummyData.posts.map((post, index) => {
+        {DummyData.posts.map((post) => {
           const { postId, images, likeCount, commentCount } = post;
           return (
             <PostCard
@@ -227,17 +227,17 @@ const PostCardGridDemo = () => {
               commentCount={commentCount}
               postId={postId}
               handleOnClick={handleModalOpen}
-              key={`post-card-${index}`}
-              content={''}
+              key={`post-card-${postId}`}
+              content=""
             />
           );
         })}
       </PostGrid>
     </Section>
   );
-};
+}
 
-const ImageSliderDemo = () => {
+function ImageSliderDemo() {
   const images = [
     'https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/859DC9ADE28CE874677BAA0A7D897EB076E0A7BA38E9F460D03089E49EE8AF7F/scale?width=1200&aspectRatio=1.78&format=jpeg',
     'https://cdn.vox-cdn.com/thumbor/IQab79SuQ1PnrneGti_uy_pxTKo=/148x0:1768x1080/1280x854/cdn.vox-cdn.com/uploads/chorus_image/image/47413330/the-simpsons-tv-series-cast-wallpaper-109911.0.0.jpeg',
@@ -252,9 +252,9 @@ const ImageSliderDemo = () => {
       </div>
     </Section>
   );
-};
+}
 
-const CheckboxDemo = () => {
+function CheckboxDemo() {
   const [checked, setChecked] = useState(false);
 
   const handleCheckbox = () => {
@@ -270,16 +270,16 @@ const CheckboxDemo = () => {
     <Section>
       <Text size={20}>Checkbox</Text>
       <form action="" onSubmit={handleSubmit} className="flex flex-col gap-sm">
-        <Checkbox checked={checked} onChange={handleCheckbox}>
+        <Checkbox checked={checked} onClick={handleCheckbox}>
           <Text size={12}>체크하기</Text>
         </Checkbox>
         <SubmitButton text="확인" />
       </form>
     </Section>
   );
-};
+}
 
-const GridDemo = () => {
+function GridDemo() {
   const [items, setItems] = useState([
     'item-1',
     'item-2',
@@ -332,9 +332,9 @@ const GridDemo = () => {
       <Grid items={items} />
     </Section>
   );
-};
+}
 
-const DropdownDemo = () => {
+function DropdownDemo() {
   const [value, setValue] = useState<string | null>(null);
 
   const handleSelectDropdown = (text: string) => {
@@ -353,21 +353,21 @@ const DropdownDemo = () => {
         <div className="h-[3rem] w-[12rem]">
           <Dropdown placeholder="옵션을 선택하세요." value={value}>
             <DropdownItem
-              text={'옵션1'}
+              text="옵션1"
               handleOnClick={handleSelectDropdown}
               icon={<PasswordIcon />}
             />
-            <DropdownItem text={'옵션2'} handleOnClick={handleSelectDropdown} />
-            <DropdownItem text={'옵션3'} handleOnClick={handleSelectDropdown} />
+            <DropdownItem text="옵션2" handleOnClick={handleSelectDropdown} />
+            <DropdownItem text="옵션3" handleOnClick={handleSelectDropdown} />
           </Dropdown>
         </div>
         <SubmitButton text="확인" />
       </form>
     </Section>
   );
-};
+}
 
-const LikeButtonDemo = () => {
+function LikeButtonDemo() {
   const [like, setLike] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(12);
 
@@ -379,25 +379,25 @@ const LikeButtonDemo = () => {
   return (
     <Section>
       <Text size={20}>Like Button</Text>
-      <LikeButton liked={like} onChange={handleLike}>
+      <LikeButton liked={like} onClick={handleLike}>
         <Text size={12} classList="select-none">
           좋아요 {likeCount}
         </Text>
       </LikeButton>
     </Section>
   );
-};
+}
 
-const Section = ({ children }: SectionProps) => {
+function Section({ children }: SectionProps) {
   return (
     <section className="flex flex-col items-center gap-lg border border-text-secondary p-[2rem]">
       {children}
     </section>
   );
-};
+}
 
-const SectionSpan = ({ text }: SectionTitleProps) => {
+function SectionSpan({ text }: SectionTitleProps) {
   return <span className="display-regular-12">{text}</span>;
-};
+}
 
 export default DemoPage;
