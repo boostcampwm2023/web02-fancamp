@@ -5,7 +5,7 @@ const Root = () => {
   return (
     <main className="h-center relative flex w-[67.5rem] justify-between">
       <SideMenu />
-      <div className="content__wrapper">
+      <div className="content">
         <Outlet />
       </div>
     </main>

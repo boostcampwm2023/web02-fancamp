@@ -63,13 +63,9 @@ const Grid = ({ items }: GridProps) => {
   }, [gridRef]);
 
   useEffect(() => {
-    // if (oldItems.length < items.length) {
-    //   setOldItems(items)
-    // } else {
     setTimeout(() => {
       setOldItems(items);
     }, 200);
-    // }
   }, [items]);
 
   const cards = oldItems.map((item, index) => {

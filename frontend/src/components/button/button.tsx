@@ -1,15 +1,15 @@
-interface ButtonProps {
-  text: string;
-  handleOnClick: () => void;
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  text?: string;
 }
 
-const Button = ({ text, handleOnClick }: ButtonProps) => {
+const Button = (props: ButtonProps) => {
+  const className =
+    'display-regular-14 border-sm bg-point-yellow p-[0.25rem] ' +
+    (props.className || '');
+
   return (
-    <button
-      className="display-regular-14 border-sm bg-point-yellow p-[0.25rem]"
-      onClick={handleOnClick}
-    >
-      {text}
+    <button {...props} className={className}>
+      {props.text}
     </button>
   );
 };

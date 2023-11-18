@@ -29,6 +29,13 @@ const Fade = (props: FadeProps) => {
     }
   }, [children]);
 
+  useEffect(() => {
+    console.log('시작');
+    return () => {
+      console.log('종료');
+    };
+  }, []);
+
   return (
     <div className="relative h-full w-full" ref={fadeRef}>
       {backupChildren}

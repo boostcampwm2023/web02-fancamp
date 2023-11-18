@@ -1,14 +1,4 @@
-@import './layout.css';
 @import './fonts.css';
-@import './utils.css';
-@import '../components/modal/modal.css';
-@import '../components/button/submitButton.css';
-@import '../components/input/input.css';
-@import '../components/menu/contentMenu.css';
-@import '../components/post/postCard.css';
-@import '../components/post/postGrid.css';
-@import '../components/slider/imageSlider.css';
-@import '../components/checkbox/checkbox.css';
 
 @tailwind base;
 @tailwind components;

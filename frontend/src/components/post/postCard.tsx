@@ -10,6 +10,20 @@ interface PostCardProps {
   handleOnClick: (postId: string) => void;
 }
 
+const cardClassName =
+  'post__card group relative aspect-square h-full w-full ' +
+  'cursor-pointer overflow-hidden border-sm border-text-primary';
+const cardImageClassName =
+  'smooth-transition post__card--hover--filter aspect-square object-cover ' +
+  'group-hover:scale-[1.1] group-hover:blur-[0.125rem] group-hover:brightness-[30%]';
+const cardTextClassName =
+  'smooth-transition relative h-full w-full overflow-hidden p-xl ' +
+  'group-hover:scale-[1.1] group-hover:bg-text-primary group-hover:bg-opacity-90 group-hover:blur-[0.125rem] ' +
+  '[&>span]:text-limit-line-5 [&>span]:v-center [&>span]:relative [&>span]:leading-[1.25rem]';
+const cardHoverClassName =
+  'smooth-transition absolute top-[0] flex h-full w-full ' +
+  'flex-col items-center justify-center gap-sm opacity-0 group-hover:opacity-100';
+
 const PostCard = ({
   imageSrc,
   likeCount,
@@ -19,19 +33,15 @@ const PostCard = ({
   handleOnClick,
 }: PostCardProps) => {
   return (
-    <div className="post__card" onClick={() => handleOnClick(postId)}>
+    <div className={cardClassName} onClick={() => handleOnClick(postId)}>
       {imageSrc ? (
-        <Image
-          src={imageSrc}
-          className="post__card__image post__card--hover--filter"
-          alt=""
-        />
+        <Image src={imageSrc} className={cardImageClassName} alt="" />
       ) : (
-        <div className="post__card__content post__card--hover--filter">
+        <div className={cardTextClassName}>
           <Text color="text-secondary">{content}</Text>
         </div>
       )}
-      <div className="post__info">
+      <div className={cardHoverClassName}>
         <Text size={12} color="surface-primary">
           좋아요 {likeCount}
         </Text>

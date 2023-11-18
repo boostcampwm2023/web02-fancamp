@@ -1,44 +1,42 @@
-interface InputProps<State> {
-  type: React.HTMLInputTypeAttribute;
+interface InputProps<State>
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string;
-  placeholder?: string;
-  setValue: React.Dispatch<React.SetStateAction<State>>;
   icon?: React.ReactNode;
-  onBlur?: () => void;
+  setValue?: React.Dispatch<React.SetStateAction<State>>;
 }
 
-/**
- * @params type input 타입 지정
- * @params setValue 외부에서 상태를 관리하기 위한 setState 함수
- * @params icon 아이콘을 보낼 수 있음
- */
-const Input = <State,>({
-  type,
-  setValue,
-  label,
-  placeholder,
-  icon,
-  onBlur,
-}: InputProps<State>) => {
+const inputClassName =
+  'placeholder:display-regular-14 flex-1 bg-transparent p-sm focus:outline-none ';
+const inputBorderClassName =
+  'smooth-transition mb-4 border-b-sm border-text-primary ' +
+  'group-focus-within:border-b-sm group-focus-within:border-point-blue';
+
+const Input = <State,>(props: InputProps<State>) => {
+  const { label, icon, setValue, ...inputProps } = props;
+
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.currentTarget;
-    setValue(value as State);
+    if (setValue) {
+      const { value } = event.currentTarget;
+      setValue(value as State);
+    }
   };
 
   return (
-    <label className="input__wrapper">
+    <label className="group flex w-full flex-col">
       {label && <span className="display-regular-14 mb-2">{label}</span>}
-      <div className="input__icon_wrapper">
+      <div className="flex flex-row items-center">
         {icon && icon}
         <input
-          type={type}
-          className="input"
-          placeholder={placeholder}
+          {...inputProps}
+          className={
+            inputClassName +
+            (inputProps.type !== 'password' && 'display-regular-14 ') +
+            (inputProps.className || '')
+          }
           onChange={handleOnChange}
-          onBlur={onBlur}
         />
       </div>
-      <div className="input__border" />
+      <div className={inputBorderClassName} />
     </label>
   );
 };

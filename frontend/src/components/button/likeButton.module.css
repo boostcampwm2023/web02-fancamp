@@ -1,3 +1,0 @@
-.checkbox__input:checked + .checkbox__icon {
-  @apply fill-point-red;
-}

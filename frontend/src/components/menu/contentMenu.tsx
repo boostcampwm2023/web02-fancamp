@@ -19,10 +19,10 @@ const ContentMenu = ({
   setMenuIndex,
 }: ContentMenuProps) => {
   return (
-    <div className="menu__wrapper">
-      <div className="menu__animated__bar__wrapper">
+    <div className="flex w-full flex-col items-center border-t-sm border-contour-primary">
+      <div className="w-[15rem]">
         <div
-          className="menu__animated__bar"
+          className="smooth-transition m-[-0.065rem] h-[0.125rem] w-[5rem] bg-text-primary"
           style={{ transform: `translateX(${menuIndex * 5}rem)` }}
         />
       </div>
@@ -53,10 +53,8 @@ const ContentMenuButton = ({
 
   return (
     <button
-      className={`menu__button ${
-        menuIndex === index
-          ? 'menu__button--selected'
-          : 'menu__button--unselected'
+      className={`smooth-transition w-[5rem] ${
+        menuIndex === index ? 'text-text-primary' : 'text-text-secondary'
       }`}
       onClick={handleOnClick}
     >
