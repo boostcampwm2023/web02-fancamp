@@ -8,10 +8,11 @@ POST {{server}}/auth/user
 Content-Type: application/json
 
 {
-    "email" : "11@2233",
-    "password": "22",
-    "username": "33",
-    "profileImage": "44",
+    "email" : "master5@fancamp.com",
+    "password": "1234",
+    "chatName": "master5",
+    "publicId": "master5",
+    "profileImage": "",
     "isMaster": true
 }
 
@@ -21,8 +22,8 @@ POST {{server}}/auth/user/signin
 Content-Type: application/json
 
 {
-    "email" : "11@22",
-    "password": "string",
+    "email" : "master4@fancamp.com",
+    "password": "1234"
 }
 
 

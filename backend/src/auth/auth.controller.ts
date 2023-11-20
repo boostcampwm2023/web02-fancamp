@@ -46,7 +46,7 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     this.authService.signout(request.cookies['email']);
-    response.clearCookie('email')
-      .clearCookie('publicId');
+    response.clearCookie('publicId')
+      .clearCookie('isMaster');
   }
 }
