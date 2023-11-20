@@ -4,3 +4,10 @@
   font-weight: 400;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'TheJamsil';
+  src: url('/fonts/The Jamsil 2 Regular.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
