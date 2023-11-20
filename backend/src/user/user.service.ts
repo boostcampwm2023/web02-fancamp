@@ -7,12 +7,16 @@ import { CreateUserAuthDto } from 'src/auth/dto/create-auth.dto';
 export class UserService {
   constructor(private readonly userRepository: UserRepository) {}
 
-  findAll() {
-    return `This action returns all user`;
-  }
+  // findAll() {
+  //   return `This action returns all user`;
+  // }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  // findOne(id: number) {
+  //   return `This action returns a #${id} user`;
+  // }
+
+  findUserByPublicId(publicId: string) {
+    return this.userRepository.findUserByPublicId(publicId);
   }
 
   // update(id: number, updateUserDto: UpdateUserDto) {

@@ -2,24 +2,35 @@ import { Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ChatRepository } from './chat.repository';
+import {UserService} from '../user/user.service';
+import {CampService} from '../camp/camp.service'
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly chatRepository: ChatRepository) {}
+  constructor(private readonly chatRepository: ChatRepository, private readonly userService: UserService, private readonly campService: CampService) {}
   create(createChatDto: CreateChatDto) {
     return this.chatRepository.createChat(createChatDto);
   }
 
-  createFromSocket(message: string, sender: string, campId: string) {
-    //TODO: campID로 masterId 찾아서 저장.
+  async createFromSocket(message: string, publicId: string, campName: string) {
+    const user = await this.userService.findUserByPublicId(publicId);
+    const camp = await this.campService.findOne(campName);
     const createDto: CreateChatDto = {
       stringContent: message,
-      sender: sender,
-      masterId: campId,
+      sender: user.id.toString(),
+      masterId: camp.masterId.toString(),
       picContent: '',
     };
     return this.chatRepository.createChat(createDto);
   }
+
+
+  async getRoomName(campName: string) {
+    const camp = await this.campService.findOne(campName);
+    const roomName = camp.campId.toString();
+    return {roomName :roomName, detailRoomName:''.concat(roomName, "-detail")};
+  }
+  
   // findAll() {
   //   return `This action returns all chat`;
   // }

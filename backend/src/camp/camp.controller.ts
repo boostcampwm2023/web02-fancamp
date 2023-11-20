@@ -11,7 +11,7 @@ import { CampService } from './camp.service';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 
-@Controller('camp')
+@Controller('camps')
 export class CampController {
   constructor(private readonly campService: CampService) {}
 
@@ -25,9 +25,16 @@ export class CampController {
   //   return this.campService.findAll();
   // }
 
-  @Get(':masterId')
-  findOne(@Param('masterId') masterId: string) {
-    return this.campService.findOne(masterId);
+  @Get(':campName')
+  findOne(@Param('campName') campName: string) {
+    return this.campService.findOne(campName);
+  }
+
+  @Post('subscirbe/:campName')
+  subscribe(
+    @Param('campName') campName: string
+    ){
+    this.campService.subscribe(campName);
   }
 
   // @Patch(':id')

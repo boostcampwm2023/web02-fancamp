@@ -16,7 +16,7 @@ export class CampRepository {
     return this.campRepository.save(createCampDto);
   }
 
-  findUserByMasterId(masterId: string) {
-    return this.campRepository.findOneBy({ masterId });
-  }
+  findOneByCampName(campName: string) {
+    return this.campRepository.findOneBy({ campName });
+  } 
 }

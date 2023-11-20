@@ -4,15 +4,16 @@
 # @server = http://223.130.146.223:3000
 
 ### 회원가입 요청~
-POST {{server}}/auth/user
+POST {{server}}/auth/users
 Content-Type: application/json
 
 {
-    "email" : "11@2233",
-    "password": "22",
-    "username": "33",
-    "profileImage": "44",
-    "isMaster": true
+    "email" : "camper4@fancamp.com",
+    "password": "1234",
+    "chatName": "campe4",
+    "publicId": "camper4",
+    "profileImage": "",
+    "isMaster": false
 }
 
 
@@ -21,8 +22,8 @@ POST {{server}}/auth/user/signin
 Content-Type: application/json
 
 {
-    "email" : "11@22",
-    "password": "string",
+    "email" : "master4@fancamp.com",
+    "password": "1234"
 }
 
 

@@ -10,34 +10,43 @@ import { ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/user')
+  @Post('/users')
   // @Redirect('/index', 301) //TODO: 홈으로 가게끄
   @UsePipes(ValidationPipe)
   async create(
     @Body() createUserAuthDto: CreateUserAuthDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-     const dto = await this.authService.create(createUserAuthDto, response);
-     response.cookie('email', dto.email).status(200).json(createUserAuthDto);
+     const dto = await this.authService.create(createUserAuthDto);
+     response
+      .cookie('publicId', dto.publicId)
+      .cookie('isMaster', dto.isMaster)
+      .status(200)
+      .json(dto);
 
   }
 
-  @Post('/user/signin')
+  @Post('/users/signin')
   @UsePipes(ValidationPipe)
   async signin(
     @Body() signinUserAuthDto: SigninUserAuthDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    const dto = await this.authService.signin(signinUserAuthDto, response);
-    response.cookie('email', dto.email).status(200).json(signinUserAuthDto);
+    const dto = await this.authService.signin(signinUserAuthDto);
+    response
+      .cookie('publicId', dto.publicId)
+      .cookie('isMaster', dto.isMaster)
+      .status(200)
+      .json(dto);
   }
 
-  @Get('/user/signout')
-  async signout(
+  @Get('/users/signout')
+  signout(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    await this.authService.signout(request.cookies['email'], response);
-    response.clearCookie('email');
+    this.authService.signout(request.cookies['publicId']);
+    response.clearCookie('publicId')
+      .clearCookie('isMaster');
   }
 }
