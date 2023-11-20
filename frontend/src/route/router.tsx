@@ -5,7 +5,7 @@ import {
   createRoutesFromElements,
 } from 'react-router-dom';
 import Root from './root';
-import DemoPage from '../pages/demo/demoPage';
+import DemoPage from '../pages/demo/components/demoPage';
 import HomePage from '../pages/home/homePage';
 import SearchPage from '../pages/search/searchPage';
 import ExplorePage from '../pages/explore/explorePage';
@@ -15,8 +15,9 @@ import ChatPage from '../pages/camps/chat';
 import PostPage from '../pages/camps/post/postPage';
 import CampPage from '../pages/camps/campPage';
 import CommunityPage from '../pages/camps/community/communityPage';
+import ApiPage from '../pages/demo/api/apiPage';
 
-export const router = createBrowserRouter(
+const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/auth">
@@ -34,10 +35,12 @@ export const router = createBrowserRouter(
             <Route path="post" element={<PostPage />} />
           </Route>
         </Route>
-        <Route path="/components/demo" element={<DemoPage />} />
+        <Route path="/demo/components" element={<DemoPage />} />
+        <Route path="/demo/api/rest" element={<ApiPage />} />
+        <Route path="/demo/api/scenario" element={<ApiPage />} />
       </Route>
-    </>,
-  ),
+    </>
+  )
 );
 
 export default router;

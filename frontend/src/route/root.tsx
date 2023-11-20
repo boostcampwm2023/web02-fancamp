@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom';
 import SideMenu from '../components/menu/sideMenu';
 
-const Root = () => {
+function Root() {
   return (
-    <main className="h-center relative flex w-[67.5rem] justify-between">
+    <main className="relative flex w-[67.5rem] justify-between h-center">
       <SideMenu />
       <div className="content">
         <Outlet />
       </div>
     </main>
   );
-};
+}
 
 export default Root;
