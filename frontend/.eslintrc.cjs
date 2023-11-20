@@ -21,6 +21,7 @@ module.exports = {
       'tsx': 'never'
     }],
     'import/no-unresolved': 'off',
+    'import/no-extraneous-dependencies':'off',
     'prettier/prettier':[
       'error',
       {
@@ -39,6 +40,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'react/require-default-props': 'off',
-    'react-hooks/exhaustive-deps': 'off'
+    'react-hooks/exhaustive-deps': 'off',
+    'import/prefer-default-export': 'off'
   },
 }
