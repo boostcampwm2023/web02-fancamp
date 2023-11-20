@@ -15,7 +15,7 @@ export class AuthService {
       10,
     ); // 암호화 해주기
     const dto = await this.userRepository.createUser(createUserAuthDto);
-    this.sessions.push(dto.email);
+    this.sessions.push(dto.publicId);
     return {
       email: dto.email,
       publicId: dto.publicId,
@@ -28,7 +28,7 @@ export class AuthService {
     const user = await this.userRepository.findUserByEmail(email);
     if (user && (await bcrypt.compare(password, user.password))) {
       //TODO: 비밀번호 암호화
-      this.sessions.push(email);
+      this.sessions.push(user.publicId);
       return  {
         email: user.email,
         publicId: user.publicId,
@@ -39,8 +39,8 @@ export class AuthService {
     }
   }
 
-  signout(email: string) {
-    const index = this.sessions.indexOf(email);
+  signout(publicId: string) {
+    const index = this.sessions.indexOf(publicId);
     if (index > -1) {
       this.sessions.splice(index, 1);
     }

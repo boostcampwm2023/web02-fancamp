@@ -10,7 +10,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/user')
+  @Post('/users')
   // @Redirect('/index', 301) //TODO: 홈으로 가게끄
   @UsePipes(ValidationPipe)
   async create(
@@ -26,7 +26,7 @@ export class AuthController {
 
   }
 
-  @Post('/user/signin')
+  @Post('/users/signin')
   @UsePipes(ValidationPipe)
   async signin(
     @Body() signinUserAuthDto: SigninUserAuthDto,
@@ -40,12 +40,12 @@ export class AuthController {
       .json(dto);
   }
 
-  @Get('/user/signout')
+  @Get('/users/signout')
   signout(
     @Req() request: Request,
     @Res({ passthrough: true }) response: Response,
   ) {
-    this.authService.signout(request.cookies['email']);
+    this.authService.signout(request.cookies['publicId']);
     response.clearCookie('publicId')
       .clearCookie('isMaster');
   }
