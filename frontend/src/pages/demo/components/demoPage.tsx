@@ -1,47 +1,36 @@
-import { FormEvent, ReactNode, useEffect, useState } from 'react';
-import SubmitButton from '../../components/button/submitButton';
-import Input from '../../components/input/input';
-import PasswordIcon from '../../assets/icons/passwordIcon.svg?react';
-import ContentMenu from '../../components/menu/contentMenu';
-import Fade from '../../components/transition/fade';
+import { FormEvent, useEffect, useState } from 'react';
+import SubmitButton from '../../../components/button/submitButton';
+import Input from '../../../components/input/input';
+import PasswordIcon from '../../../assets/icons/passwordIcon.svg?react';
+import ContentMenu from '../../../components/menu/contentMenu';
+import Fade from '../../../components/transition/fade';
 import {
   bottomFadeinAnimation,
   bottomFadeoutAnimation,
   leftFadeinAnimation,
   leftFadeoutAnimation,
-} from '../../components/transition/animation';
-import Switch from '../../components/transition/switch';
-import ImageSlider from '../../components/slider/imageSlider';
-import Text from '../../components/text/text';
-import PostGrid from '../../components/post/postGrid';
-import PostCard from '../../components/post/postCard';
-import Checkbox from '../../components/checkbox/checkbox';
-import DummyData from './dummyData.json';
-import { getPostById } from './dummyApi';
-import Grid from '../../components/grid/grid';
-import Dropdown from '../../components/dropdown/dropdown';
-import DropdownItem from '../../components/dropdown/dropdownItem';
-import Modal from '../../components/modal/modal';
-import LikeButton from '../../components/button/likeButton';
-import Button from '../../components/button/button';
-
-interface SectionTitleProps {
-  text: string;
-}
-
-interface SectionProps {
-  children: ReactNode;
-}
+} from '../../../components/transition/animation';
+import Switch from '../../../components/transition/switch';
+import ImageSlider from '../../../components/slider/imageSlider';
+import Text from '../../../components/text/text';
+import Checkbox from '../../../components/checkbox/checkbox';
+import Grid from '../../../components/grid/grid';
+import Dropdown from '../../../components/dropdown/dropdown';
+import DropdownItem from '../../../components/dropdown/dropdownItem';
+import Modal from '../../../components/modal/modal';
+import LikeButton from '../../../components/button/likeButton';
+import Button from '../../../components/button/button';
+import Section from '../../../components/section/section';
 
 function DemoPage() {
   return (
-    <div className="flex flex-col gap-xl">
+    <div className=" flex flex-col gap-xl">
       <ModalDemo />
       <LikeButtonDemo />
       <DropdownDemo />
       <GridDemo />
       <CheckboxDemo />
-      <PostCardGridDemo />
+      {/* <PostCardGridDemo /> */}
       <ImageSliderDemo />
       <SubmitButtonDemo />
       <InputDemo />
@@ -106,8 +95,8 @@ function InputDemo() {
         icon={<PasswordIcon />}
         placeholder="비밀번호"
       />
-      <SectionSpan text={email} />
-      <SectionSpan text={password} />
+      <Text size={12}>{email}</Text>
+      <Text size={12}>{password}</Text>
     </Section>
   );
 }
@@ -124,7 +113,7 @@ function ContentMenuDemo() {
         setMenuIndex={setIndex}
         categorys={categorys}
       />
-      <SectionSpan text={`현재 인덱스: ${index}`} />
+      <Text size={12}>현재 인덱스: ${index}</Text>
     </Section>
   );
 }
@@ -139,13 +128,13 @@ function FadeDemo() {
       <Button text="bottom up" onClick={() => setDemo1(!showDemo1)} />
       <div className="h-[2rem]">
         <Fade fadeIn={bottomFadeinAnimation} fadeOut={bottomFadeoutAnimation}>
-          {showDemo1 && <SectionSpan text="텍스트" />}
+          {showDemo1 && <Text size={12}>텍스트</Text>}
         </Fade>
       </div>
       <Button text="left to right" onClick={() => setDemo2(!showDemo2)} />
       <div className="h-[2rem]">
         <Fade fadeIn={leftFadeinAnimation} fadeOut={leftFadeoutAnimation}>
-          {showDemo2 && <SectionSpan text="텍스트" />}
+          {showDemo2 && <Text size={12}>텍스트</Text>}
         </Fade>
       </div>
     </Section>
@@ -173,69 +162,77 @@ function SwitchDemo() {
       />
       <Switch direction={direction} dynamic={oldIndex}>
         <div className="flex flex-col items-center justify-center">
-          <SectionSpan text={`현재 인덱스: ${index}`} />
+          <Text size={12}>현재 인덱스: ${index}</Text>
         </div>
       </Switch>
     </Section>
   );
 }
 
-function PostCardGridDemo() {
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [postData, setPostData] = useState<any>(null);
+// function PostCardGridDemo() {
+//   const [isModalOpen, setModalOpen] = useState(false);
+//   const [post, setPost] = useState<Post | null>(null);
+//   const [posts, setPosts] = useState<Post[]>([]);
 
-  const handleModalOpen = (postId: string) => {
-    getPostById(postId).then((post) => {
-      setPostData(post);
-    });
-    setModalOpen(true);
-  };
+//   useEffect(() => {
+//     fetch(`/api/posts/camp/${test.userId}`).then((postsData) => {
+//       setPosts(postsData);
+//     });
+//     setModalOpen(true);
+//   }, []);
 
-  const handleModalClose = () => {
-    setPostData(null);
-    setModalOpen(false);
-  };
+//   const handleModalOpen = (postId: string) => {
+//     fetch(`/api/posts/${postId}`).then((postData) => {
+//       setPost(postData);
+//     });
+//     setModalOpen(true);
+//   };
 
-  return (
-    <Section>
-      <Text size={20}>Post Card</Text>
-      <Modal isOpen={isModalOpen} setOpen={handleModalClose}>
-        <div className="flex">
-          {postData ? (
-            <>
-              <div className="h-[31.25rem] w-[37.5rem]">
-                <ImageSlider images={postData.images} />
-              </div>
-              <div className="flex flex-1 flex-col">
-                <span>좋아요: {postData.likeCount}</span>
-                <span>코멘트: {postData.likeCount}</span>
-                <Button text="닫기" onClick={handleModalClose} />
-              </div>
-            </>
-          ) : (
-            <div>로딩중</div>
-          )}
-        </div>
-      </Modal>
-      <PostGrid>
-        {DummyData.posts.map((post) => {
-          const { postId, images, likeCount, commentCount } = post;
-          return (
-            <PostCard
-              imageSrc={images[0]}
-              likeCount={likeCount}
-              commentCount={commentCount}
-              postId={postId}
-              handleOnClick={handleModalOpen}
-              key={`post-card-${postId}`}
-              content=""
-            />
-          );
-        })}
-      </PostGrid>
-    </Section>
-  );
-}
+//   const handleModalClose = () => {
+//     setPostData(null);
+//     setModalOpen(false);
+//   };
+
+//   return (
+//     <Section>
+//       <Text size={20}>Post Card</Text>
+//       <Modal isOpen={isModalOpen} setOpen={handleModalClose}>
+//         <div className="flex">
+//           {postData ? (
+//             <>
+//               <div className="h-[31.25rem] w-[37.5rem]">
+//                 <ImageSlider images={postData.images} />
+//               </div>
+//               <div className="flex flex-1 flex-col">
+//                 <span>좋아요: {postData.likeCount}</span>
+//                 <span>코멘트: {postData.likeCount}</span>
+//                 <Button text="닫기" onClick={handleModalClose} />
+//               </div>
+//             </>
+//           ) : (
+//             <div>로딩중</div>
+//           )}
+//         </div>
+//       </Modal>
+//       <PostGrid>
+//         {DummyData.posts.map((post) => {
+//           const { postId, images, likeCount, commentCount } = post;
+//           return (
+//             <PostCard
+//               imageSrc={images[0]}
+//               likeCount={likeCount}
+//               commentCount={commentCount}
+//               postId={postId}
+//               handleOnClick={handleModalOpen}
+//               key={`post-card-${postId}`}
+//               content=""
+//             />
+//           );
+//         })}
+//       </PostGrid>
+//     </Section>
+//   );
+// }
 
 function ImageSliderDemo() {
   const images = [
@@ -386,18 +383,6 @@ function LikeButtonDemo() {
       </LikeButton>
     </Section>
   );
-}
-
-function Section({ children }: SectionProps) {
-  return (
-    <section className="flex flex-col items-center gap-lg border border-text-secondary p-[2rem]">
-      {children}
-    </section>
-  );
-}
-
-function SectionSpan({ text }: SectionTitleProps) {
-  return <span className="display-regular-12">{text}</span>;
 }
 
 export default DemoPage;

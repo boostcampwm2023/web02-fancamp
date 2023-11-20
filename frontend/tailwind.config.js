@@ -41,7 +41,12 @@ export default {
     },
   },
   plugins: [
-    ({ addComponents, addUtilities }) => {
+    ({ addBase, addComponents, addUtilities }) => {
+      addBase({
+        'body': {
+          '@apply overflow-y-scroll': {},
+        },
+      });
       addComponents({
         '.content': {
           '@apply w-[55rem] pl-[5.3125rem] pr-[5.3125rem] pt-2xl pb-2xl': {},
