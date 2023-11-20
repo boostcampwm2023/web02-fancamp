@@ -8,8 +8,8 @@ POST {{server}}/camps
 Content-Type: application/json
 
 {
-    "campName" : "camp1",
-    "masterId": "2",
+    "campName" : "camp3",
+    "masterId": "5",
     "bannerImage": "33"
 }
 

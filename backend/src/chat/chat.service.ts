@@ -24,6 +24,13 @@ export class ChatService {
     return this.chatRepository.createChat(createDto);
   }
 
+
+  async getRoomName(campName: string) {
+    const camp = await this.campService.findOne(campName);
+    const roomName = camp.campId.toString();
+    return {roomName :roomName, detailRoomName:''.concat(roomName, "-detail")};
+  }
+  
   // findAll() {
   //   return `This action returns all chat`;
   // }

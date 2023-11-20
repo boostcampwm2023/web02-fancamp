@@ -13,41 +13,44 @@ export class ChatGateway {
   @WebSocketServer() server: Server;
 
   @SubscribeMessage('camperIn')
-  handleCamperIn(socket: Socket, data: any): void {
+  async handleCamperIn(socket: Socket, data: any): Promise<void> {
     console.log(
       `캠퍼인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { publicId, campName } = data;
-    //TODO: camp 테이블에서 campId 값 가져와서 룸 이름으로 사용
-    socket.join(campName);
+    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    socket.join(roomName);
   }
 
   @SubscribeMessage('masterIn')
-  handleMasterIn(socket: Socket, data: any): void {
+  async handleMasterIn(socket: Socket, data: any): Promise<void> {
     console.log(
       `마스터인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { publicId, campName } = data;
-    socket.join([campName, `${campName}-detail`]);
+    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    socket.join([roomName, detailRoomName]);
   }
 
   @SubscribeMessage('camperMessage')
-  handleCamperMessage(socket: Socket, data: any): void {
+  async handleCamperMessage(socket: Socket, data: any): Promise<void> {
     console.log(
       `캠퍼메세지 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
     this.chatService.createFromSocket(message, publicId, campName);
-    socket.to(`${campName}-detail`).emit('message', message);
+    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    socket.to(detailRoomName).emit('message', message);
   }
 
   @SubscribeMessage('masterMessage')
-  handleMasterMessage(socket: Socket, data: any): void {
+  async handleMasterMessage(socket: Socket, data: any): Promise<void> {
     console.log(
       `마스터메세지- socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
     this.chatService.createFromSocket(message, publicId, campName);
-    socket.broadcast.to(campName).emit('message', message);
+    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    socket.broadcast.to(roomName).emit('message', message);
   }
 }
