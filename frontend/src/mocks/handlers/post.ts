@@ -16,4 +16,15 @@ export const handlers = [
     const post = Post.find((p) => p.postId === postId);
     return HttpResponse.json(post);
   }),
+  // 특정 Post 좋아요 기능
+  http.put('/api/posts/:postId/like', async ({ request, params }) => {
+    // await delay(1000);
+    const { postId } = params;
+    const postIndex = Post.findIndex((p) => p.postId === postId);
+    const reqestBody = await request.json();
+    // @ts-ignore
+    const { like } = reqestBody;
+    Post[postIndex].likeCount += like ? 1 : -1;
+    return HttpResponse.json({ likeCount: Post[postIndex].likeCount });
+  }),
 ];
