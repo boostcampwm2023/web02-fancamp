@@ -23,6 +23,7 @@ const fontColors = {
   'point-yellow': 'text-point-yellow',
   'point-blue': 'text-point-blue',
   'point-lavender': 'text-point-lavender',
+  'point-red': 'text-point-red',
   'surface-primary': 'text-surface-primary',
 };
 
