@@ -8,7 +8,7 @@ interface DropdownProps {
   value: string | null;
 }
 
-const Dropdown = ({ children, placeholder, value }: DropdownProps) => {
+function Dropdown({ children, placeholder, value }: DropdownProps) {
   const [showDropdown, setDropdown] = useState(false);
 
   useEffect(() => {
@@ -45,6 +45,6 @@ const Dropdown = ({ children, placeholder, value }: DropdownProps) => {
       )}
     </div>
   );
-};
+}
 
 export default Dropdown;

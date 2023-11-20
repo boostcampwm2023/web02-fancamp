@@ -7,7 +7,7 @@ interface FadeProps {
   fadeOut: AnimationObject;
 }
 
-const Fade = (props: FadeProps) => {
+function Fade(props: FadeProps) {
   const { children, fadeIn, fadeOut } = props;
 
   const [backupChildren, setBackupChildren] = useState<React.ReactNode>(null);
@@ -29,18 +29,11 @@ const Fade = (props: FadeProps) => {
     }
   }, [children]);
 
-  useEffect(() => {
-    console.log('시작');
-    return () => {
-      console.log('종료');
-    };
-  }, []);
-
   return (
     <div className="relative h-full w-full" ref={fadeRef}>
       {backupChildren}
     </div>
   );
-};
+}
 
 export default Fade;

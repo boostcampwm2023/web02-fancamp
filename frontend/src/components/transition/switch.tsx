@@ -12,21 +12,17 @@ import {
 
 interface TransitionProps {
   children: React.ReactNode;
-  width: number;
-  height: number;
   classList?: string;
   direction?: 'right' | 'left' | 'bottom' | 'top';
   dynamic?: any;
 }
 
-const Switch = ({
+function Switch({
   children,
-  width,
-  height,
   classList = '',
   direction = 'right',
   dynamic,
-}: TransitionProps) => {
+}: TransitionProps) {
   const [currIndex, setCurrIndex] = useState<number>(0);
   const [children1, setChildren1] = useState<React.ReactNode>(null);
   const [children2, setChildren2] = useState<React.ReactNode>(null);
@@ -39,24 +35,16 @@ const Switch = ({
       setChildren1(children);
       if (ref1.current && ref2.current) {
         if (direction === 'right') {
-          // @ts-ignore
           ref1.current.animate(...rightFadeinAnimation);
-          // @ts-ignore
           ref2.current.animate(...rightFadeoutAnimation);
         } else if (direction === 'left') {
-          // @ts-ignore
           ref1.current.animate(...leftFadeinAnimation);
-          // @ts-ignore
           ref2.current.animate(...leftFadeoutAnimation);
         } else if (direction === 'bottom') {
-          // @ts-ignore
           ref1.current.animate(...bottomFadeinAnimation);
-          // @ts-ignore
           ref2.current.animate(...bottomFadeoutAnimation);
         } else if (direction === 'top') {
-          // @ts-ignore
           ref1.current.animate(...topFadeinAnimation);
-          // @ts-ignore
           ref2.current.animate(...topFadeoutAnimation);
         }
         ref2.current.addEventListener('animationend', () => {
@@ -68,24 +56,16 @@ const Switch = ({
       setChildren2(children);
       if (ref1.current && ref2.current) {
         if (direction === 'right') {
-          // @ts-ignore
           ref1.current.animate(...rightFadeoutAnimation);
-          // @ts-ignore
           ref2.current.animate(...rightFadeinAnimation);
         } else if (direction === 'left') {
-          // @ts-ignore
           ref1.current.animate(...leftFadeoutAnimation);
-          // @ts-ignore
           ref2.current.animate(...leftFadeinAnimation);
         } else if (direction === 'bottom') {
-          // @ts-ignore
           ref1.current.animate(...bottomFadeoutAnimation);
-          // @ts-ignore
           ref2.current.animate(...bottomFadeinAnimation);
         } else if (direction === 'top') {
-          // @ts-ignore
           ref1.current.animate(...topFadeoutAnimation);
-          // @ts-ignore
           ref2.current.animate(...topFadeinAnimation);
         }
         ref1.current.addEventListener('animationend', () => {
@@ -96,15 +76,15 @@ const Switch = ({
   }, [dynamic || children]);
 
   return (
-    <div className={`relative ${classList}`} style={{ width, height }}>
-      <div ref={ref1} className={`absolute`} style={{ width, height }}>
+    <div className={`flex flex-row flex-nowrap ${classList}`}>
+      <div ref={ref1} className="border-box w-[100%] flex-none">
         {children1}
       </div>
-      <div ref={ref2} className={`absolute`} style={{ width, height }}>
+      <div ref={ref2} className="border-box ml-[-100%] w-[100%] flex-none">
         {children2}
       </div>
     </div>
   );
-};
+}
 
 export default Switch;

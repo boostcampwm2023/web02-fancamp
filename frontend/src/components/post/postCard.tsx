@@ -24,16 +24,20 @@ const cardHoverClassName =
   'smooth-transition absolute top-[0] flex h-full w-full ' +
   'flex-col items-center justify-center gap-sm opacity-0 group-hover:opacity-100';
 
-const PostCard = ({
+function PostCard({
   imageSrc,
   likeCount,
   commentCount,
   postId,
   content,
   handleOnClick,
-}: PostCardProps) => {
+}: PostCardProps) {
   return (
-    <div className={cardClassName} onClick={() => handleOnClick(postId)}>
+    <button
+      type="button"
+      className={cardClassName}
+      onClick={() => handleOnClick(postId)}
+    >
       {imageSrc ? (
         <Image src={imageSrc} className={cardImageClassName} alt="" />
       ) : (
@@ -49,8 +53,8 @@ const PostCard = ({
           코멘트 {commentCount}
         </Text>
       </div>
-    </div>
+    </button>
   );
-};
+}
 
 export default PostCard;

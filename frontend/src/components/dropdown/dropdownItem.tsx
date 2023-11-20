@@ -6,9 +6,10 @@ interface DropdownItemProps {
   handleOnClick: (text: string) => void;
 }
 
-const DropdownItem = ({ text, icon, handleOnClick }: DropdownItemProps) => {
+function DropdownItem({ text, icon, handleOnClick }: DropdownItemProps) {
   return (
-    <li
+    <button
+      type="button"
       className="flex h-[2rem] cursor-pointer items-center gap-sm bg-surface-primary pb-xs pl-md pr-md pt-xs hover:bg-point-lavender"
       onClick={() => handleOnClick(text)}
     >
@@ -16,8 +17,8 @@ const DropdownItem = ({ text, icon, handleOnClick }: DropdownItemProps) => {
       <Text size={14} color="text-primary">
         {text}
       </Text>
-    </li>
+    </button>
   );
-};
+}
 
 export default DropdownItem;

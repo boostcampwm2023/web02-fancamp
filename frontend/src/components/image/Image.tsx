@@ -2,7 +2,9 @@ import React from 'react';
 
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
 
-const Image = (props: ImageProps) => {
+function Image(props: ImageProps) {
+  const { className, ...imageProps } = props;
+
   const handleImageLoaded = ({
     currentTarget,
   }: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -12,11 +14,12 @@ const Image = (props: ImageProps) => {
 
   return (
     <img
-      {...props}
-      className={`opacity-0 ${props.className || ''}`}
+      {...imageProps}
+      className={`opacity-0 ${className || ''}`}
       onLoad={handleImageLoaded}
+      alt=""
     />
   );
-};
+}
 
 export default Image;

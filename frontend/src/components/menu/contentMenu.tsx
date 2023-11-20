@@ -13,16 +13,12 @@ interface ContentMenuButtonProps {
   setIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const ContentMenu = ({
-  categorys,
-  menuIndex,
-  setMenuIndex,
-}: ContentMenuProps) => {
+function ContentMenu({ categorys, menuIndex, setMenuIndex }: ContentMenuProps) {
   return (
     <div className="flex w-full flex-col items-center border-t-sm border-contour-primary">
       <div className="w-[15rem]">
         <div
-          className="smooth-transition m-[-0.065rem] h-[0.125rem] w-[5rem] bg-text-primary"
+          className="m-[-0.065rem] h-[0.125rem] w-[5rem] bg-text-primary smooth-transition"
           style={{ transform: `translateX(${menuIndex * 5}rem)` }}
         />
       </div>
@@ -33,27 +29,28 @@ const ContentMenu = ({
             index={index}
             menuIndex={menuIndex}
             setIndex={setMenuIndex}
-            key={`category-menu-${index}`}
+            key={`category-menu-${category}`}
           />
         ))}
       </div>
     </div>
   );
-};
+}
 
-const ContentMenuButton = ({
+function ContentMenuButton({
   text,
   menuIndex,
   index,
   setIndex,
-}: ContentMenuButtonProps) => {
+}: ContentMenuButtonProps) {
   const handleOnClick = () => {
     setIndex(index);
   };
 
   return (
     <button
-      className={`smooth-transition w-[5rem] ${
+      type="button"
+      className={`w-[5rem] smooth-transition ${
         menuIndex === index ? 'text-text-primary' : 'text-text-secondary'
       }`}
       onClick={handleOnClick}
@@ -63,6 +60,6 @@ const ContentMenuButton = ({
       </Text>
     </button>
   );
-};
+}
 
 export default ContentMenu;

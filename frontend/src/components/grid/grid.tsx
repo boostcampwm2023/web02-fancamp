@@ -9,7 +9,7 @@ interface GridProps {
 const calcNewIndex = (
   currentIndex: number,
   targetIndex: number,
-  columns: number,
+  columns: number
 ) => {
   const currentRow = Math.floor(currentIndex / columns);
   const currentCol = currentIndex % columns;
@@ -25,14 +25,14 @@ const calcNewPosition = (
   yIndex: number,
   width: number,
   height: number,
-  gap: number,
+  gap: number
 ) => {
   const x = xIndex * (width + gap);
   const y = yIndex * (height + gap);
   return [x, y];
 };
 
-const Grid = ({ items }: GridProps) => {
+function Grid({ items }: GridProps) {
   const [oldItems, setOldItems] = useState(items);
   const [itemWidth, setItemWidth] = useState(0);
   const [itemHeight, setItemHeight] = useState(0);
@@ -43,10 +43,10 @@ const Grid = ({ items }: GridProps) => {
   useEffect(() => {
     if (gridRef.current) {
       setItemWidth(
-        pxToRem(gridRef.current.firstElementChild?.clientWidth || 0),
+        pxToRem(gridRef.current.firstElementChild?.clientWidth || 0)
       );
       setItemHeight(
-        pxToRem(gridRef.current.firstElementChild?.clientHeight || 0),
+        pxToRem(gridRef.current.firstElementChild?.clientHeight || 0)
       );
       const gridComputedStyle = window.getComputedStyle(gridRef.current);
       const gridColumnCount = gridComputedStyle
@@ -55,8 +55,8 @@ const Grid = ({ items }: GridProps) => {
       setColumn(gridColumnCount);
       const gridColumnGap = pxToRem(
         Number(
-          gridComputedStyle.getPropertyValue('column-gap').replace('px', ''),
-        ),
+          gridComputedStyle.getPropertyValue('column-gap').replace('px', '')
+        )
       );
       setGap(gridColumnGap);
     }
@@ -70,8 +70,8 @@ const Grid = ({ items }: GridProps) => {
 
   const cards = oldItems.map((item, index) => {
     const newIndex = items.findIndex((id) => id === item);
-    let x = 0,
-      y = 0;
+    let x = 0;
+    let y = 0;
     if (index !== newIndex && newIndex !== -1) {
       const [xIndex, yIndex] = calcNewIndex(index, newIndex, column);
       const calcedPosition = calcNewPosition(
@@ -79,13 +79,12 @@ const Grid = ({ items }: GridProps) => {
         yIndex,
         itemWidth,
         itemHeight,
-        gap,
+        gap
       );
-      x = calcedPosition[0];
-      y = calcedPosition[1];
+      [x, y] = calcedPosition;
     }
 
-    return <Card text={item} key={`grid-card-${index}`} x={x} y={y} />;
+    return <Card text={item} key={`grid-card-${item}`} x={x} y={y} />;
   });
 
   return (
@@ -93,9 +92,9 @@ const Grid = ({ items }: GridProps) => {
       {cards}
     </div>
   );
-};
+}
 
-const Card = ({ text, x, y }: { text: string; x: number; y: number }) => {
+function Card({ text, x, y }: { text: string; x: number; y: number }) {
   return (
     <div
       className={`flex h-[6rem] w-[6rem] items-center justify-center border-md border-text-primary bg-point-yellow ${
@@ -106,6 +105,6 @@ const Card = ({ text, x, y }: { text: string; x: number; y: number }) => {
       <Text size={14}> {text}</Text>
     </div>
   );
-};
+}
 
 export default Grid;
