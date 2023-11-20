@@ -23,7 +23,7 @@ function CampPage() {
   }, [categoryIndex]);
 
   return (
-    <div className="flex flex-col gap-md">
+    <div className="flex min-h-full flex-col gap-md">
       <CampInfo />
       <ContentMenu
         menuIndex={categoryIndex}
