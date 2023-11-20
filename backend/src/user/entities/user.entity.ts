@@ -11,8 +11,11 @@ export class User {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
-  @Column({ type: 'varchar', nullable: false })
-  username: string;
+  @Column({ type: 'varchar', nullable: true })
+  chatName: string = "";
+
+  @Column({ type: 'varchar', nullable: false, unique: true })
+  publicId: string;
 
   @Column({ type: 'varchar', nullable: false })
   profileImage: string;

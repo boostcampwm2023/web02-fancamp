@@ -13,7 +13,11 @@ export class CreateUserAuthDto {
 
     @IsString()
     @ApiProperty()
-    username: string
+    chatName: string
+
+    @IsString()
+    @ApiProperty()
+    publicId: string
 
     @IsString()
     @ApiProperty()
