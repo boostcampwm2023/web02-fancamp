@@ -18,7 +18,8 @@ export class ChatGateway {
       `캠퍼인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { publicId, campName } = data;
-    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    const { roomName, detailRoomName } =
+      await this.chatService.getRoomName(campName);
     socket.join(roomName);
   }
 
@@ -28,7 +29,8 @@ export class ChatGateway {
       `마스터인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { publicId, campName } = data;
-    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    const { roomName, detailRoomName } =
+      await this.chatService.getRoomName(campName);
     socket.join([roomName, detailRoomName]);
   }
 
@@ -39,7 +41,8 @@ export class ChatGateway {
     );
     const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
     this.chatService.createFromSocket(message, publicId, campName);
-    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    const { roomName, detailRoomName } =
+      await this.chatService.getRoomName(campName);
     socket.to(detailRoomName).emit('message', message);
   }
 
@@ -50,7 +53,24 @@ export class ChatGateway {
     );
     const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
     this.chatService.createFromSocket(message, publicId, campName);
-    const {roomName, detailRoomName} = await this.chatService.getRoomName(campName);
+    const { roomName, detailRoomName } =
+      await this.chatService.getRoomName(campName);
     socket.broadcast.to(roomName).emit('message', message);
+  }
+
+  @SubscribeMessage('camperOut')
+  handleCamperOut(socket: Socket, data: any): void {
+    console.log(
+      `캠퍼아웃 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
+    );
+    socket.disconnect();
+  }
+
+  @SubscribeMessage('masterOut')
+  handleMasterOut(socket: Socket, data: any): void {
+    console.log(
+      `마스터아웃 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
+    );
+    socket.disconnect();
   }
 }
