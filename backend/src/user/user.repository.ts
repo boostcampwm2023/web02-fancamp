@@ -18,4 +18,8 @@ export class UserRepository {
   findUserByEmail(email: string) {
     return this.usersRepository.findOneBy({ email });
   }
+
+  findUserByPublicId(publicId: string) {
+    return this.usersRepository.findOneBy({ publicId });
+  }
 }

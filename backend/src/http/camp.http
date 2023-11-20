@@ -4,12 +4,12 @@
 # @server = http://223.130.146.223:3000
 
 ### 회원가입 요청~
-POST {{server}}/camp
+POST {{server}}/camps
 Content-Type: application/json
 
 {
-    "campName" : "11@2233",
-    "masterId": "22",
+    "campName" : "camp1",
+    "masterId": "2",
     "bannerImage": "33"
 }
 

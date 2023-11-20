@@ -31,14 +31,14 @@
   <script>
     let chatSocket;
 
-    const userId = prompt('접속하는 ID 입력해주세요');
-    const campId = prompt('들어갈 캠프 ID 입력해주세요.');
+    const publicId = prompt('접속하는 publicId 입력해주세요');
+    const campName = prompt('들어갈 campName 입력해주세요.');
     //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
     function sendMessageCamper() {
       console.log('캠퍼 메세지 전송시작');
       const message = $('#message').val();
       $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
-      chatSocket.emit('camperMessage', { message, userId, campId }); //메시지 보낼 때 닉네임도 같이 전송
+      chatSocket.emit('camperMessage', { message, publicId, campName }); //메시지 보낼 때 닉네임도 같이 전송
     }
 
     //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
@@ -46,13 +46,13 @@
       console.log('마스터 메세지 전송시작');
       const message = $('#message').val();
       $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
-      chatSocket.emit('masterMessage', { message, userId, campId }); //메시지 보낼 때 닉네임도 같이 전송
+      chatSocket.emit('masterMessage', { message, publicId, campName }); //메시지 보낼 때 닉네임도 같이 전송
     }
 
     function inRoomMaster() {
       console.log('마스터 방 들어가기 시작');
       chatSocket = io('http://localhost:3000/chat');
-      chatSocket.emit('masterIn', { userId, campId });
+      chatSocket.emit('masterIn', { publicId, campName });
 
       chatSocket.on('message', (message) => {
         $('#chat').append(`<div>${message}</div>`);
@@ -66,7 +66,7 @@
     function inRoomCamper() {
       console.log('캠퍼 방 들어가기 시작');
       chatSocket = io('http://localhost:3000/chat');
-      chatSocket.emit('camperIn', { userId, campId });
+      chatSocket.emit('camperIn', { publicId, campName });
 
       chatSocket.on('message', (message) => {
         $('#chat').append(`<div>${message}</div>`);
@@ -78,11 +78,11 @@
     }
 
     function outRoomMaster() {
-      chatSocket.emit('masterOut', { userId });
+      chatSocket.emit('masterOut', { publicId });
     }
 
     function outRoomCamper() {
-      chatSocket.emit('camperOut', { userId, campId });
+      chatSocket.emit('camperOut', { publicId, campName });
     }
   </script>
 </html>

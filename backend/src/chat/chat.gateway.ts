@@ -4,11 +4,11 @@ import {
   WebSocketServer,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
-// import { ChatService } from './chat.service';
+import { ChatService } from './chat.service';
 
 @WebSocketGateway({ namespace: 'chat' })
 export class ChatGateway {
-  // constructor(private readonly chatService: ChatService) {}
+  constructor(private readonly chatService: ChatService) {}
 
   @WebSocketServer() server: Server;
 
@@ -17,8 +17,9 @@ export class ChatGateway {
     console.log(
       `캠퍼인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
-    const { userId, campId } = data;
-    socket.join(campId);
+    const { publicId, campName } = data;
+    //TODO: camp 테이블에서 campId 값 가져와서 룸 이름으로 사용
+    socket.join(campName);
   }
 
   @SubscribeMessage('masterIn')
@@ -26,8 +27,8 @@ export class ChatGateway {
     console.log(
       `마스터인 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
-    const { userId, campId } = data;
-    socket.join([campId, `${campId}-detail`]);
+    const { publicId, campName } = data;
+    socket.join([campName, `${campName}-detail`]);
   }
 
   @SubscribeMessage('camperMessage')
@@ -35,9 +36,9 @@ export class ChatGateway {
     console.log(
       `캠퍼메세지 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
-    const { message, camperId, campId } = data; //TODO: 받아오는것도 DTO로.
-    // this.chatService.createFromSocket(message, camperId, campId);
-    socket.to(`${campId}-detail`).emit('message', message);
+    const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
+    this.chatService.createFromSocket(message, publicId, campName);
+    socket.to(`${campName}-detail`).emit('message', message);
   }
 
   @SubscribeMessage('masterMessage')
@@ -45,8 +46,8 @@ export class ChatGateway {
     console.log(
       `마스터메세지- socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
-    const { message, masterId, campId } = data; //TODO: 받아오는것도 DTO로.
-    // this.chatService.createFromSocket(message, masterId, campId);
-    socket.broadcast.to(campId).emit('message', message);
+    const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
+    this.chatService.createFromSocket(message, publicId, campName);
+    socket.broadcast.to(campName).emit('message', message);
   }
 }

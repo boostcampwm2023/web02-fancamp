@@ -5,6 +5,7 @@ import { CampRepository } from './camp.repository';
 
 @Injectable()
 export class CampService {
+  
   constructor(private readonly campRepository: CampRepository) {}
   create(createCampDto: CreateCampDto) {
     return this.campRepository.createCamp(createCampDto);
@@ -14,8 +15,12 @@ export class CampService {
   //   return `This action returns all camp`;
   // }
 
-  findOne(masterId: string) {
-    return this.campRepository.findUserByMasterId(masterId);
+  findOne(campName: string) {
+    return this.campRepository.findOneByCampName(campName);
+  }
+  
+  subscribe(campName: string) {
+    throw new Error('Method not implemented.');
   }
 
   // update(id: number, updateCampDto: UpdateCampDto) {

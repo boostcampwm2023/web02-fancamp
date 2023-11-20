@@ -8,12 +8,12 @@ POST {{server}}/auth/user
 Content-Type: application/json
 
 {
-    "email" : "master5@fancamp.com",
+    "email" : "camper1@fancamp.com",
     "password": "1234",
-    "chatName": "master5",
-    "publicId": "master5",
+    "chatName": "camper1",
+    "publicId": "camper1",
     "profileImage": "",
-    "isMaster": true
+    "isMaster": false
 }
 
 
