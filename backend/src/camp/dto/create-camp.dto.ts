@@ -1,14 +1,17 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEmail, IsString, Length, isInt, IsNumberString } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsString,
+  Length,
+  isInt,
+  IsNumberString,
+} from 'class-validator';
 
 export class CreateCampDto {
   @IsString()
   @ApiProperty()
   campName: string;
-
-  @IsNumberString()
-  @ApiProperty()
-  masterId: number;
 
   @IsString()
   @ApiProperty()

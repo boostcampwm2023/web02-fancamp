@@ -3,16 +3,18 @@
 # @server = http://175.45.194.10:3000
 # @server = http://223.130.146.223:3000
 
-### 회원가입 요청~
-POST {{server}}/chat
+### 메세지 생성
+POST {{server}}/chats
 Content-Type: application/json
 
 {
-    "createdAt" : "2023-12-22",
-    "stringContent": "22",
-    "picContent": "33",
-    "sender": "1",
-    "masterId": "12"
+    "stringContent": "캠퍼1 보냅니다 (닉네임)안녕!",
+    "picContent": "",
+    "senderId": 1,
+    "masterId": 4
 }
 
+
+### 이전메세지 가져오기?
+GET {{server}}/chats/camp1
 

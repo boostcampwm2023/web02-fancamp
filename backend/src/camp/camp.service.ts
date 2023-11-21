@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 import { CampRepository } from './camp.repository';
 import { UserService } from 'src/user/user.service';
 import { SubscriptionService } from './subscription.service';
+import { resourceLimits } from 'worker_threads';
 
 @Injectable()
 export class CampService {
@@ -12,8 +13,16 @@ export class CampService {
     private readonly subscriptionService: SubscriptionService,
     private readonly userService: UserService,
   ) {}
-  create(createCampDto: CreateCampDto) {
-    return this.campRepository.createCamp(createCampDto);
+  async create(createCampDto: CreateCampDto, publicId: string) {
+    const user = await this.userService.findUserByPublicId(publicId);
+    if (user.isMaster) {
+      const result = await this.campRepository.createCamp(
+        createCampDto,
+        user.id,
+      );
+      return { campName: result.campName, bannerImage: result.bannerImage };
+    }
+    throw new UnauthorizedException("camper can't make camp");
   }
 
   // findAll() {
@@ -36,13 +45,13 @@ export class CampService {
     });
     // throw new Error('Method not implemented.');
   }
-  async getSubscriptions(publicId: string){
+  async getSubscriptions(publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
     const camperId = user.id;
-    console.log("campid",camperId)
+    console.log('campid', camperId);
     return this.subscriptionService.findAll(camperId);
   }
-  async getSubscription(publicId: string, campName: string){
+  async getSubscription(publicId: string, campName: string) {
     const user = await this.userService.findUserByPublicId(publicId);
     const camperId = user.id;
     const camp = await this.findOne(campName);

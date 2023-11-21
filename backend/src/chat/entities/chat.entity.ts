@@ -19,9 +19,9 @@ export class Chat {
   @Column({ type: 'varchar', nullable: true })
   picContent: string = '';
 
-  @Column({ type: 'varchar', nullable: false })
-  sender: string;
+  @Column({ type: 'int', nullable: false })
+  senderId: number;
 
-  @Column({ type: 'varchar', nullable: false })
-  masterId: string;
+  @Column({ type: 'int', nullable: false })
+  masterId: number;
 }
