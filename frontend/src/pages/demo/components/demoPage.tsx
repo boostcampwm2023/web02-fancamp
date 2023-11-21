@@ -377,7 +377,7 @@ function LikeButtonDemo() {
     <Section>
       <Text size={20}>Like Button</Text>
       <LikeButton liked={like} onClick={handleLike}>
-        <Text size={12} classList="select-none">
+        <Text size={12} className="select-none">
           좋아요 {likeCount}
         </Text>
       </LikeButton>
