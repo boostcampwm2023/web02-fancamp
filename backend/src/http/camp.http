@@ -16,3 +16,11 @@ Content-Type: application/json
 ###
 GET {{server}}/camp/22
 
+### 구독하기
+POST {{server}}/camps/subscriptions/camp1
+Content-Type: application/json
+
+{
+    "camperId" : "8",
+    "masterId": "2"
+}

@@ -7,5 +7,6 @@ import { UserRepository } from 'src/user/user.repository';
   imports: [],
   controllers: [AuthController],
   providers: [AuthService, UserRepository],
+  exports: [AuthService],
 })
 export class AuthModule {}

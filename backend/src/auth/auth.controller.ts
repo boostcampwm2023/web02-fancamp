@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Req, Res, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Req,
+  Res,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserAuthDto } from './dto/create-auth.dto';
@@ -17,13 +26,12 @@ export class AuthController {
     @Body() createUserAuthDto: CreateUserAuthDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-     const dto = await this.authService.create(createUserAuthDto);
-     response
+    const dto = await this.authService.create(createUserAuthDto);
+    response
       .cookie('publicId', dto.publicId)
       .cookie('isMaster', dto.isMaster)
       .status(200)
       .json(dto);
-
   }
 
   @Post('/users/signin')
@@ -46,7 +54,6 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     this.authService.signout(request.cookies['publicId']);
-    response.clearCookie('publicId')
-      .clearCookie('isMaster');
+    response.clearCookie('publicId').clearCookie('isMaster');
   }
 }
