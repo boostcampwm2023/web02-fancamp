@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { Subscription } from './entities/subscription.entity';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { concatMap } from 'rxjs';
 
 @Injectable()
 export class SubscriptionRepository {
@@ -18,5 +19,8 @@ export class SubscriptionRepository {
 
   findOne(camperId: number, masterId: number) {
     return this.subscriptionRepository.findOneBy({ camperId, masterId });
+  }
+  findAll(camperId: number){
+    return this.subscriptionRepository.findBy({camperId})
   }
 }

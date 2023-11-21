@@ -36,12 +36,17 @@ export class CampService {
     });
     // throw new Error('Method not implemented.');
   }
-
-  // update(id: number, updateCampDto: UpdateCampDto) {
-  //   return `This action updates a #${id} camp`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} camp`;
-  // }
+  async getSubscriptions(publicId: string){
+    const user = await this.userService.findUserByPublicId(publicId);
+    const camperId = user.id;
+    console.log("campid",camperId)
+    return this.subscriptionService.findAll(camperId);
+  }
+  async getSubscription(publicId: string, campName: string){
+    const user = await this.userService.findUserByPublicId(publicId);
+    const camperId = user.id;
+    const camp = await this.findOne(campName);
+    const masterId = camp.masterId;
+    return this.subscriptionService.findOne(camperId, masterId);
+  }
 }

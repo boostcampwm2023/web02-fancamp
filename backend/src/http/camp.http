@@ -8,19 +8,25 @@ POST {{server}}/camps
 Content-Type: application/json
 
 {
-    "campName" : "camp3",
+    "campName" : "camp2",
     "masterId": "5",
-    "bannerImage": "33"
+    "bannerImage": ""
 }
 
 ###
-GET {{server}}/camp/22
+GET {{server}}/camps/camp1
 
 ### 구독하기
-POST {{server}}/camps/subscriptions/camp1
+POST {{server}}/camps/subscriptions/camp2
 Content-Type: application/json
 
 {
-    "camperId" : "8",
-    "masterId": "2"
+    "camperId" : "1",
+    "masterId": "5"
 }
+
+### 모든 자신의 구독 가져오기
+GET {{server}}/camps/subscriptions
+
+###
+GET {{server}}/camps/subscriptions/camp2

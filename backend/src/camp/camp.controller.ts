@@ -19,6 +19,20 @@ import { Request, Response } from 'express';
 export class CampController {
   constructor(private readonly campService: CampService) {}
 
+  @Get('subscriptions')
+  getSubscriptions(@Req() request: Request) {
+    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
+    return this.campService.getSubscriptions(request.cookies['publicId']);
+  }
+  @Get('subscriptions/:campName')
+  getSubscription(
+    @Req() request: Request,
+    @Param('campName') campName: string
+    ) {
+    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
+    return this.campService.getSubscription(request.cookies['publicId'], campName);
+  }
+
   @Post()
   create(@Body() createCampDto: CreateCampDto) {
     return this.campService.create(createCampDto);
@@ -39,6 +53,8 @@ export class CampController {
     // 쿠키의 publicId로 userId 찾기위해 넘겨주기
     this.campService.subscribe(request.cookies['publicId'], campName);
   }
+
+
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateCampDto: UpdateCampDto) {
