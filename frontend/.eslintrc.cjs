@@ -58,5 +58,6 @@ module.exports = {
     'react/require-default-props': 'off',
     'react-hooks/exhaustive-deps': 'off',
     'import/prefer-default-export': 'off',
+    'import/no-cycle': 'off',
   },
 };
