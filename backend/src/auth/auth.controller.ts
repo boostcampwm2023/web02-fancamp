@@ -7,6 +7,7 @@ import {
   Res,
   UsePipes,
   ValidationPipe,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
@@ -55,5 +56,20 @@ export class AuthController {
   ) {
     this.authService.signout(request.cookies['publicId']);
     response.clearCookie('publicId').clearCookie('isMaster');
+  }
+
+  @Get('/users')
+  async checkLogin(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response
+
+  ){
+    const result =  await this.authService.checkLogin(request.cookies['publicId']);
+    if(result){
+      return result;
+    }
+    response.clearCookie('publicId').clearCookie('isMaster');
+    throw new UnauthorizedException('not logined');
+
   }
 }

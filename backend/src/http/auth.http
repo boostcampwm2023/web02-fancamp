@@ -8,10 +8,10 @@ POST {{server}}/auth/users
 Content-Type: application/json
 
 {
-    "email" : "camper4@fancamp.com",
+    "email" : "master1@fancamp.com",
     "password": "1234",
-    "chatName": "campe4",
-    "publicId": "camper4",
+    "chatName": "master1",
+    "publicId": "master1",
     "profileImage": "",
     "isMaster": false
 }
@@ -29,3 +29,6 @@ Content-Type: application/json
 
 ### 로그아웃 요청~
 GET {{server}}/auth/users/signout
+
+### 쿠키에 저장된걸로 로그인여부 확인
+GET {{server}}/auth/users

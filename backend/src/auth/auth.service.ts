@@ -45,4 +45,16 @@ export class AuthService {
       this.sessions.splice(index, 1);
     }
   }
+
+  async checkLogin(publicId: string){
+    if(this.sessions.includes(publicId)){
+      const user = await this.userRepository.findUserByPublicId(publicId);
+      return  {
+        email: user.email,
+        publicId: user.publicId,
+        isMaster: user.isMaster
+      };
+    }
+  }
+  
 }
