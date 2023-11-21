@@ -28,7 +28,7 @@ function LikeButton({ liked, onClick, children }: LikeButtonProps) {
           strokeWidth="2"
         />
       </svg>
-      <div className="absolute left-[0.5rem]">
+      {/* <div className="left-[0.5rem]">
         {liked && (
           <ConfettiExplosion
             duration={2200}
@@ -36,9 +36,10 @@ function LikeButton({ liked, onClick, children }: LikeButtonProps) {
             particleCount={30}
             force={0.2}
             width={400}
+            className="relative z-[10000000000]"
           />
         )}
-      </div>
+      </div> */}
       {children}
     </button>
   );

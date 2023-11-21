@@ -8,6 +8,7 @@ export const colors = {
   'point-lavender': '#D4AAFF',
   transparent: 'transparent',
   'surface-primary': '#FFFFFF',
+  'point-red': '#FF5044',
 };
 
 export const campCategorys = [

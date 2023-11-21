@@ -1,8 +1,8 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Text from '../../components/text/text';
 import ContentMenu from '../../components/menu/contentMenu';
 import { campCategorys } from '../../utils/constants';
+import CampInfo from '../../components/camp/campInfo';
 
 function CampPage() {
   const categorys = campCategorys.map((category) => category.text);
@@ -23,8 +23,8 @@ function CampPage() {
   }, [categoryIndex]);
 
   return (
-    <div>
-      <Text size={20}>CampPage</Text>
+    <div className="flex min-h-full flex-col gap-md">
+      <CampInfo />
       <ContentMenu
         menuIndex={categoryIndex}
         setMenuIndex={setCategoryIndex}

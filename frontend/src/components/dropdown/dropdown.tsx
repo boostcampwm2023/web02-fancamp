@@ -29,7 +29,7 @@ function Dropdown({ children, placeholder, value }: DropdownProps) {
     <div className="dropdown__wrapper relative">
       <button
         type="button"
-        className="flex h-full w-full items-center gap-xs border-md border-text-primary bg-surface-primary p-xs"
+        className="flex h-full w-full items-center gap-xs border-sm border-text-primary bg-surface-primary p-xs"
       >
         <div className={`${showDropdown && 'rotate-180'}`}>
           <BottomArrowIcon />
@@ -39,7 +39,7 @@ function Dropdown({ children, placeholder, value }: DropdownProps) {
         </Text>
       </button>
       {showDropdown && (
-        <ul className="absolute z-50 mt-[-0.125rem] flex w-full flex-col border-md border-text-primary bg-surface-primary">
+        <ul className="absolute z-50 mt-[-0.125rem] flex w-full flex-col border-sm border-text-primary bg-surface-primary">
           {children}
         </ul>
       )}

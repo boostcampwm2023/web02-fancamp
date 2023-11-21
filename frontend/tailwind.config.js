@@ -65,6 +65,18 @@ export default {
           '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[400]':
             {},
         },
+        '.display-light-20': {
+          '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[300]':
+            {},
+        },
+        '.display-light-14': {
+          '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[300]':
+            {},
+        },
+        '.display-light-12': {
+          '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[300]':
+            {},
+        },
         '.center': {
           '@apply left-[50%] top-[50%]': {},
           transform: 'translate(-50%, -50%)',

@@ -16,6 +16,7 @@ import PostPage from '../pages/camps/post/postPage';
 import CampPage from '../pages/camps/campPage';
 import CommunityPage from '../pages/camps/community/communityPage';
 import ApiPage from '../pages/demo/api/apiPage';
+import EditPage from '../pages/camps/edit/editPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +34,7 @@ const router = createBrowserRouter(
             <Route path="chat" element={<ChatPage />} />
             <Route path="community" element={<CommunityPage />} />
             <Route path="post" element={<PostPage />} />
+            <Route path="edit" element={<EditPage />} />
           </Route>
         </Route>
         <Route path="/demo/components" element={<DemoPage />} />
