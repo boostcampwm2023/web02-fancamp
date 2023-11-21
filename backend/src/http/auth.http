@@ -18,14 +18,14 @@ Content-Type: application/json
 
 
 ### 로그인 요청~
-POST {{server}}/auth/user/signin
+POST {{server}}/auth/users/signin
 Content-Type: application/json
 
 {
-    "email" : "master4@fancamp.com",
+    "email" : "camper1@fancamp.com",
     "password": "1234"
 }
 
 
 ### 로그아웃 요청~
-GET {{server}}/auth/user/signout
+GET {{server}}/auth/users/signout

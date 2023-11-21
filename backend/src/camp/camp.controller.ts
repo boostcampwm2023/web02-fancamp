@@ -6,11 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { CampService } from './camp.service';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { Request, Response } from 'express';
 
+@ApiTags('camps')
 @Controller('camps')
 export class CampController {
   constructor(private readonly campService: CampService) {}
@@ -30,11 +34,10 @@ export class CampController {
     return this.campService.findOne(campName);
   }
 
-  @Post('subscirbe/:campName')
-  subscribe(
-    @Param('campName') campName: string
-    ){
-    this.campService.subscribe(campName);
+  @Post('subscriptions/:campName')
+  subscribe(@Param('campName') campName: string, @Req() request: Request) {
+    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
+    this.campService.subscribe(request.cookies['publicId'], campName);
   }
 
   // @Patch(':id')
