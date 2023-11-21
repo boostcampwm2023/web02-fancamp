@@ -16,6 +16,10 @@ const secondaryMenu = [
     to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/edit',
     text: '> 캠프 수정',
   },
+  {
+    to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/upload',
+    text: '> 캠프 업로드',
+  },
   { to: '/demo/components', text: '컴포넌트 데모' },
   { to: '/demo/api/rest', text: 'Mock Api' },
 ];
