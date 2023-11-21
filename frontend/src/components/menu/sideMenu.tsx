@@ -1,5 +1,5 @@
 import useAuth from '../../hooks/useAuth';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { signout } from '../../api/auth';
 
 const mainMenu = [
@@ -18,7 +18,6 @@ const secondaryMenu = [
 
 export default function SideMenu() {
   const { auth } = useAuth();
-  const location = useLocation();
 
   const authMenu = [
     { to: '/auth/signin', text: '로그인' },
@@ -26,7 +25,7 @@ export default function SideMenu() {
   ];
 
   const handleSignout = async () => {
-    const result = await signout();
+    await signout();
     window.location.reload();
   };
 
