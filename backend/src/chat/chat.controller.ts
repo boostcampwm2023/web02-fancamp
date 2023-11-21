@@ -6,18 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('chats')
 @Controller('chats')
+@UseGuards(AuthGuard)
 export class ChatController {
   constructor(private readonly chatService: ChatService) {}
 
-  @Post('s')
+  @Post('')
   create(@Body() createChatDto: CreateChatDto) {
     return this.chatService.create(createChatDto);
   }

@@ -7,17 +7,34 @@ import {
   Param,
   Delete,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { CampService } from './camp.service';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('camps')
 @Controller('camps')
+@UseGuards(AuthGuard)
 export class CampController {
   constructor(private readonly campService: CampService) {}
+
+  @Get('subscriptions')
+  getSubscriptions(@Req() request: Request) {
+    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
+    return this.campService.getSubscriptions(request.cookies['publicId']);
+  }
+  @Get('subscriptions/:campName')
+  getSubscription(
+    @Req() request: Request,
+    @Param('campName') campName: string
+    ) {
+    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
+    return this.campService.getSubscription(request.cookies['publicId'], campName);
+  }
 
   @Post()
   create(@Body() createCampDto: CreateCampDto) {
@@ -39,6 +56,8 @@ export class CampController {
     // 쿠키의 publicId로 userId 찾기위해 넘겨주기
     this.campService.subscribe(request.cookies['publicId'], campName);
   }
+
+
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateCampDto: UpdateCampDto) {

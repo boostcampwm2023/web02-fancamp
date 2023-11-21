@@ -16,4 +16,8 @@ export class SubscriptionService {
   findOne(camperId: number, masterId: number) {
     return this.subscriptionRepository.findOne(camperId, masterId);
   }
+  findAll(camperId: number){
+    return this.subscriptionRepository.findAll(camperId)
+  }
+
 }
