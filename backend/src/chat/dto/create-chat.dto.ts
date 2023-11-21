@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsEmail, IsString, Length } from 'class-validator';
+import {
+  IsBoolean,
+  IsEmail,
+  IsNumber,
+  IsString,
+  Length,
+} from 'class-validator';
 
 export class CreateChatDto {
   @IsString()
@@ -10,11 +16,11 @@ export class CreateChatDto {
   @ApiProperty()
   picContent: string = '';
 
-  @IsString()
+  @IsNumber()
   @ApiProperty()
-  sender: string;
+  senderId: number;
 
-  @IsString()
+  @IsNumber()
   @ApiProperty()
-  masterId: string;
+  masterId: number;
 }

@@ -2,12 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ChatRepository } from './chat.repository';
-import {UserService} from '../user/user.service';
-import {CampService} from '../camp/camp.service'
+import { UserService } from '../user/user.service';
+import { CampService } from '../camp/camp.service';
 
 @Injectable()
 export class ChatService {
-  constructor(private readonly chatRepository: ChatRepository, private readonly userService: UserService, private readonly campService: CampService) {}
+  constructor(
+    private readonly chatRepository: ChatRepository,
+    private readonly userService: UserService,
+    private readonly campService: CampService,
+  ) {}
   create(createChatDto: CreateChatDto) {
     return this.chatRepository.createChat(createChatDto);
   }
@@ -17,20 +21,31 @@ export class ChatService {
     const camp = await this.campService.findOne(campName);
     const createDto: CreateChatDto = {
       stringContent: message,
-      sender: user.id.toString(),
-      masterId: camp.masterId.toString(),
+      senderId: user.id,
+      masterId: camp.masterId,
       picContent: '',
     };
     return this.chatRepository.createChat(createDto);
   }
 
-
   async getRoomName(campName: string) {
     const camp = await this.campService.findOne(campName);
     const roomName = camp.campId.toString();
-    return {roomName :roomName, detailRoomName:''.concat(roomName, "-detail")};
+    return {
+      roomName: roomName,
+      detailRoomName: ''.concat(roomName, '-detail'),
+    };
   }
-  
+
+  async getPreviousChats(campName: string, publicId: string) {
+    const camp = await this.campService.findOne(campName);
+    const user = await this.userService.findUserByPublicId(publicId);
+    return this.chatRepository.findChatsByUserIdOrMasterId(
+      user.id,
+      camp.masterId,
+    );
+  }
+
   // findAll() {
   //   return `This action returns all chat`;
   // }

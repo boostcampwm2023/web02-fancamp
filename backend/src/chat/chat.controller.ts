@@ -7,12 +7,15 @@ import {
   Param,
   Delete,
   UseGuards,
+  Res,
+  Req,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { Request, Response } from 'express';
 
 @ApiTags('chats')
 @Controller('chats')
@@ -30,10 +33,14 @@ export class ChatController {
   //   return this.chatService.findAll();
   // }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.chatService.findOne(+id);
-  // }
+  @Get(':campName')
+  async findOne(@Param('campName') campName: string, @Req() request: Request) {
+    const result = await this.chatService.getPreviousChats(
+      campName,
+      request.cookies['publicId'],
+    );
+    return result;
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateChatDto: UpdateChatDto) {

@@ -16,7 +16,16 @@ export class ChatRepository {
     return this.chatRepository.save(createChatDto);
   }
 
-  //   findUserByMasterId(masterId: string) {
-  //     return this.chatRepository.findOneBy({ masterId });
-  //   }
+  async findChatsByUserIdOrMasterId(
+    userId: number,
+    masterId: number,
+  ): Promise<Chat[]> {
+    return await this.chatRepository
+      .createQueryBuilder('chat')
+      .where(
+        '(chat.senderId = :userId AND chat.masterId = :masterId) OR chat.senderId = :masterId',
+        { userId, masterId },
+      )
+      .getMany();
+  }
 }
