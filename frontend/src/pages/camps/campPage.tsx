@@ -1,8 +1,9 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import ContentMenu from '../../components/menu/contentMenu';
 import { campCategorys } from '../../utils/constants';
 import CampInfo from '../../components/camp/campInfo';
+import Spinner from '../../components/loading/spinner';
 
 function CampPage() {
   const categorys = campCategorys.map((category) => category.text);
@@ -24,7 +25,15 @@ function CampPage() {
 
   return (
     <div className="flex min-h-full flex-col gap-md">
-      <CampInfo />
+      <Suspense
+        fallback={
+          <div className="h-[10rem] w-full">
+            <Spinner className="center" />
+          </div>
+        }
+      >
+        <CampInfo />
+      </Suspense>
       <ContentMenu
         menuIndex={categoryIndex}
         setMenuIndex={setCategoryIndex}
