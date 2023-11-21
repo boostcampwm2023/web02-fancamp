@@ -11,6 +11,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [auth, setAuth] = useState<Auth | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const isSignedIn = localStorage.getItem('isSignedIn');
@@ -20,12 +21,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setAuth(result);
       } catch (error) {
         localStorage.setItem('isSignedIn', 'false');
+      } finally {
+        setIsLoading(false);
       }
     };
 
     if (isSignedIn === 'true' && auth === null) {
       refreshAuth();
+      return;
     }
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -39,7 +44,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
-      {children}
+      {!isLoading && children}
     </AuthContext.Provider>
   );
 }

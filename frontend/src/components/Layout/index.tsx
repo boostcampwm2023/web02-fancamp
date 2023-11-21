@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import SideMenu from '../components/menu/sideMenu';
+import SideMenu from '../menu/sideMenu';
 
-function Root() {
+export default function Layout() {
   return (
     <main className="relative flex w-[67.5rem] justify-between h-center">
       <SideMenu />
@@ -11,5 +11,3 @@ function Root() {
     </main>
   );
 }
-
-export default Root;

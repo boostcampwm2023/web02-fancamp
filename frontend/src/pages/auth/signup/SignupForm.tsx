@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { signup } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/input/input';
 import SubmitButton from '../../../components/button/submitButton';
+import useAuth from '../../../hooks/useAuth';
 
 const emailRegex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
@@ -16,7 +17,16 @@ export default function SignupForm() {
   const [usernameError, setUsernameError] = useState(false);
   const [signupError, setSignupError] = useState(false);
 
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/error', {
+        state: { error: '회원가입을 하시려면 로그아웃을 먼저 해주세요! 😉' },
+      });
+    }
+  }, []);
 
   const handleBlurEmail = () => {
     const isCorrectEmailFormat = emailRegex.test(email);
@@ -44,7 +54,8 @@ export default function SignupForm() {
       return;
     }
     try {
-      await signup(email, password, username);
+      const response = await signup(email, password, username);
+      setAuth(response);
       navigate('/');
     } catch (error) {
       setSignupError(true);
@@ -64,7 +75,7 @@ export default function SignupForm() {
         onBlur={handleBlurEmail}
       />
       {emailError && (
-        <div className="display-regular-14 mb-4 text-error">
+        <div className="mb-4 text-error display-regular-14">
           이메일의 형식이 맞지 않아요!
         </div>
       )}
@@ -75,7 +86,7 @@ export default function SignupForm() {
         onBlur={handleBlurPassword}
       />
       {passwordError && (
-        <div className="display-regular-14 mb-4 text-error">
+        <div className="mb-4 text-error display-regular-14">
           비밀번호의 글자 수는 4~20 사이여야 합니다!
         </div>
       )}
@@ -86,13 +97,13 @@ export default function SignupForm() {
         onBlur={handleBlurUsername}
       />
       {usernameError && (
-        <div className="display-regular-14 mb-4 text-error">
+        <div className="mb-4 text-error display-regular-14">
           닉네임의 글자 수는 4~20 사이여야 합니다!
         </div>
       )}
       <SubmitButton text="회원가입" />
       {signupError && (
-        <div className="display-regular-14 mt-4 text-error">
+        <div className="mt-4 text-error display-regular-14">
           회원가입에 실패했습니다!
         </div>
       )}

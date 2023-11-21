@@ -56,3 +56,13 @@ export async function isValidSession(): Promise<Auth> {
   const result = response.json();
   return result;
 }
+
+export async function signout(): Promise<any> {
+  const response = await fetch('/api/auth/users/signout', {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error('로그아웃 실패');
+  }
+}

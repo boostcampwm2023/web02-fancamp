@@ -1,14 +1,33 @@
-import { Link, useLocation } from 'react-router-dom';
-import Text from '../text/text';
+import useAuth from '../../hooks/useAuth';
+import { Link, NavLink } from 'react-router-dom';
+import { signout } from '../../api/auth';
 
-interface SideMenuLinkProps {
-  to: string;
-  text: string;
-  currentPath: string;
-}
+const mainMenu = [
+  { to: '/', text: 'Home' },
+  { to: '/search', text: 'Search' },
+  { to: '/explore', text: 'Explore' },
+];
 
-function SideMenu() {
-  const location = useLocation();
+const secondaryMenu = [
+  { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '캠프' },
+  { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/chat', text: '> 채팅' },
+  { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '> 포스트' },
+  { to: '/demo/components', text: '컴포넌트 데모' },
+  { to: '/demo/api/rest', text: 'Mock Api' },
+];
+
+export default function SideMenu() {
+  const { auth } = useAuth();
+
+  const authMenu = [
+    { to: '/auth/signin', text: '로그인' },
+    { to: '/auth/signup', text: '회원가입' },
+  ];
+
+  const handleSignout = async () => {
+    await signout();
+    window.location.reload();
+  };
 
   return (
     <div className="sticky left-[0] top-[0] z-10 flex h-[100vh] w-[12.5rem] flex-col">
@@ -16,71 +35,29 @@ function SideMenu() {
         <img src="/src/assets/icons/logo.png" alt="메인 로고" />
       </Link>
       <Hr />
-      <div className="flex flex-col gap-sm pb-sm pt-sm">
-        <SideMenuLink to="/" text="Home" currentPath={location.pathname} />
-        <SideMenuLink
-          to="/search"
-          text="Search"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="/explore"
-          text="Explore"
-          currentPath={location.pathname}
-        />
+      <div className="flex flex-col gap-sm py-sm">
+        {mainMenu.map(({ to, text }) => (
+          <SideMenuNavLink key={text} to={to} text={text} />
+        ))}
       </div>
       <Hr />
-      <div className="flex flex-col gap-sm pb-sm pt-sm">
-        <SideMenuLink
-          to="/auth/signin"
-          text="로그인"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="/auth/signup"
-          text="회원가입"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post"
-          text="캠프"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/chat"
-          text="> 채팅"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post"
-          text="> 포스트"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="/demo/components"
-          text="컴포넌트 데모"
-          currentPath={location.pathname}
-        />
-        <SideMenuLink
-          to="demo/api/rest"
-          text="Mock Api"
-          currentPath={location.pathname}
-        />
+      <div className="flex flex-col gap-sm py-sm">
+        {auth ? (
+          <button className="flex" onClick={handleSignout}>
+            <span className="px-md py-sm text-text-secondary display-regular-14">
+              로그아웃
+            </span>
+          </button>
+        ) : (
+          authMenu.map(({ to, text }) => (
+            <SideMenuNavLink key={text} to={to} text={text} />
+          ))
+        )}
+        {secondaryMenu.map(({ to, text }) => (
+          <SideMenuNavLink key={text} to={to} text={text} />
+        ))}
       </div>
     </div>
-  );
-}
-
-function SideMenuLink({ to, text, currentPath }: SideMenuLinkProps) {
-  return (
-    <Link to={to} className="flex pb-sm pl-md pr-md pt-sm">
-      <Text
-        size={14}
-        color={to === currentPath ? 'text-primary' : 'text-secondary'}
-      >
-        {text}
-      </Text>
-    </Link>
   );
 }
 
@@ -88,4 +65,19 @@ function Hr() {
   return <hr className="h-[0.0625rem] border-0 bg-contour-primary" />;
 }
 
-export default SideMenu;
+function SideMenuNavLink({ to, text }: { to: string; text: string }) {
+  return (
+    <NavLink
+      to={to}
+      className={({ isActive }) =>
+        [
+          isActive ? 'text-text-primary' : 'text-text-secondary',
+          'display-regular-14',
+          'px-md py-sm',
+        ].join(' ')
+      }
+    >
+      {text}
+    </NavLink>
+  );
+}

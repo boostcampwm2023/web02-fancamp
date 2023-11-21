@@ -1,10 +1,8 @@
 import {
-  Outlet,
   Route,
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
-import Root from './root';
 import DemoPage from '../pages/demo/components/demoPage';
 import HomePage from '../pages/home/homePage';
 import SearchPage from '../pages/search/searchPage';
@@ -17,31 +15,36 @@ import CampPage from '../pages/camps/campPage';
 import CommunityPage from '../pages/camps/community/communityPage';
 import ApiPage from '../pages/demo/api/apiPage';
 import EditPage from '../pages/camps/edit/editPage';
+import Layout from '../components/Layout';
+import ErrorPage from '../pages/error';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <>
-      <Route path="/auth">
+    <Route path="/" errorElement={<ErrorPage />}>
+      <Route path="auth">
         <Route path="signin" element={<SigninPage />} />
         <Route path="signup" element={<SignupPage />} />
       </Route>
-      <Route path="/" element={<Root />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/explore" element={<ExplorePage />} />
-        <Route path="/camps" element={<CampPage />}>
-          <Route path=":campId" element={<Outlet />}>
+      <Route element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path="search" element={<SearchPage />} />
+        <Route path="explore" element={<ExplorePage />} />
+        <Route path="camps" element={<CampPage />}>
+          <Route path=":campId">
             <Route path="chat" element={<ChatPage />} />
             <Route path="community" element={<CommunityPage />} />
             <Route path="post" element={<PostPage />} />
             <Route path="edit" element={<EditPage />} />
           </Route>
         </Route>
-        <Route path="/demo/components" element={<DemoPage />} />
-        <Route path="/demo/api/rest" element={<ApiPage />} />
-        <Route path="/demo/api/scenario" element={<ApiPage />} />
+        <Route path="demo">
+          <Route path="components" element={<DemoPage />} />
+          <Route path="api/rest" element={<ApiPage />} />
+          <Route path="api/scenario" element={<ApiPage />} />
+        </Route>
+        <Route path="error" element={<ErrorPage />} />
       </Route>
-    </>
+    </Route>
   )
 );
 

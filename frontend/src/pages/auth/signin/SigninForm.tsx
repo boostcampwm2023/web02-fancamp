@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import { login } from '../../../api/auth';
+import { useState, useEffect } from 'react';
+import { signin } from '../../../api/auth';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../../components/input/input';
 import SubmitButton from '../../../components/button/submitButton';
+import useAuth from '../../../hooks/useAuth';
 
 const emailRegex = new RegExp('[a-z0-9]+@[a-z]+.[a-z]{2,3}');
 
@@ -14,7 +15,16 @@ export default function SigninForm() {
   const [passwordError, setPasswordError] = useState(false);
   const [signinError, setSigninError] = useState(false);
 
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/error', {
+        state: { error: '이미 로그인 하셨어요! 😉' },
+      });
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,7 +32,8 @@ export default function SigninForm() {
       return;
     }
     try {
-      await login(email, password);
+      const response = await signin(email, password);
+      setAuth(response);
       navigate('/');
     } catch (error) {
       setPassword('');
@@ -56,7 +67,7 @@ export default function SigninForm() {
         onBlur={handleBlurEmail}
       />
       {emailError && (
-        <div className="display-regular-14 mb-4 text-error">
+        <div className="mb-4 text-error display-regular-14">
           이메일의 형식이 맞지 않아요!
         </div>
       )}
@@ -67,13 +78,13 @@ export default function SigninForm() {
         onBlur={handleBlurPassword}
       />
       {passwordError && (
-        <div className="display-regular-14 mb-4 text-error">
+        <div className="mb-4 text-error display-regular-14">
           비밀번호의 글자 수는 4~20 사이여야 합니다!
         </div>
       )}
       <SubmitButton text="로그인" />
       {signinError && (
-        <div className="display-regular-14 mt-4 text-error">
+        <div className="mt-4 text-error display-regular-14">
           로그인에 실패했습니다!
         </div>
       )}
