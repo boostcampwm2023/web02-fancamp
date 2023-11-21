@@ -1,5 +1,7 @@
-export async function login(email: string, password: string): Promise<any> {
-  const response = await fetch('/api/auth/user/signin', {
+import { Auth } from '../types/api/auth';
+
+export async function signin(email: string, password: string): Promise<Auth> {
+  const response = await fetch('/api/auth/users/signin', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,9 +22,9 @@ export async function login(email: string, password: string): Promise<any> {
 export async function signup(
   email: string,
   password: string,
-  username: string,
-): Promise<any> {
-  const response = await fetch('/api/auth/user', {
+  chatname: string
+): Promise<Auth> {
+  const response = await fetch('/api/auth/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +32,7 @@ export async function signup(
     body: JSON.stringify({
       email,
       password,
-      username,
+      chatname,
       profileImage: '',
       isMaster: true,
     }),
@@ -38,6 +40,18 @@ export async function signup(
   });
   if (!response.ok) {
     throw new Error('회원가입 실패');
+  }
+  const result = response.json();
+  return result;
+}
+
+export async function isValidSession(): Promise<Auth> {
+  const response = await fetch('/api/auth/users', {
+    method: 'GET',
+    credentials: 'include',
+  });
+  if (!response.ok) {
+    throw new Error('유효한 세션이 아닙니다');
   }
   const result = response.json();
   return result;
