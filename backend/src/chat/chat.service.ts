@@ -40,10 +40,28 @@ export class ChatService {
   async getPreviousChats(campName: string, publicId: string) {
     const camp = await this.campService.findOne(campName);
     const user = await this.userService.findUserByPublicId(publicId);
-    return this.chatRepository.findChatsByUserIdOrMasterId(
+    const chats = await this.chatRepository.findChatsByUserIdOrMasterId(
       user.id,
       camp.masterId,
     );
+
+    if (!user.isMaster) {
+      // 채팅 배열을 순회하면서 stringContent 수정
+      const modifiedChats = chats.map((chat) => {
+        const modifiedChat = { ...chat }; // 새로운 객체를 만들어 기존 채팅 객체를 복사
+        if (modifiedChat.senderId === modifiedChat.masterId) {
+          // 마스터가 보낸 메세지의 경우에만 replace 실행
+          modifiedChat.stringContent = modifiedChat.stringContent.replace(
+            /\(닉네임\)/g,
+            user.chatName,
+          );
+        }
+        return modifiedChat;
+      });
+      return modifiedChats;
+    }
+    // 마스터는 (닉네임)을 변경해주지 않는다.
+    return chats;
   }
 
   // findAll() {
