@@ -1,4 +1,4 @@
-import ConfettiExplosion from 'react-confetti-explosion';
+// import ConfettiExplosion from 'react-confetti-explosion';
 
 interface LikeButtonProps {
   liked: boolean;
@@ -13,7 +13,7 @@ function LikeButton({ liked, onClick, children }: LikeButtonProps) {
       className="relative flex cursor-pointer items-center gap-sm"
       onClick={onClick}
     >
-      <input type="checkbox" className="sr-only" checked={liked} />
+      <input type="checkbox" className="sr-only" defaultChecked={liked} />
       <svg
         className={`${liked && 'fill-point-red'}`}
         width="16"
