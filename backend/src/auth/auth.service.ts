@@ -47,7 +47,7 @@ export class AuthService {
   }
 
   async checkLogin(publicId: string){
-    if(this.sessions.includes(publicId)){
+    if(this.validateUser(publicId)){
       const user = await this.userRepository.findUserByPublicId(publicId);
       return  {
         email: user.email,
@@ -55,6 +55,10 @@ export class AuthService {
         isMaster: user.isMaster
       };
     }
+  }
+
+  validateUser(publicId : string) {
+    return this.sessions.includes(publicId);
   }
   
 }

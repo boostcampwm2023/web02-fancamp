@@ -8,12 +8,14 @@ import { SubscriptionRepository } from './subscription.repository';
 import { Subscription } from './entities/subscription.entity';
 import { UserModule } from 'src/user/user.module';
 import { SubscriptionService } from './subscription.service';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Camp]),
     TypeOrmModule.forFeature([Subscription]),
     UserModule,
+    AuthModule
   ],
   controllers: [CampController],
   providers: [

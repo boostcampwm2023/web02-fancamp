@@ -7,15 +7,18 @@ import {
   Param,
   Delete,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { CampService } from './camp.service';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('camps')
 @Controller('camps')
+@UseGuards(AuthGuard)
 export class CampController {
   constructor(private readonly campService: CampService) {}
 

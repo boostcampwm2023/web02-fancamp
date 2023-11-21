@@ -7,9 +7,15 @@ import { ChatRepository } from './chat.repository';
 import { ChatGateway } from './chat.gateway';
 import { UserModule } from 'src/user/user.module';
 import { CampModule } from 'src/camp/camp.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Chat]), UserModule, CampModule],
+  imports: [
+    TypeOrmModule.forFeature([Chat]),
+    UserModule,
+    CampModule,
+    AuthModule,
+  ],
   controllers: [ChatController],
   providers: [ChatService, ChatRepository, ChatGateway],
   exports: [ChatService, ChatGateway],
