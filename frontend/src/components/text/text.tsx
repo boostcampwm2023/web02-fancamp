@@ -6,7 +6,7 @@ interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   size?: 12 | 14 | 20;
   weight?: 400 | 300;
   color?: keyof typeof colors;
-  classList?: string;
+  className?: string;
 }
 
 const font = {

@@ -22,8 +22,8 @@ function Input<State>(props: InputProps<State>) {
   };
 
   return (
-    <div className="group flex w-full flex-col">
-      {label && <span className="mb-2 display-regular-14">{label}</span>}
+    <div className="group flex w-full flex-col gap-sm">
+      {label && <span className="display-regular-14">{label}</span>}
       <div className="flex flex-row items-center">
         {icon && icon}
         <input

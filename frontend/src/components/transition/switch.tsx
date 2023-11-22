@@ -12,14 +12,14 @@ import {
 
 interface TransitionProps {
   children: React.ReactNode;
-  classList?: string;
+  className?: string;
   direction?: 'right' | 'left' | 'bottom' | 'top';
   dynamic?: any;
 }
 
 function Switch({
   children,
-  classList = '',
+  className = '',
   direction = 'right',
   dynamic,
 }: TransitionProps) {
@@ -76,7 +76,7 @@ function Switch({
   }, [dynamic || children]);
 
   return (
-    <div className={`flex flex-row flex-nowrap ${classList}`}>
+    <div className={`flex flex-row flex-nowrap ${className}`}>
       <div ref={ref1} className="border-box w-[100%] flex-none">
         {children1}
       </div>

@@ -15,7 +15,7 @@ function SubscribeButton({
       className="relative flex cursor-pointer items-center gap-sm"
       onClick={onClick}
     >
-      <input type="checkbox" className="sr-only" checked={subscribed} />
+      <input type="checkbox" className="sr-only" defaultChecked={subscribed} />
       {children}
     </button>
   );

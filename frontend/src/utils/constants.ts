@@ -25,3 +25,14 @@ export const campCategorys = [
     path: 'chat',
   },
 ];
+
+export const campEditCategorys = [
+  {
+    text: '프로필',
+    path: 'profile',
+  },
+  {
+    text: '비밀번호',
+    path: 'password',
+  },
+];

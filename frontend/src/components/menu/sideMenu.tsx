@@ -1,5 +1,5 @@
-import useAuth from '../../hooks/useAuth';
 import { Link, NavLink } from 'react-router-dom';
+import useAuth from '../../hooks/useAuth';
 import { signout } from '../../api/auth';
 
 const mainMenu = [
@@ -12,6 +12,10 @@ const secondaryMenu = [
   { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '캠프' },
   { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/chat', text: '> 채팅' },
   { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '> 포스트' },
+  {
+    to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/edit',
+    text: '> 캠프 수정',
+  },
   { to: '/demo/components', text: '컴포넌트 데모' },
   { to: '/demo/api/rest', text: 'Mock Api' },
 ];
@@ -43,7 +47,7 @@ export default function SideMenu() {
       <Hr />
       <div className="flex flex-col gap-sm py-sm">
         {auth ? (
-          <button className="flex" onClick={handleSignout}>
+          <button type="button" className="flex" onClick={handleSignout}>
             <span className="px-md py-sm text-text-secondary display-regular-14">
               로그아웃
             </span>

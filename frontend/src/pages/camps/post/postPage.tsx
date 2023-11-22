@@ -62,7 +62,13 @@ function PostPage() {
           </Modal>
         </Suspense>
       )}
-      <Suspense fallback={<Spinner />}>
+      <Suspense
+        fallback={
+          <div className="h-[10rem] w-full">
+            <Spinner className="center" />
+          </div>
+        }
+      >
         <PostGridTemplate handleModalOpen={handleModalOpen} />
       </Suspense>
     </section>
