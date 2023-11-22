@@ -1,11 +1,13 @@
 import {
   Column,
   Entity,
+  Index,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
+@Index(['postId', 'userId'], { unique: true })
 export class Like {
   @PrimaryGeneratedColumn()
   commentId: number;
