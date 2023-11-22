@@ -10,7 +10,7 @@ const mainMenu = [
 
 const secondaryMenu = [
   { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '캠프' },
-  { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/chat', text: '> 채팅' },
+  { to: '/chat', text: '> 채팅' },
   { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '> 포스트' },
   {
     to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/edit',
@@ -20,13 +20,13 @@ const secondaryMenu = [
   { to: '/demo/api/rest', text: 'Mock Api' },
 ];
 
+const authMenu = [
+  { to: '/auth/signin', text: '로그인' },
+  { to: '/auth/signup', text: '회원가입' },
+];
+
 export default function SideMenu() {
   const { auth } = useAuth();
-
-  const authMenu = [
-    { to: '/auth/signin', text: '로그인' },
-    { to: '/auth/signup', text: '회원가입' },
-  ];
 
   const handleSignout = async () => {
     await signout();
