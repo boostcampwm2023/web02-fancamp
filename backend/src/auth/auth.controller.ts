@@ -15,7 +15,7 @@ import { CreateUserAuthDto } from './dto/create-auth.dto';
 import { SigninUserAuthDto } from './dto/signin-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Auth')
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -61,15 +61,15 @@ export class AuthController {
   @Get('/users')
   async checkLogin(
     @Req() request: Request,
-    @Res({ passthrough: true }) response: Response
-
-  ){
-    const result =  await this.authService.checkLogin(request.cookies['publicId']);
-    if(result){
+    @Res({ passthrough: true }) response: Response,
+  ) {
+    const result = await this.authService.checkLogin(
+      request.cookies['publicId'],
+    );
+    if (result) {
       return result;
     }
     response.clearCookie('publicId').clearCookie('isMaster');
     throw new UnauthorizedException('not logined');
-
   }
 }
