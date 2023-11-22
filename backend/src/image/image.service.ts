@@ -59,4 +59,8 @@ export class ImageService {
       console.error(err);
     }
   }
+
+  findUrlsByPostId(postId: number) {
+    return this.imageRepository.findUrlsByPostId(postId);
+  }
 }

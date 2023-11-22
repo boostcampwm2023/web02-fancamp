@@ -54,6 +54,11 @@ export class PostService {
     await this.imageService.uploadFiles(files, post.postId, post.campId);
     return post;
   }
+  async findPostWithUrls(postId: number) {
+    const post = await this.findPost(postId);
+    const urls = await this.imageService.findUrlsByPostId(postId);
+    return { ...post, urls: urls };
+  }
 
   findPost(postId: number) {
     return this.postRepository.findOne(postId);

@@ -12,7 +12,16 @@ export class ImageRepository {
   }
 
   create(createImageDto: CreateImageDto) {
-    createImageDto;
     return this.imageRepository.save(createImageDto);
+  }
+  findUrlsByPostId(postId: number) {
+    return this.imageRepository
+      .createQueryBuilder('image')
+      .select(['image.imageUrl'])
+      .where({
+        postId,
+        isDeleted: false,
+      })
+      .getMany();
   }
 }

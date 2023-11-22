@@ -89,13 +89,14 @@ export class PostController {
       request.cookies['publicId'],
     );
   }
-  @Get(':postId')
-  findPost(@Param('postId') id: string) {
-    return this.postService.findPost(+id);
-  }
   @Get('camp/:campName')
   findAllPosts(@Param('campName') campName: string) {
     return this.postService.findAllPostsByCampName(campName);
+  }
+
+  @Get(':postId')
+  findPost(@Param('postId') postId: string) {
+    return this.postService.findPostWithUrls(+postId);
   }
 
   @Patch(':postId')
