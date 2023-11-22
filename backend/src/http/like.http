@@ -1,0 +1,9 @@
+#
+@server = http://localhost:3000
+# @server = http://223.130.146.223:3000
+
+### 포스트 id로 좋아요 생성하기 -> 중복처리
+POST {{server}}/posts/like/1
+
+### 포스트 id로 좋아요 지우기
+DELETE  {{server}}/posts/like/1

@@ -17,7 +17,16 @@ Content-Type: application/json
 }
 
 
-### 로그인 요청~
+### 마스터 로그인 요청~
+POST {{server}}/auth/users/signin
+Content-Type: application/json
+
+{
+    "email" : "master2@fancamp.com",
+    "password": "1234"
+}
+
+### 캠퍼 로그인 요청~
 POST {{server}}/auth/users/signin
 Content-Type: application/json
 

@@ -1,0 +1,44 @@
+#
+@server = http://localhost:3000
+# @server = http://223.130.146.223:3000
+
+### 포스트 생성
+POST {{server}}/posts
+Content-Type: application/json
+
+{
+    "content" : "7 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글글글글글글글글 ",
+    "picCnt" : 0,
+    "campName" : "camp1"
+}
+
+### 포스트 id로 가져오기
+GET {{server}}/posts/10
+
+### 글 내용 수정
+PATCH {{server}}/posts/7
+Content-Type: application/json
+
+{
+    "content" : "수정된 글~~~~~~"
+}
+
+###  둘다 수정
+PATCH {{server}}/posts/10
+Content-Type: application/json
+
+{
+    "content" : "둘다 수정됨~~~~",
+    "picCnt" : 1000
+}
+
+### 사진 개수만 수정
+PATCH {{server}}/posts/7
+Content-Type: application/json
+
+{
+    "picCnt" : 10
+}
+
+### 삭제 (soft delete)
+DELETE {{server}}/posts/7
