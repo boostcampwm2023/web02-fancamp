@@ -67,7 +67,16 @@ export class PostService {
   async findAllPostsByCampName(campName: string) {
     //TODO: 쿠키 분석해서 구독중인지 확인
     const camp = await this.campService.findOne(campName);
-    return this.postRepository.findAllByMasterId(camp.masterId);
+    const posts = await this.postRepository.findAllByMasterId(camp.masterId);
+    console.log('this is posts\n', posts);
+    return await Promise.all(
+      posts.map(async (post) => {
+        console.log(post);
+        const urls = await this.imageService.findUrlsByPostId(post.postId); //TODO: 이미지 없으면
+        console.log(urls[0]);
+        return { ...post, url: urls[0] };
+      }),
+    );
   }
 
   async updatePost(
