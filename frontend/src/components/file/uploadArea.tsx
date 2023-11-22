@@ -1,18 +1,27 @@
-import { DragEvent, useState } from 'react';
+import { DragEvent, useEffect, useState } from 'react';
 import { UploadedImage } from '../../types/client/image';
-import Image from '../image/Image';
+import Image from '../image/image';
 
-function UploadArea() {
-  const [uploadedImages, setUploadedImages] = useState<UploadedImage[]>([]);
+interface UploadAreaProps {
+  files: File[];
+  setFiles: React.Dispatch<React.SetStateAction<any[]>>;
+}
+
+function UploadArea({ files, setFiles }: UploadAreaProps) {
+  const [images, setImages] = useState<UploadedImage[]>([]);
   const [dragging, setDragging] = useState<boolean>(false);
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     setDragging(false);
-    const { files } = event.dataTransfer;
-    if (!files) {
+    const { files: newFiles } = event.dataTransfer;
+    if (!newFiles) {
       return;
     }
+    setFiles((_) => [..._, ...newFiles]);
+  };
+
+  useEffect(() => {
     Array.from(files).forEach((file) => {
       if (file.type.match('image.*')) {
         const fileReader = new FileReader();
@@ -23,12 +32,12 @@ function UploadArea() {
             size: file.size,
             buffer: fileReader.result as string,
           };
-          setUploadedImages((images) => [...images, newUploadedImage]);
+          setImages((_) => [..._, newUploadedImage]);
         };
         fileReader.readAsDataURL(file);
       }
     });
-  };
+  }, [files]);
 
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -38,14 +47,17 @@ function UploadArea() {
     event.preventDefault();
   };
 
+  const handleStartDrag = () => {
+    setDragging(true);
+  };
+
   const handleFinishDrag = () => {
     setDragging(false);
   };
 
-  const handleImageClick = (name: string) => {
-    setUploadedImages((images) =>
-      images.filter((image) => image.name !== name)
-    );
+  const handleImageClick = (index: number) => {
+    setImages(images.filter((_, i) => i !== index));
+    setFiles(files.filter((_, i) => i !== index));
   };
 
   return (
@@ -59,13 +71,13 @@ function UploadArea() {
       }}
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      onDragEnter={handleFinishDrag}
+      onDragEnter={handleStartDrag}
       onDragLeave={handleFinishDrag}
       onDragEnd={handleFinishDrag}
       onMouseUp={handleFinishDrag}
     >
       <div className="flex h-full w-full gap-md overflow-x-scroll p-lg">
-        {uploadedImages.map((image) => {
+        {images.map((image, index) => {
           const { name, buffer } = image;
           return (
             <Image
@@ -74,7 +86,7 @@ function UploadArea() {
               key={`uploaded-image-${name}`}
               className="no-drag aspect-square h-full object-cover"
               onDragStart={handleImageDragStart}
-              onClick={() => handleImageClick(name)}
+              onClick={() => handleImageClick(index)}
             />
           );
         })}
