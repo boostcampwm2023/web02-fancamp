@@ -6,10 +6,6 @@ export class CreatePostDto {
   @ApiProperty()
   content: string = '';
 
-  @IsNumber()
-  @ApiProperty()
-  picCnt: number = 0;
-
   @IsString()
   @ApiProperty()
   campName: string;

@@ -2,13 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { CreateImageDto } from './dto/create-image.dto';
 import { UpdateImageDto } from './dto/update-image.dto';
 
-import { v4 as uuidv4 } from 'uuid';
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { ImageRepository } from './image.repository';
 
 @Injectable()
 export class ImageService {
+  constructor(private readonly imageRepository: ImageRepository) {}
   s3Client = new S3Client({
-    endpoint: 'https://kr.object.ncloudstorage.com',
+    endpoint: process.env.END_POINT,
     forcePathStyle: true,
     region: process.env.REGION,
     credentials: {
@@ -17,11 +18,36 @@ export class ImageService {
     },
   });
   bucket_name = process.env.BUCKET_NAME;
-  async uploadFile(file: Express.Multer.File) {
-    const key = `${uuidv4()}.${file.originalname.split('.')[1]}`;
+
+  async createImage(createImageDto: CreateImageDto) {
+    return this.imageRepository.create(createImageDto);
+  }
+
+  async uploadFiles(
+    files: Array<Express.Multer.File>,
+    postId: number,
+    campId: number,
+  ) {
+    if (!files) {
+      return;
+    }
+    await Promise.all(
+      files.map(async (file, index) => {
+        const fileName = `${campId}-${postId}_${index}`;
+        const fileExt = file.originalname.split('.')[1];
+        const fileNullName = `${fileName}.${fileExt}`;
+        await this.uploadFile(file, fileNullName);
+
+        const imageUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileNullName}`;
+        this.createImage({ imageUrl, postId });
+      }),
+    );
+  }
+
+  async uploadFile(file: Express.Multer.File, fileNullName: string) {
     const command = new PutObjectCommand({
       Bucket: this.bucket_name,
-      Key: key,
+      Key: fileNullName,
       Body: file.buffer,
       ContentType: file.mimetype,
       ACL: 'public-read',
@@ -29,29 +55,8 @@ export class ImageService {
     try {
       const response = await this.s3Client.send(command);
       console.log(response);
-      return key;
     } catch (err) {
       console.error(err);
     }
-  }
-
-  create(createImageDto: CreateImageDto) {
-    return 'This action adds a new image';
-  }
-
-  findAll() {
-    return `This action returns all image`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} image`;
-  }
-
-  update(id: number, updateImageDto: UpdateImageDto) {
-    return `This action updates a #${id} image`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} image`;
   }
 }

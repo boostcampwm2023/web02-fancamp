@@ -10,12 +10,14 @@ import { CampModule } from 'src/camp/camp.module';
 import { UserModule } from 'src/user/user.module';
 import { LikeRepository } from './like.repository';
 import { CommentRepository } from './comment.repository';
+import { ImageModule } from 'src/image/image.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Post, Like, Comment]),
     CampModule,
     UserModule,
+    ImageModule,
   ],
   controllers: [PostController],
   providers: [

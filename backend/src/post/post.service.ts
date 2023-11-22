@@ -17,19 +17,25 @@ import { Certificate } from 'crypto';
 import { Post } from './entities/post.entity';
 import { UpdateCommenttDto } from './dto/update-comment.dto';
 import { Comment } from './entities/comment.entity';
+import { ImageService } from 'src/image/image.service';
 
 @Injectable()
 export class PostService {
   constructor(
     private readonly postRepository: PostRepository,
-    private readonly campService: CampService,
-    private readonly userService: UserService,
     private readonly likeRepository: LikeRepository,
     private readonly commentRepository: CommentRepository,
+    private readonly campService: CampService,
+    private readonly userService: UserService,
+    private readonly imageService: ImageService,
   ) {}
 
   /* Post */
-  async createPost(createPostDto: CreatePostDto, publicId: string) {
+  async createPost(
+    files: Array<Express.Multer.File>,
+    createPostDto: CreatePostDto,
+    publicId: string,
+  ) {
     const user = await this.userService.findUserByPublicId(publicId);
     if (!user.isMaster) {
       throw new HttpException(
@@ -38,16 +44,25 @@ export class PostService {
       );
     }
     const camp = await this.campService.findOne(createPostDto.campName);
-    return this.postRepository.create(
+    const post = await this.postRepository.create(
       createPostDto,
       user.id,
       camp.campId,
       user.isMaster,
+      files.length,
     );
+    await this.imageService.uploadFiles(files, post.postId, post.campId);
+    return post;
   }
 
   findPost(postId: number) {
     return this.postRepository.findOne(postId);
+  }
+
+  async findAllPostsByCampName(campName: string) {
+    //TODO: 쿠키 분석해서 구독중인지 확인
+    const camp = await this.campService.findOne(campName);
+    return this.postRepository.findAllByMasterId(camp.masterId);
   }
 
   async updatePost(
@@ -71,6 +86,9 @@ export class PostService {
       const user = await this.userService.findUserByPublicId(publicId);
       return this.likeRepository.create(postId, user.id);
     }
+  }
+  async findLikesByPostId(postId: number) {
+    return this.likeRepository.findLikesByPostId(postId);
   }
 
   async removeLike(postId: number, publicId: string) {
@@ -142,4 +160,18 @@ export class PostService {
       HttpStatus.BAD_REQUEST,
     );
   }
+
+  // async uploadImage(@UploadedFiles() files: Array<Express.Multer.File>) {
+  //   let urls = [];
+  //   if (!files) {
+  //     return 'false';
+  //   }
+  //   await Promise.all(
+  //     files.map(async (file) => {
+  //       const url = await this.imageService.uploadFile(file);
+  //       urls.push(url);
+  //     }),
+  //   );
+  //   console.log(urls);
+  // }
 }

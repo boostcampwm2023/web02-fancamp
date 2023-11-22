@@ -19,10 +19,11 @@ export class PostRepository {
     userId: number,
     campId: number,
     isMaster: boolean,
+    picCnt: number,
   ) {
     return this.postRepository.save({
       content: createPostDto.content,
-      picCnt: createPostDto.picCnt,
+      picCnt: picCnt,
       userId,
       campId,
       isMaster,
@@ -32,6 +33,9 @@ export class PostRepository {
 
   findOne(postId: number) {
     return this.postRepository.findOneBy({ postId });
+  }
+  findAllByMasterId(masterId: number) {
+    return this.postRepository.findBy({ userId: masterId });
   }
 
   async update(post: Post, updatePostDto: UpdatePostDto) {
