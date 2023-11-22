@@ -1,4 +1,4 @@
-import { Module,NestModule, MiddlewareConsumer } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -7,9 +7,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
 import { LoggerMiddleware } from './logger.middleware';
+import { CampModule } from './camp/camp.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
-  imports: [UserModule, AuthModule,
+  imports: [
+    UserModule,
+    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -26,12 +30,13 @@ import { LoggerMiddleware } from './logger.middleware';
       entities: [User],
       autoLoadEntities: true,
     }),
+    CampModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-
-export class AppModule implements NestModule{
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(LoggerMiddleware).forRoutes('*');
   }

@@ -12,11 +12,14 @@ export class UserRepository {
   }
 
   createUser(createUserAuthDto: CreateUserAuthDto) {
-    console.log(createUserAuthDto)
     return this.usersRepository.save(createUserAuthDto);
   }
 
   findUserByEmail(email: string) {
     return this.usersRepository.findOneBy({ email });
+  }
+
+  findUserByPublicId(publicId: string) {
+    return this.usersRepository.findOneBy({ publicId });
   }
 }

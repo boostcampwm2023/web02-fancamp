@@ -3,8 +3,17 @@ import { AppModule } from './app.module';
 import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+//TODO: 클라이언트 연결되면 삭제 ->
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { join } from 'path';
+//<-
+
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  // const app = await NestFactory.create(AppModule); //TODO: 클라이언트 연결되면 주석 해제
+  //TODO: 클라이언트 연결되면 삭제 ->
+  const app = await NestFactory.create<NestExpressApplication>(AppModule); //express 사용하는 인스턴스 생성
+  app.useStaticAssets(join(__dirname, 'static')); //정적 파일 경로 지정
+  //<-
   app.use(cookieParser());
 
   const config = new DocumentBuilder()
@@ -15,7 +24,7 @@ async function bootstrap() {
     .build();
 
   app.enableCors({
-    origin:['http://localhost:5173', '*'], //origin이 *가 있으면 fetch옵션에 credential이 include일때 요청이 안옴.
+    origin: ['http://localhost:5173', '*'], //origin이 *가 있으면 fetch옵션에 credential이 include일때 요청이 안옴.
     credentials: true, // 인증 정보를 서버로 전송할 수 있도록 허용
   });
 

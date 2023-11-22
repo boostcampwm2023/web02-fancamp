@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Nest Chat</title>
+  </head>
+  <body>
+    <h2>심플 채팅</h2>
+    <div id="chat"></div>
+    <!-- 채팅 메시지를 표시할 div -->
+
+    <div>
+      <!-- 채팅방 목록 -->
+      <h2>채팅방 목록</h2>
+      <ul id="rooms"></ul>
+    </div>
+
+    <input type="text" id="message" placeholder="메시지를 입력해주세요" />
+    <button onclick="sendMessageMaster()">전송</button>
+    <button onclick="sendMessageCamper()">캠퍼 전송</button>
+    <button onclick="inRoomMaster()">마스터가 방 들어가기</button>
+    <button onclick="inRoomCamper()">캠퍼가 방 들어가기</button>
+    <button onclick="outRoomMaster()">마스터가 방 나가기</button>
+    <button onclick="outRoomCamper()">캠퍼가 방 나가기</button>
+  </body>
+
+  <!-- jquery로드 -->
+  <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
+  <!-- socket.io로드 -->
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script>
+    let chatSocket;
+
+    const publicId = prompt('접속하는 publicId 입력해주세요');
+    const campName = prompt('들어갈 campName 입력해주세요.');
+    //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
+    function sendMessageCamper() {
+      console.log('캠퍼 메세지 전송시작');
+      const message = $('#message').val();
+      $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
+      chatSocket.emit('camperMessage', { message, publicId, campName }); //메시지 보낼 때 닉네임도 같이 전송
+    }
+
+    //[전송] 버튼 클릭 시 입력된 글을 message 이벤트로 보냄
+    function sendMessageMaster() {
+      console.log('마스터 메세지 전송시작');
+      const message = $('#message').val();
+      $('#chat').append(`<div>나 :  ${message}</div>`); //내가 보낸 메시지는 바로 추가
+      chatSocket.emit('masterMessage', { message, publicId, campName }); //메시지 보낼 때 닉네임도 같이 전송
+    }
+
+    function inRoomMaster() {
+      console.log('마스터 방 들어가기 시작');
+      chatSocket = io('http://localhost:3000/chat');
+      chatSocket.emit('masterIn', { publicId, campName });
+
+      chatSocket.on('message', (message) => {
+        $('#chat').append(`<div>${message}</div>`);
+      });
+
+      chatSocket.on('connect', () => {
+        console.log('서버에 연결되었습니다.');
+      });
+    }
+
+    function inRoomCamper() {
+      console.log('캠퍼 방 들어가기 시작');
+      chatSocket = io('http://localhost:3000/chat');
+      chatSocket.emit('camperIn', { publicId, campName });
+
+      chatSocket.on('message', (message) => {
+        $('#chat').append(`<div>${message}</div>`);
+      });
+
+      chatSocket.on('connect', () => {
+        console.log('서버에 연결되었습니다.');
+      });
+    }
+
+    function outRoomMaster() {
+      chatSocket.emit('masterOut', { publicId });
+    }
+
+    function outRoomCamper() {
+      chatSocket.emit('camperOut', { publicId, campName });
+    }
+  </script>
+</html>

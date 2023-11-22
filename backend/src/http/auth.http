@@ -1,0 +1,34 @@
+#
+@server = http://localhost:3000
+# @server = http://175.45.194.10:3000
+# @server = http://223.130.146.223:3000
+
+### 회원가입 요청~
+POST {{server}}/auth/users
+Content-Type: application/json
+
+{
+    "email" : "master2@fancamp.com",
+    "password": "1234",
+    "chatName": "master2",
+    "publicId": "master2",
+    "profileImage": "",
+    "isMaster": true
+}
+
+
+### 로그인 요청~
+POST {{server}}/auth/users/signin
+Content-Type: application/json
+
+{
+    "email" : "camper1@fancamp.com",
+    "password": "1234"
+}
+
+
+### 로그아웃 요청~
+GET {{server}}/auth/users/signout
+
+### 쿠키에 저장된걸로 로그인여부 확인
+GET {{server}}/auth/users
