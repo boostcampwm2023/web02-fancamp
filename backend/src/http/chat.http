@@ -8,9 +8,9 @@ POST {{server}}/chats
 Content-Type: application/json
 
 {
-    "stringContent": "캠퍼1 보냅니다 (닉네임)안녕!",
+    "stringContent": "캠퍼2 보냅니다 (닉네임)안녕!",
     "picContent": "",
-    "senderId": 1,
+    "senderId": 2,
     "masterId": 4
 }
 

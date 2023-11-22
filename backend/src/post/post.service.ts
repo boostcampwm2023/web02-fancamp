@@ -15,6 +15,8 @@ import { CommentRepository } from './comment.repository';
 import { ERR_MESSAGE } from 'src/utils/constants';
 import { Certificate } from 'crypto';
 import { Post } from './entities/post.entity';
+import { UpdateCommenttDto } from './dto/update-comment.dto';
+import { Comment } from './entities/comment.entity';
 
 @Injectable()
 export class PostService {
@@ -81,11 +83,26 @@ export class PostService {
   /* Comment */
   async createComment(createCommentDto: CreateCommentDto, publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
-    await this.checkOwnPost(createCommentDto.postId, user.id);
     return this.commentRepository.create(createCommentDto, user.id);
   }
 
-  /* Check functions */
+  async updateComment(
+    commentId: number,
+    updateCommentDto: UpdateCommenttDto,
+    publicId: string,
+  ) {
+    const user = await this.userService.findUserByPublicId(publicId);
+    const comment = await this.checkOwnComment(commentId, user.id);
+    return this.commentRepository.update(comment, updateCommentDto);
+  }
+
+  async removeComment(commentId: number, publicId: any) {
+    const user = await this.userService.findUserByPublicId(publicId);
+    const comment = await this.checkOwnComment(commentId, user.id);
+    return this.commentRepository.remove(comment);
+  }
+
+  /* Check Post functions */
   async checkPost(postId: number): Promise<Post> {
     const post = await this.postRepository.findOne(postId);
     if (post) {
@@ -103,5 +120,26 @@ export class PostService {
       return post;
     }
     throw new HttpException(ERR_MESSAGE.NOT_POST_OWNER, HttpStatus.BAD_REQUEST);
+  }
+  /* Check Comment functions */
+  async checkComment(commentId: number): Promise<Comment> {
+    const comment = await this.commentRepository.findOne(commentId);
+    if (comment) {
+      return comment;
+    }
+    throw new HttpException(
+      ERR_MESSAGE.COMMENT_NOT_FOUND_BY_ID,
+      HttpStatus.BAD_REQUEST,
+    );
+  }
+  async checkOwnComment(commentId: number, userId: number): Promise<Comment> {
+    const comment = await this.checkComment(commentId);
+    if (comment.userId === userId) {
+      return comment;
+    }
+    throw new HttpException(
+      ERR_MESSAGE.NOT_COMMENT_OWNER,
+      HttpStatus.BAD_REQUEST,
+    );
   }
 }

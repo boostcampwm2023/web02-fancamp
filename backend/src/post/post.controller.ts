@@ -15,6 +15,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 import { Request } from 'express';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { UpdateCommenttDto } from './dto/update-comment.dto';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -51,18 +52,18 @@ export class PostController {
     return this.postService.removePost(+postId);
   }
   /* like */
-  @Post('like/:postId')
+  @Post('likes/:postId')
   createLike(@Param('postId') postId: string, @Req() request: Request) {
     return this.postService.createLike(+postId, request.cookies['publicId']);
   }
 
-  @Delete('like/:postId')
+  @Delete('likes/:postId')
   removeLike(@Param('postId') postId: string, @Req() request: Request) {
     return this.postService.removeLike(+postId, request.cookies['publicId']);
   }
 
   /* comment */
-  @Post('comment')
+  @Post('comments')
   createComment(
     @Body() createCommentDto: CreateCommentDto,
     @Req() request: Request,
@@ -71,5 +72,23 @@ export class PostController {
       createCommentDto,
       request.cookies['publicId'],
     );
+  }
+
+  @Patch('comments/:commentId')
+  updateComment(
+    @Param('commentId') commentId: string,
+    @Body() updateCommentDto: UpdateCommenttDto,
+    @Req() request: Request,
+  ) {
+    return this.postService.updateComment(
+      +commentId,
+      updateCommentDto,
+      request.cookies['publicId'],
+    );
+  }
+
+  @Delete('comments/:postId')
+  removeComment(@Param('postId') postId: string, @Req() request: Request) {
+    return this.postService.removeComment(+postId, request.cookies['publicId']);
   }
 }

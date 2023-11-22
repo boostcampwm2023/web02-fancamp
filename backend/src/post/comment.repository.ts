@@ -3,6 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { concatMap } from 'rxjs';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './entities/comment.entity';
+import { UpdateCommenttDto } from './dto/update-comment.dto';
 @Injectable()
 export class CommentRepository {
   private commentRepository: Repository<Comment>;
@@ -18,5 +19,18 @@ export class CommentRepository {
       postId: createCommentDto.postId,
       isDeleted: false,
     });
+  }
+  findOne(commentId: number) {
+    return this.commentRepository.findOneBy({ commentId });
+  }
+
+  update(comment: Comment, updateCommentDto: UpdateCommenttDto) {
+    comment.content = updateCommentDto.content;
+    return this.commentRepository.save(comment);
+  }
+
+  remove(comment: Comment) {
+    comment.isDeleted = true;
+    return this.commentRepository.save(comment);
   }
 }

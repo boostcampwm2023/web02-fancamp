@@ -8,5 +8,5 @@ export class CreateCommentDto {
 
   @IsNumber()
   @ApiProperty()
-  postId: number = 0;
+  postId: number;
 }
