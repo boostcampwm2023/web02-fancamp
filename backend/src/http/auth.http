@@ -31,7 +31,7 @@ POST {{server}}/auth/users/signin
 Content-Type: application/json
 
 {
-    "email" : "camper1@fancamp.com",
+    "email" : "camper3@fancamp.com",
     "password": "1234"
 }
 

@@ -3,7 +3,10 @@
 # @server = http://223.130.146.223:3000
 
 ### 포스트 id로 좋아요 생성하기 -> 중복처리
-POST {{server}}/posts/like/1
+POST {{server}}/posts/likes/1
 
 ### 포스트 id로 좋아요 지우기
 DELETE  {{server}}/posts/like/1
+
+### postId로 좋아요 수 가져오기
+GET {{server}}/posts/likes/1

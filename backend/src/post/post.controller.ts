@@ -24,46 +24,6 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) {}
-  /* Post */
-  @Post()
-  @UseInterceptors(FilesInterceptor('files'))
-  create(
-    @UploadedFiles() files: Array<Express.Multer.File>,
-    @Body() createPostDto: CreatePostDto,
-    @Req() request: Request,
-  ) {
-    return this.postService.createPost(
-      files,
-      createPostDto,
-      request.cookies['publicId'],
-    );
-  }
-  @Get(':postId')
-  findPost(@Param('postId') id: string) {
-    return this.postService.findPost(+id);
-  }
-  @Get('camp/:campName')
-  findAllPosts(@Param('campName') campName: string) {
-    return this.postService.findAllPostsByCampName(campName);
-  }
-
-  @Patch(':postId')
-  updatePost(
-    @Param('postId') postId: string,
-    @Body() updatePostDto: UpdatePostDto,
-    @Req() request: Request,
-  ) {
-    return this.postService.updatePost(
-      +postId,
-      updatePostDto,
-      request.cookies['publicId'],
-    );
-  }
-
-  @Delete(':postId')
-  remove(@Param('postId') postId: string) {
-    return this.postService.removePost(+postId);
-  }
   /* like */
   @Post('likes/:postId')
   createLike(@Param('postId') postId: string, @Req() request: Request) {
@@ -114,5 +74,45 @@ export class PostController {
       +commentId,
       request.cookies['publicId'],
     );
+  }
+  /* Post */
+  @Post()
+  @UseInterceptors(FilesInterceptor('files'))
+  create(
+    @UploadedFiles() files: Array<Express.Multer.File>,
+    @Body() createPostDto: CreatePostDto,
+    @Req() request: Request,
+  ) {
+    return this.postService.createPost(
+      files,
+      createPostDto,
+      request.cookies['publicId'],
+    );
+  }
+  @Get(':postId')
+  findPost(@Param('postId') id: string) {
+    return this.postService.findPost(+id);
+  }
+  @Get('camp/:campName')
+  findAllPosts(@Param('campName') campName: string) {
+    return this.postService.findAllPostsByCampName(campName);
+  }
+
+  @Patch(':postId')
+  updatePost(
+    @Param('postId') postId: string,
+    @Body() updatePostDto: UpdatePostDto,
+    @Req() request: Request,
+  ) {
+    return this.postService.updatePost(
+      +postId,
+      updatePostDto,
+      request.cookies['publicId'],
+    );
+  }
+
+  @Delete(':postId')
+  remove(@Param('postId') postId: string) {
+    return this.postService.removePost(+postId);
   }
 }
