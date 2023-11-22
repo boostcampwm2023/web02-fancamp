@@ -19,6 +19,7 @@ import Layout from '../components/Layout';
 import ErrorPage from '../pages/error';
 import ProfilePage from '../pages/camps/edit/profile/profilePage';
 import PasswordPage from '../pages/camps/edit/password/passwordPage';
+import AuthProtectedRoute from './AuthProtectedRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,12 +32,15 @@ const router = createBrowserRouter(
         <Route index element={<HomePage />} />
         <Route path="search" element={<SearchPage />} />
         <Route path="explore" element={<ExplorePage />} />
+        <Route element={<AuthProtectedRoute />}>
+          <Route path="chat" element={<ChatPage />} />
+        </Route>
         <Route path="camps" element={<CampPage />}>
           <Route path=":campId">
-            <Route path="chat" element={<ChatPage />} />
             <Route path="community" element={<CommunityPage />} />
             <Route path="post" element={<PostPage />} />
           </Route>
+          R
         </Route>
         <Route path="demo">
           <Route path="components" element={<DemoPage />} />

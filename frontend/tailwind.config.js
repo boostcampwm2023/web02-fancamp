@@ -35,15 +35,19 @@ export default {
       'point-blue': '#0087E9',
       'point-lavender': '#D4AAFF',
       'point-red': '#FF5044',
-      transparent: 'transparent',
       'surface-primary': '#FFFFFF',
+      'light-yellow': '#FDF2DF',
+      yellow: '#FFE2B5',
+      border: '#BEBEBE',
+      transparent: 'transparent',
+      white: '#FFFFFF',
       error: '#ff4d4d',
     },
   },
   plugins: [
     ({ addBase, addComponents, addUtilities }) => {
       addBase({
-        'body': {
+        body: {
           '@apply overflow-y-scroll': {},
         },
       });
@@ -55,6 +59,10 @@ export default {
       addUtilities({
         '.display-regular-20': {
           '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[400]':
+            {},
+        },
+        '.display-regular-16': {
+          '@apply font-[TheJamsil] text-[1rem] leading-[1.185rem] font-[400]':
             {},
         },
         '.display-regular-14': {

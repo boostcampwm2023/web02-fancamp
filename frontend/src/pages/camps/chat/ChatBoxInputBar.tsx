@@ -1,11 +1,18 @@
 import { useState } from 'react';
 import { Message } from './ChatBox';
+import { getLocaleString } from '../../../utils/date';
 
 type Props = {
+  messages: Message[];
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
+  onSubmitMessage: (message: string) => void;
 };
 
-export default function ChatBoxInputBar({ setMessages }: Props) {
+export default function ChatBoxInputBar({
+  messages,
+  setMessages,
+  onSubmitMessage,
+}: Props) {
   const [inputText, setInputText] = useState('');
 
   const handleInputTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -14,10 +21,11 @@ export default function ChatBoxInputBar({ setMessages }: Props) {
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    onSubmitMessage(inputText);
     const newMessage = {
-      messageId: Math.random(),
-      isMasterMessage: false,
-      time: '오후 4:00',
+      messageId: messages.length + 1,
+      isMyMessage: true,
+      time: getLocaleString(),
       text: inputText,
     };
     setMessages((prev) => [...prev, newMessage]);
@@ -25,15 +33,19 @@ export default function ChatBoxInputBar({ setMessages }: Props) {
   };
 
   return (
-    <form onSubmit={handleMessageSubmit} className="flex rounded-full border">
+    <form onSubmit={handleMessageSubmit} className="border-border flex border">
       <input
-        className="w-full rounded-full"
+        className="display-regular-16 w-full bg-contour-primary p-4"
         onChange={handleInputTextChange}
         value={inputText}
-        placeholder="메세지 입력..."
+        placeholder="메세지를 보내보세요! 😁"
       />
-      <button className="" type="submit">
-        전송
+      <button
+        className="bg-contour-primary p-2"
+        type="submit"
+        aria-label="submit your message"
+      >
+        <img src="/SubmitMessageIcon.png" />
       </button>
     </form>
   );

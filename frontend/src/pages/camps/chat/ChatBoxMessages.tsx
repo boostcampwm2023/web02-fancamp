@@ -6,22 +6,42 @@ interface Props {
 
 export default function ChatBoxMessages({ messages }: Props) {
   return (
-    <div className="flex-1 border">
+    <div className="bg-light-yellow border-border max-h-[60%] flex-1 overflow-y-scroll border-l border-r">
       <ul className="flex flex-col gap-8 p-8">
-        {messages.map(({ messageId, isMasterMessage, text, time }) => {
-          return isMasterMessage ? (
-            <li key={messageId}>
-              <span className="bg-green-200 mr-2 rounded p-2">{text}</span>
-              <span className="text-gray-400 text-sm">{time}</span>
-            </li>
-          ) : (
-            <li className="text-right">
-              <span className="text-gray-400 text-sm">{time}</span>
-              <span className="bg-blue-200 ml-2 rounded p-2">{text}</span>
-            </li>
-          );
-        })}
+        {messages.map(({ messageId, isMyMessage, text, time }) => (
+          <MessageBubble
+            key={messageId}
+            isMyMessage={isMyMessage}
+            text={text}
+            time={time}
+          />
+        ))}
       </ul>
     </div>
+  );
+}
+
+interface MessageBubbleProps {
+  isMyMessage: boolean;
+  text: string;
+  time: string;
+}
+
+function MessageBubble({ isMyMessage, text, time }: MessageBubbleProps) {
+  return (
+    <li className={`flex items-end gap-4 ${isMyMessage && 'flex-row-reverse'}`}>
+      <span
+        className={`${
+          isMyMessage
+            ? 'text-white rounded-br-none bg-point-lavender'
+            : 'bg-white rounded-tl-none text-text-primary'
+        } display-regular-16 ml-2 rounded-lg p-4`}
+      >
+        {text}
+      </span>
+      <span className="text-sm text-text-secondary display-light-14">
+        {time}
+      </span>
+    </li>
   );
 }
