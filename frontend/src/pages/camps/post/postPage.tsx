@@ -15,7 +15,7 @@ import { Comment } from '../../../types/api/comment';
 import Spinner from '../../../components/loading/spinner';
 import ModalSipnner from '../../../components/loading/modalSpinner';
 import { User } from '../../../types/api/user';
-import Image from '../../../components/image/Image';
+import Image from '../../../components/image/image';
 import LikeButton from '../../../components/button/likeButton';
 import { numberToString } from '../../../utils/unit';
 import { queryClient } from '../../../main';
@@ -148,7 +148,7 @@ function PostModalTemplate({
   const postLikeMutation = useMutation({
     mutationFn: (like: boolean) =>
       fetch(`/api/posts/${postId}/like`, {
-        method: 'put',
+        method: 'PUT',
         body: JSON.stringify({ like }),
       }).then((res) => res.json()),
     onSuccess: (data) => {

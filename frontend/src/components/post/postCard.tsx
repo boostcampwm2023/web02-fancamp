@@ -1,4 +1,4 @@
-import Image from '../image/Image';
+import Image from '../image/image';
 import Text from '../text/text';
 
 interface PostCardProps {

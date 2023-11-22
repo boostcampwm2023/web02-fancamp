@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react';
 import RightArrowIcon from '../../assets/icons/rightArrowIcon.svg?react';
 import Text from '../text/text';
-import Image from '../image/Image';
+import Image from '../image/image';
 
 interface ImageSliderProps {
   width?: number;
