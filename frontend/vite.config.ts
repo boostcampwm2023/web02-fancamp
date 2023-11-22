@@ -14,6 +14,13 @@ export default defineConfig({
         secure: false,
         ws: true,
       },
+      '/socket.io': {
+        target: 'http://223.130.133.168:3000',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/ws/, ''),
+        secure: false,
+        ws: true,
+      },
     },
   },
 });

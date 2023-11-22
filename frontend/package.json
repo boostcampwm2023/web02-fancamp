@@ -20,6 +20,7 @@
     "react-loader-spinner": "^5.4.5",
     "react-router-dom": "^6.18.0",
     "react18-json-view": "^0.2.6",
+    "socket.io-client": "^4.7.2",
     "vite-plugin-svgr": "^4.1.0"
   },
   "devDependencies": {
