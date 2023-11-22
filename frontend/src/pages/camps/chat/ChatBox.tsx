@@ -1,38 +1,83 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ChatBoxMessages from './ChatBoxMessages';
 import ChatBoxNavBar from './ChatBoxNavBar';
 import ChatBoxInputBar from './ChatBoxInputBar';
+import useAuth from '../../../hooks/useAuth';
+import { socket } from '../../../api/socket';
+import { getLocaleString } from '../../../utils/date';
 
 export interface Message {
   messageId: number;
-  isMasterMessage: boolean;
+  isMyMessage: boolean;
   text: string;
   time: string;
 }
 
-const mockData = [
-  {
-    messageId: 0,
-    isMasterMessage: false,
-    text: '안녕하세요 팬입니다',
-    time: '오후 3:01',
-  },
-  {
-    messageId: 1,
-    isMasterMessage: true,
-    text: '반갑습니다 마스터입니다',
-    time: '오후 3:20',
-  },
-];
-
 export default function ChatBox() {
-  const [messages, setMessages] = useState<Message[]>(mockData);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const { auth } = useAuth();
+  const { publicId, isMaster } = auth!;
+
+  useEffect(() => {
+    socket.connect();
+
+    if (isMaster) {
+      socket.emit('masterIn', { publicId, campName: 'camp1' });
+      return () => {
+        socket.emit('masterOut', { campName: 'camp1' });
+        socket.disconnect();
+      };
+    }
+
+    socket.emit('camperIn', { campName: 'camp1' });
+    return () => {
+      socket.emit('camperOut', { campName: 'camp1' });
+      socket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    function onMessage(message: any) {
+      const newMessage = {
+        messageId: messages.length + 1,
+        isMyMessage: false,
+        text: message,
+        time: getLocaleString(),
+      };
+      setMessages((prev) => [...prev, newMessage]);
+    }
+    socket.on('message', onMessage);
+
+    return () => {
+      socket.off('message', onMessage);
+    };
+  }, []);
+
+  const handleSubmitMessage = (message: string) => {
+    if (isMaster) {
+      socket.emit('masterMessage', {
+        publicId,
+        message,
+        campName: 'camp1',
+      });
+      return;
+    }
+    socket.emit('camperMessage', {
+      publicId,
+      message,
+      campName: 'camp1',
+    });
+  };
 
   return (
-    <div className="flex min-h-screen flex-col p-8">
+    <div className="flex h-screen flex-col p-8">
       <ChatBoxNavBar />
       <ChatBoxMessages messages={messages} />
-      <ChatBoxInputBar setMessages={setMessages} />
+      <ChatBoxInputBar
+        messages={messages}
+        setMessages={setMessages}
+        onSubmitMessage={handleSubmitMessage}
+      />
     </div>
   );
 }
