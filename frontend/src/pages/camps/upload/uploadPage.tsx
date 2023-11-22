@@ -6,10 +6,19 @@ import UploadArea from '../../../components/file/uploadArea';
 
 function UploadPage() {
   const [content, setContent] = useState<string>('');
+  const [files, setFiles] = useState<File[]>([]);
 
   const handleUpload = (event: FormEvent) => {
     event.preventDefault();
-    console.log(content);
+    const formData = new FormData();
+    files.forEach((file) => {
+      formData.append('files', file);
+    });
+
+    fetch('http://localhost:3000/file/upload', {
+      method: 'POST',
+      body: formData,
+    });
   };
 
   return (
@@ -22,9 +31,9 @@ function UploadPage() {
           <TextArea
             placeholder="원하는 내용을 적어보세요!"
             setValue={setContent}
-            defaultValue={content}
+            value={content}
           />
-          <UploadArea />
+          <UploadArea files={files} setFiles={setFiles} />
           <SubmitButton text="업로드" />
         </form>
       </div>
