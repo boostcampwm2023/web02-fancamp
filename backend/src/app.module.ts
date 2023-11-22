@@ -6,10 +6,11 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from './user/entities/user.entity';
-import { LoggerMiddleware } from './logger.middleware';
+import { LoggerMiddleware } from './utils/logger.middleware';
 import { CampModule } from './camp/camp.module';
 import { ChatModule } from './chat/chat.module';
 import { PostModule } from './post/post.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { PostModule } from './post/post.module';
     CampModule,
     ChatModule,
     PostModule,
+    ImageModule,
   ],
   controllers: [AppController],
   providers: [AppService],

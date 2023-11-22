@@ -4,7 +4,7 @@ import { concatMap } from 'rxjs';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ERR_MESSAGE } from 'src/constants';
+import { ERR_MESSAGE } from 'src/utils/constants';
 
 @Injectable()
 export class PostRepository {

@@ -12,7 +12,7 @@ import { UserService } from 'src/user/user.service';
 import { LikeRepository } from './like.repository';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { CommentRepository } from './comment.repository';
-import { ERR_MESSAGE } from 'src/constants';
+import { ERR_MESSAGE } from 'src/utils/constants';
 import { Certificate } from 'crypto';
 import { Post } from './entities/post.entity';
 
