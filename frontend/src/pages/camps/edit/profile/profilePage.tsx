@@ -2,7 +2,7 @@ import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { FormEvent, Suspense, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SubmitButton from '../../../../components/button/submitButton';
-import Image from '../../../../components/image/Image';
+import Image from '../../../../components/image/image';
 import Input from '../../../../components/input/input';
 import Text from '../../../../components/text/text';
 import { CampEditable } from '../../../../types/api/camp';
@@ -36,7 +36,7 @@ function ProfilePageTemplate() {
   const editProfileMutation = useMutation({
     mutationFn: (profile: Partial<CampEditable>) =>
       fetch(`/api/users/${campId}`, {
-        method: 'patch',
+        method: 'PATCH',
         body: JSON.stringify(profile),
       }).then((res) => res.json()),
     onSuccess: (data: Partial<CampEditable>) => {
@@ -78,7 +78,7 @@ function ProfilePageTemplate() {
           label="이름"
           type="text"
           setValue={setNewUserName}
-          defaultValue={newUserName}
+          value={newUserName}
           placeholder="이름을 입력해주세요."
         />
         <SubmitButton
