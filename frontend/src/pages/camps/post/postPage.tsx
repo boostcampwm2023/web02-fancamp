@@ -80,27 +80,25 @@ function PostGridTemplate({ handleModalOpen }: PostGridTemplateProps) {
 
   const { data: posts } = useSuspenseQuery<Post[]>({
     queryKey: ['posts'],
-    queryFn: () => fetch(`/api/posts/${campId}`).then((res) => res.json()),
+    queryFn: () => fetch(`/api/posts/camp/${campId}`).then((res) => res.json()),
   });
 
   return (
     <PostGrid>
-      {posts.length &&
-        posts.map((post) => {
-          const { postId, images, likeCount, commentCount, content } = post;
-          console.log(post);
-          return (
-            <PostCard
-              imageSrc={images[0]}
-              likeCount={likeCount}
-              commentCount={commentCount}
-              postId={postId}
-              handleOnClick={handleModalOpen}
-              content={content}
-              key={`post-card-${postId}`}
-            />
-          );
-        })}
+      {posts.map((post) => {
+        const { postId, images, likeCount, commentCount, content } = post;
+        return (
+          <PostCard
+            imageSrc={images[0]}
+            likeCount={likeCount}
+            commentCount={commentCount}
+            postId={postId}
+            handleOnClick={handleModalOpen}
+            content={content}
+            key={`post-card-${postId}`}
+          />
+        );
+      })}
     </PostGrid>
   );
 }
