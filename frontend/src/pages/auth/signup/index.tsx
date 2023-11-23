@@ -1,13 +1,12 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 import SignupForm from './SignupForm';
 import useAuth from '../../../hooks/useAuth';
 import { validateSign } from '../../../utils/validate';
 import { checkEmail, signup } from '../../../api/auth';
 import { EmailStatus, SignupStatus } from '../../../types/client/auth';
 
-interface SignMutateStatus {
+interface SignStatus {
   isPending: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -23,31 +22,13 @@ export default function SignupPage() {
   const [profileImage, setProfileImage] = useState<string>('');
   const [isMaster, setMaster] = useState<boolean>(false);
   const [isEmailOk, setEmailOk] = useState<EmailStatus>('ok');
-  const [signMutateStatus, setSignMutateStatus] = useState<SignMutateStatus>({
+  const [signStatus, setSignStatus] = useState<SignStatus>({
     isPending: false,
     isError: false,
     isSuccess: false,
   });
-  const { auth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-
-  const checkEmailMutation = useMutation({
-    mutationFn: ({ emailValue }: any) => checkEmail(emailValue),
-    onSuccess: () => {
-      setStatus('password');
-    },
-    onError: () => {
-      setEmailOk('duplicatedError');
-    },
-  });
-
-  const signupMutation = useMutation({
-    mutationFn: () =>
-      signup(email, password, chatName, publicId, profileImage, isMaster),
-    onSuccess: () => {
-      setStatus('finish');
-    },
-  });
 
   useEffect(() => {
     if (auth) {
@@ -65,8 +46,27 @@ export default function SignupPage() {
         setEmailOk('formatError');
         return;
       }
-      // checkEmailMutation.mutate({ emailValue: email });
-      setStatus('password');
+      setSignStatus({
+        isPending: true,
+        isError: false,
+        isSuccess: false,
+      });
+      try {
+        await checkEmail(email);
+        setStatus('password');
+        setSignStatus({
+          isPending: false,
+          isError: false,
+          isSuccess: true,
+        });
+      } catch (error) {
+        setEmailOk('duplicatedError');
+        setSignStatus({
+          isPending: false,
+          isError: true,
+          isSuccess: false,
+        });
+      }
     } else if (signupStatus === 'password') {
       const validatePassword = validateSign.isPasswordOk(password);
       const validateConfirmPassword = password === confirmPassword;
@@ -75,7 +75,34 @@ export default function SignupPage() {
       }
     } else if (signupStatus === 'profile') {
       // 관련 상태 검증 규칙 추가하기
-      signupMutation.mutate();
+      setSignStatus({
+        isPending: true,
+        isError: false,
+        isSuccess: false,
+      });
+      try {
+        const resAuth = await signup(
+          email,
+          password,
+          chatName,
+          publicId,
+          profileImage,
+          isMaster
+        );
+        setAuth(resAuth);
+        setStatus('finish');
+        setSignStatus({
+          isPending: false,
+          isError: false,
+          isSuccess: true,
+        });
+      } catch (error) {
+        setSignStatus({
+          isPending: false,
+          isError: true,
+          isSuccess: false,
+        });
+      }
     } else if (signupStatus === 'finish') {
       navigate('/');
     }
@@ -93,7 +120,7 @@ export default function SignupPage() {
         // profileImage={profileImage}
         isMaster={isMaster}
         isEmailOk={isEmailOk}
-        status={signMutateStatus}
+        status={signStatus}
         setEmail={setEmail}
         setPassword={setPassword}
         setConfirmPassword={setConfirmPassword}

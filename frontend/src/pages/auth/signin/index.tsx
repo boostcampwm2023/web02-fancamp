@@ -1,12 +1,11 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
 import SigninForm from './SigninForm';
 import useAuth from '../../../hooks/useAuth';
 import { validateSign } from '../../../utils/validate';
 import { signin } from '../../../api/auth';
 
-interface SignMutateStatus {
+interface SignStatus {
   isPending: boolean;
   isError: boolean;
   isSuccess: boolean;
@@ -16,21 +15,13 @@ export default function SigninPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [signMutateStatus, setSignMutateStatus] = useState<SignMutateStatus>({
+  const [signStatus, setSignStatus] = useState<SignStatus>({
     isPending: false,
     isError: false,
     isSuccess: false,
   });
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
-
-  const signinMutation = useMutation({
-    mutationFn: () => signin(email, password),
-    onSuccess: (data) => {
-      setAuth(data);
-      navigate('/');
-    },
-  });
 
   useEffect(() => {
     if (auth) {
@@ -40,18 +31,6 @@ export default function SigninPage() {
     }
   }, []);
 
-  useEffect(() => {
-    setSignMutateStatus({
-      isPending: signinMutation.isPending,
-      isError: signinMutation.isError,
-      isSuccess: signinMutation.isSuccess,
-    });
-  }, [
-    signinMutation.isPending,
-    signinMutation.isError,
-    signinMutation.isSuccess,
-  ]);
-
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const validateEmail = validateSign.isEmailOk(email);
@@ -59,7 +38,27 @@ export default function SigninPage() {
     if (!validateEmail || !validatePassword) {
       return;
     }
-    signinMutation.mutate();
+    setSignStatus({
+      isPending: true,
+      isError: false,
+      isSuccess: false,
+    });
+    try {
+      const response = await signin(email, password);
+      setAuth(response);
+      navigate('/');
+      setSignStatus({
+        isPending: false,
+        isError: false,
+        isSuccess: true,
+      });
+    } catch (error) {
+      setSignStatus({
+        isPending: false,
+        isError: true,
+        isSuccess: false,
+      });
+    }
   };
 
   return (
@@ -70,7 +69,7 @@ export default function SigninPage() {
         setEmail={setEmail}
         setPassword={setPassword}
         handleSubmit={handleSubmit}
-        status={signMutateStatus}
+        status={signStatus}
       />
     </div>
   );
