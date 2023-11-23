@@ -19,10 +19,29 @@ export async function signin(email: string, password: string): Promise<Auth> {
   return result;
 }
 
+export async function checkEmail(email: string): Promise<boolean> {
+  const response = await fetch('/api/auth/users/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email,
+    }),
+  });
+  if (!response.ok) {
+    throw new Error('중복된 이메일');
+  }
+  return true;
+}
+
 export async function signup(
   email: string,
   password: string,
-  chatname: string
+  chatName: string,
+  publicId: string,
+  profileImage: string,
+  isMaster: boolean
 ): Promise<Auth> {
   const response = await fetch('/api/auth/users', {
     method: 'POST',
@@ -32,9 +51,10 @@ export async function signup(
     body: JSON.stringify({
       email,
       password,
-      chatname,
-      profileImage: '',
-      isMaster: true,
+      chatName,
+      publicId,
+      profileImage,
+      isMaster,
     }),
     credentials: 'include',
   });

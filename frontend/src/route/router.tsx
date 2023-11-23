@@ -19,6 +19,7 @@ import Layout from '../components/Layout';
 import ErrorPage from '../pages/error';
 import ProfilePage from '../pages/camps/edit/profile/profilePage';
 import PasswordPage from '../pages/camps/edit/password/passwordPage';
+import UploadPage from '../pages/camps/upload/uploadPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
 
 const router = createBrowserRouter(
@@ -52,6 +53,7 @@ const router = createBrowserRouter(
           <Route path="profile" element={<ProfilePage />} />
           <Route path="password" element={<PasswordPage />} />
         </Route>
+        <Route path="/camps/:campId/upload" element={<UploadPage />} />
         <Route path="/demo/components" element={<DemoPage />} />
         <Route path="/demo/api/rest" element={<ApiPage />} />
         <Route path="/demo/api/scenario" element={<ApiPage />} />

@@ -40,21 +40,21 @@ function PasswordPage() {
         <Input
           label="기존 비밀번호"
           type="password"
-          defaultValue={currentPassword}
+          value={currentPassword}
           setValue={setCurrentPassword}
           placeholder="기존의 비밀번호를 입력해주세요."
         />
         <Input
           label="새로운 비밀번호"
           type="password"
-          defaultValue={newPassword}
+          value={newPassword}
           setValue={setNewPassword}
           placeholder="새로운 비밀번호를 입력해주세요."
         />
         <Input
           label="새로운 비밀번호 확인"
           type="password"
-          defaultValue={newPasswordConfirm}
+          value={newPasswordConfirm}
           setValue={setNewPasswordConfirm}
           placeholder="새로운 비밀번호를 다시 입력해주세요."
         />
