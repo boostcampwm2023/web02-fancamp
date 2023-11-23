@@ -37,6 +37,7 @@ export default {
       'point-red': '#FF5044',
       'surface-primary': '#FFFFFF',
       'light-yellow': '#FDF2DF',
+      'logo-green': '#36B85D',
       yellow: '#FFE2B5',
       border: '#BEBEBE',
       transparent: 'transparent',
