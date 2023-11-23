@@ -15,12 +15,12 @@ export async function signin(email: string, password: string): Promise<Auth> {
   if (!response.ok) {
     throw new Error('로그인 실패');
   }
-  const result = response.json();
+  const result = await response.json();
   return result;
 }
 
 export async function checkEmail(email: string): Promise<boolean> {
-  const response = await fetch('/api/auth/users/signin', {
+  const response = await fetch('/api/auth/users/rightEmail', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ export async function signup(
   if (!response.ok) {
     throw new Error('회원가입 실패');
   }
-  const result = response.json();
+  const result = await response.json();
   return result;
 }
 
@@ -73,7 +73,7 @@ export async function isValidSession(): Promise<Auth> {
   if (!response.ok) {
     throw new Error('유효한 세션이 아닙니다');
   }
-  const result = response.json();
+  const result = await response.json();
   return result;
 }
 

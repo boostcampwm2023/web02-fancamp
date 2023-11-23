@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
-import { signout } from '../../api/auth';
+import { signout } from '../../API/auth';
 
 const mainMenu = [
   { to: '/', text: 'Home' },
@@ -8,29 +8,45 @@ const mainMenu = [
   { to: '/explore', text: 'Explore' },
 ];
 
-const secondaryMenu = [
-  { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '캠프' },
-  { to: '/chat', text: '> 채팅' },
-  { to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/post', text: '> 포스트' },
-  {
-    to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/edit',
-    text: '> 캠프 수정',
-  },
-  {
-    to: '/camps/0b5060ce-dfb4-4497-b0bf-34c6b7fce368/upload',
-    text: '> 캠프 업로드',
-  },
-  { to: '/demo/components', text: '컴포넌트 데모' },
-  { to: '/demo/api/rest', text: 'Mock Api' },
-];
-
 const authMenu = [
   { to: '/auth/signin', text: '로그인' },
   { to: '/auth/signup', text: '회원가입' },
 ];
 
+const demoMenu = [
+  { to: '/demo/components', text: '컴포넌트 데모' },
+  { to: '/demo/api/rest', text: 'Mock Api' },
+];
+
 export default function SideMenu() {
   const { auth } = useAuth();
+
+  const masterMenu = [
+    {
+      to: `/camps/${auth?.publicId}/post`,
+      text: '캠프',
+    },
+    { to: `/camps/${auth?.publicId}/chat`, text: '> 채팅' },
+    {
+      to: `/camps/${auth?.publicId}/post`,
+      text: '> 포스트',
+    },
+    {
+      to: `/camps/${auth?.publicId}/edit`,
+      text: '> 캠프 수정',
+    },
+    {
+      to: `/camps/${auth?.publicId}/upload`,
+      text: '> 캠프 업로드',
+    },
+  ];
+
+  const camperMenu = [
+    {
+      to: '/subscriptions',
+      text: '구독한 캠프',
+    },
+  ];
 
   const handleSignout = async () => {
     await signout();
@@ -61,7 +77,15 @@ export default function SideMenu() {
             <SideMenuNavLink key={text} to={to} text={text} />
           ))
         )}
-        {secondaryMenu.map(({ to, text }) => (
+        {auth?.isMaster &&
+          masterMenu.map(({ to, text }) => (
+            <SideMenuNavLink key={text} to={to} text={text} />
+          ))}
+        {auth?.isMaster === false &&
+          camperMenu.map(({ to, text }) => (
+            <SideMenuNavLink key={text} to={to} text={text} />
+          ))}
+        {demoMenu.map(({ to, text }) => (
           <SideMenuNavLink key={text} to={to} text={text} />
         ))}
       </div>

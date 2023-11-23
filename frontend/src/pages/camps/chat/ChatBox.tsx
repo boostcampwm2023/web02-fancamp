@@ -3,8 +3,9 @@ import ChatBoxMessages from './ChatBoxMessages';
 import ChatBoxNavBar from './ChatBoxNavBar';
 import ChatBoxInputBar from './ChatBoxInputBar';
 import useAuth from '../../../hooks/useAuth';
-import { socket } from '../../../api/socket';
+import { socket } from '../../../API/socket';
 import { getLocaleString } from '../../../utils/date';
+import { useParams } from 'react-router';
 
 export interface Message {
   messageId: number;
@@ -17,21 +18,22 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<Message[]>([]);
   const { auth } = useAuth();
   const { publicId, isMaster } = auth!;
+  const { campId: campName } = useParams();
 
   useEffect(() => {
     socket.connect();
 
     if (isMaster) {
-      socket.emit('masterIn', { publicId, campName: 'camp1' });
+      socket.emit('masterIn', { publicId, campName });
       return () => {
-        socket.emit('masterOut', { campName: 'camp1' });
+        socket.emit('masterOut', { campName });
         socket.disconnect();
       };
     }
 
-    socket.emit('camperIn', { campName: 'camp1' });
+    socket.emit('camperIn', { campName });
     return () => {
-      socket.emit('camperOut', { campName: 'camp1' });
+      socket.emit('camperOut', { campName });
       socket.disconnect();
     };
   }, []);
@@ -58,14 +60,14 @@ export default function ChatBox() {
       socket.emit('masterMessage', {
         publicId,
         message,
-        campName: 'camp1',
+        campName,
       });
       return;
     }
     socket.emit('camperMessage', {
       publicId,
       message,
-      campName: 'camp1',
+      campName,
     });
   };
 

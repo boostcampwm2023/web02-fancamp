@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SigninForm from './SigninForm';
 import useAuth from '../../../hooks/useAuth';
 import { validateSign } from '../../../utils/validate';
-import { signin } from '../../../api/auth';
+import { signin } from '../../../API/auth';
 
 interface SignStatus {
   isPending: boolean;
