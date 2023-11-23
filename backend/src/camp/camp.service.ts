@@ -13,21 +13,13 @@ export class CampService {
     private readonly subscriptionService: SubscriptionService,
     private readonly userService: UserService,
   ) {}
-  async create(createCampDto: CreateCampDto, publicId: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    if (user.isMaster) {
-      const result = await this.campRepository.createCamp(
-        createCampDto,
-        user.id,
-      );
-      return { campName: result.campName, bannerImage: result.bannerImage };
-    }
-    throw new UnauthorizedException("camper can't make camp");
+  async create(createCampDto: CreateCampDto) {
+    return this.campRepository.createCamp(createCampDto);
   }
 
-  // findAll() {
-  //   return `This action returns all camp`;
-  // }
+  findAll() {
+    return this.campRepository.findAll();
+  }
 
   findOne(campName: string) {
     return this.campRepository.findOneByCampName(campName);

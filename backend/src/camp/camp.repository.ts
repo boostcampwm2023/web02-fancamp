@@ -11,12 +11,12 @@ export class CampRepository {
     this.campRepository = this.dataSource.getRepository(Camp);
   }
 
-  createCamp(createCampDto: CreateCampDto, masterId: number) {
-    return this.campRepository.save({
-      campName: createCampDto.campName,
-      bannerImage: createCampDto.bannerImage,
-      masterId: masterId,
-    });
+  createCamp(createCampDto: CreateCampDto) {
+    return this.campRepository.save(createCampDto);
+  }
+
+  findAll() {
+    return this.campRepository.find();
   }
 
   findOneByCampName(campName: string) {
