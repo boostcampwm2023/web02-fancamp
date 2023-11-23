@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import CheckIcon from '../../assets/icons/checkIcon.svg?react';
@@ -8,9 +8,10 @@ import { CampInfo as CampInfoType } from '../../types/api/camp';
 import ProfileImage from '../../components/image/profileImage';
 import useAuth from '../../hooks/useAuth';
 import useFetch from '../../hooks/useFetch';
+import { isSubscribedCamp, subscribeCamp } from '../../API/subscription';
 
 function CampInfo() {
-  const [subscribed, setSubscribe] = useState(false);
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const { campId } = useParams();
   const { auth } = useAuth();
 
@@ -25,8 +26,16 @@ function CampInfo() {
     staleTime: 0,
   });
 
+  useEffect(() => {
+    isSubscribedCamp(campId!)
+      .then(() => setIsSubscribed(true))
+      .catch(() => setIsSubscribed(false));
+  }, []);
+
   const handleSubscribe = () => {
-    setSubscribe(!subscribed);
+    subscribeCamp(campId!)
+      .then(() => setIsSubscribed(true))
+      .catch(console.error);
   };
 
   return (
@@ -51,18 +60,21 @@ function CampInfo() {
         </div>
         <div>
           {!auth?.isMaster && (
-            <SubscribeButton subscribed={subscribed} onClick={handleSubscribe}>
+            <SubscribeButton
+              subscribed={isSubscribed}
+              onClick={handleSubscribe}
+            >
               <Text
                 size={14}
-                color={subscribed ? 'text-secondary' : 'point-blue'}
+                color={isSubscribed ? 'text-secondary' : 'point-blue'}
                 className="flex items-center"
               >
-                {subscribed ? (
+                {isSubscribed ? (
                   <CheckIcon className="[&>path]:stroke-text-secondary" />
                 ) : (
                   '+ '
                 )}
-                {subscribed ? '구독중' : '구독하기'}
+                {isSubscribed ? '구독중' : '구독하기'}
               </Text>
             </SubscribeButton>
           )}

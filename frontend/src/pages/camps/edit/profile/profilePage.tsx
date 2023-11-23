@@ -1,4 +1,4 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { FormEvent, Suspense, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SubmitButton from '../../../../components/button/submitButton';
@@ -6,7 +6,6 @@ import Input from '../../../../components/input/input';
 import Text from '../../../../components/text/text';
 import { CampEditable } from '../../../../types/api/camp';
 import Spinner from '../../../../components/loading/spinner';
-import { queryClient } from '../../../../main';
 import ProfileImage from '../../../../components/image/profileImage';
 import useFetch from '../../../../hooks/useFetch';
 

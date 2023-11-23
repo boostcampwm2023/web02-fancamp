@@ -35,6 +35,8 @@ function PostPageGrid({
       {auth?.isMaster && <UploadCard onClick={handleUploadModalOpen} />}
       {posts.map((post) => {
         const { postId, content } = post;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         const url = post?.url?.imageUrl;
         return (
           <PostCard

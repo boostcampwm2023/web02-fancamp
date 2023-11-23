@@ -56,7 +56,7 @@ function ModalDemo() {
     <Section>
       <Text size={20}>Modal</Text>
       <Button text="열기" onClick={handleModalOpen} />
-      <Modal isOpen={isModalOpen} setOpen={handleModalClose}>
+      <Modal isOpen={isModalOpen} handleCloseModal={handleModalClose}>
         <div className="flex h-[6rem] w-[10rem] flex-col items-center justify-evenly">
           <span>모달 테스트</span>
           <Button text="닫기" onClick={handleModalClose} />
