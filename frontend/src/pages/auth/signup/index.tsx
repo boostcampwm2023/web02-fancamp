@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import SignupForm from './SignupForm';
 import useAuth from '../../../hooks/useAuth';
 import { validateSign } from '../../../utils/validate';
-import { checkEmail, signup } from '../../../api/auth';
+import { signup } from '../../../API/auth';
 import { EmailStatus, SignupStatus } from '../../../types/client/auth';
 
 interface SignStatus {
@@ -52,7 +52,7 @@ export default function SignupPage() {
         isSuccess: false,
       });
       try {
-        await checkEmail(email);
+        // await checkEmail(email);
         setStatus('password');
         setSignStatus({
           isPending: false,
