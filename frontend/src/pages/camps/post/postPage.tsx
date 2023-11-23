@@ -1,66 +1,62 @@
 import { Suspense, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import {
-  useMutation,
-  useSuspenseQueries,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/modal/modal';
-import ImageSlider from '../../../components/slider/imageSlider';
-import PostGrid from '../../../components/post/postGrid';
-import PostCard from '../../../components/post/postCard';
-import Text from '../../../components/text/text';
-import { Post } from '../../../types/api/post';
-import { Comment } from '../../../types/api/comment';
 import Spinner from '../../../components/loading/spinner';
 import ModalSipnner from '../../../components/loading/modalSpinner';
-import { User } from '../../../types/api/user';
-import Image from '../../../components/image/image';
-import LikeButton from '../../../components/button/likeButton';
-import { numberToString } from '../../../utils/unit';
-import { queryClient } from '../../../main';
-import CloseIcon from '../../../assets/icons/closeIcon.svg?react';
-
-interface PostGridTemplateProps {
-  handleModalOpen: (postId: string) => void;
-}
-
-interface PostModalTemplateProps {
-  postId: string | null;
-  handleModalClose: () => void;
-}
-
-interface CommentProps {
-  comment: string;
-  createdAt: string;
-  profile: User;
-}
+import UploadModal from './uploadModal';
+import PostModal from './postModal';
+import PostPageGrid from './postGrid';
+import useAuth from '../../../hooks/useAuth';
 
 function PostPage() {
-  const [showModal, setModal] = useState(false);
+  const [showPostModal, setPostModal] = useState(false);
+  const [showUploadModal, setUploadModal] = useState(false);
   const [showPostId, setPostId] = useState<string | null>(null);
+  const { auth } = useAuth();
+  const navigate = useNavigate();
 
-  const handleModalOpen = (postId: string) => {
+  if (!auth) {
+    navigate('/auth/signin');
+    return null;
+  }
+
+  const handlePostModalOpen = (postId: string) => {
     setPostId(postId);
-    setModal(true);
+    setPostModal(true);
   };
 
-  const handleModalClose = () => {
+  const handlePostModalClose = () => {
     setPostId(null);
-    setModal(false);
+    setPostModal(false);
+  };
+
+  const handleUploadModalOpen = () => {
+    setUploadModal(true);
+  };
+
+  const handleUploadModalClose = () => {
+    setUploadModal(false);
   };
 
   return (
     <section className="relative flex-1">
-      {showModal && (
+      {showPostModal && (
         <Suspense fallback={<ModalSipnner />}>
-          <Modal isOpen={showModal} setOpen={handleModalClose}>
-            <PostModalTemplate
+          <Modal isOpen={showPostModal} handleCloseModal={handlePostModalClose}>
+            <PostModal
               postId={showPostId}
-              handleModalClose={handleModalClose}
+              handlePostModalClose={handlePostModalClose}
             />
           </Modal>
         </Suspense>
+      )}
+      {showUploadModal && (
+        <Modal
+          handleCloseModal={handleUploadModalClose}
+          isOpen={showUploadModal}
+        >
+          <UploadModal handleCloseModal={handleUploadModalClose} />
+        </Modal>
       )}
       <Suspense
         fallback={
@@ -69,7 +65,10 @@ function PostPage() {
           </div>
         }
       >
-        <PostGridTemplate handleModalOpen={handleModalOpen} />
+        <PostPageGrid
+          handlePostModalOpen={handlePostModalOpen}
+          handleUploadModalOpen={handleUploadModalOpen}
+        />
       </Suspense>
     </section>
   );
