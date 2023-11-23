@@ -25,9 +25,9 @@ export class CampService {
     throw new UnauthorizedException("camper can't make camp");
   }
 
-  // findAll() {
-  //   return `This action returns all camp`;
-  // }
+  findAll() {
+    return this.campRepository.findAll();
+  }
 
   findOne(campName: string) {
     return this.campRepository.findOneByCampName(campName);

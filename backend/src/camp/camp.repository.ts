@@ -19,6 +19,10 @@ export class CampRepository {
     });
   }
 
+  findAll() {
+    return this.campRepository.find();
+  }
+
   findOneByCampName(campName: string) {
     return this.campRepository.findOneBy({ campName });
   }
