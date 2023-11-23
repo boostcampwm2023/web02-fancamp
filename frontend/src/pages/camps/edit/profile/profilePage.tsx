@@ -2,12 +2,13 @@ import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { FormEvent, Suspense, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SubmitButton from '../../../../components/button/submitButton';
-import Image from '../../../../components/image/image';
 import Input from '../../../../components/input/input';
 import Text from '../../../../components/text/text';
 import { CampEditable } from '../../../../types/api/camp';
 import Spinner from '../../../../components/loading/spinner';
 import { queryClient } from '../../../../main';
+import ProfileImage from '../../../../components/image/profileImage';
+import useFetch from '../../../../hooks/useFetch';
 
 function ProfilePage() {
   return (
@@ -27,38 +28,43 @@ function ProfilePageTemplate() {
   const { campId } = useParams();
 
   const { data: camp } = useSuspenseQuery<CampEditable>({
-    queryKey: ['camp-info', campId],
-    queryFn: () => fetch(`/api/users/${campId}`).then((res) => res.json()),
+    queryKey: ['camp', campId],
+    queryFn: () =>
+      useFetch(`/api/camps/${campId}`, {
+        method: 'GET',
+        credentials: 'include',
+      }),
     gcTime: 0,
     staleTime: 0,
   });
 
-  const editProfileMutation = useMutation({
-    mutationFn: (profile: Partial<CampEditable>) =>
-      fetch(`/api/users/${campId}`, {
-        method: 'PATCH',
-        body: JSON.stringify(profile),
-      }).then((res) => res.json()),
-    onSuccess: (data: Partial<CampEditable>) => {
-      queryClient.setQueryData(['camp-info', campId], {
-        ...camp,
-        ...data,
-      });
-    },
-  });
+  // const editProfileMutation = useMutation({
+  //   mutationFn: (profile: Partial<CampEditable>) =>
+  //     useFetch(`/api/camps/${campId}`, {
+  //       method: 'PATCH',
+  //       body: JSON.stringify(profile),
+  //       credentials: 'include',
+  //     }),
+  //   onSuccess: (data: Partial<CampEditable>) => {
+  //     queryClient.setQueryData(['camp-info', campId], {
+  //       ...camp,
+  //       ...data,
+  //     });
+  //   },
+  // });
 
   const [newUserName, setNewUserName] = useState<string>(camp.userName);
 
   const handleEditProfile = (event: FormEvent) => {
     event.preventDefault();
-    if (editProfileMutation.isPending) {
-      return;
-    }
-    const newProfile: Partial<CampEditable> = {};
-    if (newUserName !== camp.userName) {
-      newProfile.userName = newUserName;
-    }
-    editProfileMutation.mutate(newProfile);
+    // if (editProfileMutation.isPending) {
+    //   return;
+    // }
+    // const newProfile: Partial<CampEditable> = {};
+    // if (newUserName !== camp.userName) {
+    //   newProfile.userName = newUserName;
+    // }
+    // editProfileMutation.mutate(newProfile);
   };
 
   return (
@@ -67,12 +73,10 @@ function ProfilePageTemplate() {
         프로필 변경
       </Text>
       <form className="flex flex-col gap-lg" onSubmit={handleEditProfile}>
-        <Image
+        <ProfileImage
           src={camp.profileUrl}
           alt="camp-profile-image"
-          className="relative rounded-full border-sm border-text-primary h-center"
-          width={128}
-          height={128}
+          className="relative h-center"
         />
         <Input
           label="이름"
@@ -83,9 +87,9 @@ function ProfilePageTemplate() {
         />
         <SubmitButton
           text="프로필 변경"
-          isPending={editProfileMutation.isPending}
-          isError={editProfileMutation.isError}
-          isSuccess={editProfileMutation.isSuccess}
+          // isPending={editProfileMutation.isPending}
+          // isError={editProfileMutation.isError}
+          // isSuccess={editProfileMutation.isSuccess}
         />
       </form>
     </div>
