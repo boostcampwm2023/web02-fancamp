@@ -1,4 +1,3 @@
-
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 
@@ -9,7 +8,11 @@ export class LoggerMiddleware implements NestMiddleware {
     const domain = req.headers.host;
     console.log(`Request from ${ipAddress} at ${new Date()}`);
     console.log(`Requested domain: ${domain}`);
-    console.log(`Request ${req.method} ${JSON.stringify(req.url)} ${JSON.stringify(req.body)} ${req.ip} at ${new Date()}`);
+    console.log(
+      `Request ${req.method} ${JSON.stringify(req.url)} ${JSON.stringify(
+        req.body,
+      )} ${req.ip} at ${new Date()}`,
+    );
     next();
   }
 }

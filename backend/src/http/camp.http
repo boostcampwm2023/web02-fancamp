@@ -3,7 +3,7 @@
 # @server = http://175.45.194.10:3000
 # @server = http://223.130.146.223:3000
 
-### 회원가입 요청~
+### 캠프 생성
 POST {{server}}/camps
 Content-Type: application/json
 
@@ -12,6 +12,10 @@ Content-Type: application/json
     "masterId": "5",
     "bannerImage": ""
 }
+
+
+### 캠프 전부 가져오기
+GET {{server}}/camps
 
 ###
 GET {{server}}/camps/camp1

@@ -4,10 +4,14 @@ import { CreateUserAuthDto } from './dto/create-auth.dto';
 import { UserRepository } from 'src/user/user.repository';
 import { Response } from 'express';
 import * as bcrypt from 'bcrypt';
+import { CampService } from 'src/camp/camp.service';
 @Injectable()
 export class AuthService {
   private sessions = [];
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly campService: CampService,
+  ) {}
 
   async create(createUserAuthDto: CreateUserAuthDto) {
     createUserAuthDto.password = await bcrypt.hash(
@@ -16,10 +20,15 @@ export class AuthService {
     ); // 암호화 해주기
     const dto = await this.userRepository.createUser(createUserAuthDto);
     this.sessions.push(dto.publicId);
+    await this.campService.create({
+      campName: dto.publicId,
+      bannerImage: '',
+      masterId: dto.id,
+    });
     return {
       email: dto.email,
       publicId: dto.publicId,
-      isMaster: dto.isMaster
+      isMaster: dto.isMaster,
     };
   }
 
@@ -29,10 +38,10 @@ export class AuthService {
     if (user && (await bcrypt.compare(password, user.password))) {
       //TODO: 비밀번호 암호화
       this.sessions.push(user.publicId);
-      return  {
+      return {
         email: user.email,
         publicId: user.publicId,
-        isMaster: user.isMaster
+        isMaster: user.isMaster,
       };
     } else {
       throw new UnauthorizedException('login failed');
@@ -46,19 +55,18 @@ export class AuthService {
     }
   }
 
-  async checkLogin(publicId: string){
-    if(this.validateUser(publicId)){
+  async checkLogin(publicId: string) {
+    if (this.validateUser(publicId)) {
       const user = await this.userRepository.findUserByPublicId(publicId);
-      return  {
+      return {
         email: user.email,
         publicId: user.publicId,
-        isMaster: user.isMaster
+        isMaster: user.isMaster,
       };
     }
   }
 
-  validateUser(publicId : string) {
+  validateUser(publicId: string) {
     return this.sessions.includes(publicId);
   }
-  
 }

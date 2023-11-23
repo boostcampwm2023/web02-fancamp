@@ -3,26 +3,35 @@
 # @server = http://175.45.194.10:3000
 # @server = http://223.130.146.223:3000
 
-### 회원가입 요청~
+### 회원가입 요청(마스터) - 캠프도 생성되야함.
 POST {{server}}/auth/users
 Content-Type: application/json
 
 {
-    "email" : "master2@fancamp.com",
+    "email" : "master4@fancamp.com",
     "password": "1234",
-    "chatName": "master2",
-    "publicId": "master2",
+    "chatName": "master4",
+    "publicId": "master4",
     "profileImage": "",
     "isMaster": true
 }
 
 
-### 로그인 요청~
+### 마스터 로그인 요청~
 POST {{server}}/auth/users/signin
 Content-Type: application/json
 
 {
-    "email" : "camper1@fancamp.com",
+    "email" : "master1@fancamp.com",
+    "password": "1234"
+}
+
+### 캠퍼 로그인 요청~
+POST {{server}}/auth/users/signin
+Content-Type: application/json
+
+{
+    "email" : "camper3@fancamp.com",
     "password": "1234"
 }
 

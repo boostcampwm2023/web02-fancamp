@@ -39,15 +39,10 @@ export class CampController {
     );
   }
 
-  @Post()
-  create(@Body() createCampDto: CreateCampDto, @Req() request: Request) {
-    return this.campService.create(createCampDto, request.cookies['publicId']);
+  @Get()
+  findAll() {
+    return this.campService.findAll();
   }
-
-  // @Get()
-  // findAll() {
-  //   return this.campService.findAll();
-  // }
 
   @Get(':campName')
   findOne(@Param('campName') campName: string) {
