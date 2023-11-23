@@ -1,27 +1,24 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SigninForm from './SigninForm';
 import useAuth from '../../../hooks/useAuth';
 import { validateSign } from '../../../utils/validate';
+import { FetchStatus } from '../../../types/api/status';
 import { signin } from '../../../API/auth';
-
-interface SignStatus {
-  isPending: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-}
 
 export default function SigninPage() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
-  const [signStatus, setSignStatus] = useState<SignStatus>({
+  const [signStatus, setSignStatus] = useState<FetchStatus>({
     isPending: false,
     isError: false,
     isSuccess: false,
   });
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   useEffect(() => {
     if (auth) {
@@ -46,12 +43,13 @@ export default function SigninPage() {
     try {
       const response = await signin(email, password);
       setAuth(response);
-      navigate('/');
       setSignStatus({
         isPending: false,
         isError: false,
         isSuccess: true,
       });
+      const redirectUrl = location.state?.redirect;
+      navigate(redirectUrl || '/');
     } catch (error) {
       setSignStatus({
         isPending: false,
