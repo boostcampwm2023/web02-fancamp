@@ -59,5 +59,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'off',
     'import/prefer-default-export': 'off',
     'import/no-cycle': 'off',
+    'react-hooks/rules-of-hooks': 'off',
+    'react/jsx-no-useless-fragment': 'off',
   },
 };
