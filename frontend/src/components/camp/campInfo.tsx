@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import CheckIcon from '../../assets/icons/checkIcon.svg?react';
@@ -6,9 +6,10 @@ import SubscribeButton from '../button/subscribeButton';
 import Image from '../image/Image';
 import Text from '../text/text';
 import { User } from '../../types/api/user';
+import { isSubscribedCamp, subscribeCamp } from '../../API/subscription';
 
-function CampInfo() {
-  const [subscribed, setSubscribe] = useState(false);
+export default function CampInfo() {
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const { campId } = useParams();
 
   const { data: camp } = useSuspenseQuery<User>({
@@ -18,8 +19,16 @@ function CampInfo() {
     staleTime: 0,
   });
 
+  useEffect(() => {
+    isSubscribedCamp(campId!)
+      .then(() => setIsSubscribed(true))
+      .catch(() => setIsSubscribed(false));
+  }, []);
+
   const handleSubscribe = () => {
-    setSubscribe(!subscribed);
+    subscribeCamp(campId!)
+      .then(() => setIsSubscribed(true))
+      .catch(console.error);
   };
 
   return (
@@ -48,18 +57,18 @@ function CampInfo() {
           </div>
         </div>
         <div>
-          <SubscribeButton subscribed={subscribed} onClick={handleSubscribe}>
+          <SubscribeButton subscribed={isSubscribed} onClick={handleSubscribe}>
             <Text
               size={14}
-              color={subscribed ? 'text-secondary' : 'point-blue'}
+              color={isSubscribed ? 'text-secondary' : 'point-blue'}
               className="flex items-center"
             >
-              {subscribed ? (
+              {isSubscribed ? (
                 <CheckIcon className="[&>path]:stroke-text-secondary" />
               ) : (
                 '+ '
               )}
-              {subscribed ? '구독중' : '구독하기'}
+              {isSubscribed ? '구독중' : '구독하기'}
             </Text>
           </SubscribeButton>
         </div>
@@ -67,5 +76,3 @@ function CampInfo() {
     </div>
   );
 }
-
-export default CampInfo;
