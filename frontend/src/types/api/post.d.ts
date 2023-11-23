@@ -1,9 +1,13 @@
 export interface Post {
-  postId: string;
-  userId: string;
+  campId: string;
   content: string;
   createdAt: string;
-  likeCount: number;
-  commentCount: number;
-  images: string[];
+  isDeleted: boolean;
+  isMaster: boolean;
+  picCnt: number;
+  postId: number;
+  userId: number;
+  urls?: {
+    imageUrl: string;
+  }[];
 }
