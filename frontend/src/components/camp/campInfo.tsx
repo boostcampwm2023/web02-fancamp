@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import CheckIcon from '../../assets/icons/checkIcon.svg?react';
 import SubscribeButton from '../button/subscribeButton';
-import Image from '../image/Image';
+import Image from '../image/image';
 import Text from '../text/text';
 import { User } from '../../types/api/user';
 import { isSubscribedCamp, subscribeCamp } from '../../API/subscription';

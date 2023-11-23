@@ -19,7 +19,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [chatName, setChatName] = useState<string>('');
   const [publicId, setPublicId] = useState<string>('');
-  const [profileImage, setProfileImage] = useState<string>('');
+  const [profileImage, _] = useState<string>('');
   const [isMaster, setMaster] = useState<boolean>(false);
   const [isEmailOk, setEmailOk] = useState<EmailStatus>('ok');
   const [signStatus, setSignStatus] = useState<SignStatus>({

@@ -20,24 +20,23 @@ const demoMenu = [
 
 export default function SideMenu() {
   const { auth } = useAuth();
-  const { publicId } = auth || '';
 
   const masterMenu = [
     {
-      to: `/camps/${publicId}/post`,
+      to: `/camps/${auth?.publicId}/post`,
       text: '캠프',
     },
-    { to: `/camps/${publicId}/chat`, text: '> 채팅' },
+    { to: `/camps/${auth?.publicId}/chat`, text: '> 채팅' },
     {
-      to: `/camps/${publicId}/post`,
+      to: `/camps/${auth?.publicId}/post`,
       text: '> 포스트',
     },
     {
-      to: `/camps/${publicId}/edit`,
+      to: `/camps/${auth?.publicId}/edit`,
       text: '> 캠프 수정',
     },
     {
-      to: `/camps/${publicId}/upload`,
+      to: `/camps/${auth?.publicId}/upload`,
       text: '> 캠프 업로드',
     },
   ];
