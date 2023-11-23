@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { CampService } from './camp.service';
 import { CampController } from './camp.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,10 +12,10 @@ import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
+    forwardRef(() => AuthModule),
     TypeOrmModule.forFeature([Camp]),
     TypeOrmModule.forFeature([Subscription]),
     UserModule,
-    AuthModule
   ],
   controllers: [CampController],
   providers: [

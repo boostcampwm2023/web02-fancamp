@@ -14,8 +14,6 @@ import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
-    UserModule,
-    AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
@@ -32,7 +30,9 @@ import { ImageModule } from './image/image.module';
       entities: [User],
       autoLoadEntities: true,
     }),
+    UserModule,
     CampModule,
+    AuthModule,
     ChatModule,
     PostModule,
     ImageModule,
