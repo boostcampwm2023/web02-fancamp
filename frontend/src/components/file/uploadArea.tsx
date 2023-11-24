@@ -1,6 +1,7 @@
-import { DragEvent, useEffect, useState } from 'react';
+import { ChangeEvent, DragEvent, createRef, useEffect, useState } from 'react';
 import { UploadedImage } from '../../types/client/image';
 import Image from '../image/image';
+import Text from '../text/text';
 
 interface UploadAreaProps {
   files: File[];
@@ -10,6 +11,7 @@ interface UploadAreaProps {
 function UploadArea({ files, setFiles }: UploadAreaProps) {
   const [images, setImages] = useState<UploadedImage[]>([]);
   const [dragging, setDragging] = useState<boolean>(false);
+  const fileInputRef = createRef<HTMLInputElement>();
 
   const handleDrop = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -21,7 +23,22 @@ function UploadArea({ files, setFiles }: UploadAreaProps) {
     setFiles((_) => [..._, ...newFiles]);
   };
 
+  const handleFileInputChange = ({
+    currentTarget,
+  }: ChangeEvent<HTMLInputElement>) => {
+    const { files: newFiles } = currentTarget;
+    if (!newFiles) {
+      return;
+    }
+    setFiles((_) => [..._, ...newFiles]);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  };
+
   useEffect(() => {
+    // 추후에 최적화 필요
+    setImages(() => []);
     Array.from(files).forEach((file) => {
       if (file.type.match('image.*')) {
         const fileReader = new FileReader();
@@ -61,11 +78,16 @@ function UploadArea({ files, setFiles }: UploadAreaProps) {
   };
 
   return (
-    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events
     <div
-      className={`h-[10rem] w-full border-sm ${
+      className={`relative h-[5rem] w-full cursor-pointer border-sm ${
         dragging ? 'border-point-green' : 'border-text-primary'
       }`}
+      onClick={() => {
+        if (fileInputRef.current) {
+          fileInputRef.current.click();
+        }
+      }}
       onDrag={(e) => {
         e.preventDefault();
       }}
@@ -76,7 +98,7 @@ function UploadArea({ files, setFiles }: UploadAreaProps) {
       onDragEnd={handleFinishDrag}
       onMouseUp={handleFinishDrag}
     >
-      <div className="flex h-full w-full gap-md overflow-x-scroll p-lg">
+      <div className="cool-scrollbar flex h-full w-full gap-md overflow-x-scroll p-lg">
         {images.map((image, index) => {
           const { name, buffer } = image;
           return (
@@ -91,6 +113,15 @@ function UploadArea({ files, setFiles }: UploadAreaProps) {
           );
         })}
       </div>
+      <input
+        type="file"
+        ref={fileInputRef}
+        className="hidden"
+        onChange={handleFileInputChange}
+      />
+      <Text size={14} color="text-secondary" className="absolute center">
+        파일 업로드
+      </Text>
     </div>
   );
 }

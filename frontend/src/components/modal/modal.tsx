@@ -2,17 +2,17 @@ import { ReactNode, useEffect, useRef } from 'react';
 
 interface ModalProps {
   isOpen: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  handleCloseModal: () => void;
   children: ReactNode;
 }
 
-function Modal({ isOpen, setOpen, children }: ModalProps) {
+function Modal({ isOpen, handleCloseModal, children }: ModalProps) {
   const modalRef = useRef<HTMLDialogElement>(null);
 
   const handleModalClick = (event: any) => {
     const { nodeName } = event.target;
     if (nodeName === 'DIALOG') {
-      setOpen(false);
+      handleCloseModal();
     }
   };
 

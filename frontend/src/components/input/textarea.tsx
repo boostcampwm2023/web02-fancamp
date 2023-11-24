@@ -4,7 +4,7 @@ interface TextAreaProps
 }
 
 const TextAreaClassName =
-  'h-[20rem] w-full resize-none p-md ' +
+  'w-full resize-none p-md ' +
   'border-sm border-text-primary text-text-primary display-regular-14 ' +
   'focus:outline-none focus:border-point-blue selection:bg-point-lavender leading-[10rem]';
 

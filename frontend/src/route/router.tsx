@@ -7,7 +7,6 @@ import DemoPage from '../pages/demo/components/demoPage';
 import HomePage from '../pages/home';
 import SearchPage from '../pages/search';
 import ExplorePage from '../pages/explore';
-import SigninPage from '../pages/auth/signin';
 import SignupPage from '../pages/auth/signup';
 import ChatPage from '../pages/camps/chat';
 import PostPage from '../pages/camps/post/postPage';
@@ -19,9 +18,9 @@ import Layout from '../components/Layout';
 import ErrorPage from '../pages/error';
 import ProfilePage from '../pages/camps/edit/profile/profilePage';
 import PasswordPage from '../pages/camps/edit/password/passwordPage';
-import UploadPage from '../pages/camps/upload/uploadPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
 import SubscriptionsPage from '../pages/subscriptions';
+import SigninPage from '../pages/auth/signin';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,7 +47,6 @@ const router = createBrowserRouter(
             <Route path="password" element={<PasswordPage />} />
           </Route>
         </Route>
-        <Route path="/camps/:campId/upload" element={<UploadPage />} />
         <Route path="error" element={<ErrorPage />} />
         <Route path="/demo/components" element={<DemoPage />} />
         <Route path="/demo/api/rest" element={<ApiPage />} />

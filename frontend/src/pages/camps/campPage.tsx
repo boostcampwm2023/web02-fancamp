@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
 import ContentMenu from '../../components/menu/contentMenu';
 import { campCategorys } from '../../utils/constants';
-import CampInfo from '../../components/camp/campInfo';
+import CampInfo from './campInfo';
 import Spinner from '../../components/loading/spinner';
 
 function CampPage() {

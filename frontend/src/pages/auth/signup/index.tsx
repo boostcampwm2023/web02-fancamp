@@ -5,12 +5,7 @@ import useAuth from '../../../hooks/useAuth';
 import { validateSign } from '../../../utils/validate';
 import { signup } from '../../../API/auth';
 import { EmailStatus, SignupStatus } from '../../../types/client/auth';
-
-interface SignStatus {
-  isPending: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-}
+import { FetchStatus } from '../../../types/api/status';
 
 export default function SignupPage() {
   const [signupStatus, setStatus] = useState<SignupStatus>('email');
@@ -22,7 +17,7 @@ export default function SignupPage() {
   const [profileImage, _] = useState<string>('');
   const [isMaster, setMaster] = useState<boolean>(false);
   const [isEmailOk, setEmailOk] = useState<EmailStatus>('ok');
-  const [signStatus, setSignStatus] = useState<SignStatus>({
+  const [signStatus, setSignStatus] = useState<FetchStatus>({
     isPending: false,
     isError: false,
     isSuccess: false,

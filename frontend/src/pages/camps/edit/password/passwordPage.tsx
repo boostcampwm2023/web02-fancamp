@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import SubmitButton from '../../../../components/button/submitButton';
 import Input from '../../../../components/input/input';
 import Text from '../../../../components/text/text';
+import useFetch from '../../../../hooks/useFetch';
 
 interface ChangePassword {
   currentPassword: string;
@@ -16,10 +17,11 @@ function PasswordPage() {
 
   const changePasswordMutation = useMutation({
     mutationFn: (passwords: ChangePassword) =>
-      fetch(`/api/users/`, {
+      useFetch(`/api/users/`, {
         method: 'patch',
         body: JSON.stringify(passwords),
-      }).then((res) => res.json()),
+        credentials: 'include',
+      }),
   });
 
   const handleChangePassword = (event: FormEvent) => {
