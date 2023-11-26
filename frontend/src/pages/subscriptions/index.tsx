@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getSubscribedCamps } from '../../API/camp';
-import ProfileImage from '../../components/image/profileImage';
-import Spinner from '../../components/loading/spinner';
+import ProfileImage from '../../components/ProfileImage/ProfileImage';
+import Spinner from '../../components/Loading/Spinner';
 
 export default function SubscriptionsPage() {
   const [subscribedCamps, setSubscribedCamps] = useState([]);

@@ -3,9 +3,9 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import useAuth from '../../../hooks/useAuth';
 import { Post } from '../../../types/api/post';
 import useFetch from '../../../hooks/useFetch';
-import PostGrid from '../../../components/grid/postGrid';
-import UploadCard from '../../../components/card/uploadCard';
-import PostCard from '../../../components/card/postCard';
+import PostGrid from '../../../components/Grid/PostGrid';
+import UploadCard from '../../../components/Card/UploadCard';
+import PostCard from '../../../components/Card/PostCard';
 
 interface PostGridProps {
   handlePostModalOpen: (postId: string) => void;

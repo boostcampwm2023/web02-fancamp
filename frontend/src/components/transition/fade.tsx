@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimationObject } from './animation';
+import { AnimationObject } from './Animation';
 
 interface FadeProps {
   children: React.ReactNode;

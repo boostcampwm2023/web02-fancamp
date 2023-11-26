@@ -1,4 +1,4 @@
-import Text from '../text/text';
+import Text from '../ui/Text';
 
 interface DropdownItemProps {
   text: string;

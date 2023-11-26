@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { getAllCamps } from '../../API/camp';
 import { Link } from 'react-router-dom';
-import ProfileImage from '../../components/image/profileImage';
-import Spinner from '../../components/loading/spinner';
+import ProfileImage from '../../components/ProfileImage/ProfileImage';
+import Spinner from '../../components/Loading/Spinner';
 
 export default function ExplorePage() {
   const [camps, setCamps] = useState([]);

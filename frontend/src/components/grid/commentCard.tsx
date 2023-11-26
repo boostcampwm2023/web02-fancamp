@@ -1,6 +1,6 @@
 import { User } from '../../types/api/user';
-import ProfileImage from '../image/profileImage';
-import Text from '../text/text';
+import ProfileImage from '../ProfileImage/ProfileImage';
+import Text from '../ui/Text';
 
 interface CommentProps {
   comment: string;

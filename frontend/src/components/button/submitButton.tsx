@@ -1,7 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { useEffect, useState } from 'react';
-import Spinner from '../loading/spinner';
-import Text from '../text/text';
+import Spinner from '../Loading/Spinner';
+import Text from '../ui/Text';
 
 interface SubmitButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {

@@ -1,8 +1,8 @@
 import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import SubmitButton from '../../../../components/button/submitButton';
-import Input from '../../../../components/input/input';
-import Text from '../../../../components/text/text';
+import SubmitButton from '../../../../components/Button/SubmitButton';
+import Input from '../../../../components/ui/Input';
+import Text from '../../../../components/ui/Text';
 import useFetch from '../../../../hooks/useFetch';
 
 interface ChangePassword {

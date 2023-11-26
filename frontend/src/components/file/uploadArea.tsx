@@ -1,7 +1,7 @@
 import { ChangeEvent, DragEvent, createRef, useEffect, useState } from 'react';
 import { UploadedImage } from '../../types/client/image';
-import Image from '../image/image';
-import Text from '../text/text';
+import Image from '../ui/Image';
+import Text from '../ui/Text';
 
 interface UploadAreaProps {
   files: File[];

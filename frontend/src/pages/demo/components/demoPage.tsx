@@ -1,26 +1,26 @@
 import { FormEvent, useEffect, useState } from 'react';
-import SubmitButton from '../../../components/button/submitButton';
-import Input from '../../../components/input/input';
+import SubmitButton from '../../../components/Button/SubmitButton';
+import Input from '../../../components/ui/Input';
 import PasswordIcon from '../../../assets/icons/passwordIcon.svg?react';
-import ContentMenu from '../../../components/menu/contentMenu';
-import Fade from '../../../components/transition/fade';
+import ContentMenu from '../../../components/Menu/ContentMenu';
+import Fade from '../../../components/Transition/Fade';
 import {
   bottomFadeinAnimation,
   bottomFadeoutAnimation,
   leftFadeinAnimation,
   leftFadeoutAnimation,
-} from '../../../components/transition/animation';
-import Switch from '../../../components/transition/switch';
-import ImageSlider from '../../../components/slider/imageSlider';
-import Text from '../../../components/text/text';
-import Checkbox from '../../../components/checkbox/checkbox';
-import Grid from '../../../components/grid/grid';
-import Dropdown from '../../../components/dropdown/dropdown';
-import DropdownItem from '../../../components/dropdown/dropdownItem';
-import Modal from '../../../components/modal/modal';
-import LikeButton from '../../../components/button/likeButton';
-import Button from '../../../components/button/button';
-import Section from '../../../components/section/section';
+} from '../../../components/Transition/Animation';
+import Switch from '../../../components/Transition/Switch';
+import ImageSlider from '../../../components/Slider/ImageSlider';
+import Text from '../../../components/ui/Text';
+import Checkbox from '../../../components/ui/Checkbox';
+import Grid from '../../../components/Grid/Grid';
+import Dropdown from '../../../components/Dropdown/Dropdown';
+import DropdownItem from '../../../components/Dropdown/DropdownItem';
+import Modal from '../../../components/Modal/Modal';
+import LikeButton from '../../../components/Button/LikeButton';
+import Button from '../../../components/ui/Button';
+import Section from '../../../components/ui/Section';
 
 function DemoPage() {
   return (

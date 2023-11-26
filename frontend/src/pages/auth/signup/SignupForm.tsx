@@ -2,15 +2,15 @@
 /* eslint-disable no-nested-ternary */
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Input from '../../../components/input/input';
-import SubmitButton from '../../../components/button/submitButton';
+import Input from '../../../components/ui/Input';
+import SubmitButton from '../../../components/Button/SubmitButton';
 import { auth as authConstants } from '../../../utils/constants';
-import LineProgress from '../../../components/progress/lineProgress';
-import Text from '../../../components/text/text';
-import ProfileImage from '../../../components/image/profileImage';
+import LineProgress from '../../../components/Progress/LineProgress';
+import Text from '../../../components/ui/Text';
+import ProfileImage from '../../../components/ProfileImage/ProfileImage';
 import { validateSign } from '../../../utils/validate';
 import { EmailStatus, SignupStatus } from '../../../types/client/auth';
-import Checkbox from '../../../components/checkbox/checkbox';
+import Checkbox from '../../../components/ui/Checkbox';
 
 interface SignupFormProps {
   signupStatus: SignupStatus;

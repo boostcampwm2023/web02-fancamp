@@ -1,6 +1,6 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ContentMenu from '../../../components/menu/contentMenu';
+import ContentMenu from '../../../components/Menu/ContentMenu';
 import { campEditCategorys } from '../../../utils/constants';
 
 function EditPage() {

@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import SubmitButton from '../../../components/button/submitButton';
-import TextArea from '../../../components/input/textarea';
-import Text from '../../../components/text/text';
-import UploadArea from '../../../components/file/uploadArea';
+import SubmitButton from '../../../components/Button/SubmitButton';
+import TextArea from '../../../components/ui/TextArea';
+import Text from '../../../components/ui/Text';
+import UploadArea from '../../../components/File/UploadArea';
 import useFetch from '../../../hooks/useFetch';
 
 interface UploadModalProps {

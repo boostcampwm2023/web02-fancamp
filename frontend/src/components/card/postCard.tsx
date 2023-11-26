@@ -1,5 +1,5 @@
-import Image from '../image/image';
-import Text from '../text/text';
+import Image from '../ui/Image';
+import Text from '../ui/Text';
 
 interface PostCardProps {
   imageSrc: string;

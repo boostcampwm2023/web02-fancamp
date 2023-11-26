@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { pxToRem } from '../../utils/unit';
-import Text from '../text/text';
+import Text from '../ui/Text';
 
 interface GridProps {
   items: any[];

@@ -8,7 +8,7 @@ import {
   topFadeoutAnimation,
   bottomFadeinAnimation,
   bottomFadeoutAnimation,
-} from './animation';
+} from './Animation';
 
 interface TransitionProps {
   children: React.ReactNode;

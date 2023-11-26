@@ -1,4 +1,4 @@
-import Text from '../text/text';
+import Text from './Text';
 
 interface InputProps<State>
   extends React.InputHTMLAttributes<HTMLInputElement> {

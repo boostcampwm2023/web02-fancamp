@@ -1,9 +1,9 @@
 import JsonView from 'react18-json-view';
 import { useState } from 'react';
 import { Post } from '../../../types/api/post';
-import Section from '../../../components/section/section';
-import Text from '../../../components/text/text';
-import Button from '../../../components/button/button';
+import Section from '../../../components/ui/Section';
+import Text from '../../../components/ui/Text';
+import Button from '../../../components/ui/Button';
 import { User } from '../../../types/api/user';
 
 const test = {
