@@ -1,11 +1,11 @@
+import LineProgress from '@components/Progress/LineProgress';
+import Text from '@components/ui/Text';
+import Input from '@components/ui/Input';
+import SubmitButton from '@components/Button/SubmitButton';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import Input from '../../../components/ui/Input';
-import SubmitButton from '../../../components/Button/SubmitButton';
-import Text from '../../../components/ui/Text';
-import { AUTH as AUTH_CONSTANTS } from '../../../constants/auth';
-import { validateSign } from '../../../utils/validate';
-import LineProgress from '../../../components/Progress/LineProgress';
+import { validateSign } from '@utils/validate';
+import { AUTH as AUTH_CONSTANTS } from '@constants/auth';
 
 interface SigninFormProps {
   email: string;
