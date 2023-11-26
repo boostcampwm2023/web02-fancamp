@@ -4,8 +4,8 @@ import ChatBoxMessages from './ChatBoxMessages';
 import ChatBoxNavBar from './ChatBoxNavBar';
 import ChatBoxInputBar from './ChatBoxInputBar';
 import useAuth from '../../../hooks/useAuth';
-import { socket } from '../../../API/socket';
 import { getLocaleString } from '../../../utils/date';
+import { socket } from '@API/socket';
 
 export interface Message {
   messageId: number;

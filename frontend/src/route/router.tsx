@@ -11,7 +11,7 @@ import SignupPage from '../pages/auth/signup/SignupPage';
 import ChatPage from '../pages/camps/chat/ChatPage';
 import PostPage from '../pages/camps/post/PostPage';
 import CampPage from '../pages/camps/CampPage';
-import CommunityPage from '../pages/camps/community/communityPage';
+import CommunityPage from '../pages/camps/community/CommunityPage';
 import ApiPage from '../pages/demo/api/ApiPage';
 import EditPage from '../pages/camps/edit/EditPage';
 import ErrorPage from '../pages/error/ErrorPage';
