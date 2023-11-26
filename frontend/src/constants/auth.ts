@@ -1,43 +1,4 @@
-export const colors = {
-  'text-primary': '#111111',
-  'text-secondary': '#777777',
-  'contour-primary': '#DFDFDF',
-  'point-green': '#ADFF00',
-  'point-yellow': '#FFC044',
-  'point-blue': '#0087E9',
-  'point-lavender': '#D4AAFF',
-  transparent: 'transparent',
-  'surface-primary': '#FFFFFF',
-  'point-red': '#FF5044',
-};
-
-export const campCategorys = [
-  {
-    text: '포스트',
-    path: 'post',
-  },
-  {
-    text: '커뮤니티',
-    path: 'community',
-  },
-  {
-    text: '채팅',
-    path: 'chat',
-  },
-];
-
-export const campEditCategorys = [
-  {
-    text: '프로필',
-    path: 'profile',
-  },
-  {
-    text: '비밀번호',
-    path: 'password',
-  },
-];
-
-export const auth = {
+export const AUTH = {
   signin: {
     title: '로그인',
     error: {

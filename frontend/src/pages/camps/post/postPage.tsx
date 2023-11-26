@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Modal from '../../../components/Modal/Modal';
 import Spinner from '../../../components/Loading/Spinner';
 import ModalSipnner from '../../../components/Loading/ModalSpinner';
-import UploadModal from './uploadModal';
-import PostModal from './postModal';
-import PostPageGrid from './postGrid';
+import UploadModal from './UploadModal';
+import PostModal from './PostModal';
+import PostPageGrid from './PostGrid';
 import useAuth from '../../../hooks/useAuth';
 
 function PostPage() {

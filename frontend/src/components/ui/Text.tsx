@@ -1,11 +1,11 @@
 import React from 'react';
-import { colors } from '../../utils/constants';
+import { COLORS } from '../../constants/colors';
 
 interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
   size?: 12 | 14 | 20;
   weight?: 400 | 300;
-  color?: keyof typeof colors;
+  color?: keyof typeof COLORS;
   className?: string;
 }
 

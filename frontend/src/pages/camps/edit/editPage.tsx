@@ -1,10 +1,10 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import ContentMenu from '../../../components/Menu/ContentMenu';
-import { campEditCategorys } from '../../../utils/constants';
+import { CAMP_EDIT_CATEGORIES } from '../../../constants/camp';
 
 function EditPage() {
-  const categorys = campEditCategorys.map((category) => category.text);
+  const categorys = CAMP_EDIT_CATEGORIES.map((category) => category.text);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const { campId } = useParams();
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ function EditPage() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const { path } = campEditCategorys[categoryIndex];
+    const { path } = CAMP_EDIT_CATEGORIES[categoryIndex];
     navigate(`/camps/${campId}/edit/${path}`);
   }, [categoryIndex]);
 

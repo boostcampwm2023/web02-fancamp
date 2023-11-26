@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Input from '../../../components/ui/Input';
 import SubmitButton from '../../../components/Button/SubmitButton';
 import Text from '../../../components/ui/Text';
-import { auth as authConstants } from '../../../utils/constants';
+import { AUTH as AUTH_CONSTANTS } from '../../../constants/auth';
 import { validateSign } from '../../../utils/validate';
 import LineProgress from '../../../components/Progress/LineProgress';
 
@@ -57,7 +57,7 @@ export default function SigninForm({
             type="email"
             setValue={setEmail}
             placeholder="fancamp@naver.com"
-            errorMessage={!isEmailOk ? authConstants.signin.error.email : ''}
+            errorMessage={!isEmailOk ? AUTH_CONSTANTS.signin.error.email : ''}
             onBlur={handleBlurEmail}
           />
           <Input
@@ -65,7 +65,7 @@ export default function SigninForm({
             type="password"
             setValue={setPassword}
             errorMessage={
-              !isPasswordOk ? authConstants.signin.error.password : ''
+              !isPasswordOk ? AUTH_CONSTANTS.signin.error.password : ''
             }
             onBlur={handleBlurPassword}
           />
@@ -80,11 +80,11 @@ export default function SigninForm({
           />
           <div className="flex justify-center gap-sm">
             <Text size={12} color="text-secondary">
-              {authConstants.signin.induce.signup.text}
+              {AUTH_CONSTANTS.signin.induce.signup.text}
             </Text>
             <Link to="/auth/signup" className="flex">
               <Text size={12} color="point-blue">
-                {authConstants.signin.induce.signup.link}
+                {AUTH_CONSTANTS.signin.induce.signup.link}
               </Text>
             </Link>
           </div>

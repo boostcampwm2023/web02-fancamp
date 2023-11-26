@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Input from '../../../components/ui/Input';
 import SubmitButton from '../../../components/Button/SubmitButton';
-import { auth as authConstants } from '../../../utils/constants';
+import { AUTH as AUTH_CONSTANTS } from '../../../constants/auth';
 import LineProgress from '../../../components/Progress/LineProgress';
 import Text from '../../../components/ui/Text';
 import ProfileImage from '../../../components/ProfileImage/ProfileImage';
@@ -98,12 +98,12 @@ export default function SignupForm({
       onSubmit={handleSubmit}
     >
       <LineProgress
-        maxStep={Object.keys(authConstants.signup.step).length - 1}
-        currentStep={authConstants.signup.step[signupStatus].stepIndex}
+        maxStep={Object.keys(AUTH_CONSTANTS.signup.step).length - 1}
+        currentStep={AUTH_CONSTANTS.signup.step[signupStatus].stepIndex}
         className="absolute left-[0] top-[0]"
       />
       <Text size={20} className="text-center">
-        {authConstants.signup.step[signupStatus].title}
+        {AUTH_CONSTANTS.signup.step[signupStatus].title}
       </Text>
       <div className="flex flex-1 flex-col justify-between">
         <div className="flex flex-1 flex-col">
@@ -116,9 +116,9 @@ export default function SignupForm({
               placeholder="fancamp@naver.com"
               errorMessage={
                 isEmailOk === 'formatError'
-                  ? authConstants.signup.error.email.format
+                  ? AUTH_CONSTANTS.signup.error.email.format
                   : isEmailOk === 'duplicatedError'
-                    ? authConstants.signup.error.email.duplicated
+                    ? AUTH_CONSTANTS.signup.error.email.duplicated
                     : ''
               }
               onBlur={handleBlurEmail}
@@ -131,7 +131,7 @@ export default function SignupForm({
                 value={password}
                 setValue={setPassword}
                 errorMessage={
-                  !isPasswordOk ? authConstants.signup.error.password : ''
+                  !isPasswordOk ? AUTH_CONSTANTS.signup.error.password : ''
                 }
                 onBlur={handleBlurPassword}
               />{' '}
@@ -142,7 +142,7 @@ export default function SignupForm({
                 setValue={setConfirmPassword}
                 errorMessage={
                   !isConfirmPasswordOk
-                    ? authConstants.signup.error.confirmPassword
+                    ? AUTH_CONSTANTS.signup.error.confirmPassword
                     : ''
                 }
                 onBlur={handleBlurConfirmPassword}
@@ -182,7 +182,7 @@ export default function SignupForm({
         </div>
         <div className="flex flex-col gap-md">
           <SubmitButton
-            text={authConstants.signup.step[signupStatus].apply}
+            text={AUTH_CONSTANTS.signup.step[signupStatus].apply}
             isPending={status.isPending}
             isError={status.isError}
             isSuccess={status.isSuccess}
@@ -190,11 +190,11 @@ export default function SignupForm({
           />
           <div className="flex justify-center gap-sm">
             <Text size={12} color="text-secondary">
-              {authConstants.signup.induce.signin.text}
+              {AUTH_CONSTANTS.signup.induce.signin.text}
             </Text>
             <Link to="/auth/signin" className="flex">
               <Text size={12} color="point-blue">
-                {authConstants.signup.induce.signin.link}
+                {AUTH_CONSTANTS.signup.induce.signin.link}
               </Text>
             </Link>
           </div>

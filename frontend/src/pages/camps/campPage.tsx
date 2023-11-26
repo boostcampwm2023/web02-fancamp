@@ -1,12 +1,12 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
 import ContentMenu from '../../components/Menu/ContentMenu';
-import { campCategorys } from '../../utils/constants';
-import CampInfo from './campInfo';
+import CampInfo from './CampInfo';
 import Spinner from '../../components/Loading/Spinner';
+import { CAMP_CATEGORIES } from '../../constants/camp';
 
 function CampPage() {
-  const categorys = campCategorys.map((category) => category.text);
+  const categorys = CAMP_CATEGORIES.map((category) => category.text);
   const [categoryIndex, setCategoryIndex] = useState(0);
   const { campId } = useParams();
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ function CampPage() {
   }, [location.pathname]);
 
   useEffect(() => {
-    const { path } = campCategorys[categoryIndex];
+    const { path } = CAMP_CATEGORIES[categoryIndex];
     navigate(`/camps/${campId}/${path}`);
   }, [categoryIndex]);
 

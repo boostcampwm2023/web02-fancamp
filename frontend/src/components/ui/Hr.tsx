@@ -1,7 +1,7 @@
-import { colors } from '../../utils/constants';
+import { COLORS } from '../../constants/colors';
 
 interface HrProps extends React.HtmlHTMLAttributes<HTMLHRElement> {
-  color?: keyof typeof colors;
+  color?: keyof typeof COLORS;
   className?: string;
 }
 
