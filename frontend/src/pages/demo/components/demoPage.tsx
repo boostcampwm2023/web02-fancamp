@@ -1,24 +1,24 @@
 import { FormEvent, useEffect, useState } from 'react';
-import SubmitButton from '../../../components/Button/SubmitButton';
-import Input from '../../../components/ui/Input';
+import SubmitButton from '../../../components/button/SubmitButton';
+import Input from '../../../components/input/Input';
 import PasswordIcon from '../../../assets/icons/passwordIcon.svg?react';
-import ContentMenu from '../../../components/Menu/ContentMenu';
-import Fade from '../../../components/Transition/Fade';
+import ContentMenu from '../../../components/menu/ContentMenu';
+import Fade from '../../../components/transition/Fade';
 import {
   bottomFadeinAnimation,
   bottomFadeoutAnimation,
   leftFadeinAnimation,
   leftFadeoutAnimation,
-} from '../../../components/Transition/Animation';
-import Switch from '../../../components/Transition/Switch';
-import ImageSlider from '../../../components/Slider/ImageSlider';
+} from '../../../components/transition/Animation';
+import Switch from '../../../components/transition/Switch';
+import ImageSlider from '../../../components/slider/ImageSlider';
 import Text from '../../../components/ui/Text';
-import Checkbox from '../../../components/ui/Checkbox';
-import Grid from '../../../components/Grid/Grid';
-import Dropdown from '../../../components/Dropdown/Dropdown';
-import DropdownItem from '../../../components/Dropdown/DropdownItem';
-import Modal from '../../../components/Modal/Modal';
-import LikeButton from '../../../components/Button/LikeButton';
+import Checkbox from '../../../components/checkbox/Checkbox';
+import Grid from '../../../components/grid/Grid';
+import Dropdown from '../../../components/dropdown/Dropdown';
+import DropdownItem from '../../../components/dropdown/DropdownItem';
+import Modal from '../../../components/modal/Modal';
+import LikeButton from '../../../components/button/LikeButton';
 import Button from '../../../components/ui/Button';
 import Section from '../../../components/ui/Section';
 

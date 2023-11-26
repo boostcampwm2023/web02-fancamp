@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import SubmitButton from '../../../../components/Button/SubmitButton';
-import Input from '../../../../components/ui/Input';
+import SubmitButton from '../../../../components/button/SubmitButton';
+import Input from '../../../../components/input/Input';
 import Text from '../../../../components/ui/Text';
 import useFetch from '../../../../hooks/useFetch';
 

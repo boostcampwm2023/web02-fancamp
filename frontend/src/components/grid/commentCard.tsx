@@ -1,5 +1,5 @@
 import { User } from '../../types/api/user';
-import ProfileImage from '../ProfileImage/ProfileImage';
+import ProfileImage from '../profile/ProfileImage';
 import Text from '../ui/Text';
 
 interface CommentProps {

@@ -1,8 +1,8 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
-import ContentMenu from '../../components/Menu/ContentMenu';
+import ContentMenu from '../../components/menu/ContentMenu';
 import CampInfo from './CampInfo';
-import Spinner from '../../components/Loading/Spinner';
+import Spinner from '../../components/loading/Spinner';
 import { CAMP_CATEGORIES } from '../../constants/camp';
 
 function CampPage() {

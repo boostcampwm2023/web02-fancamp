@@ -1,7 +1,7 @@
-import LineProgress from '@components/Progress/LineProgress';
+import LineProgress from '@components/progress/LineProgress';
 import Text from '@components/ui/Text';
-import Input from '@components/ui/Input';
-import SubmitButton from '@components/Button/SubmitButton';
+import Input from '@components/input/Input';
+import SubmitButton from '@components/button/SubmitButton';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { validateSign } from '@utils/validate';

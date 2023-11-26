@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom';
-import SideMenu from '../Menu/SideMenu';
+import SideMenu from '../menu/SideMenu';
 
 export default function Layout() {
   return (

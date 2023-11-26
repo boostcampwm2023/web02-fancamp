@@ -14,13 +14,13 @@ import CampPage from '../pages/camps/CampPage';
 import CommunityPage from '../pages/camps/community/communityPage';
 import ApiPage from '../pages/demo/api/ApiPage';
 import EditPage from '../pages/camps/edit/EditPage';
-import Layout from '../components/Layout';
 import ErrorPage from '../pages/error/ErrorPage';
 import ProfilePage from '../pages/camps/edit/profile/ProfilePage';
 import PasswordPage from '../pages/camps/edit/password/PasswordPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
 import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
 import SigninPage from '../pages/auth/signin/SigninPage';
+import Layout from '@components/layout/Layout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

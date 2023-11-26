@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { useEffect, useState } from 'react';
-import Spinner from '../Loading/Spinner';
+import Spinner from '../loading/Spinner';
 import Text from '../ui/Text';
 
 interface SubmitButtonProps

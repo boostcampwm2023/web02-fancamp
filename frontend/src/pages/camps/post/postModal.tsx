@@ -8,11 +8,11 @@ import { useParams } from 'react-router-dom';
 import useFetch from '../../../hooks/useFetch';
 import { Post } from '../../../types/api/post';
 import { CampInfo } from '../../../types/api/camp';
-import ImageSlider from '../../../components/Slider/ImageSlider';
-import ProfileImage from '../../../components/ProfileImage/ProfileImage';
+import ImageSlider from '../../../components/slider/ImageSlider';
+import ProfileImage from '../../../components/profile/ProfileImage';
 import Text from '../../../components/ui/Text';
 import CloseIcon from '../../../assets/icons/closeIcon.svg?react';
-import LikeButton from '../../../components/Button/LikeButton';
+import LikeButton from '../../../components/button/LikeButton';
 import { formatDate } from '../../../utils/date';
 
 interface PostModalTemplateProps {

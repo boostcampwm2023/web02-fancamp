@@ -1,8 +1,8 @@
 import { Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../../../components/Modal/Modal';
-import Spinner from '../../../components/Loading/Spinner';
-import ModalSipnner from '../../../components/Loading/ModalSpinner';
+import Modal from '../../../components/modal/Modal';
+import Spinner from '../../../components/loading/Spinner';
+import ModalSipnner from '../../../components/loading/ModalSpinner';
 import UploadModal from './UploadModal';
 import PostModal from './PostModal';
 import PostPageGrid from './PostGrid';
