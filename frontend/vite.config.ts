@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -22,5 +23,41 @@ export default defineConfig({
         ws: true,
       },
     },
+  },
+  resolve: {
+    alias: [
+      {
+        find: '@API',
+        replacement: path.resolve(__dirname, 'src/API'),
+      },
+      {
+        find: '@components',
+        replacement: path.resolve(__dirname, 'src/components'),
+      },
+      {
+        find: '@constants',
+        replacement: path.resolve(__dirname, 'src/constants'),
+      },
+      {
+        find: '@contexts',
+        replacement: path.resolve(__dirname, 'src/contexts'),
+      },
+      {
+        find: '@hooks',
+        replacement: path.resolve(__dirname, 'src/hooks'),
+      },
+      {
+        find: '@pages',
+        replacement: path.resolve(__dirname, 'src/pages'),
+      },
+      {
+        find: '@types',
+        replacement: path.resolve(__dirname, 'src/types'),
+      },
+      {
+        find: '@utils',
+        replacement: path.resolve(__dirname, 'src/utils'),
+      },
+    ],
   },
 });

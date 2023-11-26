@@ -3,24 +3,24 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
-import DemoPage from '../pages/demo/components/demoPage';
-import HomePage from '../pages/home';
-import SearchPage from '../pages/search';
-import ExplorePage from '../pages/explore';
-import SignupPage from '../pages/auth/signup';
-import ChatPage from '../pages/camps/chat';
-import PostPage from '../pages/camps/post/postPage';
-import CampPage from '../pages/camps/campPage';
-import CommunityPage from '../pages/camps/community/communityPage';
-import ApiPage from '../pages/demo/api/apiPage';
-import EditPage from '../pages/camps/edit/editPage';
-import Layout from '../components/Layout';
-import ErrorPage from '../pages/error';
-import ProfilePage from '../pages/camps/edit/profile/profilePage';
-import PasswordPage from '../pages/camps/edit/password/passwordPage';
+import DemoPage from '../pages/demo/components/DemoPage';
+import HomePage from '../pages/home/HomePage';
+import SearchPage from '../pages/search/SearchPage';
+import ExplorePage from '../pages/explore/ExplorePage';
+import SignupPage from '../pages/auth/signup/SignupPage';
+import ChatPage from '../pages/camps/chat/ChatPage';
+import PostPage from '../pages/camps/post/PostPage';
+import CampPage from '../pages/camps/CampPage';
+import CommunityPage from '../pages/camps/community/CommunityPage';
+import ApiPage from '../pages/demo/api/ApiPage';
+import EditPage from '../pages/camps/edit/EditPage';
+import ErrorPage from '../pages/error/ErrorPage';
+import ProfilePage from '../pages/camps/edit/profile/ProfilePage';
+import PasswordPage from '../pages/camps/edit/password/PasswordPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
-import SubscriptionsPage from '../pages/subscriptions';
-import SigninPage from '../pages/auth/signin';
+import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
+import SigninPage from '../pages/auth/signin/SigninPage';
+import Layout from '@components/layout/Layout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
