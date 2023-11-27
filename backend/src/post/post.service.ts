@@ -51,13 +51,26 @@ export class PostService {
       user.isMaster,
       files.length,
     );
-    await this.imageService.uploadFiles(files, post.postId, post.campId);
+    await this.imageService.uploadPostFiles(files, post.postId, post.campId);
     return post;
   }
-  async findPostWithUrls(postId: number) {
+
+  async findPostWithUrls(postId: number, publicId: string) {
     const post = await this.findPost(postId);
-    const urls = await this.imageService.findUrlsByPostId(postId);
-    return { ...post, urls: urls };
+    const likesCount = await this.countLikes(postId);
+    const commentsCount = await this.countComments(postId);
+    const commets = await this.findCommentsByPostId(postId);
+    const urls = await this.imageService.findImagesByPostId(postId);
+    const user = await this.userService.findUserByPublicId(publicId);
+    const isLike = await this.findLikeByPostId(postId, user.id);
+    return {
+      ...post,
+      likesCount: likesCount,
+      commentsCount: commentsCount,
+      urls: urls,
+      comments: commets,
+      isLike: isLike,
+    };
   }
 
   findPost(postId: number) {
@@ -72,9 +85,21 @@ export class PostService {
     return await Promise.all(
       posts.map(async (post) => {
         console.log(post);
-        const urls = await this.imageService.findUrlsByPostId(post.postId); //TODO: 이미지 없으면
-        console.log(urls[0]);
-        return { ...post, url: urls[0] };
+        const urls = await this.imageService.findImagesByPostId(post.postId); //TODO: 이미지 없으면
+        console.log(urls);
+        if (urls[0] && !urls[0].isImage) {
+          //TODO: 나중에 썸네일 추출 기능 넣고 삭제하기
+          urls[0].imageUrl =
+            'https://kr.object.ncloudstorage.com/fancamp-images/default_thumbnail.jpg';
+        }
+        const likesCount = await this.countLikes(post.postId);
+        const commentsCount = await this.countComments(post.postId);
+        return {
+          ...post,
+          likesCount: likesCount,
+          commentsCount: commentsCount,
+          url: urls[0],
+        };
       }),
     );
   }
@@ -101,15 +126,22 @@ export class PostService {
       return this.likeRepository.create(postId, user.id);
     }
   }
-  async findLikesByPostId(postId: number) {
-    return this.likeRepository.findLikesByPostId(postId);
-  }
-
   async removeLike(postId: number, publicId: string) {
     if (await this.checkPost(postId)) {
       const user = await this.userService.findUserByPublicId(publicId);
       return this.likeRepository.remove(postId, user.id);
     }
+  }
+
+  async countLikes(postId: number): Promise<number> {
+    return this.likeRepository.countByPostId(postId);
+  }
+
+  async findLikeByPostId(postId: number, userId: number): Promise<Boolean> {
+    if (await this.likeRepository.findByPostId(postId, userId)) {
+      return true;
+    }
+    return false;
   }
 
   /* Comment */
@@ -132,6 +164,21 @@ export class PostService {
     const user = await this.userService.findUserByPublicId(publicId);
     const comment = await this.checkOwnComment(commentId, user.id);
     return this.commentRepository.remove(comment);
+  }
+
+  async findCommentsByPostId(postId: number): Promise<{}[]> {
+    const comments: Comment[] =
+      await this.commentRepository.findByPostId(postId);
+    return await Promise.all(
+      comments.map(async (comment) => {
+        const user = await this.userService.findUserByUserId(comment.userId);
+        return { ...comment, publicId: user.publicId };
+      }),
+    );
+  }
+
+  async countComments(postId: number): Promise<number> {
+    return this.commentRepository.countByPostId(postId);
   }
 
   /* Check Post functions */
@@ -174,18 +221,4 @@ export class PostService {
       HttpStatus.BAD_REQUEST,
     );
   }
-
-  // async uploadImage(@UploadedFiles() files: Array<Express.Multer.File>) {
-  //   let urls = [];
-  //   if (!files) {
-  //     return 'false';
-  //   }
-  //   await Promise.all(
-  //     files.map(async (file) => {
-  //       const url = await this.imageService.uploadFile(file);
-  //       urls.push(url);
-  //     }),
-  //   );
-  //   console.log(urls);
-  // }
 }

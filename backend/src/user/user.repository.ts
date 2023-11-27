@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserAuthDto } from 'src/auth/dto/create-auth.dto';
@@ -22,4 +22,33 @@ export class UserRepository {
   findUserByPublicId(publicId: string) {
     return this.usersRepository.findOneBy({ publicId });
   }
+
+  findUserByUserId(userId: number): Promise<User> {
+    return this.usersRepository.findOneBy({ id: userId });
+  }
+
+  async update(user: User) {
+    await this.usersRepository.save(user);
+    return user;
+  }
+
+  // async updateUserImage(id: number, imageUrl: string): Promise<User> {
+  //   const user = await this.usersRepository.findOneBy({ id });
+  //   if (!user) {
+  //     throw new NotFoundException(`User with id ${id} not found`);
+  //   }
+  //   user.profileImage = imageUrl;
+  //   await this.usersRepository.save(user);
+  //   return user;
+  // }
+
+  // async updateUserChatName(id: number, chatName: string) {
+  //   const user = await this.usersRepository.findOneBy({ id });
+  //   if (!user) {
+  //     throw new NotFoundException(`User with id ${id} not found`);
+  //   }
+  //   user.chatName = chatName;
+  //   await this.usersRepository.save(user);
+  //   return user;
+  // }
 }

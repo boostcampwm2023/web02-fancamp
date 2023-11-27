@@ -9,4 +9,12 @@ export class CreateImageDto {
   @IsNumber()
   @ApiProperty()
   postId: number;
+
+  @IsNumber()
+  @ApiProperty()
+  userId: number;
+
+  @IsBoolean()
+  @ApiProperty()
+  isImage: boolean;
 }

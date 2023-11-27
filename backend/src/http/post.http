@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### 포스트 id로 가져오기
-GET {{server}}/posts/15
+GET {{server}}/posts/1
 
 ### campName로 가져오기
 GET {{server}}/posts/camp/camp1

@@ -16,7 +16,6 @@ Content-Type: application/json
     "isMaster": true
 }
 
-
 ### 마스터 로그인 요청~
 POST {{server}}/auth/users/signin
 Content-Type: application/json
@@ -28,10 +27,10 @@ Content-Type: application/json
 
 ### 캠퍼 로그인 요청~
 POST {{server}}/auth/users/signin
-Content-Type: application/json
+Content-Type: application/json 
 
 {
-    "email" : "camper3@fancamp.com",
+    "email" : "camper1@fancamp.com",
     "password": "1234"
 }
 

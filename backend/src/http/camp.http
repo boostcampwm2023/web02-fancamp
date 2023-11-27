@@ -33,4 +33,4 @@ Content-Type: application/json
 GET {{server}}/camps/subscriptions
 
 ###
-GET {{server}}/camps/subscriptions/camp2
+GET {{server}}/camps/subscriptions/camp1
