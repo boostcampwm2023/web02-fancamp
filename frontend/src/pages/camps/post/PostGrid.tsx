@@ -6,6 +6,7 @@ import useFetch from '../../../hooks/useFetch';
 import PostGrid from '../../../components/grid/PostGrid';
 import UploadCard from '../../../components/card/UploadCard';
 import PostCard from '../../../components/card/PostCard';
+import { BASE_URL } from '@constants/URLs';
 
 interface PostGridProps {
   handlePostModalOpen: (postId: string) => void;
@@ -22,7 +23,7 @@ function PostPageGrid({
   const { data: posts } = useSuspenseQuery<Post[]>({
     queryKey: ['posts', campId],
     queryFn: () =>
-      useFetch(`/api/posts/camp/${campId}`, {
+      useFetch(`${BASE_URL}/posts/camp/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),

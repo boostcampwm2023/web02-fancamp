@@ -9,6 +9,7 @@ import ProfileImage from '../../components/profile/ProfileImage';
 import useAuth from '../../hooks/useAuth';
 import useFetch from '../../hooks/useFetch';
 import { isSubscribedCamp, subscribeCamp } from '../../API/subscription';
+import { BASE_URL } from '@constants/URLs';
 
 function CampInfo() {
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -18,7 +19,7 @@ function CampInfo() {
   const { data: camp } = useSuspenseQuery<CampInfoType>({
     queryKey: ['camp', campId],
     queryFn: () =>
-      useFetch(`/api/camps/${campId}`, {
+      useFetch(`${BASE_URL}/camps/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),

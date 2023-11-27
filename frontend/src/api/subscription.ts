@@ -1,7 +1,9 @@
+import { BASE_URL } from '@constants/URLs';
+
 export async function isSubscribedCamp(campName: string): Promise<any> {
   const NOT_SUBSCRIBED = 400;
 
-  const response = await fetch(`/api/camps/subscriptions/${campName}`, {
+  const response = await fetch(`${BASE_URL}/camps/subscriptions/${campName}`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -15,7 +17,7 @@ export async function isSubscribedCamp(campName: string): Promise<any> {
 }
 
 export async function subscribeCamp(campName: string): Promise<any> {
-  const response = await fetch(`/api/camps/subscriptions/${campName}`, {
+  const response = await fetch(`${BASE_URL}/camps/subscriptions/${campName}`, {
     method: 'POST',
     credentials: 'include',
   });

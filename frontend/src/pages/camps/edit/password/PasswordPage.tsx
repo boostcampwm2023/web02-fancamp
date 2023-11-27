@@ -4,6 +4,7 @@ import SubmitButton from '../../../../components/button/SubmitButton';
 import Input from '../../../../components/input/Input';
 import Text from '../../../../components/ui/Text';
 import useFetch from '../../../../hooks/useFetch';
+import { BASE_URL } from '@constants/URLs';
 
 interface ChangePassword {
   currentPassword: string;
@@ -17,7 +18,7 @@ function PasswordPage() {
 
   const changePasswordMutation = useMutation({
     mutationFn: (passwords: ChangePassword) =>
-      useFetch(`/api/users/`, {
+      useFetch(`${BASE_URL}/users/`, {
         method: 'patch',
         body: JSON.stringify(passwords),
         credentials: 'include',

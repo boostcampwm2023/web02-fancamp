@@ -8,6 +8,7 @@ import { CampEditable } from '../../../../types/api/camp';
 import Spinner from '../../../../components/loading/Spinner';
 import ProfileImage from '../../../../components/profile/ProfileImage';
 import useFetch from '../../../../hooks/useFetch';
+import { BASE_URL } from '@constants/URLs';
 
 function ProfilePage() {
   return (
@@ -29,7 +30,7 @@ function ProfilePageTemplate() {
   const { data: camp } = useSuspenseQuery<CampEditable>({
     queryKey: ['camp', campId],
     queryFn: () =>
-      useFetch(`/api/camps/${campId}`, {
+      useFetch(`${BASE_URL}/camps/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),
