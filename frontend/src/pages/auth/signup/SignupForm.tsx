@@ -1,16 +1,16 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-nested-ternary */
+import LineProgress from '@components/progress/LineProgress';
+import Text from '@components/ui/Text';
+import { EmailStatus, SignupStatus } from '@type/client/auth';
+import { validateSign } from '@utils/validate';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Input from '../../../components/input/Input';
-import SubmitButton from '../../../components/button/SubmitButton';
-import { AUTH as AUTH_CONSTANTS } from '../../../constants/auth';
-import LineProgress from '../../../components/progress/LineProgress';
-import Text from '../../../components/ui/Text';
-import ProfileImage from '../../../components/profile/ProfileImage';
-import { validateSign } from '../../../utils/validate';
-import { EmailStatus, SignupStatus } from '../../../types/client/auth';
-import Checkbox from '../../../components/checkbox/Checkbox';
+import { AUTH as AUTH_CONSTANTS } from '@constants/auth';
+import Input from '@components/input/Input';
+import ProfileImage from '@components/profile/ProfileImage';
+import Checkbox from '@components/checkbox/Checkbox';
+import SubmitButton from '@components/button/SubmitButton';
 
 interface SignupFormProps {
   signupStatus: SignupStatus;

@@ -31,6 +31,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/API'),
       },
       {
+        find: '@assets',
+        replacement: path.resolve(__dirname, 'src/assets'),
+      },
+      {
         find: '@components',
         replacement: path.resolve(__dirname, 'src/components'),
       },
@@ -51,8 +55,8 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/pages'),
       },
       {
-        find: '@types',
-        replacement: path.resolve(__dirname, 'src/types'),
+        find: '@type',
+        replacement: path.resolve(__dirname, 'src/type'),
       },
       {
         find: '@utils',

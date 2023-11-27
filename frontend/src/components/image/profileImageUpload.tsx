@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useEffect } from 'react';
-import Image from './image';
-import CameraIcon from '../../assets/icons/cameraIcon.svg?react';
-import { fileToImage } from '../../utils/file';
-import { UploadedImage } from '../../types/client/image';
+import Image from '@components/ui/Image';
+import { UploadedImage } from '@type/client/image';
+import { fileToImage } from '@utils/file';
+import CameraIcon from '@assets/icons/cameraIcon.svg?react';
 
 interface ProfileImageUploadProps
   extends React.ImgHTMLAttributes<HTMLImageElement> {

@@ -1,9 +1,9 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Suspense, useEffect, useState } from 'react';
-import ContentMenu from '../../components/menu/ContentMenu';
+import { CAMP_CATEGORIES } from '@constants/camp';
+import Spinner from '@components/loading/Spinner';
+import ContentMenu from '@components/menu/ContentMenu';
 import CampInfo from './CampInfo';
-import Spinner from '../../components/loading/Spinner';
-import { CAMP_CATEGORIES } from '../../constants/camp';
 
 function CampPage() {
   const categorys = CAMP_CATEGORIES.map((category) => category.text);

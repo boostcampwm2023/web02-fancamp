@@ -1,11 +1,11 @@
 import { useParams } from 'react-router-dom';
 import { useSuspenseQuery } from '@tanstack/react-query';
-import useAuth from '../../../hooks/useAuth';
-import { Post } from '../../../types/api/post';
-import useFetch from '../../../hooks/useFetch';
-import PostGrid from '../../../components/grid/PostGrid';
-import UploadCard from '../../../components/card/UploadCard';
-import PostCard from '../../../components/card/PostCard';
+import useAuth from '@hooks/useAuth';
+import { Post } from '@type/api/post';
+import useFetch from '@hooks/useFetch';
+import PostGrid from '@components/grid/PostGrid';
+import UploadCard from '@components/card/UploadCard';
+import PostCard from '@components/card/PostCard';
 import { BASE_URL } from '@constants/URLs';
 
 interface PostGridProps {

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import CheckIcon from '../../assets/icons/checkIcon.svg?react';
-import SubscribeButton from '../../components/button/SubscribeButton';
-import Text from '../../components/ui/Text';
-import { CampInfo as CampInfoType } from '../../types/api/camp';
-import ProfileImage from '../../components/profile/ProfileImage';
-import useAuth from '../../hooks/useAuth';
-import useFetch from '../../hooks/useFetch';
-import { isSubscribedCamp, subscribeCamp } from '../../API/subscription';
+import { CampInfo as CampInfoType } from '@type/api/camp';
+import useAuth from '@hooks/useAuth';
+import useFetch from '@hooks/useFetch';
+import { isSubscribedCamp, subscribeCamp } from '@API/subscription';
+import ProfileImage from '@components/profile/ProfileImage';
+import Text from '@components/ui/Text';
+import SubscribeButton from '@components/button/SubscribeButton';
+import CheckIcon from '@assets/icons/checkIcon.svg?react';
 import { BASE_URL } from '@constants/URLs';
 
 function CampInfo() {

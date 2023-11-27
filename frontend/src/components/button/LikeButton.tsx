@@ -1,5 +1,3 @@
-// import ConfettiExplosion from 'react-confetti-explosion';
-
 interface LikeButtonProps {
   liked: boolean;
   onClick: () => void;
@@ -28,18 +26,6 @@ function LikeButton({ liked, onClick, children }: LikeButtonProps) {
           strokeWidth="2"
         />
       </svg>
-      {/* <div className="left-[0.5rem]">
-        {liked && (
-          <ConfettiExplosion
-            duration={2200}
-            particleSize={6}
-            particleCount={30}
-            force={0.2}
-            width={400}
-            className="relative z-[10000000000]"
-          />
-        )}
-      </div> */}
       {children}
     </button>
   );

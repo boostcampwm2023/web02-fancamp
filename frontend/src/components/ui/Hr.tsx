@@ -1,4 +1,4 @@
-import { COLORS } from '../../constants/colors';
+import { COLORS } from '@constants/colors';
 
 interface HrProps extends React.HtmlHTMLAttributes<HTMLHRElement> {
   color?: keyof typeof COLORS;

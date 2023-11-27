@@ -1,6 +1,6 @@
+import { signout } from '@API/auth';
+import useAuth from '@hooks/useAuth';
 import { Link, NavLink } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import { signout } from '../../API/auth';
 
 const mainMenu = [
   { to: '/', text: 'Home' },

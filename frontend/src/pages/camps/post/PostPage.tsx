@@ -1,12 +1,12 @@
+import ModalSipnner from '@components/loading/ModalSpinner';
+import Modal from '@components/modal/Modal';
+import useAuth from '@hooks/useAuth';
 import { Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from '../../../components/modal/Modal';
-import Spinner from '../../../components/loading/Spinner';
-import ModalSipnner from '../../../components/loading/ModalSpinner';
-import UploadModal from './UploadModal';
+import Spinner from '@components/loading/Spinner';
 import PostModal from './PostModal';
+import UploadModal from './UploadModal';
 import PostPageGrid from './PostGrid';
-import useAuth from '../../../hooks/useAuth';
 
 function PostPage() {
   const [showPostModal, setPostModal] = useState(false);

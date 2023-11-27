@@ -1,4 +1,4 @@
-import Text from '../ui/Text';
+import Text from '@components/ui/Text';
 
 interface UploadCardProps {
   onClick: () => void;

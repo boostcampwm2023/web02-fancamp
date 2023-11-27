@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
-import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react';
-import RightArrowIcon from '../../assets/icons/rightArrowIcon.svg?react';
-import Text from '../ui/Text';
-import Image from '../ui/Image';
+import Image from '@components/ui/Image';
+import Text from '@components/ui/Text';
+import LeftArrowIcon from '@assets/icons/leftArrowIcon.svg?react';
+import RightArrowIcon from '@assets/icons/rightArrowIcon.svg?react';
 
 interface ImageSliderProps {
   width?: number;

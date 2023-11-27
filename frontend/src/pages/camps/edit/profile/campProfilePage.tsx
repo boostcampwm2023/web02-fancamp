@@ -1,13 +1,12 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { FormEvent, Suspense, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import SubmitButton from '../../../../components/button/submitButton';
-import Input from '../../../../components/input/input';
-import Text from '../../../../components/text/text';
-import { CampEditable } from '../../../../types/api/camp';
-import Spinner from '../../../../components/loading/spinner';
-import useFetch from '../../../../hooks/useFetch';
-import ProfileImageUpload from '../../../../components/image/profileImageUpload';
+import Text from '@components/ui/Text';
+import Input from '@components/input/Input';
+import SubmitButton from '@components/button/SubmitButton';
+import Spinner from '@components/loading/Spinner';
+import useFetch from '@hooks/useFetch';
+import { CampEditable } from '@type/api/camp';
 
 function CampProfilePage() {
   return (

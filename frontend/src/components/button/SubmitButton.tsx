@@ -1,7 +1,8 @@
 /* eslint-disable no-nested-ternary */
+
+import Spinner from '@components/loading/Spinner';
+import Text from '@components/ui/Text';
 import { useEffect, useState } from 'react';
-import Spinner from '../loading/Spinner';
-import Text from '../ui/Text';
 
 interface SubmitButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -53,7 +54,6 @@ function SubmitButton(props: SubmitButtonProps) {
         완료
       </Text>
     ) : (
-      // eslint-disable-next-line react/jsx-no-useless-fragment
       <></>
     );
 

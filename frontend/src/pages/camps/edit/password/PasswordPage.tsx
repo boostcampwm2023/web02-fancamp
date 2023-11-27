@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import SubmitButton from '../../../../components/button/SubmitButton';
-import Input from '../../../../components/input/Input';
-import Text from '../../../../components/ui/Text';
-import useFetch from '../../../../hooks/useFetch';
+import useFetch from '@hooks/useFetch';
+import Text from '@components/ui/Text';
+import Input from '@components/input/Input';
+import SubmitButton from '@components/button/SubmitButton';
 import { BASE_URL } from '@constants/URLs';
 
 interface ChangePassword {

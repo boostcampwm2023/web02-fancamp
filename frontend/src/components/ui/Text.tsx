@@ -1,5 +1,5 @@
+import { COLORS } from '@constants/colors';
 import React from 'react';
-import { COLORS } from '../../constants/colors';
 
 interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;

@@ -1,10 +1,10 @@
 import JsonView from 'react18-json-view';
 import { useState } from 'react';
-import { Post } from '../../../types/api/post';
-import Section from '../../../components/ui/Section';
-import Text from '../../../components/ui/Text';
-import Button from '../../../components/ui/Button';
-import { User } from '../../../types/api/user';
+import { Post } from '@type/api/post';
+import Section from '@components/ui/Section';
+import Text from '@components/ui/Text';
+import Button from '@components/ui/Button';
+import { User } from '@type/api/user';
 import { BASE_URL } from '@constants/URLs';
 
 const test = {

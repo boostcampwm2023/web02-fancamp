@@ -1,20 +1,19 @@
+import LikeButton from '@components/button/LikeButton';
+import ProfileImage from '@components/profile/ProfileImage';
+import ImageSlider from '@components/slider/ImageSlider';
+import Text from '@components/ui/Text';
+import useFetch from '@hooks/useFetch';
 import {
   useMutation,
   useSuspenseQueries,
   useSuspenseQuery,
 } from '@tanstack/react-query';
+import { CampInfo } from '@type/api/camp';
+import { Post } from '@type/api/post';
+import { formatDate } from '@utils/date';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useFetch from '../../../hooks/useFetch';
-import { Post } from '../../../types/api/post';
-import { CampInfo } from '../../../types/api/camp';
-import ImageSlider from '../../../components/slider/ImageSlider';
-import ProfileImage from '../../../components/profile/ProfileImage';
-import Text from '../../../components/ui/Text';
-import CloseIcon from '../../../assets/icons/closeIcon.svg?react';
-import LikeButton from '../../../components/button/LikeButton';
-import { formatDate } from '../../../utils/date';
-import { BASE_URL } from '@constants/URLs';
+import CloseIcon from '@assets/icons/closeIcon.svg?react';
 
 interface PostModalTemplateProps {
   postId: string | null;

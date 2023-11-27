@@ -1,7 +1,7 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import ContentMenu from '../../../components/menu/ContentMenu';
-import { CAMP_EDIT_CATEGORIES } from '../../../constants/camp';
+import ContentMenu from '@components/menu/ContentMenu';
+import { CAMP_EDIT_CATEGORIES } from '@constants/camp';
 
 function EditPage() {
   const categorys = CAMP_EDIT_CATEGORIES.map((category) => category.text);

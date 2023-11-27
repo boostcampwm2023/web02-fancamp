@@ -20,7 +20,7 @@ import ProfilePage from '../pages/camps/edit/profile/ProfilePage';
 import PasswordPage from '../pages/camps/edit/password/PasswordPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
 import UserPage from '../pages/user/UserPage';
-import UserEditPage from '../pages/user/UserEditPage';
+import UserEditPage from '../pages/user/edit/UserEditPage';
 import OnlyMasterRoute from './OnlyMasterRoute';
 import OnlyCamperRoute from './OnlyCamperRoute';
 import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
