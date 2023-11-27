@@ -26,4 +26,10 @@ export class LikeRepository {
   remove(postId: number, userId: number) {
     return this.likeRepository.update({ postId, userId }, { isDeleted: true });
   }
+
+  countByPostId(postId: number): number | Promise<number> {
+    return this.likeRepository.count({
+      where: { postId, isDeleted: false },
+    });
+  }
 }

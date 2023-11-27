@@ -56,8 +56,17 @@ export class PostService {
   }
   async findPostWithUrls(postId: number) {
     const post = await this.findPost(postId);
+    const likesCount = await this.countLikes(post.postId);
+    const commentsCount = await this.countComments(post.postId);
+    const commets = await this.findCommentsByPostId(post.postId);
     const urls = await this.imageService.findUrlsByPostId(postId);
-    return { ...post, urls: urls };
+    return {
+      ...post,
+      likesCount: likesCount,
+      commentsCount: commentsCount,
+      urls: urls,
+      comments: commets,
+    };
   }
 
   findPost(postId: number) {
@@ -74,7 +83,14 @@ export class PostService {
         console.log(post);
         const urls = await this.imageService.findUrlsByPostId(post.postId); //TODO: 이미지 없으면
         console.log(urls[0]);
-        return { ...post, url: urls[0] };
+        const likesCount = await this.countLikes(post.postId);
+        const commentsCount = await this.countComments(post.postId);
+        return {
+          ...post,
+          likesCount: likesCount,
+          commentsCount: commentsCount,
+          url: urls[0],
+        };
       }),
     );
   }
@@ -112,6 +128,10 @@ export class PostService {
     }
   }
 
+  async countLikes(postId: number): Promise<number> {
+    return this.likeRepository.countByPostId(postId);
+  }
+
   /* Comment */
   async createComment(createCommentDto: CreateCommentDto, publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
@@ -132,6 +152,14 @@ export class PostService {
     const user = await this.userService.findUserByPublicId(publicId);
     const comment = await this.checkOwnComment(commentId, user.id);
     return this.commentRepository.remove(comment);
+  }
+
+  async findCommentsByPostId(postId: number): Promise<Comment[]> {
+    return this.commentRepository.findByPostId(postId);
+  }
+
+  async countComments(postId: number): Promise<number> {
+    return this.commentRepository.countByPostId(postId);
   }
 
   /* Check Post functions */
