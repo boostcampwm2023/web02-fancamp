@@ -1,5 +1,7 @@
+import { BASE_URL } from '@constants/URLs';
+
 export async function getMessages(campName: string): Promise<any> {
-  const response = await fetch(`/api/chats/${campName}`, {
+  const response = await fetch(`${BASE_URL}/chats/${campName}`, {
     method: 'GEt',
     headers: {
       'Content-Type': 'application/json',

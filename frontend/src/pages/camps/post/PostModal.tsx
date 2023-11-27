@@ -14,6 +14,7 @@ import Text from '../../../components/ui/Text';
 import CloseIcon from '../../../assets/icons/closeIcon.svg?react';
 import LikeButton from '../../../components/button/LikeButton';
 import { formatDate } from '../../../utils/date';
+import { BASE_URL } from '@constants/URLs';
 
 interface PostModalTemplateProps {
   postId: string | null;
@@ -29,7 +30,7 @@ function PostModal({ postId, handlePostModalClose }: PostModalTemplateProps) {
       {
         queryKey: ['post', postId],
         queryFn: (): Promise<Post> =>
-          useFetch(`/api/posts/${postId}`, {
+          useFetch(`${BASE_URL}/posts/${postId}`, {
             method: 'GET',
             credentials: 'include',
           }),
@@ -49,7 +50,7 @@ function PostModal({ postId, handlePostModalClose }: PostModalTemplateProps) {
   const { data: camp } = useSuspenseQuery({
     queryKey: ['camp', post.campId],
     queryFn: (): Promise<CampInfo> =>
-      useFetch(`/api/camps/${campId}`, {
+      useFetch(`${BASE_URL}/camps/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),
@@ -58,7 +59,7 @@ function PostModal({ postId, handlePostModalClose }: PostModalTemplateProps) {
   const { data: isLiked } = useSuspenseQuery({
     queryKey: ['like', postId],
     queryFn: (): Promise<any[]> =>
-      useFetch(`/api/posts/likes/${postId}`, {
+      useFetch(`${BASE_URL}/posts/likes/${postId}`, {
         method: 'GET',
         credentials: 'include',
       }),
@@ -81,7 +82,7 @@ function PostModal({ postId, handlePostModalClose }: PostModalTemplateProps) {
 
   const postLikeMutation = useMutation({
     mutationFn: () =>
-      useFetch(`/api/posts/likes/${postId}`, {
+      useFetch(`${BASE_URL}/posts/likes/${postId}`, {
         method: 'POST',
         body: JSON.stringify({ postId }),
         credentials: 'include',

@@ -5,6 +5,7 @@ import TextArea from '../../../components/ui/TextArea';
 import Text from '../../../components/ui/Text';
 import UploadArea from '../../../components/file/UploadArea';
 import useFetch from '../../../hooks/useFetch';
+import { BASE_URL } from '@constants/URLs';
 
 interface UploadModalProps {
   handleCloseModal: () => void;
@@ -21,7 +22,7 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
     isSuccess: isUploadSuccess,
   } = useMutation({
     mutationFn: (formData: FormData) =>
-      useFetch(`/api/posts/`, {
+      useFetch(`${BASE_URL}/posts/`, {
         method: 'POST',
         body: formData,
         credentials: 'include',

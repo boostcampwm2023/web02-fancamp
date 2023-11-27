@@ -1,5 +1,7 @@
+import { BASE_URL } from '@constants/URLs';
+
 export async function getAllCamps() {
-  const response = await fetch('/api/camps', {
+  const response = await fetch(`${BASE_URL}/camps`, {
     credentials: 'include',
   });
   if (!response.ok) {
@@ -10,7 +12,7 @@ export async function getAllCamps() {
 }
 
 export async function getSubscribedCamps() {
-  const response = await fetch('/api/camps/subscriptions', {
+  const response = await fetch(`${BASE_URL}/camps/subscriptions`, {
     credentials: 'include',
   });
   if (!response.ok) {

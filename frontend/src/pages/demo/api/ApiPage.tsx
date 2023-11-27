@@ -5,6 +5,7 @@ import Section from '../../../components/ui/Section';
 import Text from '../../../components/ui/Text';
 import Button from '../../../components/ui/Button';
 import { User } from '../../../types/api/user';
+import { BASE_URL } from '@constants/URLs';
 
 const test = {
   userId: '0b5060ce-dfb4-4497-b0bf-34c6b7fce368',
@@ -27,13 +28,13 @@ function PostApiDemo() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   const getPostsByUserId = () => {
-    fetch(`/api/posts/camp/${userId}`)
+    fetch(`${BASE_URL}posts/camp/${userId}`)
       .then((res) => res.json())
       .then((data) => setPosts(data));
   };
 
   const getPostByPostId = () => {
-    fetch(`/api/posts/${postId}`)
+    fetch(`${BASE_URL}posts/${postId}`)
       .then((res) => res.json())
       .then((data) => setPost(data));
   };
@@ -61,7 +62,7 @@ function CommentApiDemo() {
   const [comments, setComments] = useState<Comment[]>([]);
 
   const getCommentsByPostId = () => {
-    fetch(`/api/posts/${postId}/comments`)
+    fetch(`${BASE_URL}/posts/${postId}/comments`)
       .then((res) => res.json())
       .then((data) => setComments(data));
   };
@@ -83,7 +84,7 @@ function UserApiDemo() {
   const [user, setUser] = useState<User | null>(null);
 
   const getUserByUserId = () => {
-    fetch(`/api/users/${userId}`)
+    fetch(`${BASE_URL}/users/${userId}`)
       .then((res) => res.json())
       .then((data) => setUser(data));
   };

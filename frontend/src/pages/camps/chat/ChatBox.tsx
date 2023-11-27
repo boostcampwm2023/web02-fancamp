@@ -23,6 +23,16 @@ export default function ChatBox() {
   useEffect(() => {
     socket.connect();
 
+    console.log(import.meta.env.MODE);
+
+    if (import.meta.env.PROD) {
+      console.log('prod');
+    }
+
+    if (import.meta.env.DEV) {
+      console.log('dev');
+    }
+
     if (isMaster) {
       socket.emit('masterIn', { publicId, campName });
       return () => {
