@@ -1,16 +1,15 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { FormEvent, Suspense, useEffect, useState } from 'react';
+import { FormEvent, Suspense, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import SubmitButton from '../../../../components/button/SubmitButton';
-import Input from '../../../../components/input/Input';
-import Text from '../../../../components/ui/Text';
+import SubmitButton from '../../../../components/button/submitButton';
+import Input from '../../../../components/input/input';
+import Text from '../../../../components/text/text';
 import { CampEditable } from '../../../../types/api/camp';
-import Spinner from '../../../../components/loading/Spinner';
+import Spinner from '../../../../components/loading/spinner';
 import useFetch from '../../../../hooks/useFetch';
-import { BASE_URL } from '@constants/URLs';
 import ProfileImageUpload from '../../../../components/image/profileImageUpload';
 
-function ProfilePage() {
+function CampProfilePage() {
   return (
     <Suspense
       fallback={
@@ -31,17 +30,13 @@ function ProfilePageTemplate() {
   const { data: camp } = useSuspenseQuery<CampEditable>({
     queryKey: ['camp', campId],
     queryFn: () =>
-      useFetch(`${BASE_URL}/camps/${campId}`, {
+      useFetch(`/api/camps/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),
     gcTime: 0,
     staleTime: 0,
   });
-
-  useEffect(() => {
-    console.log(camp);
-  }, [camp]);
 
   // const editProfileMutation = useMutation({
   //   mutationFn: (profile: Partial<CampEditable>) =>
@@ -107,4 +102,4 @@ function ProfilePageTemplate() {
   );
 }
 
-export default ProfilePage;
+export default CampProfilePage;
