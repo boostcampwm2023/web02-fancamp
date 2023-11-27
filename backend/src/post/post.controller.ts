@@ -89,7 +89,7 @@ export class PostController {
       request.cookies['publicId'],
     );
   }
-  @Get('camp/:campName')
+  @Get('camps/:campName')
   findAllPosts(@Param('campName') campName: string) {
     return this.postService.findAllPostsByCampName(campName);
   }

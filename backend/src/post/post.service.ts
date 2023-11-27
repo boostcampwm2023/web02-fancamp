@@ -60,7 +60,7 @@ export class PostService {
     const likesCount = await this.countLikes(postId);
     const commentsCount = await this.countComments(postId);
     const commets = await this.findCommentsByPostId(postId);
-    const urls = await this.imageService.findUrlsByPostId(postId);
+    const urls = await this.imageService.findImagesByPostId(postId);
     const user = await this.userService.findUserByPublicId(publicId);
     const isLike = await this.findLikeByPostId(postId, user.id);
     return {
@@ -85,8 +85,13 @@ export class PostService {
     return await Promise.all(
       posts.map(async (post) => {
         console.log(post);
-        const urls = await this.imageService.findUrlsByPostId(post.postId); //TODO: 이미지 없으면
-        console.log(urls[0]);
+        const urls = await this.imageService.findImagesByPostId(post.postId); //TODO: 이미지 없으면
+        console.log(urls);
+        if (urls[0] && !urls[0].isImage) {
+          //TODO: 나중에 썸네일 추출 기능 넣고 삭제하기
+          urls[0].imageUrl =
+            'https://kr.object.ncloudstorage.com/fancamp-images/default_thumbnail.jpg';
+        }
         const likesCount = await this.countLikes(post.postId);
         const commentsCount = await this.countComments(post.postId);
         return {

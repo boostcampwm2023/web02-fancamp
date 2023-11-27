@@ -19,10 +19,6 @@ export class ImageService {
   });
   bucket_name = process.env.BUCKET_NAME;
 
-  async createImage(createImageDto: CreateImageDto) {
-    return this.imageRepository.create(createImageDto);
-  }
-
   async uploadPostFiles(
     files: Array<Express.Multer.File>,
     postId: number,
@@ -55,15 +51,25 @@ export class ImageService {
     try {
       const response = await this.s3Client.send(command);
       const imageUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileName}`;
-      this.createImage({ imageUrl, postId, userId });
-      console.log(response);
+      const isImage = this.isImage(file.mimetype);
+      this.createImage({ imageUrl, postId, userId, isImage });
       return imageUrl;
     } catch (err) {
       console.error(err);
     }
   }
 
-  findUrlsByPostId(postId: number) {
-    return this.imageRepository.findUrlsByPostId(postId);
+  isImage(mimetype: string): boolean {
+    return mimetype.startsWith('image/');
+  }
+
+  async createImage(createImageDto: CreateImageDto) {
+    return this.imageRepository.create(createImageDto);
+  }
+
+  async findImagesByPostId(postId: number) {
+    const images = await this.imageRepository.findByPostId(postId);
+    images.sort((a, b) => a.imageUrl.localeCompare(b.imageUrl));
+    return images;
   }
 }

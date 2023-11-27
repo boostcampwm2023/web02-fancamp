@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { concatMap } from 'rxjs';
+import { concatAll, concatMap } from 'rxjs';
 import { Image } from './entities/image.entity';
 import { CreateImageDto } from './dto/create-image.dto';
 @Injectable()
@@ -11,17 +11,24 @@ export class ImageRepository {
     this.imageRepository = this.dataSource.getRepository(Image);
   }
 
-  create(createImageDto: CreateImageDto) {
-    return this.imageRepository.save(createImageDto);
+  async create(createImageDto: CreateImageDto) {
+    if (
+      !(await this.imageRepository.findOneBy({
+        imageUrl: createImageDto.imageUrl,
+      }))
+    ) {
+      return this.imageRepository.save(createImageDto);
+    }
   }
-  findUrlsByPostId(postId: number) {
+  findByPostId(postId: number) {
     return this.imageRepository
       .createQueryBuilder('image')
-      .select(['image.imageUrl'])
+      .select(['image.imageUrl', 'image.isImage'])
       .where({
         postId,
         isDeleted: false,
       })
       .getMany();
   }
+  checkAndUpdate() {}
 }

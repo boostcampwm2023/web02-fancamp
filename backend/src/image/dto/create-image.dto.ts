@@ -13,4 +13,8 @@ export class CreateImageDto {
   @IsNumber()
   @ApiProperty()
   userId: number;
+
+  @IsBoolean()
+  @ApiProperty()
+  isImage: boolean;
 }
