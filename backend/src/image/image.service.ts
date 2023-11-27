@@ -23,7 +23,7 @@ export class ImageService {
     return this.imageRepository.create(createImageDto);
   }
 
-  async uploadFiles(
+  async uploadPostFiles(
     files: Array<Express.Multer.File>,
     postId: number,
     campId: number,
@@ -34,27 +34,30 @@ export class ImageService {
     await Promise.all(
       files.map(async (file, index) => {
         const fileName = `${campId}-${postId}_${index}`;
-        const fileExt = file.originalname.split('.')[1];
-        const fileNullName = `${fileName}.${fileExt}`;
-        await this.uploadFile(file, fileNullName);
-
-        const imageUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileNullName}`;
-        this.createImage({ imageUrl, postId });
+        await this.uploadFile(file, fileName, postId, -1);
       }),
     );
   }
 
-  async uploadFile(file: Express.Multer.File, fileNullName: string) {
+  async uploadFile(
+    file: Express.Multer.File,
+    fileName: string,
+    postId: number,
+    userId: number,
+  ) {
     const command = new PutObjectCommand({
       Bucket: this.bucket_name,
-      Key: fileNullName,
+      Key: fileName,
       Body: file.buffer,
       ContentType: file.mimetype,
       ACL: 'public-read',
     });
     try {
       const response = await this.s3Client.send(command);
+      const imageUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileName}`;
+      this.createImage({ imageUrl, postId, userId });
       console.log(response);
+      return imageUrl;
     } catch (err) {
       console.error(err);
     }
