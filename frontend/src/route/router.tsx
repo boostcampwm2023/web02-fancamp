@@ -3,6 +3,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
+import Layout from '@components/layout/Layout';
 import DemoPage from '../pages/demo/components/DemoPage';
 import HomePage from '../pages/home/HomePage';
 import SearchPage from '../pages/search/SearchPage';
@@ -18,9 +19,12 @@ import ErrorPage from '../pages/error/ErrorPage';
 import ProfilePage from '../pages/camps/edit/profile/ProfilePage';
 import PasswordPage from '../pages/camps/edit/password/PasswordPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
+import UserPage from '../pages/user/UserPage';
+import UserEditPage from '../pages/user/UserEditPage';
+import OnlyMasterRoute from './OnlyMasterRoute';
+import OnlyCamperRoute from './OnlyCamperRoute';
 import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
 import SigninPage from '../pages/auth/signin/SigninPage';
-import Layout from '@components/layout/Layout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,9 +46,17 @@ const router = createBrowserRouter(
               <Route path="post" element={<PostPage />} />
             </Route>
           </Route>
-          <Route path="/camps/:campId/edit" element={<EditPage />}>
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="password" element={<PasswordPage />} />
+          <Route element={<OnlyMasterRoute />}>
+            <Route path="/camps/:campId/edit" element={<EditPage />}>
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="password" element={<PasswordPage />} />
+            </Route>
+          </Route>
+        </Route>
+        <Route element={<OnlyCamperRoute />}>
+          <Route path="user">
+            <Route path="" element={<UserPage />} />
+            <Route path="edit" element={<UserEditPage />} />
           </Route>
         </Route>
         <Route path="error" element={<ErrorPage />} />
