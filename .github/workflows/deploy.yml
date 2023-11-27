@@ -1,0 +1,36 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+jobs:
+  get-dev-branch-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: connect ssh
+        uses: appleboy/ssh-action@master
+        env:
+          DB_ENV: ${{secrets.DEPLOYMENT_DB_ENV}}
+          FE_ENV: ${{secrets.DEPLOYMENT_FE_ENV}}
+        with:
+          host: ${{ secrets.DEPLOYMENT_SSH_HOST }}
+          username: ${{ secrets.DEPLOYMENT_SSH_USERNAME }}
+          key: ${{ secrets.DEPLOYMENT_SSH_KEY }}
+          script: |
+            cd /repo/web02-fancamp
+            git stash 
+            git switch dev
+            git pull origin dev
+            cd frontend
+            echo "FE_ENV=$FE_ENV" >> .env
+            npm install
+            npm run build
+            sudo systemctl nginx restart
+            cd ../backend
+            echo "DB_ENV=$DB_ENV" >> .env
+            npm install
+            pm2 restart 0

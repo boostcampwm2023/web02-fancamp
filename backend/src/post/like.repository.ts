@@ -14,16 +14,18 @@ export class LikeRepository {
   create(postId: number, userId: number) {
     return this.likeRepository.save({ postId, userId, isDeleted: false });
   }
-  async findLikesByPostId(postId: number): Promise<Like[]> {
-    return this.likeRepository.find({
-      where: {
-        postId,
-        isDeleted: false,
-      },
-    });
-  }
 
   remove(postId: number, userId: number) {
     return this.likeRepository.update({ postId, userId }, { isDeleted: true });
+  }
+
+  countByPostId(postId: number): number | Promise<number> {
+    return this.likeRepository.count({
+      where: { postId, isDeleted: false },
+    });
+  }
+
+  findByPostId(postId: number, userId: number): Promise<Like> {
+    return this.likeRepository.findOneBy({ postId, userId, isDeleted: false });
   }
 }

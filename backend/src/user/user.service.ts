@@ -2,26 +2,45 @@ import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UserRepository } from './user.repository';
 import { CreateUserAuthDto } from 'src/auth/dto/create-auth.dto';
+import { ImageService } from 'src/image/image.service';
+import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly userRepository: UserRepository) {}
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly imageService: ImageService,
+  ) {}
 
-  // findAll() {
-  //   return `This action returns all user`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} user`;
-  // }
+  findUserByUserId(userId: number): Promise<User> {
+    return this.userRepository.findUserByUserId(userId);
+  }
 
   findUserByPublicId(publicId: string) {
     return this.userRepository.findUserByPublicId(publicId);
   }
 
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
+  async update(
+    file: Express.Multer.File,
+    publicId: string,
+    updateUserDto: UpdateUserDto,
+  ) {
+    const user = await this.findUserByPublicId(publicId);
+    const fileName = `${user.id}-profile`;
+    if (file) {
+      const imageUrl = await this.imageService.uploadFile(
+        file,
+        fileName,
+        -1,
+        user.id,
+      );
+      user.profileImage = imageUrl;
+    }
+    if (updateUserDto.chatName) {
+      user.chatName = updateUserDto.chatName;
+    }
+    return this.userRepository.update(user);
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} user`;

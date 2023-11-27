@@ -32,7 +32,7 @@ export class PostController {
 
   @Get('likes/:postId')
   getLikes(@Param('postId') postId: string) {
-    return this.postService.findLikesByPostId(+postId);
+    return this.postService.countLikes(+postId);
   }
 
   @Delete('likes/:postId')
@@ -89,14 +89,17 @@ export class PostController {
       request.cookies['publicId'],
     );
   }
-  @Get('camp/:campName')
+  @Get('camps/:campName')
   findAllPosts(@Param('campName') campName: string) {
     return this.postService.findAllPostsByCampName(campName);
   }
 
   @Get(':postId')
-  findPost(@Param('postId') postId: string) {
-    return this.postService.findPostWithUrls(+postId);
+  findPost(@Param('postId') postId: string, @Req() request: Request) {
+    return this.postService.findPostWithUrls(
+      +postId,
+      request.cookies['publicId'],
+    );
   }
 
   @Patch(':postId')

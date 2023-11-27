@@ -33,4 +33,14 @@ export class CommentRepository {
     comment.isDeleted = true;
     return this.commentRepository.save(comment);
   }
+
+  findByPostId(postId: number): Promise<Comment[]> {
+    return this.commentRepository.findBy({ postId });
+  }
+
+  countByPostId(postId: number): number | PromiseLike<number> {
+    return this.commentRepository.count({
+      where: { postId, isDeleted: false },
+    });
+  }
 }

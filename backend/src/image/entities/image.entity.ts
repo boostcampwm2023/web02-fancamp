@@ -8,9 +8,15 @@ export class Image {
   @Column({ type: 'varchar', nullable: false })
   imageUrl: string;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   postId: number;
+
+  @Column({ type: 'int', nullable: true })
+  userId: number;
 
   @Column({ type: 'boolean', nullable: true, default: false })
   isDeleted: boolean;
+
+  @Column({ type: 'boolean', nullable: true })
+  isImage: boolean;
 }

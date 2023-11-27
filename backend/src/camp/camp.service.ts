@@ -41,13 +41,13 @@ export class CampService {
     const user = await this.userService.findUserByPublicId(publicId);
     const camperId = user.id;
     console.log('campid', camperId);
-    return this.subscriptionService.findAll(camperId);
+    return await this.subscriptionService.findAll(camperId);
   }
   async getSubscription(publicId: string, campName: string) {
     const user = await this.userService.findUserByPublicId(publicId);
     const camperId = user.id;
     const camp = await this.findOne(campName);
     const masterId = camp.masterId;
-    return this.subscriptionService.findOne(camperId, masterId);
+    return await this.subscriptionService.findOne(camperId, masterId);
   }
 }
