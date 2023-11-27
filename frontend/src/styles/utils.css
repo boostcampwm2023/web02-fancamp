@@ -1,11 +1,15 @@
 .cool-scrollbar::-webkit-scrollbar {
-    @apply w-xs;
+  @apply h-xs w-xs;
 }
 
 .cool-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-text-secondary;
+  @apply bg-text-secondary;
 }
 
 .cool-scrollbar::-webkit-scrollbar-track {
-    @apply bg-transparent;
+  @apply bg-transparent;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  @apply hidden;
 }
