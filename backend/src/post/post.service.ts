@@ -51,21 +51,25 @@ export class PostService {
       user.isMaster,
       files.length,
     );
-    await this.imageService.uploadFiles(files, post.postId, post.campId);
+    await this.imageService.uploadPostFiles(files, post.postId, post.campId);
     return post;
   }
-  async findPostWithUrls(postId: number) {
+
+  async findPostWithUrls(postId: number, publicId: string) {
     const post = await this.findPost(postId);
-    const likesCount = await this.countLikes(post.postId);
-    const commentsCount = await this.countComments(post.postId);
-    const commets = await this.findCommentsByPostId(post.postId);
+    const likesCount = await this.countLikes(postId);
+    const commentsCount = await this.countComments(postId);
+    const commets = await this.findCommentsByPostId(postId);
     const urls = await this.imageService.findUrlsByPostId(postId);
+    const user = await this.userService.findUserByPublicId(publicId);
+    const isLike = await this.findLikeByPostId(postId, user.id);
     return {
       ...post,
       likesCount: likesCount,
       commentsCount: commentsCount,
       urls: urls,
       comments: commets,
+      isLike: isLike,
     };
   }
 
@@ -117,10 +121,6 @@ export class PostService {
       return this.likeRepository.create(postId, user.id);
     }
   }
-  async findLikesByPostId(postId: number) {
-    return this.likeRepository.findLikesByPostId(postId);
-  }
-
   async removeLike(postId: number, publicId: string) {
     if (await this.checkPost(postId)) {
       const user = await this.userService.findUserByPublicId(publicId);
@@ -130,6 +130,13 @@ export class PostService {
 
   async countLikes(postId: number): Promise<number> {
     return this.likeRepository.countByPostId(postId);
+  }
+
+  async findLikeByPostId(postId: number, userId: number): Promise<Boolean> {
+    if (await this.likeRepository.findByPostId(postId, userId)) {
+      return true;
+    }
+    return false;
   }
 
   /* Comment */
@@ -154,8 +161,15 @@ export class PostService {
     return this.commentRepository.remove(comment);
   }
 
-  async findCommentsByPostId(postId: number): Promise<Comment[]> {
-    return this.commentRepository.findByPostId(postId);
+  async findCommentsByPostId(postId: number): Promise<{}[]> {
+    const comments: Comment[] =
+      await this.commentRepository.findByPostId(postId);
+    return await Promise.all(
+      comments.map(async (comment) => {
+        const user = await this.userService.findUserByUserId(comment.userId);
+        return { ...comment, publicId: user.publicId };
+      }),
+    );
   }
 
   async countComments(postId: number): Promise<number> {
@@ -202,18 +216,4 @@ export class PostService {
       HttpStatus.BAD_REQUEST,
     );
   }
-
-  // async uploadImage(@UploadedFiles() files: Array<Express.Multer.File>) {
-  //   let urls = [];
-  //   if (!files) {
-  //     return 'false';
-  //   }
-  //   await Promise.all(
-  //     files.map(async (file) => {
-  //       const url = await this.imageService.uploadFile(file);
-  //       urls.push(url);
-  //     }),
-  //   );
-  //   console.log(urls);
-  // }
 }

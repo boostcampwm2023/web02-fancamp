@@ -9,7 +9,7 @@ import { CampRepository } from './camp.repository';
 export class SubscriptionService {
   constructor(
     private readonly subscriptionRepository: SubscriptionRepository,
-    private readonly campRepository: CampRepository
+    private readonly campRepository: CampRepository,
   ) {}
   create(createSubscriptionDto: CreateSubscriptionDto) {
     return this.subscriptionRepository.createSubscription(
@@ -17,24 +17,23 @@ export class SubscriptionService {
     );
   }
   async findOne(camperId: number, masterId: number) {
-    if(!await this.subscriptionRepository.findOne(camperId, masterId)){
+    if (!(await this.subscriptionRepository.findOne(camperId, masterId))) {
       throw new HttpException(
         ERR_MESSAGE.NOT_SUBSCRIBED,
         HttpStatus.BAD_REQUEST,
       );
     }
-    
-
   }
-  async findAll(camperId: number){
-    const subscriptions = await this.subscriptionRepository.findAll(camperId);    
+
+  async findAll(camperId: number) {
+    const subscriptions = await this.subscriptionRepository.findAll(camperId);
     return await Promise.all(
       subscriptions.map(async (subscription) => {
-        console.log(subscription);
-        const camp = await this.campRepository.findOneByMasterId(subscription.masterId);
+        const camp = await this.campRepository.findOneByMasterId(
+          subscription.masterId,
+        );
         return camp;
       }),
     );
   }
-
 }

@@ -16,4 +16,7 @@ export class Image {
 
   @Column({ type: 'boolean', nullable: true, default: false })
   isDeleted: boolean;
+
+  @Column({ type: 'boolean', nullable: true, default: true })
+  isImage: boolean;
 }
