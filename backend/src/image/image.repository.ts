@@ -23,7 +23,7 @@ export class ImageRepository {
   findByPostId(postId: number) {
     return this.imageRepository
       .createQueryBuilder('image')
-      .select(['image.imageUrl', 'image.isImage'])
+      .select(['image.imageUrl', 'image.mimetype'])
       .where({
         postId,
         isDeleted: false,

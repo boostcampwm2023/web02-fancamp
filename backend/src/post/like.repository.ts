@@ -12,7 +12,10 @@ export class LikeRepository {
   }
 
   create(postId: number, userId: number) {
-    return this.likeRepository.save({ postId, userId, isDeleted: false });
+    return this.likeRepository.query(
+      'INSERT INTO `like` (postId, userId, isDeleted) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE isDeleted = VALUES(isDeleted)',
+      [postId, userId, false],
+    );
   }
 
   remove(postId: number, userId: number) {

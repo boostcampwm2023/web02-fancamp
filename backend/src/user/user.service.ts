@@ -20,13 +20,19 @@ export class UserService {
     return this.userRepository.findUserByPublicId(publicId);
   }
 
+  async get(publicId: string) {
+    const { email, isMaster, chatName, profileImage } =
+      await this.userRepository.findUserByPublicId(publicId);
+    return { publicId, email, isMaster, chatName, profileImage };
+  }
+
   async update(
     file: Express.Multer.File,
     publicId: string,
     updateUserDto: UpdateUserDto,
   ) {
     const user = await this.findUserByPublicId(publicId);
-    const fileName = `${user.id}-profile`;
+    const fileName = `${user.publicId}`;
     if (file) {
       const imageUrl = await this.imageService.uploadFile(
         file,
@@ -39,7 +45,14 @@ export class UserService {
     if (updateUserDto.chatName) {
       user.chatName = updateUserDto.chatName;
     }
-    return this.userRepository.update(user);
+    await this.userRepository.update(user);
+    return {
+      email: user.email,
+      publicId: user.publicId,
+      isMaster: user.isMaster,
+      chatName: user.chatName,
+      profileImage: user.profileImage,
+    };
   }
 
   // remove(id: number) {

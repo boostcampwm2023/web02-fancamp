@@ -21,7 +21,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Get()
+  @Get()
+  get(@Req() request: Request) {
+    return this.userService.get(request.cookies['publicId']);
+  }
 
   @Put()
   @UseInterceptors(FileInterceptor('file'))
