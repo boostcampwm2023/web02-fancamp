@@ -9,6 +9,7 @@ import { Subscription } from './entities/subscription.entity';
 import { UserModule } from 'src/user/user.module';
 import { SubscriptionService } from './subscription.service';
 import { AuthModule } from 'src/auth/auth.module';
+import { ImageModule } from 'src/image/image.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { AuthModule } from 'src/auth/auth.module';
     TypeOrmModule.forFeature([Camp]),
     TypeOrmModule.forFeature([Subscription]),
     UserModule,
+    ImageModule,
   ],
   controllers: [CampController],
   providers: [

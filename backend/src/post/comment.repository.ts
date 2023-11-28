@@ -12,11 +12,11 @@ export class CommentRepository {
     this.commentRepository = this.dataSource.getRepository(Comment);
   }
 
-  create(createCommentDto: CreateCommentDto, userId: number) {
+  create(postId: number, content: string, userId: number) {
     return this.commentRepository.save({
-      content: createCommentDto.content,
+      content,
       userId,
-      postId: createCommentDto.postId,
+      postId,
       isDeleted: false,
     });
   }
@@ -24,8 +24,8 @@ export class CommentRepository {
     return this.commentRepository.findOneBy({ commentId });
   }
 
-  update(comment: Comment, updateCommentDto: UpdateCommenttDto) {
-    comment.content = updateCommentDto.content;
+  update(comment: Comment, content: string) {
+    comment.content = content;
     return this.commentRepository.save(comment);
   }
 
@@ -35,7 +35,7 @@ export class CommentRepository {
   }
 
   findByPostId(postId: number): Promise<Comment[]> {
-    return this.commentRepository.findBy({ postId });
+    return this.commentRepository.findBy({ postId, isDeleted: false });
   }
 
   countByPostId(postId: number): number | PromiseLike<number> {

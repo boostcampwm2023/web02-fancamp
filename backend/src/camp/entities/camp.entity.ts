@@ -11,6 +11,9 @@ export class Camp {
   @Column({ type: 'int', nullable: false, unique: true })
   masterId: number;
 
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
   bannerImage: string = '';
+
+  @Column({ type: 'varchar', nullable: true })
+  content: string = '';
 }

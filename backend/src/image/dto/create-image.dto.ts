@@ -10,10 +10,6 @@ export class CreateImageDto {
   @ApiProperty()
   postId: number;
 
-  @IsNumber()
-  @ApiProperty()
-  userId: number;
-
   @IsString()
   @ApiProperty()
   mimetype: string;

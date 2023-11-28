@@ -24,57 +24,6 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 @Controller('posts')
 export class PostController {
   constructor(private readonly postService: PostService) {}
-  /* like */
-  @Post('likes/:postId')
-  createLike(@Param('postId') postId: string, @Req() request: Request) {
-    return this.postService.createLike(+postId, request.cookies['publicId']);
-  }
-
-  @Get('likes/:postId')
-  getLikes(@Param('postId') postId: string) {
-    return this.postService.countLikes(+postId);
-  }
-
-  @Delete('likes/:postId')
-  removeLike(@Param('postId') postId: string, @Req() request: Request) {
-    return this.postService.removeLike(+postId, request.cookies['publicId']);
-  }
-
-  /* comment */
-  @Post('comments')
-  createComment(
-    @Body() createCommentDto: CreateCommentDto,
-    @Req() request: Request,
-  ) {
-    return this.postService.createComment(
-      createCommentDto,
-      request.cookies['publicId'],
-    );
-  }
-
-  @Patch('comments/:commentId')
-  updateComment(
-    @Param('commentId') commentId: string,
-    @Body() updateCommentDto: UpdateCommenttDto,
-    @Req() request: Request,
-  ) {
-    return this.postService.updateComment(
-      +commentId,
-      updateCommentDto,
-      request.cookies['publicId'],
-    );
-  }
-
-  @Delete('comments/:commentId')
-  removeComment(
-    @Param('commentId') commentId: string,
-    @Req() request: Request,
-  ) {
-    return this.postService.removeComment(
-      +commentId,
-      request.cookies['publicId'],
-    );
-  }
   /* Post */
   @Post()
   @UseInterceptors(FilesInterceptor('files'))
@@ -89,10 +38,6 @@ export class PostController {
       request.cookies['publicId'],
     );
   }
-  @Get('camps/:campName')
-  findAllPosts(@Param('campName') campName: string) {
-    return this.postService.findAllPostsByCampName(campName);
-  }
 
   @Get(':postId')
   findPost(@Param('postId') postId: string, @Req() request: Request) {
@@ -100,6 +45,11 @@ export class PostController {
       +postId,
       request.cookies['publicId'],
     );
+  }
+
+  @Get('camps/:campName')
+  findAllPosts(@Param('campName') campName: string) {
+    return this.postService.findAllPostsByCampName(campName);
   }
 
   @Patch(':postId')
@@ -118,5 +68,68 @@ export class PostController {
   @Delete(':postId')
   remove(@Param('postId') postId: string) {
     return this.postService.removePost(+postId);
+  }
+
+  /* like */
+  @Get(':postId/likes')
+  getLikes(@Param('postId') postId: string) {
+    return this.postService.countLikes(+postId);
+  }
+
+  @Post(':postId/likes')
+  createLike(@Param('postId') postId: string, @Req() request: Request) {
+    return this.postService.createLike(+postId, request.cookies['publicId']);
+  }
+
+  @Delete(':postId/likes')
+  removeLike(@Param('postId') postId: string, @Req() request: Request) {
+    return this.postService.removeLike(+postId, request.cookies['publicId']);
+  }
+
+  /* comment */
+  @Get(':postId/comments')
+  findComments(@Param('postId') postId: string) {
+    return this.postService.findCommentsByPostId(+postId);
+  }
+
+  @Post(':postId/comments')
+  createComment(
+    @Param('postId') postId: string,
+    @Body() createCommentDto: CreateCommentDto,
+    @Req() request: Request,
+  ) {
+    return this.postService.createComment(
+      +postId,
+      createCommentDto.content,
+      request.cookies['publicId'],
+    );
+  }
+
+  @Patch(':postId/comments/:commentId')
+  updateComment(
+    @Param('postId') postId: string,
+    @Param('commentId') commentId: string,
+    @Body() updateCommentDto: UpdateCommenttDto,
+    @Req() request: Request,
+  ) {
+    return this.postService.updateComment(
+      +postId,
+      +commentId,
+      updateCommentDto.content,
+      request.cookies['publicId'],
+    );
+  }
+
+  @Delete(':postId/comments/:commentId')
+  removeComment(
+    @Param('postId') postId: string,
+    @Param('commentId') commentId: string,
+    @Req() request: Request,
+  ) {
+    return this.postService.removeComment(
+      +postId,
+      +commentId,
+      request.cookies['publicId'],
+    );
   }
 }

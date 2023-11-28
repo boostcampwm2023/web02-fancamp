@@ -20,7 +20,11 @@ export class SubscriptionRepository {
   findOne(camperId: number, masterId: number) {
     return this.subscriptionRepository.findOneBy({ camperId, masterId });
   }
-  findAll(camperId: number){
-    return this.subscriptionRepository.findBy({camperId})
+  findAll(camperId: number) {
+    return this.subscriptionRepository.findBy({ camperId });
+  }
+
+  count(masterId: number) {
+    return this.subscriptionRepository.count({ where: { masterId } });
   }
 }

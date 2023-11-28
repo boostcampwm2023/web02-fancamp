@@ -30,7 +30,7 @@ export class ImageService {
     await Promise.all(
       files.map(async (file, index) => {
         const fileName = `${campId}-${postId}_${index}`;
-        await this.uploadFile(file, fileName, postId, -1);
+        await this.uploadFile(file, fileName, postId);
       }),
     );
   }
@@ -39,7 +39,6 @@ export class ImageService {
     file: Express.Multer.File,
     fileName: string,
     postId: number,
-    userId: number,
   ) {
     const command = new PutObjectCommand({
       Bucket: this.bucket_name,
@@ -52,16 +51,18 @@ export class ImageService {
       const response = await this.s3Client.send(command);
       const fileUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileName}`;
       const mimetype = file.mimetype;
-      this.createImage({ fileUrl, postId, userId, mimetype });
+      if (postId !== -1) {
+        this.imageRepository.create({ fileUrl, postId, mimetype });
+      }
       return fileUrl;
     } catch (err) {
       console.error(err);
     }
   }
 
-  async createImage(createImageDto: CreateImageDto) {
-    return this.imageRepository.create(createImageDto);
-  }
+  // async createImage(createImageDto: CreateImageDto) {
+  //   return this.imageRepository.create(createImageDto);
+  // }
 
   async findImagesByPostId(postId: number) {
     const images = await this.imageRepository.findByPostId(postId);

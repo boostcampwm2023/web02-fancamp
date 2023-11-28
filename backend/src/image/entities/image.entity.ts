@@ -11,9 +11,6 @@ export class Image {
   @Column({ type: 'int', nullable: true })
   postId: number;
 
-  @Column({ type: 'int', nullable: true })
-  userId: number;
-
   @Column({ type: 'boolean', nullable: true, default: false })
   isDeleted: boolean;
 

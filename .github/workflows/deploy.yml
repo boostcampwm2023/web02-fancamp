@@ -3,8 +3,6 @@ name: Deploy to Production
 on:
   push:
     branches: [dev]
-  pull_request:
-    branches: [dev]
 
 jobs:
   get-dev-branch-and-deploy:

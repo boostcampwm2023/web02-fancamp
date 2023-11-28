@@ -25,6 +25,7 @@ export class AuthService {
       campName: publicId,
       bannerImage: '',
       masterId: id,
+      content: '',
     });
     return {
       publicId,
