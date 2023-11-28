@@ -19,11 +19,11 @@ export class PostRepository {
     userId: number,
     campId: number,
     isMaster: boolean,
-    picCnt: number,
+    pictureCount: number,
   ) {
     return this.postRepository.save({
       content: createPostDto.content,
-      picCnt: picCnt,
+      pictureCount: pictureCount,
       userId,
       campId,
       isMaster,

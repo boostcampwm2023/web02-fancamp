@@ -14,7 +14,7 @@ export class CreateImageDto {
   @ApiProperty()
   userId: number;
 
-  @IsBoolean()
+  @IsString()
   @ApiProperty()
-  isImage: boolean;
+  mimetype: string;
 }

@@ -14,7 +14,7 @@ export class Post {
   content: string = '';
 
   @Column({ type: 'int', nullable: true })
-  picCnt: number = 0;
+  pictureCount: number = 0;
 
   @UpdateDateColumn({ name: 'updated _at' })
   createdAt: string; //TODO: time type으로 바꾸기

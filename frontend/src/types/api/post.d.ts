@@ -4,7 +4,7 @@ export interface Post {
   createdAt: string;
   isDeleted: boolean;
   isMaster: boolean;
-  picCnt: number;
+  pictureCount: number;
   postId: number;
   userId: number;
   urls?: {

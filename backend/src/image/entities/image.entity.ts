@@ -17,6 +17,6 @@ export class Image {
   @Column({ type: 'boolean', nullable: true, default: false })
   isDeleted: boolean;
 
-  @Column({ type: 'boolean', nullable: true })
-  isImage: boolean;
+  @Column({ type: 'varchar', nullable: true })
+  mimetype: string;
 }

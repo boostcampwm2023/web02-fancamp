@@ -32,7 +32,7 @@ export class UserService {
     updateUserDto: UpdateUserDto,
   ) {
     const user = await this.findUserByPublicId(publicId);
-    const fileName = `${user.id}-profile`;
+    const fileName = `${user.publicId}`;
     if (file) {
       const imageUrl = await this.imageService.uploadFile(
         file,
