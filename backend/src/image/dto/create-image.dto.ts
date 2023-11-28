@@ -4,7 +4,7 @@ import { IsBoolean, IsNumber, IsString, isBoolean } from 'class-validator';
 export class CreateImageDto {
   @IsString()
   @ApiProperty()
-  imageUrl: string;
+  fileUrl: string;
 
   @IsNumber()
   @ApiProperty()

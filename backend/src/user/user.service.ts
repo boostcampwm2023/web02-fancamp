@@ -34,13 +34,13 @@ export class UserService {
     const user = await this.findUserByPublicId(publicId);
     const fileName = `${user.publicId}`;
     if (file) {
-      const imageUrl = await this.imageService.uploadFile(
+      const fileUrl = await this.imageService.uploadFile(
         file,
         fileName,
         -1,
         user.id,
       );
-      user.profileImage = imageUrl;
+      user.profileImage = fileUrl;
     }
     if (updateUserDto.chatName) {
       user.chatName = updateUserDto.chatName;

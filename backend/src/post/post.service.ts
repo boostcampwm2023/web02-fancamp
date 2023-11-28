@@ -92,7 +92,7 @@ export class PostService {
 
         if (urls[0] && !urls[0].mimetype.startsWith('image')) {
           //TODO: 나중에 썸네일 추출 기능 넣고 삭제하기
-          urls[0].imageUrl =
+          urls[0].fileUrl =
             'https://kr.object.ncloudstorage.com/fancamp-images/default_thumbnail.jpg';
           urls[0].mimetype = 'image/jpeg';
         }
