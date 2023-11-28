@@ -50,10 +50,10 @@ export class ImageService {
     });
     try {
       const response = await this.s3Client.send(command);
-      const imageUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileName}`;
+      const fileUrl = `${process.env.END_POINT}/${this.bucket_name}/${fileName}`;
       const mimetype = file.mimetype;
-      this.createImage({ imageUrl, postId, userId, mimetype });
-      return imageUrl;
+      this.createImage({ fileUrl, postId, userId, mimetype });
+      return fileUrl;
     } catch (err) {
       console.error(err);
     }
@@ -65,7 +65,7 @@ export class ImageService {
 
   async findImagesByPostId(postId: number) {
     const images = await this.imageRepository.findByPostId(postId);
-    images.sort((a, b) => a.imageUrl.localeCompare(b.imageUrl));
+    images.sort((a, b) => a.fileUrl.localeCompare(b.fileUrl));
     return images;
   }
 }

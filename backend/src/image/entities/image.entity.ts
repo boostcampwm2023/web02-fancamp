@@ -6,7 +6,7 @@ export class Image {
   imageId: number;
 
   @Column({ type: 'varchar', nullable: false })
-  imageUrl: string;
+  fileUrl: string;
 
   @Column({ type: 'int', nullable: true })
   postId: number;
