@@ -4,7 +4,7 @@ import { IsBoolean, IsNumber, IsString, isBoolean } from 'class-validator';
 export class CreateImageDto {
   @IsString()
   @ApiProperty()
-  imageUrl: string;
+  fileUrl: string;
 
   @IsNumber()
   @ApiProperty()
@@ -14,7 +14,7 @@ export class CreateImageDto {
   @ApiProperty()
   userId: number;
 
-  @IsBoolean()
+  @IsString()
   @ApiProperty()
-  isImage: boolean;
+  mimetype: string;
 }

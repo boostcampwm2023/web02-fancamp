@@ -18,17 +18,19 @@ export class AuthService {
       createUserAuthDto.password,
       10,
     ); // 암호화 해주기
-    const dto = await this.userRepository.createUser(createUserAuthDto);
-    this.sessions.push(dto.publicId);
+    const { id, publicId, email, isMaster, chatName } =
+      await this.userRepository.createUser(createUserAuthDto);
+    this.sessions.push(publicId);
     await this.campService.create({
-      campName: dto.publicId,
+      campName: publicId,
       bannerImage: '',
-      masterId: dto.id,
+      masterId: id,
     });
     return {
-      email: dto.email,
-      publicId: dto.publicId,
-      isMaster: dto.isMaster,
+      publicId,
+      email,
+      isMaster,
+      chatName,
     };
   }
 
@@ -37,11 +39,13 @@ export class AuthService {
     const user = await this.userRepository.findUserByEmail(email);
     if (user && (await bcrypt.compare(password, user.password))) {
       //TODO: 비밀번호 암호화
-      this.sessions.push(user.publicId);
+      const { publicId, isMaster, chatName } = user;
+      this.sessions.push(publicId);
       return {
-        email: user.email,
-        publicId: user.publicId,
-        isMaster: user.isMaster,
+        publicId,
+        email,
+        isMaster,
+        chatName,
       };
     } else {
       throw new UnauthorizedException('login failed');
@@ -57,11 +61,13 @@ export class AuthService {
 
   async checkLogin(publicId: string) {
     if (this.validateUser(publicId)) {
-      const user = await this.userRepository.findUserByPublicId(publicId);
+      const { email, isMaster, chatName } =
+        await this.userRepository.findUserByPublicId(publicId);
       return {
-        email: user.email,
-        publicId: user.publicId,
-        isMaster: user.isMaster,
+        publicId,
+        email,
+        isMaster,
+        chatName,
       };
     }
   }

@@ -52,53 +52,59 @@ export class PostService {
       files.length,
     );
     await this.imageService.uploadPostFiles(files, post.postId, post.campId);
-    return post;
+    return { ...post, publicId: publicId };
   }
 
   async findPostWithUrls(postId: number, publicId: string) {
-    const post = await this.findPost(postId);
-    const likesCount = await this.countLikes(postId);
-    const commentsCount = await this.countComments(postId);
+    const post = await this.postRepository.findOne(postId);
+    const { publicId: writerPublicId } =
+      await this.userService.findUserByUserId(post.userId);
+    const likeCount = await this.countLikes(postId);
+    const commentCount = await this.countComments(postId);
     const commets = await this.findCommentsByPostId(postId);
-    const urls = await this.imageService.findImagesByPostId(postId);
+    const url = await this.imageService.findImagesByPostId(postId);
     const user = await this.userService.findUserByPublicId(publicId);
     const isLike = await this.findLikeByPostId(postId, user.id);
     return {
       ...post,
-      likesCount: likesCount,
-      commentsCount: commentsCount,
-      urls: urls,
-      comments: commets,
+      publicId: writerPublicId,
       isLike: isLike,
+      likeCount: likeCount,
+      commentCount: commentCount,
+      comments: commets,
+      url: url,
     };
   }
 
-  findPost(postId: number) {
-    return this.postRepository.findOne(postId);
-  }
+  // findPost(postId: number) {
+  //   return this.postRepository.findOne(postId);
+  // }
 
   async findAllPostsByCampName(campName: string) {
     //TODO: 쿠키 분석해서 구독중인지 확인
     const camp = await this.campService.findOne(campName);
     const posts = await this.postRepository.findAllByMasterId(camp.masterId);
-    console.log('this is posts\n', posts);
     return await Promise.all(
       posts.map(async (post) => {
-        console.log(post);
+        const { publicId: writerPublicId } =
+          await this.userService.findUserByUserId(post.userId);
         const urls = await this.imageService.findImagesByPostId(post.postId); //TODO: 이미지 없으면
-        console.log(urls);
-        if (urls[0] && !urls[0].isImage) {
+
+        if (urls[0] && !urls[0].mimetype.startsWith('image')) {
           //TODO: 나중에 썸네일 추출 기능 넣고 삭제하기
-          urls[0].imageUrl =
+          urls[0].fileUrl =
             'https://kr.object.ncloudstorage.com/fancamp-images/default_thumbnail.jpg';
+          urls[0].mimetype = 'image/jpeg';
         }
-        const likesCount = await this.countLikes(post.postId);
-        const commentsCount = await this.countComments(post.postId);
+        const thumbnail = urls[0] ? [urls[0]] : [];
+        const likeCount = await this.countLikes(post.postId);
+        const commentCount = await this.countComments(post.postId);
         return {
           ...post,
-          likesCount: likesCount,
-          commentsCount: commentsCount,
-          url: urls[0],
+          publicId: writerPublicId,
+          likeCount: likeCount,
+          commentCount: commentCount,
+          url: thumbnail,
         };
       }),
     );

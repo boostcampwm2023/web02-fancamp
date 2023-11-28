@@ -1,8 +1,8 @@
 #
 @server = http://localhost:3000
 
-### 회원가입 요청~
-POST {{server}}/user
+### 유저 정보 수정(프로필 이미지, 채팅방이름)
+PUT {{server}}/users
 Content-Type: application/json
 
 {
@@ -12,3 +12,6 @@ Content-Type: application/json
     "profileImage": "44",
     "isMaster": true
 }
+
+###
+GET {{server}}/users

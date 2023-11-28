@@ -31,7 +31,7 @@ Content-Type: application/json
 
 {
     "content" : "둘다 수정됨~~~~",
-    "picCnt" : 1000
+    "pictureCount" : 1000
 }
 
 ### 사진 개수만 수정
@@ -39,7 +39,7 @@ PATCH {{server}}/posts/7
 Content-Type: application/json
 
 {
-    "picCnt" : 10
+    "pictureCount" : 10
 }
 
 ### 삭제 (soft delete)

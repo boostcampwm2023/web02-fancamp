@@ -32,12 +32,12 @@ export class UserRepository {
     return user;
   }
 
-  // async updateUserImage(id: number, imageUrl: string): Promise<User> {
+  // async updateUserImage(id: number, fileUrl: string): Promise<User> {
   //   const user = await this.usersRepository.findOneBy({ id });
   //   if (!user) {
   //     throw new NotFoundException(`User with id ${id} not found`);
   //   }
-  //   user.profileImage = imageUrl;
+  //   user.profileImage = fileUrl;
   //   await this.usersRepository.save(user);
   //   return user;
   // }

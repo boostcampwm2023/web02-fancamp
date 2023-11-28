@@ -14,7 +14,7 @@ export class ImageRepository {
   async create(createImageDto: CreateImageDto) {
     if (
       !(await this.imageRepository.findOneBy({
-        imageUrl: createImageDto.imageUrl,
+        fileUrl: createImageDto.fileUrl,
       }))
     ) {
       return this.imageRepository.save(createImageDto);
@@ -23,7 +23,7 @@ export class ImageRepository {
   findByPostId(postId: number) {
     return this.imageRepository
       .createQueryBuilder('image')
-      .select(['image.imageUrl', 'image.isImage'])
+      .select(['image.fileUrl', 'image.mimetype'])
       .where({
         postId,
         isDeleted: false,
