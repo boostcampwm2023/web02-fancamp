@@ -1,4 +1,11 @@
-export function getLocaleString(): string {
+export function getLocaleString(date?: string): string {
+  if (date) {
+    return new Date(date).toLocaleString('ko-KR', {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
   return new Date().toLocaleString('ko-KR', {
     hour: '2-digit',
     minute: '2-digit',

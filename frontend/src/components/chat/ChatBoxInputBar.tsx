@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Message } from './ChatBox';
-import { getLocaleString } from '../../../utils/date';
 
 type Props = {
   messages: Message[];
@@ -21,21 +20,25 @@ export default function ChatBoxInputBar({
 
   const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (inputText.trim().length === 0) {
+      return;
+    }
+
     onSubmitMessage(inputText);
     const newMessage = {
-      messageId: messages.length + 1,
+      chatId: messages.length + 1,
       isMyMessage: true,
-      time: getLocaleString(),
-      text: inputText,
+      createdAt: String(new Date()),
+      stringContent: inputText,
     };
     setMessages((prev) => [...prev, newMessage]);
     setInputText('');
   };
 
   return (
-    <form onSubmit={handleMessageSubmit} className="border-border flex border">
+    <form onSubmit={handleMessageSubmit} className="flex border border-border">
       <input
-        className="display-regular-16 w-full bg-contour-primary p-4"
+        className="w-full bg-contour-primary p-4 display-regular-16"
         onChange={handleInputTextChange}
         value={inputText}
         placeholder="메세지를 보내보세요! 😁"
