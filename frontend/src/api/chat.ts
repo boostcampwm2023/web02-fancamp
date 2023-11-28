@@ -1,8 +1,10 @@
 import { BASE_URL } from '@constants/URLs';
 
-export async function getMessages(campName: string): Promise<any> {
+export async function fetchMessages(
+  campName: string | undefined
+): Promise<any> {
   const response = await fetch(`${BASE_URL}/chats/${campName}`, {
-    method: 'GEt',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json',
     },
