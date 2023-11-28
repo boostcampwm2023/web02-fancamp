@@ -61,7 +61,7 @@ export class PostService {
       await this.userService.findUserByUserId(post.userId);
     const likeCount = await this.countLikes(postId);
     const commentCount = await this.countComments(postId);
-    const commets = await this.findCommentsByPostId(postId);
+    // const commets = await this.findCommentsByPostId(postId);
     const url = await this.imageService.findImagesByPostId(postId);
     const user = await this.userService.findUserByPublicId(publicId);
     const isLike = await this.findLikeByPostId(postId, user.id);
@@ -71,7 +71,7 @@ export class PostService {
       isLike: isLike,
       likeCount: likeCount,
       commentCount: commentCount,
-      comments: commets,
+      // comments: commets,
       url: url,
     };
   }
@@ -151,22 +151,23 @@ export class PostService {
   }
 
   /* Comment */
-  async createComment(createCommentDto: CreateCommentDto, publicId: string) {
+  async createComment(postId: number, content: string, publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
-    return this.commentRepository.create(createCommentDto, user.id);
+    return this.commentRepository.create(postId, content, user.id);
   }
 
   async updateComment(
+    postId: number,
     commentId: number,
-    updateCommentDto: UpdateCommenttDto,
+    content: string,
     publicId: string,
   ) {
     const user = await this.userService.findUserByPublicId(publicId);
     const comment = await this.checkOwnComment(commentId, user.id);
-    return this.commentRepository.update(comment, updateCommentDto);
+    return this.commentRepository.update(comment, content);
   }
 
-  async removeComment(commentId: number, publicId: any) {
+  async removeComment(postId: number, commentId: number, publicId: any) {
     const user = await this.userService.findUserByPublicId(publicId);
     const comment = await this.checkOwnComment(commentId, user.id);
     return this.commentRepository.remove(comment);
@@ -178,7 +179,11 @@ export class PostService {
     return await Promise.all(
       comments.map(async (comment) => {
         const user = await this.userService.findUserByUserId(comment.userId);
-        return { ...comment, publicId: user.publicId };
+        return {
+          ...comment,
+          publicId: user.publicId,
+          profileImage: user.profileImage,
+        };
       }),
     );
   }

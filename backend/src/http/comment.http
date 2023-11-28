@@ -2,21 +2,24 @@
 @server = http://localhost:3000
 # @server = http://223.130.146.223:3000
 
+### 포스트 id로 comment 조회 
+GET {{server}}/posts/28/comments
+
+
 ### 포스트 id로 comment 생성하기
-POST {{server}}/posts/comments
+POST {{server}}/posts/28/comments
 Content-Type: application/json
 
 {
-    "content": "hello33",
-    "postId": 1
+    "content": "hello33"
 }
 
 ### 포스트 id로 코멘트 지우기
-DELETE  {{server}}/posts/comments/1 
+DELETE  {{server}}/posts/28/comments/7
 
 
 ### 글 내용 수정
-PATCH {{server}}/posts/comments/2
+PATCH {{server}}/posts/28/comments/5
 Content-Type: application/json
 
 {

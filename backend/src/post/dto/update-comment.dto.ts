@@ -6,8 +6,4 @@ export class UpdateCommenttDto extends PartialType(CreateCommentDto) {
   @IsString()
   @ApiProperty()
   content: string = '';
-
-  @IsNumber()
-  @ApiProperty()
-  postId: number;
 }

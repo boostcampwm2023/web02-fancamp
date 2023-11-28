@@ -5,6 +5,7 @@ import { CampRepository } from './camp.repository';
 import { UserService } from 'src/user/user.service';
 import { SubscriptionService } from './subscription.service';
 import { resourceLimits } from 'worker_threads';
+import { ImageService } from 'src/image/image.service';
 
 @Injectable()
 export class CampService {
@@ -12,6 +13,7 @@ export class CampService {
     private readonly campRepository: CampRepository,
     private readonly subscriptionService: SubscriptionService,
     private readonly userService: UserService,
+    private readonly imageService: ImageService,
   ) {}
   async create(createCampDto: CreateCampDto) {
     return this.campRepository.createCamp(createCampDto);
@@ -21,8 +23,11 @@ export class CampService {
     return this.campRepository.findAll();
   }
 
-  findOne(campName: string) {
-    return this.campRepository.findOneByCampName(campName);
+  async findOne(campName: string) {
+    const camp = await this.campRepository.findOneByCampName(campName);
+    const user = await this.userService.findUserByPublicId(campName);
+    const subscriptionCount = await this.subscriptionService.getCount(user.id);
+    return { ...camp, subscriptionCount };
   }
 
   async subscribe(publicId: string, campName: string) {
@@ -49,5 +54,22 @@ export class CampService {
     const camp = await this.findOne(campName);
     const masterId = camp.masterId;
     return await this.subscriptionService.findOne(camperId, masterId);
+  }
+
+  async update(
+    file: Express.Multer.File,
+    campName: string,
+    updateCampDto: UpdateCampDto,
+  ) {
+    const camp = await this.findOne(campName);
+    const fileName = `${camp.campId}_banner`;
+    if (file) {
+      const fileUrl = await this.imageService.uploadFile(file, fileName, -1);
+      camp.bannerImage = fileUrl;
+    }
+    if (updateCampDto.content) {
+      camp.content = updateCampDto.content;
+    }
+    return this.campRepository.update(camp);
   }
 }

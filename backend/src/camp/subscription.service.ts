@@ -36,4 +36,8 @@ export class SubscriptionService {
       }),
     );
   }
+
+  async getCount(masterId: number) {
+    return this.subscriptionRepository.count(masterId);
+  }
 }

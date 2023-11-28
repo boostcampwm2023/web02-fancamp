@@ -19,11 +19,15 @@ export class CampRepository {
     return this.campRepository.find();
   }
 
-  findOneByMasterId(masterId: number){
-    return this.campRepository.findOneBy({masterId});
+  findOneByMasterId(masterId: number) {
+    return this.campRepository.findOneBy({ masterId });
   }
 
   findOneByCampName(campName: string) {
     return this.campRepository.findOneBy({ campName });
+  }
+
+  async update(camp: Camp) {
+    return this.campRepository.save(camp);
   }
 }
