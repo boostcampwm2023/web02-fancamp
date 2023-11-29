@@ -37,7 +37,7 @@ function UserProfileEditPageTemplate() {
   });
 
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
-  const [chatName, setChatName] = useState<string>(profile.chatName);
+  const [newChatName, setNewChatName] = useState<string>(profile.chatName);
 
   const handleEditProfile = (event: FormEvent) => {
     event.preventDefault();
@@ -45,8 +45,8 @@ function UserProfileEditPageTemplate() {
     if (newProfileImage) {
       formData.append('file', newProfileImage);
     }
-    if (chatName !== profile.chatName) {
-      formData.append('chatName', chatName);
+    if (newChatName !== profile.chatName) {
+      formData.append('chatName', newChatName);
     }
     const isFormDataEmpty = formData.keys().next().done;
     if (!isFormDataEmpty && !isUpdateProfilePending) {
@@ -75,8 +75,8 @@ function UserProfileEditPageTemplate() {
         <Input
           label="이름"
           type="text"
-          setValue={setChatName}
-          value={chatName}
+          setValue={setNewChatName}
+          value={newChatName}
           placeholder="이름을 입력해주세요."
         />
         <SubmitButton
