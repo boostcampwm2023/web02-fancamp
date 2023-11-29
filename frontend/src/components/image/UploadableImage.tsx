@@ -51,11 +51,7 @@ function UploadableImage(props: UploadableImagedProps) {
     <div className="relative">
       <Image
         {...UploadableImageProps}
-        src={
-          newImage?.buffer ||
-          src ||
-          'https://images.pexels.com/photos/19247146/pexels-photo-19247146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-        }
+        src={newImage?.buffer || src || '/src/assets/default/profileImage.png'}
         className={`object-cover ${className || ''}`}
       />
       <button
