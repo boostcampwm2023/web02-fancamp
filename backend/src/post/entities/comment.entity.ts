@@ -24,4 +24,7 @@ export class Comment {
 
   @Column({ type: 'boolean', nullable: false })
   isDeleted: boolean = false;
+
+  @Column({ type: 'varchar', nullable: false })
+  setimentColorHex: string;
 }

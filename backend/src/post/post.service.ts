@@ -18,6 +18,7 @@ import { Post } from './entities/post.entity';
 import { UpdateCommenttDto } from './dto/update-comment.dto';
 import { Comment } from './entities/comment.entity';
 import { ImageService } from 'src/image/image.service';
+import { getSentiment, getSentimentColor } from 'src/utils/sentiment';
 
 @Injectable()
 export class PostService {
@@ -153,7 +154,14 @@ export class PostService {
   /* Comment */
   async createComment(postId: number, content: string, publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
-    return this.commentRepository.create(postId, content, user.id);
+    const setimentColorHex = await getSentimentColor(content);
+    return this.commentRepository.create(
+      postId,
+      content,
+      user.id,
+      setimentColorHex,
+    );
+    // return sentimentLevel;
   }
 
   async updateComment(
@@ -164,7 +172,8 @@ export class PostService {
   ) {
     const user = await this.userService.findUserByPublicId(publicId);
     const comment = await this.checkOwnComment(commentId, user.id);
-    return this.commentRepository.update(comment, content);
+    const setimentColorHex = await getSentimentColor(content);
+    return this.commentRepository.update(comment, content, setimentColorHex);
   }
 
   async removeComment(postId: number, commentId: number, publicId: any) {
