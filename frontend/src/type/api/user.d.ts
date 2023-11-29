@@ -1,6 +1,7 @@
 export interface User {
-  userId: string;
-  userName: string;
-  profileUrl: string;
-  postCount: number;
+  chatName: string;
+  email: string;
+  isMaster: boolean;
+  profileImage: string;
+  publicId: string;
 }
