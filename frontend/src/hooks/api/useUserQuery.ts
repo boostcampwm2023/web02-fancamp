@@ -1,6 +1,7 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { User } from '@type/api/user';
 import { MutationProps } from '@type/api/api';
+import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
 
 interface UpdateProfileMutationFnProps {
@@ -11,7 +12,7 @@ export const getProfileQuery = () => {
   const { data, isError, isLoading } = useSuspenseQuery<User>({
     queryKey: ['user'],
     queryFn: () =>
-      useFetch(`/api/users`, {
+      useFetch(`${BASE_URL}/users`, {
         method: 'GET',
         credentials: 'include',
       }),
@@ -28,7 +29,7 @@ export const updateProfileMutation = ({
 }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ formData }: UpdateProfileMutationFnProps) =>
-      useFetch(`/api/users`, {
+      useFetch(`${BASE_URL}/users`, {
         method: 'PUT',
         body: formData,
         credentials: 'include',

@@ -2,6 +2,7 @@ import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { Camp } from '@type/api/camp';
 import { Post } from '@type/api/post';
 import { MutationProps } from '@type/api/api';
+import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
 
 interface UpdateCampMutationFnProps {
@@ -13,7 +14,7 @@ export const getCampQuery = (campId: string) => {
   const { data, isError, isLoading } = useSuspenseQuery<Camp>({
     queryKey: ['camp', campId],
     queryFn: () =>
-      useFetch(`/api/camps/${campId}`, {
+      useFetch(`${BASE_URL}/camps/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),
@@ -28,7 +29,7 @@ export const getCampPostsQuery = (campId: string) => {
   const { data, isError, isLoading } = useSuspenseQuery<Post[]>({
     queryKey: ['posts', campId],
     queryFn: () =>
-      useFetch(`/api/posts/camps/${campId}`, {
+      useFetch(`${BASE_URL}/posts/camps/${campId}`, {
         method: 'GET',
         credentials: 'include',
       }),
@@ -42,7 +43,7 @@ export const getCampPostsQuery = (campId: string) => {
 export const updateCampMutation = ({ onSuccess, onError }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ campName, formData }: UpdateCampMutationFnProps) =>
-      useFetch(`/api/camps/${campName}`, {
+      useFetch(`${BASE_URL}/camps/${campName}`, {
         method: 'PUT',
         body: formData,
         credentials: 'include',

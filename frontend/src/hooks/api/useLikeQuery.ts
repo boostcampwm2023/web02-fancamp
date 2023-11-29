@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { MutationProps } from '@type/api/api';
+import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
 
 interface PostLikeMutationFnProps {
@@ -9,7 +10,7 @@ interface PostLikeMutationFnProps {
 export const postLikeMutation = ({ onSuccess, onError }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ postId }: PostLikeMutationFnProps) =>
-      useFetch(`/api/posts/${postId}/likes`, {
+      useFetch(`${BASE_URL}/posts/${postId}/likes`, {
         method: 'POST',
         credentials: 'include',
       }),
@@ -23,7 +24,7 @@ export const postLikeMutation = ({ onSuccess, onError }: MutationProps) => {
 export const deleteLikeMutation = ({ onSuccess, onError }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ postId }: PostLikeMutationFnProps) =>
-      useFetch(`/api/posts/${postId}/likes`, {
+      useFetch(`${BASE_URL}/posts/${postId}/likes`, {
         method: 'DELETE',
         credentials: 'include',
       }),

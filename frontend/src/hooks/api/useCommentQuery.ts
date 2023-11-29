@@ -1,6 +1,7 @@
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { Comment } from '@type/api/comment';
 import { MutationProps } from '@type/api/api';
+import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
 
 interface PostCommentMutationFnProps {
@@ -12,7 +13,7 @@ export const getCommentsQuery = (postId: string) => {
   const { data, isError, isLoading, refetch } = useSuspenseQuery<Comment[]>({
     queryKey: ['comments', postId],
     queryFn: () =>
-      useFetch(`/api/posts/${postId}/comments`, {
+      useFetch(`${BASE_URL}/posts/${postId}/comments`, {
         method: 'GET',
         credentials: 'include',
       }),
@@ -26,7 +27,7 @@ export const getCommentsQuery = (postId: string) => {
 export const postCommentMutation = ({ onError, onSuccess }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ postId, content }: PostCommentMutationFnProps) =>
-      useFetch(`/api/posts/${postId}/comments`, {
+      useFetch(`${BASE_URL}/posts/${postId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
