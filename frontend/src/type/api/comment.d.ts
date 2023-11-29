@@ -2,6 +2,10 @@ export interface Comment {
   commentId: string;
   postId: string;
   userId: string;
-  comment: string;
+  content: string;
   createdAt: string;
+  isDeleted: boolean;
+  publicId: string;
+  profileImage: string;
+  setimentColorHex: string;
 }

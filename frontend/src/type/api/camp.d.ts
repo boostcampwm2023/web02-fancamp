@@ -1,4 +1,4 @@
-export interface CampInfo {
+export interface Camp {
   bannerImage: string;
   campid: number;
   campName: string;
