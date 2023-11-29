@@ -64,6 +64,7 @@ export class ChatGateway {
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
     socket.broadcast.to(roomName).emit('message', chatWithSender);
+    this.chatService.noticeMasterMessage(+roomName, campName);
   }
 
   @SubscribeMessage('camperOut')

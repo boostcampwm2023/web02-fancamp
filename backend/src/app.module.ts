@@ -11,6 +11,7 @@ import { CampModule } from './camp/camp.module';
 import { ChatModule } from './chat/chat.module';
 import { PostModule } from './post/post.module';
 import { ImageModule } from './image/image.module';
+import { NoticeModule } from './notice/notice.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ImageModule } from './image/image.module';
     ChatModule,
     PostModule,
     ImageModule,
+    NoticeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

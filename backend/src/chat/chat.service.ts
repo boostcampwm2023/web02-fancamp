@@ -6,6 +6,7 @@ import { UserService } from '../user/user.service';
 import { CampService } from '../camp/camp.service';
 import { ERR_MESSAGE } from 'src/utils/constants';
 import { Chat } from './entities/chat.entity';
+import { NoticeGateway } from 'src/notice/notice.gateway';
 
 @Injectable()
 export class ChatService {
@@ -13,6 +14,7 @@ export class ChatService {
     private readonly chatRepository: ChatRepository,
     private readonly userService: UserService,
     private readonly campService: CampService,
+    private readonly noticeGateway: NoticeGateway,
   ) {}
   create(createChatDto: CreateChatDto) {
     return this.chatRepository.createChat(createChatDto);
@@ -79,5 +81,9 @@ export class ChatService {
       publicId: sender.publicId,
       profileImage: sender.profileImage,
     };
+  }
+
+  async noticeMasterMessage(campId: number, campName: string) {
+    this.noticeGateway.noticeChat(campId, campName);
   }
 }
