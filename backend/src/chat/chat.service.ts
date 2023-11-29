@@ -5,6 +5,7 @@ import { ChatRepository } from './chat.repository';
 import { UserService } from '../user/user.service';
 import { CampService } from '../camp/camp.service';
 import { ERR_MESSAGE } from 'src/utils/constants';
+import { Chat } from './entities/chat.entity';
 
 @Injectable()
 export class ChatService {
@@ -26,7 +27,8 @@ export class ChatService {
       masterId: camp.masterId,
       picContent: '',
     };
-    return this.chatRepository.createChat(createDto);
+    const chat = await this.chatRepository.createChat(createDto);
+    return this.getChatWithSender(chat);
   }
 
   async getRoomName(campName: string) {
@@ -40,7 +42,6 @@ export class ChatService {
 
   async getPreviousChats(campName: string, publicId: string, cursor: string) {
     const cursorDate = new Date(cursor);
-    console.log('커서데이트', cursorDate, campName);
     const camp = await this.campService.findOne(campName);
     const user = await this.userService.findUserByPublicId(publicId);
 
@@ -49,7 +50,7 @@ export class ChatService {
       camp.masterId,
       cursorDate,
     );
-    console.log('chats', chats);
+
     if (!chats.length) {
       throw new HttpException(
         ERR_MESSAGE.NO_MORE_MESSAGE,
@@ -57,26 +58,26 @@ export class ChatService {
       );
     }
 
+    const chatsWithSender = await Promise.all(
+      chats.map(async (chat) => {
+        return this.getChatWithSender(chat);
+      }),
+    );
+
     return {
       cursor: cursor,
       nextCursor: chats.slice(-1)[0].createdAt,
-      result: chats,
+      result: chatsWithSender,
     };
   }
 
-  // findAll() {
-  //   return `This action returns all chat`;
-  // }
-
-  // findOne(id: number) {
-  //   return `This action returns a #${id} chat`;
-  // }
-
-  // update(id: number, updateChatDto: UpdateChatDto) {
-  //   return `This action updates a #${id} chat`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} chat`;
-  // }
+  async getChatWithSender(chat: Chat) {
+    const sender = await this.userService.findUserByUserId(chat.senderId);
+    return {
+      ...chat,
+      chatName: sender.chatName,
+      publicId: sender.publicId,
+      profileImage: sender.profileImage,
+    };
+  }
 }
