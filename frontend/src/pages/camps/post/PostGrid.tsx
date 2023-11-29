@@ -1,12 +1,10 @@
-import { useParams } from 'react-router-dom';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '@hooks/useAuth';
-import { Post } from '@type/api/post';
-import useFetch from '@hooks/useFetch';
 import PostGrid from '@components/grid/PostGrid';
 import UploadCard from '@components/card/UploadCard';
 import PostCard from '@components/card/PostCard';
 import { BASE_URL } from '@constants/URLs';
+import { getCampPostsQuery } from '@hooks/api/useCampQuery';
 
 interface PostGridProps {
   handlePostModalOpen: (postId: string) => void;
@@ -19,35 +17,29 @@ function PostPageGrid({
 }: PostGridProps) {
   const { campId } = useParams();
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
-  const { data: posts } = useSuspenseQuery<Post[]>({
-    queryKey: ['posts', campId],
-    queryFn: () =>
-      useFetch(`${BASE_URL}/posts/camp/${campId}`, {
-        method: 'GET',
-        credentials: 'include',
-      }),
-    gcTime: 0,
-    staleTime: 0,
-  });
+  if (!campId) {
+    navigate('/');
+    return <></>;
+  }
+
+  const { data: posts } = getCampPostsQuery(campId);
 
   return (
     <PostGrid>
       {auth?.isMaster && <UploadCard onClick={handleUploadModalOpen} />}
       {posts.map((post) => {
-        const { postId, content } = post;
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        const url = post?.url?.imageUrl;
+        const { postId, content, url, likeCount, commentCount } = post;
         return (
           <PostCard
-            likeCount={0}
-            commentCount={0}
             postId={String(postId)}
+            likeCount={likeCount}
+            commentCount={commentCount}
             handleOnClick={handlePostModalOpen}
             content={content}
             key={`post-card-${postId}`}
-            imageSrc={url || ''}
+            imageSrc={url.length ? url[0].fileUrl : ''}
           />
         );
       })}
