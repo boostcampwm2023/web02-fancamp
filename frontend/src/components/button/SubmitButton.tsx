@@ -81,11 +81,13 @@ function SubmitButton(props: SubmitButtonProps) {
     >
       <div
         className={`${buttonInnerClassName} ${
-          isError
-            ? 'bg-point-red'
-            : isSuccess
-              ? 'bg-point-green'
-              : 'bg-point-lavender'
+          isInit
+            ? 'bg-point-lavender'
+            : isError
+              ? 'bg-point-red'
+              : isSuccess
+                ? 'bg-point-green'
+                : 'bg-point-lavender'
         }`}
       >
         {elementByStatus}

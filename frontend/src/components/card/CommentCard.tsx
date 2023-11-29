@@ -8,7 +8,7 @@ interface CommentProps {
 }
 
 function CommentCard({ comment }: CommentProps) {
-  const { userId, profileImage, createdAt, content, setimentColorHex } =
+  const { profileImage, createdAt, content, setimentColorHex, publicId } =
     comment;
   return (
     <li className="gamd flex flex-col gap-md">
@@ -20,7 +20,7 @@ function CommentCard({ comment }: CommentProps) {
             height={24}
             className="border-xs rounded-full border-text-primary"
           />
-          <Text size={12}>{userId}</Text>
+          <Text size={12}>{publicId}</Text>
         </div>
         <Text size={12} color="text-secondary" className="text-end">
           {formatDate(createdAt)}
