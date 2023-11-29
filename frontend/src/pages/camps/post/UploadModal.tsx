@@ -1,10 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import useFetch from '@hooks/useFetch';
 import Text from '@components/ui/Text';
 import TextArea from '@components/ui/TextArea';
 import SubmitButton from '@components/button/SubmitButton';
 import UploadArea from '@components/file/UploadArea';
+import { postPostMutation } from '@hooks/api/usePostQuery';
 import { BASE_URL } from '@constants/URLs';
 
 interface UploadModalProps {
@@ -39,8 +38,7 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
       formData.append('files', file);
     });
     formData.append('content', content);
-
-    uploadMutate(formData);
+    postPost({ formData });
   };
 
   return (
@@ -57,9 +55,9 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
         />
         <UploadArea files={files} setFiles={setFiles} />
         <SubmitButton
-          isPending={isUploadPending}
-          isError={isUploadError}
-          isSuccess={isUploadSuccess}
+          isPending={isPending}
+          isError={isError}
+          isSuccess={isSuccess}
           text="업로드"
         />
       </form>
