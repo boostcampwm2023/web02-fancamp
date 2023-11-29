@@ -12,11 +12,17 @@ export class CommentRepository {
     this.commentRepository = this.dataSource.getRepository(Comment);
   }
 
-  create(postId: number, content: string, userId: number) {
+  create(
+    postId: number,
+    content: string,
+    userId: number,
+    setimentColorHex: string,
+  ) {
     return this.commentRepository.save({
       content,
       userId,
       postId,
+      setimentColorHex,
       isDeleted: false,
     });
   }
@@ -24,8 +30,9 @@ export class CommentRepository {
     return this.commentRepository.findOneBy({ commentId });
   }
 
-  update(comment: Comment, content: string) {
+  update(comment: Comment, content: string, setimentColorHex: string) {
     comment.content = content;
+    comment.setimentColorHex = setimentColorHex;
     return this.commentRepository.save(comment);
   }
 
