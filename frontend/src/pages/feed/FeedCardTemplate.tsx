@@ -1,4 +1,3 @@
-import PostConentCard from '@components/card/PostContentCard';
 import ImageSlider from '@components/slider/ImageSlider';
 import Text from '@components/ui/Text';
 import { Camp } from '@type/api/camp';
@@ -7,6 +6,8 @@ import { WheelEvent } from 'react';
 import CommentCard from '@components/card/CommentCard';
 import { Comment } from '@type/api/comment';
 import InputComment from '@components/input/InputComment';
+import PostConentCard from '@components/card/PostConentCard';
+import Hr from '@components/ui/Hr';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -70,9 +71,12 @@ function FeedCardTemplate({
           isLike={isLike}
           likeCount={post.likeCount}
         />
-        <Text size={12} className="relative mt-sm h-center">
-          {post.commentCount}개의 코멘트
-        </Text>
+
+        <Hr color="text-secondary">
+          <Text size={12} color="point-blue">
+            {post.commentCount}개의 코멘트
+          </Text>
+        </Hr>
         <ul className="flex flex-col gap-lg p-md">
           {comments.map((comment) => (
             <CommentCard
