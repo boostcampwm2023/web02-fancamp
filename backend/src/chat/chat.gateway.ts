@@ -40,10 +40,14 @@ export class ChatGateway {
       `캠퍼메세지 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
-    this.chatService.createFromSocket(message, publicId, campName);
+    const chatWithSender = await this.chatService.createFromSocket(
+      message,
+      publicId,
+      campName,
+    );
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
-    socket.to(detailRoomName).emit('message', message);
+    socket.to(detailRoomName).emit('message', chatWithSender);
   }
 
   @SubscribeMessage('masterMessage')
@@ -52,10 +56,14 @@ export class ChatGateway {
       `마스터메세지- socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
     const { message, publicId, campName } = data; //TODO: 받아오는것도 DTO로.
-    this.chatService.createFromSocket(message, publicId, campName);
+    const chatWithSender = await this.chatService.createFromSocket(
+      message,
+      publicId,
+      campName,
+    );
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
-    socket.broadcast.to(roomName).emit('message', message);
+    socket.broadcast.to(roomName).emit('message', chatWithSender);
   }
 
   @SubscribeMessage('camperOut')
