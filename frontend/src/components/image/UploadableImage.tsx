@@ -4,22 +4,15 @@ import { UploadedImage } from '@type/client/image';
 import { fileToImage } from '@utils/file';
 import CameraIcon from '@assets/icons/cameraIcon.svg?react';
 
-interface ProfileImageUploadProps
+interface UploadableImagedProps
   extends React.ImgHTMLAttributes<HTMLImageElement> {
   newFile: File | null;
   setNewFile: React.Dispatch<React.SetStateAction<File | null>>;
 }
 
-function ProfileImageUpload(props: ProfileImageUploadProps) {
-  const {
-    newFile,
-    setNewFile,
-    src,
-    width,
-    height,
-    className,
-    ...profileImageProps
-  } = props;
+function UploadableImage(props: UploadableImagedProps) {
+  const { newFile, setNewFile, src, className, ...UploadableImageProps } =
+    props;
   const fileInputRef = React.useRef<HTMLInputElement>(null);
   const [newImage, setNewImage] = React.useState<UploadedImage | null>(null);
 
@@ -55,19 +48,15 @@ function ProfileImageUpload(props: ProfileImageUploadProps) {
   }, [newFile]);
 
   return (
-    <div className="relative w-fit">
+    <div className="relative">
       <Image
-        {...profileImageProps}
+        {...UploadableImageProps}
         src={
           newImage?.buffer ||
           src ||
-          'https://images.pexels.com/photos/18963468/pexels-photo-18963468.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'
+          'https://images.pexels.com/photos/19247146/pexels-photo-19247146.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
         }
-        width={width || 100}
-        height={height || 100}
-        className={`aspect-square rounded-full border-sm border-text-primary object-cover ${
-          className || ''
-        }`}
+        className={`object-cover ${className || ''}`}
       />
       <button
         type="button"
@@ -87,4 +76,4 @@ function ProfileImageUpload(props: ProfileImageUploadProps) {
   );
 }
 
-export default ProfileImageUpload;
+export default UploadableImage;
