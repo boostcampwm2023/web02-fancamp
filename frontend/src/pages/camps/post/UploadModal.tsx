@@ -4,7 +4,6 @@ import TextArea from '@components/ui/TextArea';
 import SubmitButton from '@components/button/SubmitButton';
 import UploadArea from '@components/file/UploadArea';
 import { postPostMutation } from '@hooks/api/usePostQuery';
-import { BASE_URL } from '@constants/URLs';
 
 interface UploadModalProps {
   handleCloseModal: () => void;
@@ -15,17 +14,11 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
   const [files, setFiles] = useState<File[]>([]);
 
   const {
-    mutate: uploadMutate,
-    isPending: isUploadPending,
-    isError: isUploadError,
-    isSuccess: isUploadSuccess,
-  } = useMutation({
-    mutationFn: (formData: FormData) =>
-      useFetch(`${BASE_URL}/posts/`, {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      }),
+    mutate: postPost,
+    isPending,
+    isError,
+    isSuccess,
+  } = postPostMutation({
     onSuccess: () => {
       handleCloseModal();
     },

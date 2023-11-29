@@ -3,7 +3,6 @@ import useAuth from '@hooks/useAuth';
 import PostGrid from '@components/grid/PostGrid';
 import UploadCard from '@components/card/UploadCard';
 import PostCard from '@components/card/PostCard';
-import { BASE_URL } from '@constants/URLs';
 import { getCampPostsQuery } from '@hooks/api/useCampQuery';
 
 interface PostGridProps {
