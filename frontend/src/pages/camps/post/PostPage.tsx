@@ -4,9 +4,9 @@ import useAuth from '@hooks/useAuth';
 import { Suspense, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '@components/loading/Spinner';
-import PostModal from './PostModal';
 import UploadModal from './UploadModal';
 import PostPageGrid from './PostGrid';
+import PostModalLogic from './PostModalLogic';
 
 function PostPage() {
   const [showPostModal, setPostModal] = useState(false);
@@ -40,10 +40,10 @@ function PostPage() {
 
   return (
     <section className="relative flex-1">
-      {showPostModal && (
+      {showPostModal && showPostId !== null && (
         <Suspense fallback={<ModalSipnner />}>
           <Modal isOpen={showPostModal} handleCloseModal={handlePostModalClose}>
-            <PostModal
+            <PostModalLogic
               postId={showPostId}
               handlePostModalClose={handlePostModalClose}
             />
