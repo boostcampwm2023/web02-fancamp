@@ -1,10 +1,45 @@
+import Text from '@components/ui/Text';
+import { formatDate } from '@utils/date';
+import { numberToString } from '@utils/unit';
+
 interface LikeButtonProps {
+  isMaster: boolean;
+  isLike: boolean;
+  createdAt: string;
+  likeCount: number;
+  handleLike: () => void;
+}
+
+interface ButtonProps {
   liked: boolean;
   onClick: () => void;
   children?: React.ReactNode;
 }
 
-function LikeButton({ liked, onClick, children }: LikeButtonProps) {
+function LikeButton({
+  isMaster,
+  isLike,
+  createdAt,
+  likeCount,
+  handleLike,
+}: LikeButtonProps) {
+  return (
+    <div className="flex justify-between">
+      {isMaster ? (
+        <Text size={12}>좋아요 {numberToString(likeCount)}</Text>
+      ) : (
+        <Button liked={isLike} onClick={handleLike}>
+          <Text size={12}>좋아요 {numberToString(likeCount)}</Text>
+        </Button>
+      )}
+      <Text size={12} color="text-secondary" className="text-end">
+        {formatDate(createdAt)}
+      </Text>
+    </div>
+  );
+}
+
+function Button({ liked, onClick, children }: ButtonProps) {
   return (
     <button
       type="button"
