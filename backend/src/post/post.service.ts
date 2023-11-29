@@ -19,6 +19,7 @@ import { UpdateCommenttDto } from './dto/update-comment.dto';
 import { Comment } from './entities/comment.entity';
 import { ImageService } from 'src/image/image.service';
 import { getSentiment, getSentimentColor } from 'src/utils/sentiment';
+import { NoticeGateway } from 'src/notice/notice.gateway';
 
 @Injectable()
 export class PostService {
@@ -29,6 +30,7 @@ export class PostService {
     private readonly campService: CampService,
     private readonly userService: UserService,
     private readonly imageService: ImageService,
+    private readonly noticeGateway: NoticeGateway,
   ) {}
 
   /* Post */
@@ -53,6 +55,7 @@ export class PostService {
       files.length,
     );
     await this.imageService.uploadPostFiles(files, post.postId, post.campId);
+    this.noticeGateway.noticePost(camp.campId, camp.campName);
     return { ...post, publicId: publicId };
   }
 

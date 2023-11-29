@@ -8,6 +8,7 @@ import { ChatGateway } from './chat.gateway';
 import { UserModule } from 'src/user/user.module';
 import { CampModule } from 'src/camp/camp.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { NoticeModule } from 'src/notice/notice.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { AuthModule } from 'src/auth/auth.module';
     UserModule,
     CampModule,
     AuthModule,
+    NoticeModule,
   ],
   controllers: [ChatController],
   providers: [ChatService, ChatRepository, ChatGateway],
