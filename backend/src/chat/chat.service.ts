@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ChatRepository } from './chat.repository';
 import { UserService } from '../user/user.service';
 import { CampService } from '../camp/camp.service';
+import { ERR_MESSAGE } from 'src/utils/constants';
 
 @Injectable()
 export class ChatService {
@@ -37,31 +38,30 @@ export class ChatService {
     };
   }
 
-  async getPreviousChats(campName: string, publicId: string) {
+  async getPreviousChats(campName: string, publicId: string, cursor: string) {
+    const cursorDate = new Date(cursor);
+    console.log('커서데이트', cursorDate, campName);
     const camp = await this.campService.findOne(campName);
     const user = await this.userService.findUserByPublicId(publicId);
+
     const chats = await this.chatRepository.findChatsByUserIdOrMasterId(
       user.id,
       camp.masterId,
+      cursorDate,
     );
-
-    if (!user.isMaster) {
-      // 채팅 배열을 순회하면서 stringContent 수정
-      const modifiedChats = chats.map((chat) => {
-        const modifiedChat = { ...chat }; // 새로운 객체를 만들어 기존 채팅 객체를 복사
-        if (modifiedChat.senderId === modifiedChat.masterId) {
-          // 마스터가 보낸 메세지의 경우에만 replace 실행
-          modifiedChat.stringContent = modifiedChat.stringContent.replace(
-            /\(닉네임\)/g,
-            user.chatName,
-          );
-        }
-        return modifiedChat;
-      });
-      return modifiedChats;
+    console.log('chats', chats);
+    if (!chats.length) {
+      throw new HttpException(
+        ERR_MESSAGE.NO_MORE_MESSAGE,
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    // 마스터는 (닉네임)을 변경해주지 않는다.
-    return chats;
+
+    return {
+      cursor: cursor,
+      nextCursor: chats.slice(-1)[0].createdAt,
+      result: chats,
+    };
   }
 
   // findAll() {
