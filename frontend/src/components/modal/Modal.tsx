@@ -34,7 +34,7 @@ function Modal({ isOpen, handleCloseModal, children }: ModalProps) {
     <>
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <dialog
-        className="h-fit w-fit opacity-0 smooth-transition backdrop:bg-text-primary backdrop:bg-opacity-50 backdrop:smooth-transition focus:outline-none"
+        className="h-fit w-fit opacity-0 outline-none smooth-transition backdrop:bg-text-primary backdrop:bg-opacity-50 backdrop:smooth-transition focus:outline-none"
         ref={modalRef}
         onClick={handleModalClick}
       >

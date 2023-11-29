@@ -73,7 +73,7 @@ function Switch({
         });
       }
     }
-  }, [dynamic || children]);
+  }, [dynamic, children]);
 
   return (
     <div className={`flex flex-row flex-nowrap ${className}`}>

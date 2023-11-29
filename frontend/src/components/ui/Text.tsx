@@ -43,7 +43,7 @@ function Text(props: TextProps) {
   return (
     <span
       {...textProps}
-      className={`smooth-transition ${font[size || 14][weight || 400]} ${
+      className={`w-fit smooth-transition ${font[size || 14][weight || 400]} ${
         fontColors[color || 'text-primary']
       } ${className || ''} `}
     >
