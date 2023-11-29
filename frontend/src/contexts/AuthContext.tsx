@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react';
 import { Auth } from '@type/api/auth';
-import { isValidSession } from '../API/auth';
+import { isValidSession } from '@API/auth';
 
 interface AuthContextType {
   auth: Auth | null;
