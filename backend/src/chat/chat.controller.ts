@@ -9,6 +9,7 @@ import {
   UseGuards,
   Res,
   Req,
+  Query,
 } from '@nestjs/common';
 import { ChatService } from './chat.service';
 import { CreateChatDto } from './dto/create-chat.dto';
@@ -34,10 +35,15 @@ export class ChatController {
   // }
 
   @Get(':campName')
-  async findOne(@Param('campName') campName: string, @Req() request: Request) {
+  async findOne(
+    @Param('campName') campName: string,
+    @Query('cursor') cursor: string,
+    @Req() request: Request,
+  ) {
     const result = await this.chatService.getPreviousChats(
       campName,
       request.cookies['publicId'],
+      cursor,
     );
     return result;
   }

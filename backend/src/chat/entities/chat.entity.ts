@@ -11,7 +11,7 @@ export class Chat {
   chatId: number;
 
   @UpdateDateColumn({ name: 'updated _at' })
-  createdAt: string; //TODO: time type으로 바꾸기
+  createdAt: Date; //TODO: time type으로 바꾸기
 
   @Column({ type: 'varchar', nullable: true })
   stringContent: string = '';

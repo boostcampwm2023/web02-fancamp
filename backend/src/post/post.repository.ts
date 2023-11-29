@@ -35,7 +35,11 @@ export class PostRepository {
     return this.postRepository.findOneBy({ postId });
   }
   findAllByMasterId(masterId: number) {
-    return this.postRepository.findBy({ userId: masterId });
+    return this.postRepository
+      .createQueryBuilder('post')
+      .where('post.userId = :masterId', { masterId })
+      .orderBy('post.createdAt', 'DESC') // 역순으로 정렬
+      .getMany();
   }
 
   async update(post: Post, updatePostDto: UpdatePostDto) {

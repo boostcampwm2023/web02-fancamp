@@ -5,4 +5,5 @@ export const ERR_MESSAGE = Object.freeze({
   COMMENT_NOT_FOUND_BY_ID: 'Comment with ID not found',
   NOT_COMMENT_OWNER: 'Not Comment Owner',
   NOT_SUBSCRIBED: 'Not Subscribed',
+  NO_MORE_MESSAGE: 'No More Message',
 } as const);
