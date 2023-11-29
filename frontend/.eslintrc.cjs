@@ -61,5 +61,6 @@ module.exports = {
     'import/no-cycle': 'off',
     'react-hooks/rules-of-hooks': 'off',
     'react/jsx-no-useless-fragment': 'off',
+    'no-nested-ternary': 'off',
   },
 };
