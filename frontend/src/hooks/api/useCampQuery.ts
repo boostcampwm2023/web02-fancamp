@@ -1,7 +1,13 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { Camp } from '@type/api/camp';
 import { Post } from '@type/api/post';
+import { MutationProps } from '@type/api/api';
 import useFetch from './useFetch';
+
+interface UpdateCampMutationFnProps {
+  campName: string;
+  formData: FormData;
+}
 
 export const getCampQuery = (campId: string) => {
   const { data, isError, isLoading } = useSuspenseQuery<Camp>({
@@ -31,4 +37,19 @@ export const getCampPostsQuery = (campId: string) => {
   });
 
   return { data, isError, isLoading };
+};
+
+export const updateCampMutation = ({ onSuccess, onError }: MutationProps) => {
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: ({ campName, formData }: UpdateCampMutationFnProps) =>
+      useFetch(`/api/camps/${campName}`, {
+        method: 'PUT',
+        body: formData,
+        credentials: 'include',
+      }),
+    onSuccess,
+    onError,
+  });
+
+  return { mutate, isPending, isError, isSuccess };
 };
