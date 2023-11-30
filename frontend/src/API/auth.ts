@@ -21,7 +21,7 @@ export async function signin(email: string, password: string): Promise<Auth> {
 }
 
 export async function checkEmail(email: string): Promise<boolean> {
-  const response = await fetch(`${BASE_URL}auth/users/rightEmail`, {
+  const response = await fetch(`${BASE_URL}/auth/users/rightEmail`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ export async function signup(
 }
 
 export async function isValidSession(): Promise<Auth> {
-  const response = await fetch(`${BASE_URL}auth/users`, {
+  const response = await fetch(`${BASE_URL}/auth/users`, {
     method: 'GET',
     credentials: 'include',
   });
@@ -79,7 +79,7 @@ export async function isValidSession(): Promise<Auth> {
 }
 
 export async function signout(): Promise<any> {
-  const response = await fetch(`${BASE_URL}auth/users/signout`, {
+  const response = await fetch(`${BASE_URL}/auth/users/signout`, {
     method: 'GET',
     credentials: 'include',
   });
