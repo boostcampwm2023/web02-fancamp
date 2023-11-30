@@ -16,8 +16,8 @@ export default function ChatBoxToast({ children, duration }: Props) {
     <>
       {isOpen &&
         createPortal(
-          <div className="absolute left-1/2 top-1/2 rounded-lg bg-logo-green p-4 opacity-100 transition-opacity display-regular-16">
-            {children}
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 cursor-default rounded-lg bg-logo-green p-4">
+            <span className="text-white display-regular-16">{children}</span>
           </div>,
           chatBox
         )}

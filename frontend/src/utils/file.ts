@@ -1,4 +1,4 @@
-import { UploadedImage } from '../types/client/image';
+import { UploadedImage } from '../type/client/image';
 
 export const fileToImage = (file: File): Promise<UploadedImage> => {
   return new Promise((resolve) => {

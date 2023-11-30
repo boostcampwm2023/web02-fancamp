@@ -1,17 +1,25 @@
+import useAuth from '@hooks/useAuth';
 import { getLocaleString } from '@utils/date';
 import { ForwardedRef, forwardRef } from 'react';
 
 interface Props {
-  isMyMessage: boolean;
   stringContent: string;
   createdAt: string;
+  senderChatName: string;
 }
 
 const ChatBoxMessage = forwardRef(function ChatBoxMessage(
-  { isMyMessage, stringContent: text, createdAt: time }: Props,
+  { stringContent, createdAt, senderChatName }: Props,
   ref: ForwardedRef<HTMLLIElement>
 ) {
-  const localeTimeString = getLocaleString(time);
+  const { auth } = useAuth();
+  const { chatName, isMaster } = auth!;
+  const localeTimeString = getLocaleString(createdAt);
+  const isMyMessage = senderChatName === chatName;
+
+  const chatNameReplacedText = isMaster
+    ? stringContent
+    : stringContent.replace('(닉네임)', chatName);
 
   return (
     <li ref={ref} className={`flex gap-4 ${isMyMessage && 'flex-row-reverse'}`}>
@@ -25,11 +33,11 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
         />
       )}
       <div
-        className={`flex flex-col gap-2 display-regular-14 ${
+        className={`flex flex-col gap-2 display-regular-16 ${
           isMyMessage && 'items-end'
         }`}
       >
-        <span>작성자</span>
+        <span>{senderChatName}</span>
         <div
           className={`flex items-end gap-4 ${
             isMyMessage && 'flex-row-reverse'
@@ -38,11 +46,11 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
           <span
             className={`${
               isMyMessage
-                ? 'rounded-br-none bg-point-lavender text-white'
-                : 'rounded-tl-none bg-white text-text-primary'
+                ? 'rounded-br-none bg-point-yellow text-text-primary'
+                : 'rounded-tl-none bg-point-lavender text-text-primary'
             } rounded-lg p-4 display-regular-16`}
           >
-            {text}
+            {isMyMessage ? stringContent : chatNameReplacedText}
           </span>
         </div>
       </div>

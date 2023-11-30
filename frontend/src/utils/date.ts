@@ -12,6 +12,29 @@ export function getLocaleString(date?: string): string {
   });
 }
 
+export function getCurrentDateString(): string {
+  return JSON.stringify(new Date()).slice(1, -1);
+}
+
+export function getFullDateString(createdAt: string): string {
+  const dateObj = new Date(createdAt);
+  const [year, month, date] = dateObj
+    .toLocaleDateString()
+    .split('.')
+    .map((el) => el.trim());
+  const dayArray = [
+    '일요일',
+    '월요일',
+    '화요일',
+    '수요일',
+    '목요일',
+    '금요일',
+    '토요일',
+  ];
+  const day = dayArray[dateObj.getDay()];
+  return `🗓️ ${year}년 ${month}월 ${date}일 ${day}`;
+}
+
 export const formatDate = (date: string) => {
   const currDate = new Date();
   const currYear = currDate.getFullYear();

@@ -26,7 +26,7 @@ export default function ExplorePage() {
           <Spinner />
         </div>
       ) : camps.length > 0 ? (
-        <ul className="mb-8 flex gap-8 text-text-primary display-regular-16">
+        <ul className="mb-8 grid grid-cols-5 gap-8 text-text-primary display-regular-16">
           {camps.map(({ campId, campName }) => (
             <Link
               key={campId}

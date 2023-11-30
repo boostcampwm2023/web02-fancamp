@@ -9,3 +9,14 @@ export const validateSign = {
     return result;
   },
 };
+
+export const validateMessageInputText = (inputText: string) => {
+  const trimedInputText = inputText.trim();
+  if (trimedInputText.length === 0) {
+    return false;
+  }
+  if (trimedInputText.length >= 36) {
+    return false;
+  }
+  return true;
+};
