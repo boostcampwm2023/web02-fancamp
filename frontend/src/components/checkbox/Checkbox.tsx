@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+
 interface CheckboxProps {
   checked: boolean;
   onClick: () => void;
@@ -12,7 +14,6 @@ function Checkbox({ checked, onClick, children }: CheckboxProps) {
       onClick={onClick}
     >
       <input type="checkbox" className="sr-only" />
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label
         className={`relative inline-block h-[0.75rem] w-[0.75rem] border-sm border-text-primary ${
           checked ? 'bg-point-yellow' : 'bg-surface-primary'

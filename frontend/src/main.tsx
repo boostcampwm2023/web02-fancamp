@@ -1,7 +1,7 @@
 import './styles/index.css';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import QueryProvider from '@contexts/QueryProvider';
 import router from './route/router';
 import { AuthProvider } from './contexts/AuthContext';
 
@@ -16,14 +16,12 @@ async function enableMocking() {
   return worker.start();
 }
 
-export const queryClient = new QueryClient();
-
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <AuthProvider>
-      <QueryClientProvider client={queryClient}>
+      <QueryProvider>
         <RouterProvider router={router} />
-      </QueryClientProvider>
+      </QueryProvider>
     </AuthProvider>
   );
 });

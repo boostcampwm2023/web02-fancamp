@@ -1,11 +1,11 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { EmailStatus, SignupStatus } from '@type/client/auth';
+import { FetchStatus } from '@type/api/status';
+import useAuth from '@hooks/useAuth';
+import { validateSign } from '@utils/validate';
+import { signup } from '@API/auth';
 import SignupForm from './SignupForm';
-import useAuth from '../../../hooks/useAuth';
-import { validateSign } from '../../../utils/validate';
-import { signup } from '../../../API/auth';
-import { EmailStatus, SignupStatus } from '../../../types/client/auth';
-import { FetchStatus } from '../../../types/api/status';
 
 export default function SignupPage() {
   const [signupStatus, setStatus] = useState<SignupStatus>('email');
@@ -14,7 +14,7 @@ export default function SignupPage() {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [chatName, setChatName] = useState<string>('');
   const [publicId, setPublicId] = useState<string>('');
-  const [profileImage, _] = useState<string>('');
+  const [profileImage] = useState<string>('');
   const [isMaster, setMaster] = useState<boolean>(false);
   const [isEmailOk, setEmailOk] = useState<EmailStatus>('ok');
   const [signStatus, setSignStatus] = useState<FetchStatus>({

@@ -3,6 +3,13 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from 'react-router-dom';
+import Layout from '@components/layout/Layout';
+import FeedPage from '@pages/feed/FeedPage';
+import UserEditPage from '@pages/user/edit/ProfileEditPage';
+import UserProfileEditPage from '@pages/user/edit/profile/UserProfileEditPage';
+import UserPasswordEditPage from '@pages/user/edit/password/UserPasswordEditPage';
+import UserPage from '@pages/user/UserPage';
+import CampProfileEditPage from '@pages/camps/edit/CampProfileEditPage';
 import DemoPage from '../pages/demo/components/DemoPage';
 import HomePage from '../pages/home/HomePage';
 import SearchPage from '../pages/search/SearchPage';
@@ -13,14 +20,10 @@ import PostPage from '../pages/camps/post/PostPage';
 import CampPage from '../pages/camps/CampPage';
 import CommunityPage from '../pages/camps/community/CommunityPage';
 import ApiPage from '../pages/demo/api/ApiPage';
-import EditPage from '../pages/camps/edit/EditPage';
 import ErrorPage from '../pages/error/ErrorPage';
-import ProfilePage from '../pages/camps/edit/profile/ProfilePage';
-import PasswordPage from '../pages/camps/edit/password/PasswordPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
 import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
 import SigninPage from '../pages/auth/signin/SigninPage';
-import Layout from '@components/layout/Layout';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -33,6 +36,7 @@ const router = createBrowserRouter(
         <Route index element={<HomePage />} />
         <Route path="search" element={<SearchPage />} />
         <Route path="explore" element={<ExplorePage />} />
+        <Route path="feed" element={<FeedPage />} />
         <Route element={<AuthProtectedRoute />}>
           <Route path="camps/:campId/chat" element={<ChatPage />} />
           <Route path="subscriptions" element={<SubscriptionsPage />} />
@@ -42,9 +46,13 @@ const router = createBrowserRouter(
               <Route path="post" element={<PostPage />} />
             </Route>
           </Route>
-          <Route path="/camps/:campId/edit" element={<EditPage />}>
-            <Route path="profile" element={<ProfilePage />} />
-            <Route path="password" element={<PasswordPage />} />
+          <Route path="camps/edit" element={<CampProfileEditPage />} />
+        </Route>
+        <Route element={<AuthProtectedRoute />}>
+          <Route path="user" element={<UserPage />} />
+          <Route path="user/edit" element={<UserEditPage />}>
+            <Route path="profile" element={<UserProfileEditPage />} />
+            <Route path="password" element={<UserPasswordEditPage />} />
           </Route>
         </Route>
         <Route path="error" element={<ErrorPage />} />

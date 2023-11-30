@@ -1,43 +1,12 @@
-import { useEffect, useState } from 'react';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
-import CheckIcon from '../../assets/icons/checkIcon.svg?react';
-import SubscribeButton from '../../components/button/SubscribeButton';
-import Text from '../../components/ui/Text';
-import { CampInfo as CampInfoType } from '../../types/api/camp';
-import ProfileImage from '../../components/profile/ProfileImage';
-import useAuth from '../../hooks/useAuth';
-import useFetch from '../../hooks/useFetch';
-import { isSubscribedCamp, subscribeCamp } from '../../API/subscription';
-import { BASE_URL } from '@constants/URLs';
+import ProfileImage from '@components/profile/ProfileImage';
+import Text from '@components/ui/Text';
+import { getCampQuery } from '@hooks/api/useCampQuery';
 
 function CampInfo() {
-  const [isSubscribed, setIsSubscribed] = useState(false);
   const { campId } = useParams();
-  const { auth } = useAuth();
 
-  const { data: camp } = useSuspenseQuery<CampInfoType>({
-    queryKey: ['camp', campId],
-    queryFn: () =>
-      useFetch(`${BASE_URL}/camps/${campId}`, {
-        method: 'GET',
-        credentials: 'include',
-      }),
-    gcTime: 0,
-    staleTime: 0,
-  });
-
-  useEffect(() => {
-    isSubscribedCamp(campId!)
-      .then(() => setIsSubscribed(true))
-      .catch(() => setIsSubscribed(false));
-  }, []);
-
-  const handleSubscribe = () => {
-    subscribeCamp(campId!)
-      .then(() => setIsSubscribed(true))
-      .catch(console.error);
-  };
+  const { data: camp } = getCampQuery(campId!);
 
   return (
     <div className="mb-xl flex w-full items-center gap-xl">
@@ -60,7 +29,7 @@ function CampInfo() {
           </div>
         </div>
         <div>
-          {!auth?.isMaster && (
+          {/* {!auth?.isMaster && (
             <SubscribeButton
               subscribed={isSubscribed}
               onClick={handleSubscribe}
@@ -78,7 +47,7 @@ function CampInfo() {
                 {isSubscribed ? '구독중' : '구독하기'}
               </Text>
             </SubscribeButton>
-          )}
+          )} */}
         </div>
       </div>
     </div>

@@ -1,11 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { useMutation } from '@tanstack/react-query';
-import SubmitButton from '../../../components/button/SubmitButton';
-import TextArea from '../../../components/ui/TextArea';
-import Text from '../../../components/ui/Text';
-import UploadArea from '../../../components/file/UploadArea';
-import useFetch from '../../../hooks/useFetch';
-import { BASE_URL } from '@constants/URLs';
+import Text from '@components/ui/Text';
+import TextArea from '@components/ui/TextArea';
+import SubmitButton from '@components/button/SubmitButton';
+import UploadArea from '@components/file/UploadArea';
+import { postPostMutation } from '@hooks/api/usePostQuery';
 
 interface UploadModalProps {
   handleCloseModal: () => void;
@@ -16,17 +14,11 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
   const [files, setFiles] = useState<File[]>([]);
 
   const {
-    mutate: uploadMutate,
-    isPending: isUploadPending,
-    isError: isUploadError,
-    isSuccess: isUploadSuccess,
-  } = useMutation({
-    mutationFn: (formData: FormData) =>
-      useFetch(`${BASE_URL}/posts/`, {
-        method: 'POST',
-        body: formData,
-        credentials: 'include',
-      }),
+    mutate: postPost,
+    isPending,
+    isError,
+    isSuccess,
+  } = postPostMutation({
     onSuccess: () => {
       handleCloseModal();
     },
@@ -39,8 +31,7 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
       formData.append('files', file);
     });
     formData.append('content', content);
-
-    uploadMutate(formData);
+    postPost({ formData });
   };
 
   return (
@@ -57,9 +48,9 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
         />
         <UploadArea files={files} setFiles={setFiles} />
         <SubmitButton
-          isPending={isUploadPending}
-          isError={isUploadError}
-          isSuccess={isUploadSuccess}
+          isPending={isPending}
+          isError={isError}
+          isSuccess={isSuccess}
           text="업로드"
         />
       </form>

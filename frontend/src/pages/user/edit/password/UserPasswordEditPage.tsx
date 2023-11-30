@@ -1,24 +1,23 @@
 import { FormEvent, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import SubmitButton from '../../../../components/button/SubmitButton';
-import Input from '../../../../components/input/Input';
-import Text from '../../../../components/ui/Text';
-import useFetch from '../../../../hooks/useFetch';
-import { BASE_URL } from '@constants/URLs';
+import useFetch from '@hooks/api/useFetch';
+import Text from '@components/ui/Text';
+import Input from '@components/input/Input';
+import SubmitButton from '@components/button/SubmitButton';
 
 interface ChangePassword {
   currentPassword: string;
   newPassword: string;
 }
 
-function PasswordPage() {
+function UserPasswordEditPage() {
   const [currentPassword, setCurrentPassword] = useState<string>('');
   const [newPassword, setNewPassword] = useState<string>('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
 
   const changePasswordMutation = useMutation({
     mutationFn: (passwords: ChangePassword) =>
-      useFetch(`${BASE_URL}/users/`, {
+      useFetch(`/api/users/`, {
         method: 'patch',
         body: JSON.stringify(passwords),
         credentials: 'include',
@@ -72,4 +71,4 @@ function PasswordPage() {
   );
 }
 
-export default PasswordPage;
+export default UserPasswordEditPage;

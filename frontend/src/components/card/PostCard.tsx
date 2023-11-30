@@ -1,5 +1,5 @@
-import Image from '../ui/Image';
-import Text from '../ui/Text';
+import Image from '@components/ui/Image';
+import Text from '@components/ui/Text';
 
 interface PostCardProps {
   imageSrc: string;
@@ -11,10 +11,10 @@ interface PostCardProps {
 }
 
 const cardClassName =
-  'post__card group relative aspect-square h-full w-full ' +
+  'group relative aspect-square h-full w-full ' +
   'cursor-pointer overflow-hidden border-sm border-text-primary';
 const cardImageClassName =
-  'smooth-transition post__card--hover--filter aspect-square object-cover ' +
+  'smooth-transition aspect-square object-cover ' +
   'group-hover:scale-[1.1] group-hover:blur-[0.125rem] group-hover:brightness-[30%]';
 const cardTextClassName =
   'smooth-transition relative h-full w-full overflow-hidden p-xl ' +

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import BottomArrowIcon from '../../assets/icons/bottomArrowIcon.svg?react';
-import Text from '../ui/Text';
+import Text from '@components/ui/Text';
+import BottomArrowIcon from '@assets/icons/bottomArrowIcon.svg?react';
 
 interface DropdownProps {
   children: React.ReactNode;

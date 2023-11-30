@@ -1,5 +1,5 @@
+import Image from '@components/ui/Image';
 import React from 'react';
-import Image from '../ui/Image';
 
 interface ProfileImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
 

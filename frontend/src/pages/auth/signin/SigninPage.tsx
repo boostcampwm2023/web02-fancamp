@@ -1,10 +1,10 @@
+import { signin } from '@API/auth';
+import useAuth from '@hooks/useAuth';
+import { FetchStatus } from '@type/api/status';
+import { validateSign } from '@utils/validate';
 import { FormEvent, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SigninForm from './SigninForm';
-import useAuth from '../../../hooks/useAuth';
-import { validateSign } from '../../../utils/validate';
-import { FetchStatus } from '../../../types/api/status';
-import { signin } from '../../../API/auth';
 
 export default function SigninPage() {
   const [email, setEmail] = useState<string>('');

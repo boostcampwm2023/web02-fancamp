@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react';
-import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react';
-import RightArrowIcon from '../../assets/icons/rightArrowIcon.svg?react';
-import Text from '../ui/Text';
-import Image from '../ui/Image';
+import Image from '@components/ui/Image';
+import Text from '@components/ui/Text';
+import LeftArrowIcon from '@assets/icons/leftArrowIcon.svg?react';
+import RightArrowIcon from '@assets/icons/rightArrowIcon.svg?react';
 
 interface ImageSliderProps {
   width?: number;
@@ -27,7 +27,7 @@ function ImageSlider({ width = 37.5, images }: ImageSliderProps) {
 
   return (
     <div
-      className="group relative h-full w-full overflow-x-hidden border-sm border-text-primary"
+      className="group relative h-full w-full overflow-x-hidden"
       ref={sliderRef}
     >
       <div
@@ -37,9 +37,9 @@ function ImageSlider({ width = 37.5, images }: ImageSliderProps) {
         {images.map((image) => (
           <Image
             src={image}
-            className="object-cover"
-            key={`image-slider-${image}`}
+            className="w-[100%] object-cover"
             style={{ width: `${width}rem` }}
+            key={`image-slider-${image}`}
           />
         ))}
       </div>

@@ -1,11 +1,12 @@
+import { signout } from '@API/auth';
+import useAuth from '@hooks/useAuth';
 import { Link, NavLink } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
-import { signout } from '../../API/auth';
 
 const mainMenu = [
   { to: '/', text: 'Home' },
   { to: '/search', text: 'Search' },
   { to: '/explore', text: 'Explore' },
+  { to: '/feed', text: 'Feed' },
 ];
 
 const authMenu = [
@@ -32,7 +33,7 @@ export default function SideMenu() {
       text: '> 포스트',
     },
     {
-      to: `/camps/${auth?.publicId}/edit`,
+      to: `/camps/edit`,
       text: '> 캠프 수정',
     },
     {
@@ -45,6 +46,10 @@ export default function SideMenu() {
     {
       to: '/subscriptions',
       text: '구독한 캠프',
+    },
+    {
+      to: '/user',
+      text: '마이페이지',
     },
   ];
 

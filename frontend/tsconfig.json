@@ -24,12 +24,13 @@
     "baseUrl": "src",
     "paths": {
       "@API/*": ["API/*"],
+      "@assets/*": ["assets/*"],
       "@components/*": ["components/*"],
       "@constants/*": ["constants/*"],
       "@contexts/*": ["contexts/*"],
       "@hooks/*": ["hooks/*"],
       "@pages/*": ["pages/*"],
-      "@types/*": ["types/*"],
+      "@type/*": ["type/*"],
       "@utils/*": ["utils/*"]
     }
   },

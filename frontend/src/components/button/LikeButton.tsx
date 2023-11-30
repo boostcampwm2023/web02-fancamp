@@ -1,12 +1,45 @@
-// import ConfettiExplosion from 'react-confetti-explosion';
+import Text from '@components/ui/Text';
+import { formatDate } from '@utils/date';
+import { numberToString } from '@utils/unit';
 
 interface LikeButtonProps {
+  isMaster: boolean;
+  isLike: boolean;
+  createdAt: string;
+  likeCount: number;
+  handleLike: () => void;
+}
+
+interface ButtonProps {
   liked: boolean;
   onClick: () => void;
   children?: React.ReactNode;
 }
 
-function LikeButton({ liked, onClick, children }: LikeButtonProps) {
+function LikeButton({
+  isMaster,
+  isLike,
+  createdAt,
+  likeCount,
+  handleLike,
+}: LikeButtonProps) {
+  return (
+    <div className="flex justify-between">
+      {isMaster ? (
+        <Text size={12}>좋아요 {numberToString(likeCount)}</Text>
+      ) : (
+        <Button liked={isLike} onClick={handleLike}>
+          <Text size={12}>좋아요 {numberToString(likeCount)}</Text>
+        </Button>
+      )}
+      <Text size={12} color="text-secondary" className="text-end">
+        {formatDate(createdAt)}
+      </Text>
+    </div>
+  );
+}
+
+function Button({ liked, onClick, children }: ButtonProps) {
   return (
     <button
       type="button"
@@ -28,18 +61,6 @@ function LikeButton({ liked, onClick, children }: LikeButtonProps) {
           strokeWidth="2"
         />
       </svg>
-      {/* <div className="left-[0.5rem]">
-        {liked && (
-          <ConfettiExplosion
-            duration={2200}
-            particleSize={6}
-            particleCount={30}
-            force={0.2}
-            width={400}
-            className="relative z-[10000000000]"
-          />
-        )}
-      </div> */}
       {children}
     </button>
   );

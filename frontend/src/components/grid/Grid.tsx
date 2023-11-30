@@ -1,6 +1,6 @@
+import Text from '@components/ui/Text';
+import { pxToRem } from '@utils/unit';
 import { useEffect, useRef, useState } from 'react';
-import { pxToRem } from '../../utils/unit';
-import Text from '../ui/Text';
 
 interface GridProps {
   items: any[];
@@ -102,7 +102,7 @@ function Card({ text, x, y }: { text: string; x: number; y: number }) {
       }`}
       style={{ transform: `translate(${x}rem, ${y}rem)` }}
     >
-      <Text size={14}> {text}</Text>
+      <Text size={14}>{text}</Text>
     </div>
   );
 }
