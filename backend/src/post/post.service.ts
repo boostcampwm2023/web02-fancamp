@@ -44,19 +44,9 @@ export class PostService {
       };
     }
 
-    const results = await Promise.all(
-      posts.map(async (post) => {
-        const likeCount = await this.countLikes(post.postId);
-        const commentCount = await this.countComments(post.postId);
-        const url = await this.imageService.findImagesByPostId(post.postId);
-        return {
-          ...post,
-          likeCount: likeCount,
-          commentCount: commentCount,
-          url: url,
-        };
-      }),
-    );
+    const results = posts.map((post) => {
+      return post.postId;
+    });
 
     return {
       cursor: cursor,
@@ -98,24 +88,25 @@ export class PostService {
       await this.userService.findUserByUserId(post.userId);
     const likeCount = await this.countLikes(postId);
     const commentCount = await this.countComments(postId);
-    // const commets = await this.findCommentsByPostId(postId);
     const url = await this.imageService.findImagesByPostId(postId);
-    const user = await this.userService.findUserByPublicId(publicId);
-    const isLike = await this.findLikeByPostId(postId, user.id);
+    const isLike = await this.isLikePost(postId, publicId);
     return {
       ...post,
       publicId: writerPublicId,
       isLike: isLike,
       likeCount: likeCount,
       commentCount: commentCount,
-      // comments: commets,
       url: url,
     };
   }
 
-  // findPost(postId: number) {
-  //   return this.postRepository.findOne(postId);
-  // }
+  async isLikePost(postId: number, publicId: string) {
+    if (publicId) {
+      const user = await this.userService.findUserByPublicId(publicId);
+      if (user) return await this.findLikeByPostId(postId, user.id);
+    }
+    return false;
+  }
 
   async findAllPostsByCampName(campName: string) {
     //TODO: 쿠키 분석해서 구독중인지 확인
