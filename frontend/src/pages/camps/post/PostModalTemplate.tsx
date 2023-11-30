@@ -7,6 +7,9 @@ import { Comment } from '@type/api/comment';
 import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
+import { useEffect, useRef } from 'react';
+import Spinner from '@components/loading/Spinner';
+import useIntersectionObserver from '@hooks/useObserver';
 
 interface PostModalTemplateProps {
   camp: Camp;
@@ -23,6 +26,8 @@ interface PostModalTemplateProps {
     isPending: boolean;
   };
   scrollRef: React.RefObject<HTMLDivElement>;
+  fetchComments: () => Promise<any>;
+  isFetchingComments: boolean;
 }
 
 function PostModalTemplate({
@@ -37,7 +42,20 @@ function PostModalTemplate({
   handleLike,
   commentStatus,
   scrollRef,
+  fetchComments,
+  isFetchingComments,
 }: PostModalTemplateProps) {
+  const observerRef = useRef<HTMLDivElement>(null);
+  const { observe } = useIntersectionObserver(() => {
+    fetchComments();
+  });
+
+  useEffect(() => {
+    if (observerRef.current) {
+      observe(observerRef.current);
+    }
+  }, []);
+
   return (
     <div className="flex h-[31.25rem] border-sm border-text-primary">
       {post.url.length !== 0 && (
@@ -79,6 +97,10 @@ function PostModalTemplate({
               />
             ))}
           </ul>
+          {isFetchingComments && (
+            <Spinner className="relative h-center" width={16} height={16} />
+          )}
+          <div ref={observerRef} className="h-sm" />
         </div>
         <InputComment
           comment={inputComment}

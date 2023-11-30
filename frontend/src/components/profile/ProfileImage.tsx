@@ -9,7 +9,10 @@ function ProfileImage(props: ProfileImageProps) {
   return (
     <Image
       {...profileImageProps}
-      src={src || '/src/assets/default/profileImage.png'}
+      src={
+        src ||
+        'https://kr.object.ncloudstorage.com/fancamp/default/profileImage.png'
+      }
       width={width || 100}
       height={height || 100}
       className={`aspect-square rounded-full border-sm border-text-primary object-cover ${

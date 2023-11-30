@@ -70,7 +70,9 @@ function FeedPage() {
           .map((_, i) => {
             const id = slidePage + i - 2;
             const postId = postIds[id];
-            return <FeedCard postId={postId} key={`fead-card-${id}`} />;
+            return (
+              <FeedCard postId={postId} key={`fead-card-${id}`} index={i} />
+            );
           })}
       </div>
     </div>

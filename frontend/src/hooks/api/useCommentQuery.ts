@@ -1,5 +1,5 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { Comment } from '@type/api/comment';
+import { useMutation, useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { CommentResponse } from '@type/api/comment';
 import { MutationProps } from '@type/api/api';
 import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
@@ -9,19 +9,26 @@ interface PostCommentMutationFnProps {
   content: string;
 }
 
-export const getCommentsQuery = (postId: string) => {
-  const { data, isError, isLoading, refetch } = useSuspenseQuery<Comment[]>({
-    queryKey: ['comments', postId],
-    queryFn: () =>
-      useFetch(`${BASE_URL}/posts/${postId}/comments`, {
-        method: 'GET',
-        credentials: 'include',
-      }),
-    gcTime: 0,
-    staleTime: 0,
-  });
+export const getCommentsInfiniteQuery = (postId: string) => {
+  const { data, fetchNextPage, isFetching } =
+    useSuspenseInfiniteQuery<CommentResponse>({
+      queryKey: ['comments', postId],
+      queryFn: ({ pageParam = new Date() }) => {
+        return useFetch(
+          `${BASE_URL}/posts/${postId}/comments?cursor=${pageParam}`,
+          {
+            method: 'GET',
+            credentials: 'include',
+          }
+        );
+      },
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
+      initialPageParam: new Date(),
+      gcTime: 0,
+      staleTime: 0,
+    });
 
-  return { data, isError, isLoading, refetch };
+  return { data, isFetching, fetchNextPage };
 };
 
 export const postCommentMutation = ({ onError, onSuccess }: MutationProps) => {

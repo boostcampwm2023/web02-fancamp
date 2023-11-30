@@ -1,11 +1,6 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { MutationProps } from '@type/api/api';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
-
-interface PostLikeMutationFnProps {
-  postId: string;
-}
 
 export const getCampSubscriptionQuery = (campName: string) => {
   const { data, isError, isLoading } = useSuspenseQuery<any>({

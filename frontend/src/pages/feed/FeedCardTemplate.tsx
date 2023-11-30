@@ -2,12 +2,14 @@ import ImageSlider from '@components/slider/ImageSlider';
 import Text from '@components/ui/Text';
 import { Camp } from '@type/api/camp';
 import { Post } from '@type/api/post';
-import { WheelEvent } from 'react';
+import { WheelEvent, useEffect, useRef } from 'react';
 import CommentCard from '@components/card/CommentCard';
 import { Comment } from '@type/api/comment';
 import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
+import useIntersectionObserver from '@hooks/useObserver';
+import Spinner from '@components/loading/Spinner';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -23,6 +25,8 @@ interface FeedCardTemplateProps {
     isPending: boolean;
   };
   scrollRef: React.RefObject<HTMLDivElement>;
+  fetchComments: () => Promise<any>;
+  isFetchingComments: boolean;
 }
 
 function FeedCardTemplate({
@@ -36,7 +40,20 @@ function FeedCardTemplate({
   handleLike,
   commentStatus,
   scrollRef,
+  fetchComments,
+  isFetchingComments,
 }: FeedCardTemplateProps) {
+  const observerRef = useRef<HTMLDivElement>(null);
+  const { observe } = useIntersectionObserver(() => {
+    fetchComments();
+  });
+
+  useEffect(() => {
+    if (observerRef.current) {
+      observe(observerRef.current);
+    }
+  }, []);
+
   const isOverflow = () => {
     if (scrollRef.current) {
       const { clientHeight, scrollHeight } = scrollRef.current;
@@ -85,6 +102,10 @@ function FeedCardTemplate({
             />
           ))}
         </ul>
+        {isFetchingComments && (
+          <Spinner className="relative h-center" width={16} height={16} />
+        )}
+        <div ref={observerRef} className="h-sm" />
       </div>
       <InputComment
         comment={inputComment}

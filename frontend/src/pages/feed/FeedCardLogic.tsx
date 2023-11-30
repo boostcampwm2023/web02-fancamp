@@ -4,18 +4,20 @@ import { Comment } from '@type/api/comment';
 import { getPostQuery } from '@hooks/api/usePostQuery';
 import { getCampQuery } from '@hooks/api/useCampQuery';
 import {
-  getCommentsQuery,
+  getCommentsInfiniteQuery,
   postCommentMutation,
 } from '@hooks/api/useCommentQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
+import Text from '@components/ui/Text';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
-  postId: number;
+  postId: string;
+  index: number;
 }
 
-function FeedCard({ postId }: FeedCardProps) {
+function FeedCard({ postId, index }: FeedCardProps) {
   return (
     <Suspense
       fallback={
@@ -24,24 +26,36 @@ function FeedCard({ postId }: FeedCardProps) {
         </div>
       }
     >
-      <FeedCardLogic postId={postId} />
+      <FeedCardLogic postId={postId} index={index} />
     </Suspense>
   );
 }
 
-function FeedCardLogic({ postId }: any) {
+function FeedCardLogic({ postId, index }: FeedCardProps) {
   const [isLike, setLike] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   if (!postId) {
+    if (index === 1) {
+      return (
+        <div className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col justify-end">
+          <Text size={20}>최신 포스트</Text>
+        </div>
+      );
+    }
     return <div className="relative mb-[5vh] mt-[5vh] h-[70vh]" />;
   }
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(post.publicId);
-  const { data: comments } = getCommentsQuery(postId);
+  const {
+    data: commentsPages,
+    isFetching: isFetchingComments,
+    fetchNextPage: fetchComments,
+  } = getCommentsInfiniteQuery(postId);
 
   const {
     mutate: postComment,
@@ -49,15 +63,7 @@ function FeedCardLogic({ postId }: any) {
     isPending: isPostCommentPending,
   } = postCommentMutation({
     onSuccess: (newComment: Comment) => {
-      const newCommentObject = {
-        ...newComment,
-        profileImage: '',
-        publicId: '',
-      };
-      queryClient.setQueryData(
-        ['comments', postId],
-        [...comments, newCommentObject]
-      );
+      setComments([newComment, ...comments]);
       queryClient.setQueryData(['post', postId], {
         ...post,
         commentCount: post.commentCount + 1,
@@ -91,8 +97,12 @@ function FeedCardLogic({ postId }: any) {
   }, []);
 
   useEffect(() => {
+    setComments([...comments, ...(commentsPages.pages.at(-1)?.result || [])]);
+  }, [commentsPages.pages.length]);
+
+  useEffect(() => {
     if (scrollRef.current && isCommentsUpdated) {
-      scrollRef.current.scrollTo({ top: 9999999, behavior: 'smooth' });
+      scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       setCommentsUpdated(false);
     }
   }, [isCommentsUpdated]);
@@ -130,6 +140,8 @@ function FeedCardLogic({ postId }: any) {
         isPending: isPostCommentPending,
       }}
       scrollRef={scrollRef}
+      fetchComments={fetchComments}
+      isFetchingComments={isFetchingComments}
     />
   );
 }

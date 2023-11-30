@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getPostQuery } from '@hooks/api/usePostQuery';
 import { getCampQuery } from '@hooks/api/useCampQuery';
 import {
-  getCommentsQuery,
+  getCommentsInfiniteQuery,
   postCommentMutation,
 } from '@hooks/api/useCommentQuery';
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
@@ -23,6 +23,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   if (!campId) {
     navigate('/');
@@ -31,7 +32,11 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(campId);
-  const { data: comments } = getCommentsQuery(postId);
+  const {
+    data: commentsPages,
+    isFetching: isFetchingComments,
+    fetchNextPage: fetchComments,
+  } = getCommentsInfiniteQuery(postId);
 
   const {
     mutate: postComment,
@@ -39,16 +44,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     isPending: isPostCommentPending,
   } = postCommentMutation({
     onSuccess: (newComment: Comment) => {
-      const newCommentObject = {
-        ...newComment,
-        profileImage: '',
-        publicId: '',
-      };
-      queryClient.setQueryData(
-        ['comments', postId],
-        [...comments, newCommentObject]
-      );
-
+      setComments([newComment, ...comments]);
       queryClient.setQueryData(['post', postId], {
         ...post,
         commentCount: post.commentCount + 1,
@@ -82,8 +78,12 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   }, []);
 
   useEffect(() => {
+    setComments([...comments, ...(commentsPages.pages.at(-1)?.result || [])]);
+  }, [commentsPages.pages.length]);
+
+  useEffect(() => {
     if (scrollRef.current && isCommentsUpdated) {
-      scrollRef.current.scrollTo({ top: 9999999, behavior: 'smooth' });
+      scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       setCommentsUpdated(false);
     }
   }, [isCommentsUpdated]);
@@ -122,6 +122,8 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
         isPending: isPostCommentPending,
       }}
       scrollRef={scrollRef}
+      fetchComments={fetchComments}
+      isFetchingComments={isFetchingComments}
     />
   );
 }
