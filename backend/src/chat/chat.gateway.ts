@@ -6,7 +6,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { ChatService } from './chat.service';
 
-@WebSocketGateway({ namespace: 'chat' })
+@WebSocketGateway({ cors: true, namespace: 'chat' })
 export class ChatGateway {
   constructor(private readonly chatService: ChatService) {}
 

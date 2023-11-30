@@ -5,7 +5,7 @@ export default function HomePage() {
     <>
       <div className="mb-4 flex justify-center">
         <Link to="/">
-          <img src="/src/assets/icons/logo.png" alt="메인 로고" />
+          <img src="https://kr.object.ncloudstorage.com/fancamp/static/logo.png" alt="메인 로고" />
         </Link>
       </div>
       <div className="mb-8 text-center display-regular-16">

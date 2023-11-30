@@ -6,7 +6,7 @@ import {
 import { Server, Socket } from 'socket.io';
 import { CampService } from 'src/camp/camp.service';
 
-@WebSocketGateway({ namespace: 'notice' })
+@WebSocketGateway({ cors: true, namespace: 'notice' })
 export class NoticeGateway {
   constructor(private readonly campService: CampService) {}
 

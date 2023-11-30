@@ -29,7 +29,7 @@ export class ImageService {
     }
     await Promise.all(
       files.map(async (file, index) => {
-        const fileName = `${campId}-${postId}_${index}`;
+        const fileName = `${campId}/${postId}_${index}`;
         await this.uploadFile(file, fileName, postId);
       }),
     );
