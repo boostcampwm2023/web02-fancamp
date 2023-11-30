@@ -158,13 +158,17 @@ export class PostService {
   async createComment(postId: number, content: string, publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
     const setimentColorHex = await getSentimentColor(content);
-    return this.commentRepository.create(
+    const comment = await this.commentRepository.create(
       postId,
       content,
       user.id,
       setimentColorHex,
     );
-    // return sentimentLevel;
+    return {
+      ...comment,
+      publicId: user.publicId,
+      profileImage: user.profileImage,
+    };
   }
 
   async updateComment(
