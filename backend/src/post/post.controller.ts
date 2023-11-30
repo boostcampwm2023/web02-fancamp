@@ -26,6 +26,11 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 export class PostController {
   constructor(private readonly postService: PostService) {}
   /* Post */
+  @Get('')
+  getAllCampsPosts(@Query('cursor') cursor: string) {
+    return this.postService.findAllCampsPosts(cursor);
+  }
+
   @Post()
   @UseInterceptors(FilesInterceptor('files'))
   create(

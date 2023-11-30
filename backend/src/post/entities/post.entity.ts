@@ -17,7 +17,7 @@ export class Post {
   pictureCount: number = 0;
 
   @UpdateDateColumn({ name: 'updated _at' })
-  createdAt: string; //TODO: time type으로 바꾸기
+  createdAt: Date; //TODO: time type으로 바꾸기
 
   @Column({ type: 'int', nullable: false })
   userId: number;

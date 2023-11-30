@@ -33,6 +33,38 @@ export class PostService {
     private readonly noticeGateway: NoticeGateway,
   ) {}
 
+  async findAllCampsPosts(cursor: string) {
+    const cursorDate = new Date(cursor);
+    const posts = await this.postRepository.findAll(cursorDate);
+    if (!posts.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+
+    const results = await Promise.all(
+      posts.map(async (post) => {
+        const likeCount = await this.countLikes(post.postId);
+        const commentCount = await this.countComments(post.postId);
+        const url = await this.imageService.findImagesByPostId(post.postId);
+        return {
+          ...post,
+          likeCount: likeCount,
+          commentCount: commentCount,
+          url: url,
+        };
+      }),
+    );
+
+    return {
+      cursor: cursor,
+      nextCursor: posts.slice(-1)[0].createdAt,
+      result: results,
+    };
+  }
+
   /* Post */
   async createPost(
     files: Array<Express.Multer.File>,

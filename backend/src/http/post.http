@@ -2,13 +2,16 @@
 @server = http://localhost:3000
 # @server = http://223.130.146.223:3000
 
+### 포스트 최신 조회
+GET {{server}}/posts?cursor=2023-11-31T02:49:19.218Z
+
 ### 포스트 생성
 POST {{server}}/posts
 Content-Type: application/json
 
 {
-    "content" : "7 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글 글글글글글글글글글글글글글글 ",
-    "campName" : "camp1"
+    "content" : "10",
+    "campName" : "master1"
 }
 
 ### 포스트 id로 가져오기 

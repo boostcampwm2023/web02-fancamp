@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, LessThan, Repository } from 'typeorm';
 import { concatMap } from 'rxjs';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
@@ -40,6 +40,21 @@ export class PostRepository {
       .where('post.userId = :masterId', { masterId })
       .orderBy('post.createdAt', 'DESC') // 역순으로 정렬
       .getMany();
+  }
+
+  findAll(cursorDate: Date) {
+    return this.postRepository.find({
+      where: [
+        {
+          isDeleted: false,
+          createdAt: LessThan(cursorDate), // cursor 이후의 글 가져오기
+        },
+      ],
+      order: {
+        createdAt: 'DESC', // 내림차순 정렬하여 최신글이 먼저 오도록 함
+      },
+      take: 20, // 최대 20개의 결과만 가져오도록 제한
+    });
   }
 
   async update(post: Post, updatePostDto: UpdatePostDto) {
