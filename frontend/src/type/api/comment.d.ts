@@ -9,3 +9,9 @@ export interface Comment {
   profileImage: string;
   setimentColorHex: string;
 }
+
+export interface CommentResponse {
+  cursor: string | null;
+  nextCursor: string | null;
+  result: Comment[];
+}
