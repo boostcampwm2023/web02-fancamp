@@ -3,15 +3,24 @@
 # @server = http://223.130.146.223:3000
 
 ### 포스트 id로 comment 조회 
-GET {{server}}/posts/28/comments
+GET {{server}}/posts/1/comments?cursor=2023-11-30T02:49:19.218Z
 
+
+### 포스트 id로 comment 조회 
+GET {{server}}/posts/1/comments?cursor=2023-11-30T02:48:28.776Z
+
+### 포스트 id로 comment 조회 
+GET {{server}}/posts/1/comments?cursor=2023-11-30T02:48:25.144Z
+
+### 포스트 id로 comment 조회 
+GET {{server}}/posts/1/comments?cursor=2023-11-30T02:48:13.381Z
 
 ### 포스트 id로 comment 생성하기
-POST {{server}}/posts/28/comments
+POST {{server}}/posts/1/comments
 Content-Type: application/json
 
 {
-    "content": "hello33"
+    "content": "안녕하세요 "
 }
 
 ### 포스트 id로 코멘트 지우기

@@ -47,12 +47,13 @@ export class PostService {
       );
     }
     const camp = await this.campService.findOne(createPostDto.campName);
+    const pictureCount = files ? files.length : 0;
     const post = await this.postRepository.create(
       createPostDto,
       user.id,
       camp.campId,
       user.isMaster,
-      files.length,
+      pictureCount,
     );
     await this.imageService.uploadPostFiles(files, post.postId, post.campId);
     this.noticeGateway.noticePost(camp.campId, camp.campName);
@@ -189,10 +190,22 @@ export class PostService {
     return this.commentRepository.remove(comment);
   }
 
-  async findCommentsByPostId(postId: number): Promise<{}[]> {
-    const comments: Comment[] =
-      await this.commentRepository.findByPostId(postId);
-    return await Promise.all(
+  async findCommentsByPostId(postId: number, cursor: string) {
+    const cursorDate = new Date(cursor);
+    const comments: Comment[] = await this.commentRepository.findByPostId(
+      postId,
+      cursorDate,
+    );
+
+    if (!comments.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+
+    const result = await Promise.all(
       comments.map(async (comment) => {
         const user = await this.userService.findUserByUserId(comment.userId);
         return {
@@ -202,6 +215,12 @@ export class PostService {
         };
       }),
     );
+
+    return {
+      cursor: cursor,
+      nextCursor: comments.slice(-1)[0].createdAt,
+      result: result,
+    };
   }
 
   async countComments(postId: number): Promise<number> {

@@ -10,6 +10,7 @@ import {
   Put,
   UploadedFiles,
   UseInterceptors,
+  Query,
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -88,8 +89,11 @@ export class PostController {
 
   /* comment */
   @Get(':postId/comments')
-  findComments(@Param('postId') postId: string) {
-    return this.postService.findCommentsByPostId(+postId);
+  findComments(
+    @Param('postId') postId: string,
+    @Query('cursor') cursor: string,
+  ) {
+    return this.postService.findCommentsByPostId(+postId, cursor);
   }
 
   @Post(':postId/comments')
