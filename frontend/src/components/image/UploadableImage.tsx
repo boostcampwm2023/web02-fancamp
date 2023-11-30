@@ -51,7 +51,11 @@ function UploadableImage(props: UploadableImagedProps) {
     <div className="relative">
       <Image
         {...UploadableImageProps}
-        src={newImage?.buffer || src || '/src/assets/default/profileImage.png'}
+        src={
+          newImage?.buffer ||
+          src ||
+          'https://kr.object.ncloudstorage.com/fancamp/default/profileImage.png'
+        }
         className={`object-cover ${className || ''}`}
       />
       <button

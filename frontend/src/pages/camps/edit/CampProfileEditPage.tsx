@@ -1,6 +1,5 @@
 import { FormEvent, Suspense, useState } from 'react';
 import Text from '@components/ui/Text';
-import Input from '@components/input/Input';
 import SubmitButton from '@components/button/SubmitButton';
 import Spinner from '@components/loading/Spinner';
 import UploadableImage from '@components/image/UploadableImage';
@@ -32,7 +31,7 @@ function CampProfileEditPageTemplate() {
   const { data: profile } = getProfileQuery();
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
   const [newBannerImage, setNewBannerImage] = useState<File | null>(null);
-  const [newCampName, setNewCampName] = useState<string>(camp.campName);
+  const [newCampName] = useState<string>(camp.campName);
 
   const {
     mutate: updateProfile,

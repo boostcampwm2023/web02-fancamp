@@ -61,7 +61,10 @@ export default function SideMenu() {
   return (
     <div className="sticky left-[0] top-[0] z-10 flex h-[100vh] w-[12.5rem] flex-col">
       <Link to="/">
-        <img src="/src/assets/icons/logo.png" alt="메인 로고" />
+        <img
+          src="https://kr.object.ncloudstorage.com/fancamp/static/logo.png"
+          alt="메인 로고"
+        />
       </Link>
       <Hr />
       <div className="flex flex-col gap-sm py-sm">
