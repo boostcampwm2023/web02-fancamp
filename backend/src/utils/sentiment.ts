@@ -40,10 +40,10 @@ function calcSentimentHex({ negative, positive, neutral }) {
       r = Math.floor(maxValue * 0.01 * 255);
       break;
     case positive:
-      b = Math.floor(maxValue * 0.01 * 255);
+      g = Math.floor(maxValue * 0.01 * 255);
       break;
     case neutral:
-      g = Math.floor(maxValue * 0.01 * 255);
+      b = Math.floor(maxValue * 0.01 * 255);
       break;
   }
   const rgb = [r, g, b];
