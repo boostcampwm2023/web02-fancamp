@@ -51,9 +51,9 @@ export class CommentRepository {
         },
       ],
       order: {
-        createdAt: 'ASC', // 오름차순 정렬하여 먼저 친 댓글이 먼저 오도록 함
+        createdAt: 'DESC', // 내림 정렬하여 먼저 친 댓글이 먼저 오도록 함
       },
-      take: 20, // 최대 20개의 결과만 가져오도록 제한
+      take: 10, // 최대 20개의 결과만 가져오도록 제한
     });
   }
 

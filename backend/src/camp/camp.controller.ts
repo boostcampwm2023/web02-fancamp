@@ -22,15 +22,16 @@ import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('camps')
 @Controller('camps')
-@UseGuards(AuthGuard)
 export class CampController {
   constructor(private readonly campService: CampService) {}
 
+  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.campService.findAll();
   }
 
+  @UseGuards(AuthGuard)
   @Get('subscriptions')
   getSubscriptions(@Req() request: Request) {
     // 쿠키의 publicId로 userId 찾기위해 넘겨주기
@@ -42,6 +43,7 @@ export class CampController {
     return this.campService.findOne(campName);
   }
 
+  @UseGuards(AuthGuard)
   @Put(':campName')
   @UseInterceptors(FileInterceptor('file'))
   async update(
@@ -52,6 +54,7 @@ export class CampController {
     return this.campService.update(file, campName, updateCampDto);
   }
 
+  @UseGuards(AuthGuard)
   @Get(':campName/subscriptions')
   getSubscription(
     @Req() request: Request,
@@ -64,6 +67,7 @@ export class CampController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Post(':campName/subscriptions')
   subscribe(@Param('campName') campName: string, @Req() request: Request) {
     // 쿠키의 publicId로 userId 찾기위해 넘겨주기
