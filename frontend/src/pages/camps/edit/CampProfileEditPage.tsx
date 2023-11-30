@@ -109,13 +109,13 @@ function CampProfileEditPageTemplate() {
             height={100}
             className="relative aspect-square rounded-full border-sm border-text-primary h-center"
           />
-          <Input
+          {/* <Input
             label="캠프명"
             type="text"
             setValue={setNewCampName}
             value={newCampName}
             placeholder="캠프명을 입력해주세요."
-          />
+          /> */}
           {/* <Input
             label="상태 메시지"
             type="text"
