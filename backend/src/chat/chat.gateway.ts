@@ -11,7 +11,7 @@ export class ChatGateway {
   constructor(private readonly chatService: ChatService) {}
 
   @WebSocketServer() server: Server;
-
+  campNamesInChat: string[] = [];
   @SubscribeMessage('camperIn')
   async handleCamperIn(socket: Socket, data: any): Promise<void> {
     console.log(
@@ -21,6 +21,9 @@ export class ChatGateway {
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
     socket.join(roomName);
+    if (this.campNamesInChat.includes(campName)) {
+      socket.emit('masterIn');
+    }
   }
 
   @SubscribeMessage('masterIn')
@@ -32,6 +35,8 @@ export class ChatGateway {
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
     socket.join([roomName, detailRoomName]);
+    socket.to(roomName).emit('masterIn');
+    this.campNamesInChat.push(campName);
   }
 
   @SubscribeMessage('camperMessage')
@@ -77,9 +82,15 @@ export class ChatGateway {
 
   @SubscribeMessage('masterOut')
   handleMasterOut(socket: Socket, data: any): void {
+    const { campName } = data;
     console.log(
       `마스터아웃 - socket.id: ${socket.id} | data: ${JSON.stringify(data)}`,
     );
+    const index = this.campNamesInChat.indexOf(campName);
+    if (index > -1) {
+      this.campNamesInChat.splice(index, 1);
+    }
+    socket.to(campName).emit('masterOut');
     socket.disconnect();
   }
 }

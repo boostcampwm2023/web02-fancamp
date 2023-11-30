@@ -31,6 +31,12 @@ export class CampController {
     return this.campService.findAll();
   }
 
+  @Get('subscriptions')
+  getSubscriptions(@Req() request: Request) {
+    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
+    return this.campService.getSubscriptions(request.cookies['publicId']);
+  }
+
   @Get(':campName')
   findOne(@Param('campName') campName: string) {
     return this.campService.findOne(campName);
@@ -62,12 +68,6 @@ export class CampController {
   subscribe(@Param('campName') campName: string, @Req() request: Request) {
     // 쿠키의 publicId로 userId 찾기위해 넘겨주기
     this.campService.subscribe(request.cookies['publicId'], campName);
-  }
-
-  @Get('subscriptions')
-  getSubscriptions(@Req() request: Request) {
-    // 쿠키의 publicId로 userId 찾기위해 넘겨주기
-    return this.campService.getSubscriptions(request.cookies['publicId']);
   }
 
   // @Patch(':id')

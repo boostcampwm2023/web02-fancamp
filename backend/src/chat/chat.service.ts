@@ -54,10 +54,11 @@ export class ChatService {
     );
 
     if (!chats.length) {
-      throw new HttpException(
-        ERR_MESSAGE.NO_MORE_MESSAGE,
-        HttpStatus.BAD_REQUEST,
-      );
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
     }
 
     const chatsWithSender = await Promise.all(

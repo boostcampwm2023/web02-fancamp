@@ -61,7 +61,7 @@ export class ChatRepository {
         order: {
           createdAt: 'DESC', // 내림차순으로 정렬하여 최신 채팅이 먼저 오도록 함
         },
-        take: 10, // 최대 10개의 결과만 가져오도록 제한
+        take: 20, // 최대 20개의 결과만 가져오도록 제한
       });
     } else {
       // userId와 masterId가 같으면 master
@@ -75,7 +75,7 @@ export class ChatRepository {
         order: {
           createdAt: 'DESC', // 내림차순으로 정렬하여 최신 채팅이 먼저 오도록 함
         },
-        take: 10, // 최대 10개의 결과만 가져오도록 제한
+        take: 20, // 최대 20개의 결과만 가져오도록 제한
       });
     }
   }

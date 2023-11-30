@@ -33,6 +33,38 @@ export class PostService {
     private readonly noticeGateway: NoticeGateway,
   ) {}
 
+  async findAllCampsPosts(cursor: string) {
+    const cursorDate = new Date(cursor);
+    const posts = await this.postRepository.findAll(cursorDate);
+    if (!posts.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+
+    const results = await Promise.all(
+      posts.map(async (post) => {
+        const likeCount = await this.countLikes(post.postId);
+        const commentCount = await this.countComments(post.postId);
+        const url = await this.imageService.findImagesByPostId(post.postId);
+        return {
+          ...post,
+          likeCount: likeCount,
+          commentCount: commentCount,
+          url: url,
+        };
+      }),
+    );
+
+    return {
+      cursor: cursor,
+      nextCursor: posts.slice(-1)[0].createdAt,
+      result: results,
+    };
+  }
+
   /* Post */
   async createPost(
     files: Array<Express.Multer.File>,
@@ -47,12 +79,13 @@ export class PostService {
       );
     }
     const camp = await this.campService.findOne(createPostDto.campName);
+    const pictureCount = files ? files.length : 0;
     const post = await this.postRepository.create(
       createPostDto,
       user.id,
       camp.campId,
       user.isMaster,
-      files.length,
+      pictureCount,
     );
     await this.imageService.uploadPostFiles(files, post.postId, post.campId);
     this.noticeGateway.noticePost(camp.campId, camp.campName);
@@ -158,13 +191,17 @@ export class PostService {
   async createComment(postId: number, content: string, publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
     const setimentColorHex = await getSentimentColor(content);
-    return this.commentRepository.create(
+    const comment = await this.commentRepository.create(
       postId,
       content,
       user.id,
       setimentColorHex,
     );
-    // return sentimentLevel;
+    return {
+      ...comment,
+      publicId: user.publicId,
+      profileImage: user.profileImage,
+    };
   }
 
   async updateComment(
@@ -185,10 +222,22 @@ export class PostService {
     return this.commentRepository.remove(comment);
   }
 
-  async findCommentsByPostId(postId: number): Promise<{}[]> {
-    const comments: Comment[] =
-      await this.commentRepository.findByPostId(postId);
-    return await Promise.all(
+  async findCommentsByPostId(postId: number, cursor: string) {
+    const cursorDate = new Date(cursor);
+    const comments: Comment[] = await this.commentRepository.findByPostId(
+      postId,
+      cursorDate,
+    );
+
+    if (!comments.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+
+    const result = await Promise.all(
       comments.map(async (comment) => {
         const user = await this.userService.findUserByUserId(comment.userId);
         return {
@@ -198,6 +247,12 @@ export class PostService {
         };
       }),
     );
+
+    return {
+      cursor: cursor,
+      nextCursor: comments.slice(-1)[0].createdAt,
+      result: result,
+    };
   }
 
   async countComments(postId: number): Promise<number> {

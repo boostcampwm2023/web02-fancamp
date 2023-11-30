@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, LessThan, Repository } from 'typeorm';
 import { concatMap } from 'rxjs';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Comment } from './entities/comment.entity';
@@ -41,8 +41,20 @@ export class CommentRepository {
     return this.commentRepository.save(comment);
   }
 
-  findByPostId(postId: number): Promise<Comment[]> {
-    return this.commentRepository.findBy({ postId, isDeleted: false });
+  findByPostId(postId: number, curosr: Date): Promise<Comment[]> {
+    return this.commentRepository.find({
+      where: [
+        {
+          postId,
+          isDeleted: false,
+          createdAt: LessThan(curosr), // cursor 이후의 댓글 가져오기
+        },
+      ],
+      order: {
+        createdAt: 'ASC', // 오름차순 정렬하여 먼저 친 댓글이 먼저 오도록 함
+      },
+      take: 20, // 최대 20개의 결과만 가져오도록 제한
+    });
   }
 
   countByPostId(postId: number): number | PromiseLike<number> {

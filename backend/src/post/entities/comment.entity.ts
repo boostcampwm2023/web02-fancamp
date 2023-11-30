@@ -14,7 +14,7 @@ export class Comment {
   content: string = '';
 
   @UpdateDateColumn({ name: 'updated _at' })
-  createdAt: string; //TODO: time type으로 바꾸기
+  createdAt: Date;
 
   @Column({ type: 'int', nullable: false })
   userId: number;
