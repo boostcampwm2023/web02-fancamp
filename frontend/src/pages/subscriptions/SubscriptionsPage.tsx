@@ -26,7 +26,7 @@ export default function SubscriptionsPage() {
           <Spinner />
         </div>
       ) : subscribedCamps.length > 0 ? (
-        <ul className="mb-8 flex gap-8 text-text-primary display-regular-16">
+        <ul className="mb-8 grid grid-cols-5 gap-8 text-text-primary display-regular-16">
           {subscribedCamps.map(({ campId, campName }) => (
             <Link
               key={campId}

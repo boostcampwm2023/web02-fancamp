@@ -10,14 +10,16 @@ import {
   CHAT_CONNECT_TOAST_MESSAGE,
   CHAT_CONNECT_TOAST_DELAY,
 } from '@constants/chat';
-import { useQuery } from '@tanstack/react-query';
-import { fetchMessages } from '@API/chat';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { fetchInfiniteMessages } from '@API/chat';
 import { CHAT_MESSAGES } from '@constants/queryKeys';
+import { getCurrentDateString } from '@utils/date';
 
 export interface Message {
   chatId: number;
   isMyMessage: boolean;
   stringContent: string;
+  chatName: string;
   createdAt: string;
 }
 
@@ -26,40 +28,57 @@ export default function ChatBox() {
   const { publicId, isMaster } = auth!;
   const { campId: campName } = useParams();
   const {
-    isLoading: isLoadingMessages,
-    isError: isErrorMessages,
-    data: savedMessages,
-  } = useQuery({
-    queryKey: [CHAT_MESSAGES, campName],
-    queryFn: () => fetchMessages(campName),
+    messages,
+    setMessages,
+    isConnected,
+    isMasterOnline,
+    handleSubmitMessage,
+  } = useChatSocket({
+    isMaster,
+    publicId,
+    campName,
+    socket,
   });
-  const { messages, setMessages, isConnected, handleSubmitMessage } =
-    useChatSocket({
-      isMaster,
-      publicId,
-      campName,
-      socket,
-    });
+  const {
+    data: infiniteData,
+    status,
+    isFetchingNextPage,
+    hasNextPage,
+    fetchNextPage,
+    isFetching,
+  } = useInfiniteQuery({
+    queryKey: [CHAT_MESSAGES, campName],
+    queryFn: ({ pageParam }) => fetchInfiniteMessages({ campName, pageParam }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    initialPageParam: getCurrentDateString(),
+    staleTime: 1000 * 60 * 1,
+    retry: false,
+  });
 
   return (
-    <div id="#chatbox" className="flex h-[900px] flex-col p-8">
-      <ChatBoxNavBar />
-      <ChatBoxBody
-        isLoading={isLoadingMessages}
-        isError={isErrorMessages}
-        savedMessages={savedMessages}
-        messages={messages}
-      />
-      <ChatBoxInputBar
-        messages={messages}
-        setMessages={setMessages}
-        onSubmitMessage={handleSubmitMessage}
-      />
-      {isConnected && (
-        <ChatBoxToast duration={CHAT_CONNECT_TOAST_DELAY}>
-          {CHAT_CONNECT_TOAST_MESSAGE}
-        </ChatBoxToast>
-      )}
-    </div>
+    <>
+      <div id="#chatbox" className="relative flex h-[900px] flex-col p-8">
+        <ChatBoxNavBar isMaster={isMaster} isMasterOnline={isMasterOnline} />
+        <ChatBoxBody
+          messages={messages}
+          infiniteData={infiniteData}
+          status={status}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          fetchNextPage={fetchNextPage}
+          isFetching={isFetching}
+        />
+        <ChatBoxInputBar
+          messages={messages}
+          setMessages={setMessages}
+          onSubmitMessage={handleSubmitMessage}
+        />
+        {isConnected && (
+          <ChatBoxToast duration={CHAT_CONNECT_TOAST_DELAY}>
+            {CHAT_CONNECT_TOAST_MESSAGE}
+          </ChatBoxToast>
+        )}
+      </div>
+    </>
   );
 }

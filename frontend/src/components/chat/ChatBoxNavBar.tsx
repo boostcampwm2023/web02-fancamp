@@ -2,11 +2,16 @@ import { useParams } from 'react-router';
 import LeftArrowIcon from '../../assets/icons/leftArrowIcon.svg?react';
 import { Link } from 'react-router-dom';
 
-export default function ChatBoxNavBar() {
+interface Props {
+  isMaster: boolean;
+  isMasterOnline: boolean;
+}
+
+export default function ChatBoxNavBar({ isMaster, isMasterOnline }: Props) {
   const { campId: campName } = useParams();
 
   return (
-    <div className="border-b-none flex items-center gap-4 border border-border bg-yellow p-4">
+    <div className="border-b-none flex items-center gap-4 border bg-yellow p-4">
       <Link to={'..'} aria-label="go back">
         <LeftArrowIcon width={40} height={40} />
       </Link>
@@ -18,7 +23,16 @@ export default function ChatBoxNavBar() {
           alt="placeholder"
         />
       </div>
-      <span className="display-regular-20">{campName}</span>
+      <div className="flex flex-col gap-2">
+        <span className="display-regular-20">{campName}</span>
+        <span className="display-regular-14">
+          {isMaster
+            ? '🔵 Chatting'
+            : isMasterOnline
+              ? '🟢 Online'
+              : '⚫ Offline'}
+        </span>
+      </div>
     </div>
   );
 }

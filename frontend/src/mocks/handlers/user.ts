@@ -1,6 +1,6 @@
 import { HttpResponse, delay, http } from 'msw';
 import UserInfo from '../dummy/userInfo.json';
-import { CampEditable } from '../../types/api/camp';
+import { CampEditable } from '@type/api/camp';
 
 export const handlers = [
   // 특정 유저 정보 가져오기

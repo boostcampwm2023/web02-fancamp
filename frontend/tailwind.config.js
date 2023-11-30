@@ -39,7 +39,6 @@ export default {
       'light-yellow': '#FDF2DF',
       'logo-green': '#36B85D',
       yellow: '#FFE2B5',
-      border: '#BEBEBE',
       transparent: 'transparent',
       white: '#FFFFFF',
       error: '#ff4d4d',
