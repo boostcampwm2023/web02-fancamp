@@ -94,9 +94,6 @@ function PostModalTemplate({
               />
             ))}
           </ul>
-          {isFetchingComments && (
-            <Spinner className="relative h-center" width={16} height={16} />
-          )}
           <div ref={observerRef} className="h-sm" />
         </div>
         <InputComment
