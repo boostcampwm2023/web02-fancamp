@@ -42,11 +42,8 @@ function FeedCardLogic({ postId }: FeedCardProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(post.publicId);
-  const {
-    data: commentsPages,
-    isFetching: isFetchingComments,
-    fetchNextPage: fetchComments,
-  } = getCommentsInfiniteQuery(postId);
+  const { data: commentsPages, fetchNextPage: fetchComments } =
+    getCommentsInfiniteQuery(postId);
 
   const {
     mutate: postComment,
@@ -132,7 +129,6 @@ function FeedCardLogic({ postId }: FeedCardProps) {
       }}
       scrollRef={scrollRef}
       fetchComments={fetchComments}
-      isFetchingComments={isFetchingComments}
     />
   );
 }

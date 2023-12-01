@@ -8,7 +8,6 @@ import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
 import useIntersectionObserver from '@hooks/useObserver';
-import Spinner from '@components/loading/Spinner';
 import MediaSlider from '@components/slider/MediaSlider';
 
 interface FeedCardTemplateProps {
@@ -26,7 +25,6 @@ interface FeedCardTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
-  isFetchingComments: boolean;
 }
 
 function FeedCardTemplate({
@@ -41,7 +39,6 @@ function FeedCardTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
-  isFetchingComments,
 }: FeedCardTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {

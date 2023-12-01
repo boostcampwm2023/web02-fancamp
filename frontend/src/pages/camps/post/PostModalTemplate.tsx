@@ -7,7 +7,6 @@ import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
 import { useEffect, useRef } from 'react';
-import Spinner from '@components/loading/Spinner';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
 
@@ -27,7 +26,6 @@ interface PostModalTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
-  isFetchingComments: boolean;
 }
 
 function PostModalTemplate({
@@ -43,7 +41,6 @@ function PostModalTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
-  isFetchingComments,
 }: PostModalTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
