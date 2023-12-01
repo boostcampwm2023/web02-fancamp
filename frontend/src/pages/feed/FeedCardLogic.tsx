@@ -1,5 +1,5 @@
 import Spinner from '@components/loading/Spinner';
-import { Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, memo, useEffect, useRef, useState } from 'react';
 import { Comment } from '@type/api/comment';
 import { getPostQuery } from '@hooks/api/usePostQuery';
 import { getCampQuery } from '@hooks/api/useCampQuery';
@@ -9,15 +9,13 @@ import {
 } from '@hooks/api/useCommentQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
-import Text from '@components/ui/Text';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
   postId: string;
-  index: number;
 }
 
-function FeedCard({ postId, index }: FeedCardProps) {
+const FeedCard = memo(function FeedCard({ postId }: FeedCardProps) {
   return (
     <Suspense
       fallback={
@@ -26,12 +24,12 @@ function FeedCard({ postId, index }: FeedCardProps) {
         </div>
       }
     >
-      <FeedCardLogic postId={postId} index={index} />
+      <FeedCardLogic postId={postId} />
     </Suspense>
   );
-}
+});
 
-function FeedCardLogic({ postId, index }: FeedCardProps) {
+function FeedCardLogic({ postId }: FeedCardProps) {
   const [isLike, setLike] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -39,13 +37,6 @@ function FeedCardLogic({ postId, index }: FeedCardProps) {
   const [comments, setComments] = useState<Comment[]>([]);
 
   if (!postId) {
-    if (index === 1) {
-      return (
-        <div className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col justify-end">
-          <Text size={20}>최신 포스트</Text>
-        </div>
-      );
-    }
     return <div className="relative mb-[5vh] mt-[5vh] h-[70vh]" />;
   }
 
