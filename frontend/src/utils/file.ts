@@ -17,3 +17,31 @@ export const fileToImage = (file: File): Promise<UploadedImage> => {
     }
   });
 };
+
+const imageTypes = [
+  'image/jpeg',
+  'image/png',
+  'image/gif',
+  'image/bmp',
+  'image/x-ms-bmp',
+];
+
+const videoTypes = [
+  'video/mp4',
+  'video/webm',
+  'video/x-m4v',
+  'video/quicktime',
+  'video/x-msvideo',
+  'video/mpeg',
+  'video/ogg',
+];
+
+export const checkFileType = (mimetype: string) => {
+  if (imageTypes.includes(mimetype)) {
+    return 'image';
+  }
+  if (videoTypes.includes(mimetype)) {
+    return 'video';
+  }
+  return 'other';
+};

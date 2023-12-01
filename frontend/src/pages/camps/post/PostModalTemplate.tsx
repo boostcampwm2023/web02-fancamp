@@ -1,4 +1,3 @@
-import ImageSlider from '@components/slider/ImageSlider';
 import Text from '@components/ui/Text';
 import CommentCard from '@components/card/CommentCard';
 import { Post } from '@type/api/post';
@@ -10,6 +9,7 @@ import Hr from '@components/ui/Hr';
 import { useEffect, useRef } from 'react';
 import Spinner from '@components/loading/Spinner';
 import useIntersectionObserver from '@hooks/useObserver';
+import MediaSlider from '@components/slider/MediaSlider';
 
 interface PostModalTemplateProps {
   camp: Camp;
@@ -60,10 +60,7 @@ function PostModalTemplate({
     <div className="flex h-[31.25rem] border-sm border-text-primary">
       {post.url.length !== 0 && (
         <div className="w-[37.5rem]">
-          <ImageSlider
-            width={37.5}
-            images={post.url.map((url) => url.fileUrl)}
-          />
+          <MediaSlider width={37.5} medias={post.url} />
         </div>
       )}
       <div

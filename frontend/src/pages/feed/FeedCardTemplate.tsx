@@ -1,4 +1,3 @@
-import ImageSlider from '@components/slider/ImageSlider';
 import Text from '@components/ui/Text';
 import { Camp } from '@type/api/camp';
 import { Post } from '@type/api/post';
@@ -10,6 +9,7 @@ import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
 import useIntersectionObserver from '@hooks/useObserver';
 import Spinner from '@components/loading/Spinner';
+import MediaSlider from '@components/slider/MediaSlider';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -69,10 +69,13 @@ function FeedCardTemplate({
   };
 
   return (
-    <div className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col gap-[0.0625rem] border-sm border-text-primary bg-text-primary">
+    <div
+      className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col gap-[0.0625rem] border-sm border-text-primary bg-text-primary"
+      onTransitionEnd={(e) => e.stopPropagation()}
+    >
       {post.url.length !== 0 && (
-        <div className="h-[16rem] w-full">
-          <ImageSlider width={27} images={post.url.map((url) => url.fileUrl)} />
+        <div className="h-[18rem] w-full">
+          <MediaSlider width={27} medias={post.url} />
         </div>
       )}
       <div
@@ -88,7 +91,6 @@ function FeedCardTemplate({
           isLike={isLike}
           likeCount={post.likeCount}
         />
-
         <Hr color="text-secondary">
           <Text size={12} color="point-blue">
             {post.commentCount}개의 코멘트
