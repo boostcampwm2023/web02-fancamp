@@ -1,4 +1,3 @@
-import ImageSlider from '@components/slider/ImageSlider';
 import Text from '@components/ui/Text';
 import CommentCard from '@components/card/CommentCard';
 import { Post } from '@type/api/post';
@@ -8,8 +7,8 @@ import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
 import { useEffect, useRef } from 'react';
-import Spinner from '@components/loading/Spinner';
 import useIntersectionObserver from '@hooks/useObserver';
+import MediaSlider from '@components/slider/MediaSlider';
 
 interface PostModalTemplateProps {
   camp: Camp;
@@ -27,7 +26,6 @@ interface PostModalTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
-  isFetchingComments: boolean;
 }
 
 function PostModalTemplate({
@@ -43,7 +41,6 @@ function PostModalTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
-  isFetchingComments,
 }: PostModalTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
@@ -60,10 +57,7 @@ function PostModalTemplate({
     <div className="flex h-[31.25rem] border-sm border-text-primary">
       {post.url.length !== 0 && (
         <div className="w-[37.5rem]">
-          <ImageSlider
-            width={37.5}
-            images={post.url.map((url) => url.fileUrl)}
-          />
+          <MediaSlider width={37.5} medias={post.url} />
         </div>
       )}
       <div
@@ -97,9 +91,6 @@ function PostModalTemplate({
               />
             ))}
           </ul>
-          {isFetchingComments && (
-            <Spinner className="relative h-center" width={16} height={16} />
-          )}
           <div ref={observerRef} className="h-sm" />
         </div>
         <InputComment

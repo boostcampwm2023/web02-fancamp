@@ -32,11 +32,8 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(campId);
-  const {
-    data: commentsPages,
-    isFetching: isFetchingComments,
-    fetchNextPage: fetchComments,
-  } = getCommentsInfiniteQuery(postId);
+  const { data: commentsPages, fetchNextPage: fetchComments } =
+    getCommentsInfiniteQuery(postId);
 
   const {
     mutate: postComment,
@@ -123,7 +120,6 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
       }}
       scrollRef={scrollRef}
       fetchComments={fetchComments}
-      isFetchingComments={isFetchingComments}
     />
   );
 }

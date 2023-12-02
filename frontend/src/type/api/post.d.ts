@@ -1,6 +1,6 @@
 export interface PostFile {
   fileUrl: string;
-  mimeType: string;
+  mimetype: string;
 }
 
 export interface Post {
