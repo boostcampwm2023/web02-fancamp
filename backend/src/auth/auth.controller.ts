@@ -72,4 +72,14 @@ export class AuthController {
     response.clearCookie('publicId').clearCookie('isMaster');
     throw new UnauthorizedException('not logined');
   }
+
+  @Post('users/duplicateEmail')
+  async rightEmail(@Body() body: { email: string }) {
+    const user = await this.authService.existUserByEmail(body.email);
+    if (user) {
+      return { duplicateEmail: false };
+    } else {
+      return { duplicateEmail: true };
+    }
+  }
 }
