@@ -8,6 +8,7 @@ import {
   UsePipes,
   ValidationPipe,
   UnauthorizedException,
+  HttpCode,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
@@ -71,5 +72,27 @@ export class AuthController {
     }
     response.clearCookie('publicId').clearCookie('isMaster');
     throw new UnauthorizedException('not logined');
+  }
+
+  @Post('users/duplicateEmail')
+  @HttpCode(200)
+  async duplicateEmail(@Body() body: { email: string }) {
+    const user = await this.authService.existUserByEmail(body.email);
+    if (user) {
+      return { duplicateEmail: true };
+    } else {
+      return { duplicateEmail: false };
+    }
+  }
+
+  @Post('users/duplicatePublicId')
+  @HttpCode(200)
+  async duplicatePublicId(@Body() body: { publicId: string }) {
+    const user = await this.authService.existUserByPublicId(body.publicId);
+    if (user) {
+      return { duplicatePublicId: true };
+    } else {
+      return { duplicatePublicId: false };
+    }
   }
 }

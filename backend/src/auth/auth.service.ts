@@ -76,4 +76,12 @@ export class AuthService {
   validateUser(publicId: string) {
     return this.sessions.includes(publicId);
   }
+
+  existUserByEmail(email: string) {
+    return this.userRepository.findUserByEmail(email);
+  }
+
+  existUserByPublicId(publicId: string) {
+    return this.userRepository.findUserByPublicId(publicId);
+  }
 }

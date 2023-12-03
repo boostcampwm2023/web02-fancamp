@@ -40,3 +40,19 @@ GET {{server}}/auth/users/signout
 
 ### 쿠키에 저장된걸로 로그인여부 확인
 GET {{server}}/auth/users
+
+### 이메일 중복 여부 확인
+POST {{server}}/auth/users/duplicateEmail
+Content-Type: application/json
+
+{
+    "email" : "master10@fancamp.com"
+}
+
+### publicId 중복 여부 확인
+POST {{server}}/auth/users/duplicatePublicId
+Content-Type: application/json
+
+{
+    "publicId" : "master6"
+}
