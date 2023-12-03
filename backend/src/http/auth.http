@@ -48,3 +48,11 @@ Content-Type: application/json
 {
     "email" : "master10@fancamp.com"
 }
+
+### publicId 중복 여부 확인
+POST {{server}}/auth/users/duplicatePublicId
+Content-Type: application/json
+
+{
+    "publicId" : "master6"
+}

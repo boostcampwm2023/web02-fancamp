@@ -80,4 +80,8 @@ export class AuthService {
   existUserByEmail(email: string) {
     return this.userRepository.findUserByEmail(email);
   }
+
+  existUserByPublicId(publicId: string) {
+    return this.userRepository.findUserByPublicId(publicId);
+  }
 }

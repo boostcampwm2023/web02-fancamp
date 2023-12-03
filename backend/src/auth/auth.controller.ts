@@ -74,12 +74,22 @@ export class AuthController {
   }
 
   @Post('users/duplicateEmail')
-  async rightEmail(@Body() body: { email: string }) {
+  async duplicateEmail(@Body() body: { email: string }) {
     const user = await this.authService.existUserByEmail(body.email);
     if (user) {
-      return { duplicateEmail: false };
-    } else {
       return { duplicateEmail: true };
+    } else {
+      return { duplicateEmail: false };
+    }
+  }
+
+  @Post('users/duplicatePublicId')
+  async duplicatePublicId(@Body() body: { publicId: string }) {
+    const user = await this.authService.existUserByPublicId(body.publicId);
+    if (user) {
+      return { duplicatePublicId: true };
+    } else {
+      return { duplicatePublicId: false };
     }
   }
 }
