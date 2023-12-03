@@ -28,14 +28,10 @@ const useInfiniteSlider = <Item>(items: Item[]) => {
   };
 
   const handleTransitionEnd = () => {
-    if (index === 1) {
+    if (index === 1 || index === 3) {
       setIndex(2);
       setY(-140);
-      setSlidePage(slidePage - 1);
-    } else if (index === 3) {
-      setIndex(2);
-      setY(-140);
-      setSlidePage(slidePage + 1);
+      setSlidePage(index === 1 ? slidePage - 1 : slidePage + 1);
     }
   };
 

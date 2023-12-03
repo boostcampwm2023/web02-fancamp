@@ -100,8 +100,8 @@ function FeedCardTemplate({
               key={`comment-${comment.commentId}`}
             />
           ))}
+          <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
-        <div ref={observerRef} className="h-sm" />
       </div>
       <InputComment
         comment={inputComment}
