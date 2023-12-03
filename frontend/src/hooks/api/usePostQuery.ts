@@ -17,7 +17,7 @@ export const getPostQuery = (postId: string) => {
         credentials: 'include',
       }),
     gcTime: 0,
-    staleTime: 0,
+    staleTime: 3000,
   });
 
   return { data, isError, isLoading };
