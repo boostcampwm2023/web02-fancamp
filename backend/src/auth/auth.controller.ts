@@ -8,6 +8,7 @@ import {
   UsePipes,
   ValidationPipe,
   UnauthorizedException,
+  HttpCode,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
@@ -74,6 +75,7 @@ export class AuthController {
   }
 
   @Post('users/duplicateEmail')
+  @HttpCode(200)
   async duplicateEmail(@Body() body: { email: string }) {
     const user = await this.authService.existUserByEmail(body.email);
     if (user) {
@@ -84,6 +86,7 @@ export class AuthController {
   }
 
   @Post('users/duplicatePublicId')
+  @HttpCode(200)
   async duplicatePublicId(@Body() body: { publicId: string }) {
     const user = await this.authService.existUserByPublicId(body.publicId);
     if (user) {
