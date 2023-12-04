@@ -87,7 +87,7 @@ function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
         <RightArrowIcon />
       </button>
       <div className={indexClassName}>
-        <Text size={12} color="text-primary">
+        <Text size={13} color="text-primary">
           {imageIndex + 1}/{medias.length}
         </Text>
       </div>

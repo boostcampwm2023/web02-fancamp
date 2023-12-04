@@ -54,7 +54,7 @@ function ContentMenuButton({
       onClick={handleOnClick}
     >
       <Text
-        size={12}
+        size={13}
         color={menuIndex === index ? 'text-primary' : 'text-secondary'}
       >
         {text}

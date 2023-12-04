@@ -69,8 +69,8 @@ export default {
           '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[400]':
             {},
         },
-        '.display-regular-12': {
-          '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[400]':
+        '.display-regular-13': {
+          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[400]':
             {},
         },
         '.display-light-20': {
@@ -81,8 +81,8 @@ export default {
           '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[300]':
             {},
         },
-        '.display-light-12': {
-          '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[300]':
+        '.display-light-13': {
+          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[300]':
             {},
         },
         '.center': {

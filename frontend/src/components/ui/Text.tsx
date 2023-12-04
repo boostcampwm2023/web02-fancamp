@@ -3,16 +3,16 @@ import React from 'react';
 
 interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
-  size?: 12 | 14 | 20;
+  size?: 13 | 14 | 20;
   weight?: 400 | 300;
   color?: keyof typeof COLORS;
   className?: string;
 }
 
 const font = {
-  12: {
-    300: 'display-light-12',
-    400: 'display-regular-12',
+  13: {
+    300: 'display-light-13',
+    400: 'display-regular-13',
   },
   14: {
     300: 'display-light-14',

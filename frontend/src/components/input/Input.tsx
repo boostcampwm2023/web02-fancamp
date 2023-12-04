@@ -41,7 +41,7 @@ function Input<State>(props: InputProps<State>) {
       </div>
       <div className={inputBorderClassName} />
       <div className="flex h-[1rem] items-center justify-end">
-        <Text size={12} color="point-red" className="text-right">
+        <Text size={13} color="point-red" className="text-right">
           {errorMessage}
         </Text>
       </div>

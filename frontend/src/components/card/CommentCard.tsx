@@ -20,9 +20,9 @@ function CommentCard({ comment }: CommentProps) {
             height={24}
             className="border-xs rounded-full border-text-primary"
           />
-          <Text size={12}>{publicId}</Text>
+          <Text size={13}>{publicId}</Text>
         </div>
-        <Text size={12} color="text-secondary" className="text-end">
+        <Text size={13} color="text-secondary" className="text-end">
           {formatDate(createdAt)}
         </Text>
       </div>
