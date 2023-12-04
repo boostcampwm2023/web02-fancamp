@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Req,
+  UseGuards,
   Put,
   UploadedFiles,
   UseInterceptors,
@@ -20,6 +21,7 @@ import { CreateCommentDto } from './dto/create-comment.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateCommenttDto } from './dto/update-comment.dto';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @ApiTags('posts')
 @Controller('posts')
@@ -31,6 +33,7 @@ export class PostController {
     return this.postService.findAllCampsPosts(cursor);
   }
 
+  @UseGuards(AuthGuard)
   @Post()
   @UseInterceptors(FilesInterceptor('files'))
   create(
@@ -58,6 +61,7 @@ export class PostController {
     return this.postService.findAllPostsByCampName(campName);
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':postId')
   updatePost(
     @Param('postId') postId: string,
@@ -71,6 +75,7 @@ export class PostController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':postId')
   remove(@Param('postId') postId: string) {
     return this.postService.removePost(+postId);
@@ -82,11 +87,13 @@ export class PostController {
     return this.postService.countLikes(+postId);
   }
 
+  @UseGuards(AuthGuard)
   @Post(':postId/likes')
   createLike(@Param('postId') postId: string, @Req() request: Request) {
     return this.postService.createLike(+postId, request.cookies['publicId']);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':postId/likes')
   removeLike(@Param('postId') postId: string, @Req() request: Request) {
     return this.postService.removeLike(+postId, request.cookies['publicId']);
@@ -101,6 +108,7 @@ export class PostController {
     return this.postService.findCommentsByPostId(+postId, cursor);
   }
 
+  @UseGuards(AuthGuard)
   @Post(':postId/comments')
   createComment(
     @Param('postId') postId: string,
@@ -114,6 +122,7 @@ export class PostController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':postId/comments/:commentId')
   updateComment(
     @Param('postId') postId: string,
@@ -129,6 +138,7 @@ export class PostController {
     );
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':postId/comments/:commentId')
   removeComment(
     @Param('postId') postId: string,

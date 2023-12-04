@@ -21,7 +21,7 @@ GET {{server}}/posts/28
 GET {{server}}/posts/camps/camp1
 
 ### 글 내용 수정
-PATCH {{server}}/posts/7
+PATCH {{server}}/posts/1
 Content-Type: application/json
 
 {

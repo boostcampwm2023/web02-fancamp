@@ -40,4 +40,11 @@ export class SubscriptionService {
   async getCount(masterId: number) {
     return this.subscriptionRepository.count(masterId);
   }
+
+  async remove(camperId: number, masterId: number) {
+    if (await this.subscriptionRepository.findOne(camperId, masterId)) {
+      return this.subscriptionRepository.remove(camperId, masterId);
+    }
+    throw new HttpException(ERR_MESSAGE.NOT_SUBSCRIBED, HttpStatus.BAD_REQUEST);
+  }
 }
