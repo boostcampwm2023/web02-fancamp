@@ -3,8 +3,10 @@ import CloseButton from '@assets/icons/closeIcon.svg?react';
 import ProfileImage from '@components/profile/ProfileImage';
 import Text from '@components/ui/Text';
 import useAuth from '@hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 interface PostConentCardProps {
+  profileImage: string;
   campName: string;
   content: string;
   createdAt: string;
@@ -15,6 +17,7 @@ interface PostConentCardProps {
 }
 
 function PostConentCard({
+  profileImage,
   campName,
   content,
   createdAt,
@@ -28,10 +31,12 @@ function PostConentCard({
   return (
     <div className="flex flex-col gap-md p-md">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-sm">
-          <ProfileImage src="" width={32} height={32} />
-          <Text>{campName}</Text>
-        </div>
+        <Link to={`/camps/${campName}/post`}>
+          <div className="flex items-center gap-sm">
+            <ProfileImage src={profileImage} width={32} height={32} />
+            <Text>{campName}</Text>
+          </div>
+        </Link>
         {handlePostModalClose && (
           <button
             type="button"

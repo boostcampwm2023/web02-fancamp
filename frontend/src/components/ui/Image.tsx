@@ -3,7 +3,7 @@ import React from 'react';
 interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {}
 
 function Image(props: ImageProps) {
-  const { className, ...imageProps } = props;
+  const { src, className, ...imageProps } = props;
 
   const handleImageLoaded = ({
     currentTarget,
@@ -14,10 +14,14 @@ function Image(props: ImageProps) {
 
   return (
     <img
-      {...imageProps}
+      src={
+        src ||
+        'https://kr.object.ncloudstorage.com/fancamp/default/profileImage.png'
+      }
       className={`opacity-0 ${className || ''}`}
       onLoad={handleImageLoaded}
       alt=""
+      {...imageProps}
     />
   );
 }

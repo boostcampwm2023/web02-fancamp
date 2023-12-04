@@ -14,7 +14,7 @@ const cardClassName =
   'group relative aspect-square h-full w-full ' +
   'cursor-pointer overflow-hidden border-sm border-text-primary';
 const cardImageClassName =
-  'smooth-transition aspect-square object-cover ' +
+  'w-full smooth-transition aspect-square object-cover ' +
   'group-hover:scale-[1.1] group-hover:blur-[0.125rem] group-hover:brightness-[30%]';
 const cardTextClassName =
   'smooth-transition relative h-full w-full overflow-hidden p-xl ' +
@@ -39,17 +39,17 @@ function PostCard({
       onClick={() => handleOnClick(postId)}
     >
       {imageSrc ? (
-        <Image src={imageSrc} className={cardImageClassName} alt="" />
+        <Image src="" className={cardImageClassName} alt="" />
       ) : (
         <div className={cardTextClassName}>
           <Text color="text-secondary">{content}</Text>
         </div>
       )}
       <div className={cardHoverClassName}>
-        <Text size={12} color="surface-primary">
+        <Text size={13} color="surface-primary">
           좋아요 {likeCount}
         </Text>
-        <Text size={12} color="surface-primary">
+        <Text size={13} color="surface-primary">
           코멘트 {commentCount}
         </Text>
       </div>
