@@ -63,7 +63,7 @@ export class CampService {
     const camp = await this.findOne(campName);
     const fileName = `${camp.campId}_banner`;
     if (file) {
-      const fileUrl = await this.imageService.uploadFile(file, fileName, -1);
+      const fileUrl = await this.imageService.uploadFile(file, fileName);
       camp.bannerImage = fileUrl;
     }
     if (updateCampDto.content) {
