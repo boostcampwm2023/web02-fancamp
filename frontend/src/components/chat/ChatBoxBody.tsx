@@ -1,7 +1,7 @@
 import ChatBoxMessage from './ChatBoxMessage';
 import Spinner from '@components/loading/Spinner';
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
-import { useEffect, useRef, Fragment } from 'react';
+import { useEffect, useRef, useMemo, Fragment } from 'react';
 import { Message } from './ChatBox';
 import { getFullDateString } from '@utils/date';
 
@@ -25,6 +25,7 @@ export default function ChatBoxBody({
   isFetching,
 }: Props) {
   const newMessageRef = useRef<HTMLLIElement>(null);
+
   const topMessageRef = useIntersectionObserver((entry, observer) => {
     observer.unobserve(entry.target);
     if (hasNextPage && !isFetching) {
@@ -35,16 +36,19 @@ export default function ChatBoxBody({
   useEffect(() => {
     if (newMessageRef && newMessageRef.current) {
       newMessageRef.current.scrollIntoView();
-      window.scrollTo(0, 0);
     }
   }, [messages]);
 
-  const infiniteMessages: Message[] = infiniteData?.pages
-    ? infiniteData.pages
-        .map((page: any) => page.result)
-        .flat()
-        .reverse()
-    : [];
+  const infiniteMessages: Message[] = useMemo(
+    () =>
+      infiniteData
+        ? infiniteData.pages
+            .map((page: any) => page.result)
+            .flat()
+            .reverse()
+        : [],
+    [infiniteData]
+  );
 
   const dateMap = new Map<string, number>();
   const idSet = new Set<number>();

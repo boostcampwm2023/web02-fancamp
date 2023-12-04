@@ -22,7 +22,13 @@ export default function useIntersectionObserver(
         }
       });
     }, options);
-    observer.observe(ref.current);
+
+    // ChatBox에서 fetchNextPage요청이 반복적으로 여러번 되고 있어 임시 해결
+    setTimeout(() => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    }, 1000);
 
     return () => {
       observer.disconnect();
