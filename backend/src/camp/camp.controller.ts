@@ -74,13 +74,9 @@ export class CampController {
     this.campService.subscribe(request.cookies['publicId'], campName);
   }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateCampDto: UpdateCampDto) {
-  //   return this.campService.update(+id, updateCampDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.campService.remove(+id);
-  // }
+  @UseGuards(AuthGuard)
+  @Delete(':campName/subscriptions')
+  remove(@Param('campName') campName: string, @Req() request: Request) {
+    return this.campService.remove(request.cookies['publicId'], campName);
+  }
 }

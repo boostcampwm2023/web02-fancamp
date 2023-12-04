@@ -9,12 +9,16 @@ import {
   ValidationPipe,
   UnauthorizedException,
   HttpCode,
+  Param,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
 import { CreateUserAuthDto } from './dto/create-auth.dto';
 import { SigninUserAuthDto } from './dto/signin-auth.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { ERR_MESSAGE } from 'src/utils/constants';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -22,7 +26,6 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/users')
-  // @Redirect('/index', 301) //TODO: 홈으로 가게끄
   @UsePipes(ValidationPipe)
   async create(
     @Body() createUserAuthDto: CreateUserAuthDto,
@@ -74,10 +77,10 @@ export class AuthController {
     throw new UnauthorizedException('not logined');
   }
 
-  @Post('users/duplicateEmail')
+  @Post('/users/duplicateEmail')
   @HttpCode(200)
-  async duplicateEmail(@Body() body: { email: string }) {
-    const user = await this.authService.existUserByEmail(body.email);
+  async duplicateEmail(@Body('email') email: string) {
+    const user = await this.authService.existUserByEmail(email);
     if (user) {
       return { duplicateEmail: true };
     } else {
@@ -85,14 +88,27 @@ export class AuthController {
     }
   }
 
-  @Post('users/duplicatePublicId')
+  @Post('/users/duplicatePublicId')
   @HttpCode(200)
-  async duplicatePublicId(@Body() body: { publicId: string }) {
-    const user = await this.authService.existUserByPublicId(body.publicId);
+  async duplicatePublicId(@Body('publicId') publicId: string) {
+    const user = await this.authService.existUserByPublicId(publicId);
     if (user) {
       return { duplicatePublicId: true };
     } else {
       return { duplicatePublicId: false };
+    }
+  }
+
+  @Get('/users/profileImage/:publicId')
+  async getProfileImage(@Param('publicId') publicId: string) {
+    const user = await this.authService.existUserByPublicId(publicId);
+    if (user) {
+      return { profileImage: user.profileImage };
+    } else {
+      throw new HttpException(
+        ERR_MESSAGE.USER_NOT_FOUND_BY_ID,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 }

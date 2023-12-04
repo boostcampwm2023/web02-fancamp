@@ -8,12 +8,12 @@ POST {{server}}/auth/users
 Content-Type: application/json
 
 {
-    "email" : "master6@fancamp.com",
+    "email" : "camper1@fancamp.com",
     "password": "1234",
-    "chatName": "master6",
-    "publicId": "master6",
+    "chatName": "camper1",
+    "publicId": "camper1",
     "profileImage": "",
-    "isMaster": true
+    "isMaster": false
 }
 
 ### 마스터 로그인 요청~
@@ -46,7 +46,7 @@ POST {{server}}/auth/users/duplicateEmail
 Content-Type: application/json
 
 {
-    "email" : "master10@fancamp.com"
+    "email" : "master2@fancamp.com"
 }
 
 ### publicId 중복 여부 확인
@@ -54,5 +54,8 @@ POST {{server}}/auth/users/duplicatePublicId
 Content-Type: application/json
 
 {
-    "publicId" : "master6"
+    "publicId" : "master2"
 }
+
+### publicId로 프로필 이미지 가져오기
+GET {{server}}/auth/users/profileImage/master1
