@@ -54,3 +54,17 @@ export const updateCampMutation = ({ onSuccess, onError }: MutationProps) => {
 
   return { mutate, isPending, isError, isSuccess };
 };
+
+export const getAllCampsQuery = () => {
+  const { data, isError, isLoading } = useSuspenseQuery<Camp[]>({
+    queryKey: ['camps'],
+    queryFn: () =>
+      useFetch(`${BASE_URL}/camps`, {
+        method: 'GET',
+      }),
+    gcTime: 0,
+    staleTime: 0,
+  });
+
+  return { data, isError, isLoading };
+};
