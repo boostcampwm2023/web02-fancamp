@@ -13,6 +13,7 @@ import MediaSlider from '@components/slider/MediaSlider';
 interface PostModalTemplateProps {
   camp: Camp;
   post: Post;
+  profileImage: string;
   isLike: boolean;
   comments: any;
   newComments: Comment[];
@@ -32,6 +33,7 @@ interface PostModalTemplateProps {
 function PostModalTemplate({
   camp,
   post,
+  profileImage,
   isLike,
   comments,
   newComments,
@@ -72,6 +74,7 @@ function PostModalTemplate({
           ref={scrollRef}
         >
           <PostConentCard
+            profileImage={profileImage}
             campName={camp.campName}
             content={post.content}
             createdAt={post.createdAt}
@@ -81,7 +84,7 @@ function PostModalTemplate({
             likeCount={post.likeCount}
           />
           <Hr color="text-secondary">
-            <Text size={12} color="point-blue">
+            <Text size={13} color="point-blue">
               {post.commentCount}개의 코멘트
             </Text>
           </Hr>

@@ -9,6 +9,7 @@ import {
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { Comment } from '@type/api/comment';
+import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
 import PostModalTemplate from './PostModalTemplate';
 
 interface PostModalLogicProps {
@@ -34,6 +35,9 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   const { data: camp } = getCampQuery(campId);
   const { data: comments, fetchNextPage: fetchComments } =
     getCommentsInfiniteQuery(postId);
+  const {
+    data: { profileImage },
+  } = getProfileByIdQuery(campId);
 
   const {
     mutate: postComment,
@@ -103,6 +107,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     <PostModalTemplate
       camp={camp}
       post={post}
+      profileImage={profileImage}
       isLike={isLike}
       comments={comments}
       newComments={newComments}
