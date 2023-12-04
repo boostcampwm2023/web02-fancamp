@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Camp } from 'src/camp/entities/camp.entity';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -12,7 +19,7 @@ export class User {
   password: string;
 
   @Column({ type: 'varchar', nullable: true })
-  chatName: string = "";
+  chatName: string = '';
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   publicId: string;

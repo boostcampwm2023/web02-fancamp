@@ -14,20 +14,20 @@ Content-Type: application/json
 }
 
 
-### 캠프 전부 가져오기
+### 캠프 전부 가져오기   
 GET {{server}}/camps
 
-###
-GET {{server}}/camps/camp1
+### 캠프 정보 가져오기
+GET {{server}}/camps/master2
 
-### 구독하기
-POST {{server}}/camps/master1/subscriptions
+### 구독하기  
+POST {{server}}/camps/master2/subscriptions
 
-### 모든 자신의 구독 가져오기  
+### 모든 자신의 구독 가져오기 
 GET {{server}}/camps/subscriptions 
  
-###
-GET {{server}}/camps/master1/subscriptions
+### 구독 여부 확인   
+GET {{server}}/camps/master2/subscriptions
  
 ### 구독 취소
-DELETE {{server}}/camps/master1/subscriptions
+DELETE {{server}}/camps/master2/subscriptions
