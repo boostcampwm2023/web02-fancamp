@@ -23,7 +23,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComments, setNewComments] = useState<Comment[]>([]);
 
   if (!campId) {
     navigate('/');
@@ -32,7 +32,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(campId);
-  const { data: commentsPages, fetchNextPage: fetchComments } =
+  const { data: comments, fetchNextPage: fetchComments } =
     getCommentsInfiniteQuery(postId);
 
   const {
@@ -41,7 +41,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     isPending: isPostCommentPending,
   } = postCommentMutation({
     onSuccess: (newComment: Comment) => {
-      setComments([newComment, ...comments]);
+      setNewComments([newComment, ...newComments]);
       queryClient.setQueryData(['post', postId], {
         ...post,
         commentCount: post.commentCount + 1,
@@ -75,10 +75,6 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   }, []);
 
   useEffect(() => {
-    setComments([...comments, ...(commentsPages.pages.at(-1)?.result || [])]);
-  }, [commentsPages.pages.length]);
-
-  useEffect(() => {
     if (scrollRef.current && isCommentsUpdated) {
       scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       setCommentsUpdated(false);
@@ -109,6 +105,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
       post={post}
       isLike={isLike}
       comments={comments}
+      newComments={newComments}
       inputComment={inputComment}
       setInputComment={setInputComment}
       handlePostModalClose={handlePostModalClose}

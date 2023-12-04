@@ -14,7 +14,8 @@ interface PostModalTemplateProps {
   camp: Camp;
   post: Post;
   isLike: boolean;
-  comments: Comment[];
+  comments: any;
+  newComments: Comment[];
   inputComment: string;
   setInputComment: React.Dispatch<React.SetStateAction<string>>;
   handlePostModalClose: () => void;
@@ -33,6 +34,7 @@ function PostModalTemplate({
   post,
   isLike,
   comments,
+  newComments,
   inputComment,
   setInputComment,
   handlePostModalClose,
@@ -84,14 +86,22 @@ function PostModalTemplate({
             </Text>
           </Hr>
           <ul className="flex flex-col gap-lg p-md">
-            {comments.map((comment) => (
+            {newComments.map((comment: Comment) => (
               <CommentCard
                 comment={comment}
                 key={`comment-${comment.commentId}`}
               />
             ))}
+            {comments.pages.map((commentPage: any) =>
+              commentPage.result.map((comment: any) => (
+                <CommentCard
+                  comment={comment}
+                  key={`comment-${comment.commentId}`}
+                />
+              ))
+            )}
+            <div ref={observerRef} className="h-sm" />
           </ul>
-          <div ref={observerRef} className="h-sm" />
         </div>
         <InputComment
           comment={inputComment}
