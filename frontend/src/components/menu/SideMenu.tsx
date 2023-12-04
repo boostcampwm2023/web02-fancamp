@@ -15,11 +15,6 @@ const authMenu = [
   { to: '/auth/signup', text: '회원가입' },
 ];
 
-const demoMenu = [
-  { to: '/demo/components', text: '컴포넌트 데모' },
-  { to: '/demo/api/rest', text: 'Mock Api' },
-];
-
 export default function SideMenu() {
   const { auth } = useAuth();
   const { subscribedCamps } = useSubscriptions();
@@ -61,7 +56,7 @@ export default function SideMenu() {
   };
 
   return (
-    <div className="sticky left-[0] top-[0] z-10 flex h-[100vh] w-[12.5rem] flex-col">
+    <aside className="m-2xl min-w-[12.5rem]">
       <Link to="/">
         <img
           src="https://kr.object.ncloudstorage.com/fancamp/static/logo.png"
@@ -95,19 +90,21 @@ export default function SideMenu() {
           camperMenu.map(({ to, text }) => (
             <SideMenuNavLink key={text} to={to} text={text} />
           ))}
-        {demoMenu.map(({ to, text }) => (
-          <SideMenuNavLink key={text} to={to} text={text} />
-        ))}
         {subscribedCamps?.map(({ campName, bannerImage }) => (
           <div className="flex px-md" key={campName}>
-            <div>
-              <img width={40} height={40} src={bannerImage} />
+            <div className="overflow-hidden rounded">
+              <img
+                className="h-[36px] w-[36px] object-cover"
+                width={36}
+                height={36}
+                src={bannerImage}
+              />
             </div>
             <SideMenuNavLink to={`/camps/${campName}`} text={campName} />
           </div>
         ))}
       </div>
-    </div>
+    </aside>
   );
 }
 

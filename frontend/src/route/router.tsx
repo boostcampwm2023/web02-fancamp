@@ -10,7 +10,6 @@ import UserProfileEditPage from '@pages/user/edit/profile/UserProfileEditPage';
 import UserPasswordEditPage from '@pages/user/edit/password/UserPasswordEditPage';
 import UserPage from '@pages/user/UserPage';
 import CampProfileEditPage from '@pages/camps/edit/CampProfileEditPage';
-import DemoPage from '../pages/demo/components/DemoPage';
 import HomePage from '../pages/home/HomePage';
 import SearchPage from '../pages/search/SearchPage';
 import ExplorePage from '../pages/explore/ExplorePage';
@@ -18,8 +17,6 @@ import SignupPage from '../pages/auth/signup/SignupPage';
 import ChatPage from '../pages/camps/chat/ChatPage';
 import PostPage from '../pages/camps/post/PostPage';
 import CampPage from '../pages/camps/CampPage';
-import CommunityPage from '../pages/camps/community/CommunityPage';
-import ApiPage from '../pages/demo/api/ApiPage';
 import ErrorPage from '../pages/error/ErrorPage';
 import AuthProtectedRoute from './AuthProtectedRoute';
 import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
@@ -42,7 +39,6 @@ const router = createBrowserRouter(
           <Route path="subscriptions" element={<SubscriptionsPage />} />
           <Route path="camps" element={<CampPage />}>
             <Route path=":campId">
-              <Route path="community" element={<CommunityPage />} />
               <Route path="post" element={<PostPage />} />
             </Route>
           </Route>
@@ -56,9 +52,6 @@ const router = createBrowserRouter(
           </Route>
         </Route>
         <Route path="error" element={<ErrorPage />} />
-        <Route path="/demo/components" element={<DemoPage />} />
-        <Route path="/demo/api/rest" element={<ApiPage />} />
-        <Route path="/demo/api/scenario" element={<ApiPage />} />
       </Route>
     </Route>
   )

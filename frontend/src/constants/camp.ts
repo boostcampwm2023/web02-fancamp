@@ -4,10 +4,6 @@ export const CAMP_CATEGORIES = [
     path: 'post',
   },
   {
-    text: '커뮤니티',
-    path: 'community',
-  },
-  {
     text: '채팅',
     path: 'chat',
   },
