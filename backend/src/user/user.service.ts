@@ -34,7 +34,7 @@ export class UserService {
     const user = await this.findUserByPublicId(publicId);
     const fileName = `${user.publicId}`;
     if (file) {
-      const fileUrl = await this.imageService.uploadFile(file, fileName, -1);
+      const fileUrl = await this.imageService.uploadFile(file, fileName);
       user.profileImage = fileUrl;
     }
     if (updateUserDto.chatName) {
