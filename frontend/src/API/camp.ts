@@ -19,5 +19,6 @@ export async function getSubscribedCamps() {
     throw new Error('구독 캠프 목록 가져오기 실패');
   }
   const result = await response.json();
+  console.log(result);
   return result;
 }

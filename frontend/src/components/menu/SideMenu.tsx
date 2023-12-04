@@ -1,5 +1,6 @@
 import { signout } from '@API/auth';
 import useAuth from '@hooks/useAuth';
+import useSubscriptions from '@hooks/useSubscriptions';
 import { Link, NavLink } from 'react-router-dom';
 
 const mainMenu = [
@@ -21,6 +22,7 @@ const demoMenu = [
 
 export default function SideMenu() {
   const { auth } = useAuth();
+  const { subscribedCamps } = useSubscriptions();
 
   const masterMenu = [
     {
@@ -95,6 +97,14 @@ export default function SideMenu() {
           ))}
         {demoMenu.map(({ to, text }) => (
           <SideMenuNavLink key={text} to={to} text={text} />
+        ))}
+        {subscribedCamps?.map(({ campName, bannerImage }) => (
+          <div className="flex px-md" key={campName}>
+            <div>
+              <img width={40} height={40} src={bannerImage} />
+            </div>
+            <SideMenuNavLink to={`/camps/${campName}`} text={campName} />
+          </div>
         ))}
       </div>
     </div>

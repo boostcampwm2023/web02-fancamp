@@ -4,6 +4,7 @@ import { RouterProvider } from 'react-router-dom';
 import QueryProvider from '@contexts/QueryProvider';
 import router from './route/router';
 import { AuthProvider } from './contexts/AuthContext';
+import { SubscriptionProvider } from '@contexts/SubscriptionContext';
 
 async function enableMocking() {
   if (import.meta.env.VITE_NODE_ENV !== 'development') {
@@ -20,7 +21,9 @@ enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById('root')!).render(
     <AuthProvider>
       <QueryProvider>
-        <RouterProvider router={router} />
+        <SubscriptionProvider>
+          <RouterProvider router={router} />
+        </SubscriptionProvider>
       </QueryProvider>
     </AuthProvider>
   );
