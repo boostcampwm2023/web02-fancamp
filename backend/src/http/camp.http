@@ -21,16 +21,13 @@ GET {{server}}/camps
 GET {{server}}/camps/camp1
 
 ### 구독하기
-POST {{server}}/camps/subscriptions/camp2
-Content-Type: application/json
+POST {{server}}/camps/master1/subscriptions
 
-{
-    "camperId" : "1",
-    "masterId": "5"
-}
-
-### 모든 자신의 구독 가져오기
-GET {{server}}/camps/subscriptions
-
+### 모든 자신의 구독 가져오기  
+GET {{server}}/camps/subscriptions 
+ 
 ###
-GET {{server}}/camps/subscriptions/camp1
+GET {{server}}/camps/master1/subscriptions
+ 
+### 구독 취소
+DELETE {{server}}/camps/master1/subscriptions

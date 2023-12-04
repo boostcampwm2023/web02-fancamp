@@ -40,14 +40,13 @@ export class CampService {
       masterId: masterId,
       isSubscribe: true,
     });
-    // throw new Error('Method not implemented.');
   }
+
   async getSubscriptions(publicId: string) {
     const user = await this.userService.findUserByPublicId(publicId);
-    const camperId = user.id;
-    console.log('campid', camperId);
-    return await this.subscriptionService.findAll(camperId);
+    return await this.subscriptionService.findAll(user.id);
   }
+
   async getSubscription(publicId: string, campName: string) {
     const user = await this.userService.findUserByPublicId(publicId);
     const camperId = user.id;
@@ -71,5 +70,12 @@ export class CampService {
       camp.content = updateCampDto.content;
     }
     return this.campRepository.update(camp);
+  }
+
+  async remove(publicId: string, campName: string) {
+    const user = await this.userService.findUserByPublicId(publicId);
+    const camp = await this.campRepository.findOneByCampName(campName);
+
+    return this.subscriptionService.remove(user.id, camp.masterId);
   }
 }
