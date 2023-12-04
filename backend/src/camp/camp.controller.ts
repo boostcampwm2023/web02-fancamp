@@ -25,7 +25,6 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class CampController {
   constructor(private readonly campService: CampService) {}
 
-  @UseGuards(AuthGuard)
   @Get()
   findAll() {
     return this.campService.findAll();

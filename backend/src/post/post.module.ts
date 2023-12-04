@@ -13,6 +13,7 @@ import { CommentRepository } from './comment.repository';
 import { ImageModule } from 'src/image/image.module';
 import { NoticeGateway } from 'src/notice/notice.gateway';
 import { NoticeModule } from 'src/notice/notice.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { NoticeModule } from 'src/notice/notice.module';
     UserModule,
     ImageModule,
     NoticeModule,
+    AuthModule,
   ],
   controllers: [PostController],
   providers: [

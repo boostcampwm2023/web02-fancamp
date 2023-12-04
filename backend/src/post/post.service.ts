@@ -160,6 +160,7 @@ export class PostService {
       return this.likeRepository.create(postId, user.id);
     }
   }
+
   async removeLike(postId: number, publicId: string) {
     if (await this.checkPost(postId)) {
       const user = await this.userService.findUserByPublicId(publicId);
