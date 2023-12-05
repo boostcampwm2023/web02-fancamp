@@ -25,8 +25,9 @@ export class CampService {
 
   async findOne(campName: string) {
     const camp = await this.campRepository.findOneByCampName(campName);
-    const user = await this.userService.findUserByPublicId(campName);
-    const subscriptionCount = await this.subscriptionService.getCount(user.id);
+    const subscriptionCount = await this.subscriptionService.getCount(
+      camp.masterId,
+    );
     return { ...camp, subscriptionCount };
   }
 
