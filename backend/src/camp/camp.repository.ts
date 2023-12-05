@@ -3,6 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { Camp } from './entities/camp.entity';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { Subscription } from './entities/subscription.entity';
+import { Post } from 'src/post/entities/post.entity';
 
 @Injectable()
 export class CampRepository {
@@ -48,7 +49,7 @@ export class CampRepository {
    * @returns
    */
   async findOneByCampNameWithJoin(campName: string) {
-    return await this.campRepository
+    const result = await this.campRepository
       .createQueryBuilder('camp')
       .leftJoin(
         Subscription,
@@ -62,6 +63,19 @@ export class CampRepository {
       .where({ campName })
       .groupBy('camp.campId') // 그룹화할 열 추가
       .getRawOne();
+
+    const postCount = await this.campRepository
+      .createQueryBuilder('camp')
+      .innerJoin(
+        Post,
+        'post',
+        'camp.campId = post.campId AND post.isDeleted = false',
+      )
+      .select(['COUNT(*) AS postCount'])
+      .where({ campName })
+      .groupBy('camp.campId') // 그룹화할 열 추가
+      .getRawOne();
+    return { ...result, ...postCount };
   }
 
   /**
