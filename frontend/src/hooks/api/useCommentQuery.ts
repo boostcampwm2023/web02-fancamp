@@ -5,11 +5,11 @@ import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
 
 interface PostCommentMutationFnProps {
-  postId: string;
+  postId: number;
   content: string;
 }
 
-export const getCommentsInfiniteQuery = (postId: string) => {
+export const getCommentsInfiniteQuery = (postId: number) => {
   const { data, fetchNextPage, isFetching } =
     useSuspenseInfiniteQuery<CommentResponse>({
       queryKey: ['comments', postId],
@@ -24,7 +24,7 @@ export const getCommentsInfiniteQuery = (postId: string) => {
       },
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       initialPageParam: new Date(),
-      gcTime: 3000,
+      gcTime: 0,
       staleTime: 0,
     });
 

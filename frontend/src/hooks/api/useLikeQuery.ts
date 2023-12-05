@@ -4,7 +4,7 @@ import { BASE_URL } from '@constants/URLs';
 import useFetch from './useFetch';
 
 interface PostLikeMutationFnProps {
-  postId: string;
+  postId: number;
 }
 
 export const postLikeMutation = ({ onSuccess, onError }: MutationProps) => {

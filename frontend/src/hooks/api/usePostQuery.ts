@@ -8,7 +8,7 @@ interface PostPostMutationFnProps {
   formData: FormData;
 }
 
-export const getPostQuery = (postId: string) => {
+export const getPostQuery = (postId: number) => {
   const { data, isError, isLoading } = useSuspenseQuery<Post>({
     queryKey: ['post', postId],
     queryFn: () =>
