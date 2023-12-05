@@ -1,13 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useInfiniteSlider from '@hooks/useInfiniteSlider';
+import { getFeedInfiniteQuery } from '@hooks/api/useFeedQuery';
 import FeedCard from './FeedCardLogic';
 
 function FeedPage() {
-  const [postIds] = useState<string[]>(
-    Array(20)
-      .fill(0)
-      .map((_, i) => String(i + 32))
-  );
+  const { data: postIdsData, fetchNextPage: fetchPostIds } =
+    getFeedInfiniteQuery();
+  const [postIds, setPostIds] = useState<number[]>([]);
+
+  useEffect(() => {
+    setPostIds((_) => [..._, ...postIdsData.pages.at(-1).result]);
+  }, [postIdsData.pages.length]);
 
   const {
     ref: sliderRef,
@@ -16,7 +19,13 @@ function FeedPage() {
     handleWheel,
     useTransition,
     handleTransitionEnd,
-  } = useInfiniteSlider<string>(postIds);
+  } = useInfiniteSlider<number>(postIds);
+
+  useEffect(() => {
+    if (index === postIds.length - 1) {
+      fetchPostIds();
+    }
+  }, [index]);
 
   return (
     <div

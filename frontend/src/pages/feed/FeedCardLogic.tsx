@@ -13,7 +13,7 @@ import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
-  postId: string;
+  postId: number;
 }
 
 const FeedCard = memo(function FeedCard({ postId }: FeedCardProps) {
