@@ -1,7 +1,7 @@
-import { Message } from '@components/chat/ChatBox';
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { Message } from '@type/api/chat';
 
 interface Parameters {
   isMaster: boolean;
@@ -20,8 +20,13 @@ export default function useChatSocket({
   const [isMasterOnline, setIsMasterOnline] = useState<boolean>(false);
   const [isConnected, setIsConnected] = useState<boolean>(false);
 
+  const onConnect = () => setIsConnected(true);
+
   useEffect(() => {
-    const onConnect = () => setIsConnected(true);
+    // 캠퍼 이벤트 모음
+    if (isMaster) {
+      return;
+    }
 
     const onMasterIn = () => {
       setIsMasterOnline(true);
@@ -32,25 +37,37 @@ export default function useChatSocket({
 
     socket.connect();
     socket.on('connect', onConnect);
-    socket.emit(isMaster ? 'masterIn' : 'camperIn', {
+    socket.on('masterIn', onMasterIn);
+    socket.on('masterOut', onMasterOut);
+    socket.emit('camperIn', {
       publicId,
       campName,
     });
 
-    // 캠퍼가 마스터 온오프 이벤트받기
+    return () => {
+      socket.emit('camperOut', { campName });
+      socket.off('masterIn', onMasterIn);
+      socket.off('masterOut', onMasterOut);
+      socket.off('connect', onConnect);
+    };
+  }, []);
+
+  useEffect(() => {
+    // 마스터 이벤트 모음
     if (!isMaster) {
-      socket.on('masterIn', onMasterIn);
-      socket.on('masterOut', onMasterOut);
+      return;
     }
 
+    socket.connect();
+    socket.on('connect', onConnect);
+    socket.emit('masterIn', {
+      publicId,
+      campName,
+    });
+
     return () => {
-      if (!isMaster) {
-        socket.off('masterIn', onMasterIn);
-        socket.off('masterOut', onMasterOut);
-      }
+      socket.emit('masterOut', { campName });
       socket.off('connect', onConnect);
-      socket.emit(isMaster ? 'masterOut' : 'camperOut', { campName });
-      socket.disconnect();
     };
   }, []);
 

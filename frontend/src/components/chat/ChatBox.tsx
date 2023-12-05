@@ -15,14 +15,6 @@ import { fetchInfiniteMessages } from '@API/chat';
 import { CHAT_MESSAGES } from '@constants/queryKeys';
 import { getCurrentDateString } from '@utils/date';
 
-export interface Message {
-  chatId: number;
-  isMyMessage: boolean;
-  stringContent: string;
-  chatName: string;
-  createdAt: string;
-}
-
 export default function ChatBox() {
   const { auth } = useAuth();
   const { publicId, isMaster } = auth!;

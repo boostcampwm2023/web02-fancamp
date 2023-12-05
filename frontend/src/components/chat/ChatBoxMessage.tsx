@@ -1,3 +1,4 @@
+import ProfileImage from '@components/profile/ProfileImage';
 import useAuth from '@hooks/useAuth';
 import { getLocaleString } from '@utils/date';
 import { ForwardedRef, forwardRef } from 'react';
@@ -6,10 +7,11 @@ interface Props {
   stringContent: string;
   createdAt: string;
   senderChatName: string;
+  profileImage: string;
 }
 
 const ChatBoxMessage = forwardRef(function ChatBoxMessage(
-  { stringContent, createdAt, senderChatName }: Props,
+  { stringContent, createdAt, senderChatName, profileImage }: Props,
   ref: ForwardedRef<HTMLLIElement>
 ) {
   const { auth } = useAuth();
@@ -24,13 +26,16 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
   return (
     <li ref={ref} className={`flex gap-4 ${isMyMessage && 'flex-row-reverse'}`}>
       {!isMyMessage && (
-        <img
-          className="self-center"
-          width="60"
-          height="60"
-          src="/profileImagePlaceholder.png"
-          alt="profile image"
-        />
+        <div className="flex items-center">
+          <ProfileImage
+            src={`${
+              profileImage ? profileImage : '/profileImagePlaceholder.png'
+            }`}
+            width="60"
+            height="60"
+            alt="profile image"
+          />
+        </div>
       )}
       <div
         className={`flex flex-col gap-2 display-regular-16 ${
