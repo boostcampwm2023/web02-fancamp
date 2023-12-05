@@ -1,7 +1,7 @@
 import useAuth from '@hooks/useAuth';
 import { useState, useEffect } from 'react';
-import { Message } from './ChatBox';
 import { CHAT_MESSAGE_MAX_LENGTH } from '@constants/chat';
+import { Message } from '@type/api/chat';
 
 type Props = {
   messages: Message[];
