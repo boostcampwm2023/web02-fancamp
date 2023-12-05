@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { postSocket } from '@API/socket';
 
 interface PostGridProps {
-  handlePostModalOpen: (postId: string) => void;
+  handlePostModalOpen: (postId: number) => void;
   handleUploadModalOpen: () => void;
 }
 
@@ -51,7 +51,7 @@ function PostPageGrid({
         const { postId, content, url, likeCount, commentCount } = post;
         return (
           <PostCard
-            postId={String(postId)}
+            postId={postId}
             likeCount={likeCount}
             commentCount={commentCount}
             handleOnClick={handlePostModalOpen}
@@ -65,7 +65,7 @@ function PostPageGrid({
         const { postId, content, url, likeCount, commentCount } = post;
         return (
           <PostCard
-            postId={String(postId)}
+            postId={postId}
             likeCount={likeCount}
             commentCount={commentCount}
             handleOnClick={handlePostModalOpen}

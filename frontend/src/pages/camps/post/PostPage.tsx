@@ -9,9 +9,9 @@ import PostModalLogic from './PostModalLogic';
 function PostPage() {
   const [showPostModal, setPostModal] = useState(false);
   const [showUploadModal, setUploadModal] = useState(false);
-  const [showPostId, setPostId] = useState<string | null>(null);
+  const [showPostId, setPostId] = useState<number | null>(null);
 
-  const handlePostModalOpen = (postId: string) => {
+  const handlePostModalOpen = (postId: number) => {
     setPostId(postId);
     setPostModal(true);
   };

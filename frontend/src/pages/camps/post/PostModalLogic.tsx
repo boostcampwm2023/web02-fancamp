@@ -10,10 +10,11 @@ import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { Comment } from '@type/api/comment';
 import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
+import { commentSocket } from '@API/socket';
 import PostModalTemplate from './PostModalTemplate';
 
 interface PostModalLogicProps {
-  postId: string;
+  postId: number;
   handlePostModalClose: () => void;
 }
 
@@ -44,8 +45,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     isError: isPostCommentError,
     isPending: isPostCommentPending,
   } = postCommentMutation({
-    onSuccess: (newComment: Comment) => {
-      setNewComments([newComment, ...newComments]);
+    onSuccess: () => {
       queryClient.setQueryData(['post', postId], {
         ...post,
         commentCount: post.commentCount + 1,
@@ -73,6 +73,22 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
         });
       },
     });
+
+  useEffect(() => {
+    const handleCreatePost = (data: any) => {
+      setNewComments((_) => [data, ..._]);
+    };
+
+    commentSocket.connect();
+
+    commentSocket.emit('enterCommentPage', { postId });
+    commentSocket.on('createComment', handleCreatePost);
+
+    return () => {
+      commentSocket.emit('leaveCommentPage', { postId });
+      commentSocket.off('createComment', handleCreatePost);
+    };
+  }, [postId]);
 
   useEffect(() => {
     setLike(post.isLike);

@@ -5,9 +5,9 @@ interface PostCardProps {
   imageSrc: string;
   likeCount: number;
   commentCount: number;
-  postId: string;
+  postId: number;
   content: string;
-  handleOnClick: (postId: string) => void;
+  handleOnClick: (postId: number) => void;
 }
 
 const cardClassName =
