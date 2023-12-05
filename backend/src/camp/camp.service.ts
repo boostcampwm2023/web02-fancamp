@@ -53,4 +53,7 @@ export class CampService {
     }
     return this.campRepository.update(camp);
   }
+  search(keyword: string) {
+    return this.campRepository.search(keyword);
+  }
 }

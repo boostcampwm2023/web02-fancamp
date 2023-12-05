@@ -46,4 +46,11 @@ export class CampRepository {
       .groupBy('camp.campId') // 그룹화할 열 추가
       .getRawOne();
   }
+  search(keyword: string) {
+    return this.campRepository
+      .createQueryBuilder()
+      .where(`MATCH (campName) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+      .orWhere(`MATCH (content) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+      .getMany();
+  }
 }
