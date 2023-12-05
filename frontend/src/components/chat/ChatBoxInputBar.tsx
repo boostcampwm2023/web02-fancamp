@@ -44,6 +44,7 @@ export default function ChatBoxInputBar({
       isMyMessage: true,
       createdAt: String(new Date()),
       stringContent: inputText,
+      profileImage: '',
       chatName,
     };
     setMessages((prev) => [...prev, newMessage]);
