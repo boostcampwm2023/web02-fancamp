@@ -20,6 +20,9 @@ function CampPage() {
 
   useEffect(() => {
     const { path } = CAMP_CATEGORIES[categoryIndex];
+    if (categoryIndex === 0 && location.pathname === `/camps/${campId}/post`) {
+      return;
+    }
     navigate(`/camps/${campId}/${path}`);
   }, [categoryIndex]);
 
