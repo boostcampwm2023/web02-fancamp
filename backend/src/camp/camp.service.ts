@@ -2,9 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 import { CampRepository } from './camp.repository';
-import { UserService } from 'src/user/user.service';
 import { SubscriptionService } from './subscription.service';
-import { resourceLimits } from 'worker_threads';
 import { ImageService } from 'src/image/image.service';
 
 @Injectable()
@@ -12,17 +10,29 @@ export class CampService {
   constructor(
     private readonly campRepository: CampRepository,
     private readonly subscriptionService: SubscriptionService,
-    private readonly userService: UserService,
     private readonly imageService: ImageService,
   ) {}
+
+  /**
+   * 캠프 생성
+   * @param createCampDto
+   * @returns 생성 된 캠프 정보
+   */
   async create(createCampDto: CreateCampDto) {
     return this.campRepository.createCamp(createCampDto);
   }
-
+  /**
+   * 모든 캠프 정보 가져오기
+   * @returns 모든 캠프 정보
+   */
   findAll() {
     return this.campRepository.findAll();
   }
 
+  /**
+   * campName으로 특정 캠프 정보 찾기
+   * @returns 캠프 정보와 구독자 수
+   */
   async findOne(campName: string) {
     const camp = await this.campRepository.findOneByCampName(campName);
     const subscriptionCount = await this.subscriptionService.getCount(
@@ -31,31 +41,22 @@ export class CampService {
     return { ...camp, subscriptionCount };
   }
 
+  /**
+   * 캠프 구독
+   */
   async subscribe(publicId: string, campName: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    const camperId = user.id;
-    const camp = await this.findOne(campName);
-    const masterId = camp.masterId;
+    const camp = await this.campRepository.findOneByCampName(campName);
     this.subscriptionService.create({
-      camperId: camperId,
-      masterId: masterId,
+      publicId: publicId,
+      masterId: camp.masterId,
       isSubscribe: true,
     });
   }
 
-  async getSubscriptions(publicId: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    return await this.subscriptionService.findAll(user.id);
-  }
-
-  async getSubscription(publicId: string, campName: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    const camperId = user.id;
-    const camp = await this.findOne(campName);
-    const masterId = camp.masterId;
-    return await this.subscriptionService.findOne(camperId, masterId);
-  }
-
+  /**
+   * 캠프 정보 수정
+   * @returns
+   */
   async update(
     file: Express.Multer.File,
     campName: string,
@@ -73,11 +74,12 @@ export class CampService {
     return this.campRepository.update(camp);
   }
 
-  async remove(publicId: string, campName: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    const camp = await this.campRepository.findOneByCampName(campName);
-
-    return this.subscriptionService.remove(user.id, camp.masterId);
+  /**
+   * keyword로 검색하기
+   * @returns
+   */
+  search(keyword: string) {
+    return this.campRepository.search(keyword);
   }
 
   search(keyword: string) {
