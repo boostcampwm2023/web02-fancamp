@@ -50,6 +50,9 @@ export default {
         body: {
           '@apply overflow-y-scroll': {},
         },
+        mark: {
+          background: `linear-gradient(90deg, #FFB82F70 0%, #FFB82F80 80%, #FFB82F 100%)`,
+        },
       });
       addComponents({
         '.content': {
