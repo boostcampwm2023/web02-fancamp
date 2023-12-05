@@ -17,7 +17,19 @@ export class CampRepository {
   }
 
   findAll() {
-    return this.campRepository.find();
+    return this.campRepository
+      .createQueryBuilder('camp')
+      .leftJoin(
+        Subscription,
+        'subscription',
+        'camp.masterId = subscription.masterId AND subscription.isSubscribe = true',
+      )
+      .select([
+        'camp.*',
+        'COUNT(subscription.subscriptionId) AS subscription_count',
+      ])
+      .groupBy('camp.campId')
+      .getRawMany();
   }
 
   findOneByMasterId(masterId: number) {
