@@ -31,7 +31,6 @@ export class CampRepository {
   async update(camp: Camp) {
     return this.campRepository.save(camp);
   }
-
   /**
    * campName으로 캠프 정보와 구독자 수 찾기
    * @returns

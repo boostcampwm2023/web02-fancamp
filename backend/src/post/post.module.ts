@@ -14,6 +14,8 @@ import { ImageModule } from 'src/image/image.module';
 import { NoticeGateway } from 'src/notice/notice.gateway';
 import { NoticeModule } from 'src/notice/notice.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { CommentGateway } from './comment.gateway';
+import { PostGateway } from './post.gateway';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { AuthModule } from 'src/auth/auth.module';
     PostRepository,
     LikeRepository,
     CommentRepository,
+    CommentGateway,
+    PostGateway,
   ],
 })
 export class PostModule {}

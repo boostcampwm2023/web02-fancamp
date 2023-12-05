@@ -81,4 +81,8 @@ export class CampService {
   search(keyword: string) {
     return this.campRepository.search(keyword);
   }
+
+  search(keyword: string) {
+    return this.campRepository.search(keyword);
+  }
 }

@@ -48,7 +48,7 @@ function calcSentimentHex({ negative, positive, neutral }) {
   }
   const rgb = [r, g, b];
   const hex = getHEX(rgb);
-  console.log('rgb, hex', rgb, hex);
+  // console.log('rgb, hex', rgb, hex);
   return `#${hex}`;
 }
 

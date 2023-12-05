@@ -98,4 +98,9 @@ export class CampController {
   async searchCampByKeyword(@Param('keyword') keyword: string) {
     return await this.campService.search(keyword);
   }
+
+  @Get('search/:keyword')
+  async searchCampByKeyword(@Param('keyword') keyword: string) {
+    return await this.campService.search(keyword);
+  }
 }
