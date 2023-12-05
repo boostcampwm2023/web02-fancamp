@@ -1,6 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 import { Auth } from '@type/api/auth';
 import { isValidSession } from '@API/auth';
+import {
+  CHAT_NOTICE,
+  IS_SIGNED_IN,
+  POST_NOTICE,
+} from '@constants/localStorageKeys';
 
 interface AuthContextType {
   auth: Auth | null;
@@ -8,38 +13,46 @@ interface AuthContextType {
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
+const TRUE = 'true';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [auth, setAuth] = useState<Auth | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const removeStoredData = () => {
+    localStorage.removeItem(IS_SIGNED_IN);
+    localStorage.removeItem(CHAT_NOTICE);
+    localStorage.removeItem(POST_NOTICE);
+  };
+
   useEffect(() => {
-    const isSignedIn = localStorage.getItem('isSignedIn');
-    const refreshAuth = async () => {
+    (async function refreshAuth() {
+      const isSignedIn = localStorage.getItem(IS_SIGNED_IN);
+      if (isSignedIn !== TRUE || auth !== null) {
+        setIsLoading(false);
+        return;
+      }
+
       try {
         const result = await isValidSession();
         setAuth(result);
       } catch (error) {
-        localStorage.setItem('isSignedIn', 'false');
+        removeStoredData();
       } finally {
         setIsLoading(false);
       }
-    };
-
-    if (isSignedIn === 'true' && auth === null) {
-      refreshAuth();
-      return;
-    }
-    setIsLoading(false);
+    })();
   }, []);
 
   useEffect(() => {
-    if (auth) {
-      localStorage.setItem('isSignedIn', 'true');
-      return;
-    }
+    (function setLocalStorageOnAuthChange() {
+      if (auth) {
+        localStorage.setItem(IS_SIGNED_IN, TRUE);
+        return;
+      }
 
-    localStorage.setItem('isSignedIn', 'false');
+      removeStoredData();
+    })();
   }, [auth]);
 
   return (
