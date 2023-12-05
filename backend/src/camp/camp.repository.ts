@@ -32,6 +32,10 @@ export class CampRepository {
     return this.campRepository.save(camp);
   }
 
+  /**
+   * campName으로 캠프 정보와 구독자 수 찾기
+   * @returns
+   */
   async findOneByCampNameWithJoin(campName: string) {
     return await this.campRepository
       .createQueryBuilder('camp')
@@ -46,6 +50,11 @@ export class CampRepository {
       .groupBy('camp.campId') // 그룹화할 열 추가
       .getRawOne();
   }
+
+  /**
+   * 검색
+   * @returns 검색 결과
+   */
   search(keyword: string) {
     return this.campRepository
       .createQueryBuilder()

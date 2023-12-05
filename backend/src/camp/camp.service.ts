@@ -12,14 +12,27 @@ export class CampService {
     private readonly subscriptionService: SubscriptionService,
     private readonly imageService: ImageService,
   ) {}
+
+  /**
+   * 캠프 생성
+   * @param createCampDto
+   * @returns 생성 된 캠프 정보
+   */
   async create(createCampDto: CreateCampDto) {
     return this.campRepository.createCamp(createCampDto);
   }
-
+  /**
+   * 모든 캠프 정보 가져오기
+   * @returns 모든 캠프 정보
+   */
   findAll() {
     return this.campRepository.findAll();
   }
 
+  /**
+   * campName으로 특정 캠프 정보 찾기
+   * @returns 캠프 정보와 구독자 수
+   */
   async findOne(campName: string) {
     const camp = await this.campRepository.findOneByCampName(campName);
     const subscriptionCount = await this.subscriptionService.getCount(
@@ -28,6 +41,9 @@ export class CampService {
     return { ...camp, subscriptionCount };
   }
 
+  /**
+   * 캠프 구독
+   */
   async subscribe(publicId: string, campName: string) {
     const camp = await this.campRepository.findOneByCampName(campName);
     this.subscriptionService.create({
@@ -37,6 +53,10 @@ export class CampService {
     });
   }
 
+  /**
+   * 캠프 정보 수정
+   * @returns
+   */
   async update(
     file: Express.Multer.File,
     campName: string,
@@ -53,6 +73,11 @@ export class CampService {
     }
     return this.campRepository.update(camp);
   }
+
+  /**
+   * keyword로 검색하기
+   * @returns
+   */
   search(keyword: string) {
     return this.campRepository.search(keyword);
   }

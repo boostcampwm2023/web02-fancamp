@@ -13,7 +13,9 @@ export class SubscriptionRepository {
   constructor(private readonly dataSource: DataSource) {
     this.subscriptionRepository = this.dataSource.getRepository(Subscription);
   }
-
+  /**
+   * publicId로 masterId 찾고, 구독 upsert
+   */
   async createSubscription(createSubscriptionDto: CreateSubscriptionDto) {
     const user = await this.dataSource
       .getRepository(User)
@@ -24,23 +26,20 @@ export class SubscriptionRepository {
     );
   }
 
-  findOne(camperId: number, masterId: number) {
-    return this.subscriptionRepository.findOneBy({
-      camperId,
-      masterId,
-      isSubscribe: true,
-    });
-  }
+  /**
+   * masterId로 구독자 수 세기
+   * @returns
+   */
   count(masterId: number) {
     return this.subscriptionRepository.count({
       where: { masterId, isSubscribe: true },
     });
   }
 
-  findAll(camperId: number) {
-    return this.subscriptionRepository.findBy({ camperId, isSubscribe: true });
-  }
-  // 자신이 구독한 캠프들 가져오기
+  /**
+   * publicId로 자신의 모든 구독 캠프 가져오기
+   * @returns 자신의 모든 구독 캠프
+   */
   async findAllByPublicId(publicId: string) {
     return await this.subscriptionRepository
       .createQueryBuilder('subscription')
@@ -52,6 +51,10 @@ export class SubscriptionRepository {
       .getRawMany();
   }
 
+  /**
+   * publicId와 CampName으로 구독 여부 가져오기
+   * @returns
+   */
   findOneByPublicIdAndCampName(
     publicId: string,
     campName: string,
@@ -67,6 +70,9 @@ export class SubscriptionRepository {
       .getRawOne();
   }
 
+  /**
+   * 구독 취소
+   */
   async remove(publicId: string, campName: string) {
     const subscription = await this.subscriptionRepository
       .createQueryBuilder('subscription')
