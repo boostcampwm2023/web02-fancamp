@@ -5,10 +5,12 @@ import Text from '@components/ui/Text';
 import { getAllCampsQuery } from '@hooks/api/useCampQuery';
 import { Suspense } from 'react';
 import { Link } from 'react-router-dom';
+import SearchInputLogic from './SearchInputLogic';
 
 export default function ExplorePage() {
   return (
     <div className="flex min-h-full flex-col gap-md">
+      <SearchInputLogic />
       <Text size={20}>모든 캠프</Text>
       <Suspense
         fallback={
