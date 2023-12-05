@@ -50,14 +50,16 @@ export class CampRepository {
   async findOneByCampNameWithJoin(campName: string) {
     return await this.campRepository
       .createQueryBuilder('camp')
-      .innerJoin(
+      .leftJoin(
         Subscription,
         'subscription',
-        'camp.masterId = subscription.masterId',
+        'camp.masterId = subscription.masterId AND subscription.isSubscribe = true',
       )
-      .select(['camp.*', 'COUNT(*) AS subscription_count'])
+      .select([
+        'camp.*',
+        'COUNT(subscription.subscriptionId) AS subscriptionCount',
+      ])
       .where({ campName })
-      .andWhere('subscription.isSubscribe = true')
       .groupBy('camp.campId') // 그룹화할 열 추가
       .getRawOne();
   }

@@ -18,7 +18,7 @@ Content-Type: application/json
 GET {{server}}/camps
 
 ### 캠프 정보 가져오기
-GET {{server}}/camps/master2
+GET {{server}}/camps/master1
 
 ### 구독하기  
 POST {{server}}/camps/master2/subscriptions

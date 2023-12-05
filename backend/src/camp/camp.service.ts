@@ -34,11 +34,7 @@ export class CampService {
    * @returns 캠프 정보와 구독자 수
    */
   async findOne(campName: string) {
-    const camp = await this.campRepository.findOneByCampName(campName);
-    const subscriptionCount = await this.subscriptionService.getCount(
-      camp.masterId,
-    );
-    return { ...camp, subscriptionCount };
+    return this.campRepository.findOneByCampNameWithJoin(campName);
   }
 
   /**
