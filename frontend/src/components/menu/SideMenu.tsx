@@ -1,54 +1,23 @@
 import { signout } from '@API/auth';
+import { noticeSocket } from '@API/socket';
 import useAuth from '@hooks/useAuth';
 import useSubscriptions from '@hooks/useSubscriptions';
 import { Link, NavLink } from 'react-router-dom';
-
-const mainMenu = [
-  { to: '/', text: 'Home' },
-  { to: '/search', text: 'Search' },
-  { to: '/explore', text: 'Explore' },
-  { to: '/feed', text: 'Feed' },
-];
-
-const authMenu = [
-  { to: '/auth/signin', text: '로그인' },
-  { to: '/auth/signup', text: '회원가입' },
-];
+import {
+  authMenu,
+  camperMenu,
+  mainMenu,
+  masterMenu,
+} from '@constants/sideMenu';
+import useNoticeSocket from '@hooks/useNotice';
 
 export default function SideMenu() {
   const { auth } = useAuth();
   const { subscribedCamps } = useSubscriptions();
-
-  const masterMenu = [
-    {
-      to: `/camps/${auth?.publicId}/post`,
-      text: '캠프',
-    },
-    { to: `/camps/${auth?.publicId}/chat`, text: '> 채팅' },
-    {
-      to: `/camps/${auth?.publicId}/post`,
-      text: '> 포스트',
-    },
-    {
-      to: `/camps/edit`,
-      text: '> 캠프 수정',
-    },
-    {
-      to: `/camps/${auth?.publicId}/upload`,
-      text: '> 캠프 업로드',
-    },
-  ];
-
-  const camperMenu = [
-    {
-      to: '/subscriptions',
-      text: '구독한 캠프',
-    },
-    {
-      to: '/user',
-      text: '마이페이지',
-    },
-  ];
+  const { campsWithChatNotice, campsWithPostNotice } = useNoticeSocket(
+    noticeSocket,
+    auth
+  );
 
   const handleSignout = async () => {
     await signout();
@@ -83,15 +52,16 @@ export default function SideMenu() {
           ))
         )}
         {auth?.isMaster &&
-          masterMenu.map(({ to, text }) => (
-            <SideMenuNavLink key={text} to={to} text={text} />
-          ))}
+          masterMenu.map(({ to, text }) => {
+            const campIdTo = to.replace(':campId', auth.publicId);
+            return <SideMenuNavLink key={text} to={campIdTo} text={text} />;
+          })}
         {auth?.isMaster === false &&
           camperMenu.map(({ to, text }) => (
             <SideMenuNavLink key={text} to={to} text={text} />
           ))}
         {subscribedCamps?.map(({ campName, bannerImage }) => (
-          <div className="flex px-md" key={campName}>
+          <div className="flex items-center px-md" key={campName}>
             <div className="overflow-hidden rounded">
               <img
                 className="h-[36px] w-[36px] object-cover"
@@ -101,6 +71,16 @@ export default function SideMenu() {
               />
             </div>
             <SideMenuNavLink to={`/camps/${campName}`} text={campName} />
+            {campsWithPostNotice.includes(campName) ? (
+              <span className="animate-bounce display-regular-12">🔵</span>
+            ) : (
+              ''
+            )}
+            {campsWithChatNotice.includes(campName) ? (
+              <span className="animate-bounce display-regular-12">🟡</span>
+            ) : (
+              ''
+            )}
           </div>
         ))}
       </div>
