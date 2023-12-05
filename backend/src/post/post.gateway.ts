@@ -36,15 +36,7 @@ export class PostGateway {
 
   handleCreatePost(data: any) {
     const { campName, res } = data;
-    // console.log('포스트 만듬', new Date());
-    const last = {
-      postId: res.postId,
-      content: res.postId,
-      url: [],
-      likeCount: 0,
-      commentCount: 0,
-    };
     console.log(`Post ${res.postId}, Comment ${res.content}`);
-    this.server.to(`${campName}-page`).emit('createPost', last);
+    this.server.to(`${campName}-page`).emit('createPost', res);
   }
 }

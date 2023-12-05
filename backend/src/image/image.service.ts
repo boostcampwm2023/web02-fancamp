@@ -88,7 +88,7 @@ export class ImageService {
     filename: string,
   ) {
     if (!existsSync('./temp')) {
-      console.log('시작하기 전 없음');
+      // console.log('시작하기 전 없음');
       await promises.mkdir('./temp/video', { recursive: true });
       await promises.mkdir('./temp/thumbnail', { recursive: true });
     }

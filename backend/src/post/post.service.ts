@@ -84,7 +84,6 @@ export class PostService {
     await this.imageService.uploadPostFiles(files, post.postId, post.campId);
     const urls = this.imageService.findImagesByPostId(post.postId);
     if (urls[0] && !urls[0].mimetype.startsWith('image')) {
-      //TODO: 나중에 썸네일 추출 기능 넣고 삭제하기
       urls[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
       urls[0].mimetype = 'image/png';
     }
@@ -98,7 +97,7 @@ export class PostService {
         publicId: publicId,
         likeCount: 0,
         commentCount: 0,
-        url: thumbnail, //TODO: 이거 썸네일로 바꿔야함 어떻게 구하지...
+        url: thumbnail,
       },
     });
   }
