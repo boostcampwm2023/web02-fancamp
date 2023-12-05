@@ -78,4 +78,9 @@ export class CampController {
   remove(@Param('campName') campName: string, @Req() request: Request) {
     return this.campService.remove(request.cookies['publicId'], campName);
   }
+
+  @Get('search/:keyword')
+  async searchCampByKeyword(@Param('keyword') keyword: string) {
+    return await this.campService.search(keyword);
+  }
 }

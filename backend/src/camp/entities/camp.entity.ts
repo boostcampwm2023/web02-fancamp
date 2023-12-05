@@ -1,10 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Camp {
   @PrimaryGeneratedColumn()
   campId: number;
 
+  @Index('campName_fulltext_index', { fulltext: true, parser: 'ngram' })
   @Column({ type: 'varchar', nullable: false, unique: true })
   campName: string;
 
@@ -14,6 +15,7 @@ export class Camp {
   @Column({ type: 'varchar', nullable: true })
   bannerImage: string = '';
 
-  @Column({ type: 'varchar', nullable: true })
+  @Index('content_fulltext_index', { fulltext: true, parser: 'ngram' })
+  @Column({ type: 'varchar', nullable: false })
   content: string = '';
 }

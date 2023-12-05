@@ -12,7 +12,7 @@ export class ChatRepository {
   }
 
   createChat(createChatDto: CreateChatDto) {
-    console.log(createChatDto);
+    // console.log(createChatDto);
     return this.chatRepository.save(createChatDto);
   }
 

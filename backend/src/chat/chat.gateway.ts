@@ -36,7 +36,7 @@ export class ChatGateway {
       await this.chatService.getRoomName(campName);
     socket.join([roomName, detailRoomName]);
     socket.to(roomName).emit('masterIn');
-    this.campNamesInChat.add(campName);
+    this.campNamesInChat.add(roomName);
   }
 
   @SubscribeMessage('camperMessage')
@@ -88,7 +88,7 @@ export class ChatGateway {
     );
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
-    const index = this.campNamesInChat.delete(roomName);
+    this.campNamesInChat.delete(roomName);
     socket.to(roomName).emit('masterOut');
     socket.disconnect();
   }

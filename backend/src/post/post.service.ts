@@ -20,6 +20,8 @@ import { Comment } from './entities/comment.entity';
 import { ImageService } from 'src/image/image.service';
 import { getSentiment, getSentimentColor } from 'src/utils/sentiment';
 import { NoticeGateway } from 'src/notice/notice.gateway';
+import { CommentGateway } from './comment.gateway';
+import { PostGateway } from './post.gateway';
 
 @Injectable()
 export class PostService {
@@ -31,8 +33,11 @@ export class PostService {
     private readonly userService: UserService,
     private readonly imageService: ImageService,
     private readonly noticeGateway: NoticeGateway,
+    private readonly commentGateway: CommentGateway,
+    private readonly postGateway: PostGateway,
   ) {}
 
+  /* Post */
   async findAllCampsPosts(cursor: string) {
     const cursorDate = new Date(cursor);
     const posts = await this.postRepository.findAll(cursorDate);
@@ -55,7 +60,6 @@ export class PostService {
     };
   }
 
-  /* Post */
   async createPost(
     files: Array<Express.Multer.File>,
     createPostDto: CreatePostDto,
@@ -78,8 +82,24 @@ export class PostService {
       pictureCount,
     );
     await this.imageService.uploadPostFiles(files, post.postId, post.campId);
+    const urls = this.imageService.findImagesByPostId(post.postId);
+    if (urls[0] && !urls[0].mimetype.startsWith('image')) {
+      urls[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
+      urls[0].mimetype = 'image/png';
+    }
+    const thumbnail = urls[0] ? [urls[0]] : [];
+
     this.noticeGateway.noticePost(camp.campId, camp.campName);
-    return { ...post, publicId: publicId };
+    this.postGateway.handleCreatePost({
+      campName: camp.campName,
+      res: {
+        ...post,
+        publicId: publicId,
+        likeCount: 0,
+        commentCount: 0,
+        url: thumbnail,
+      },
+    });
   }
 
   async findPostWithUrls(postId: number, publicId: string) {
@@ -188,6 +208,11 @@ export class PostService {
       user.id,
       setimentColorHex,
     );
+    this.commentGateway.handleCreateComment({
+      ...comment,
+      publicId: user.publicId,
+      profileImage: user.profileImage,
+    });
     return {
       ...comment,
       publicId: user.publicId,

@@ -74,7 +74,12 @@ export class ImageService {
   async findImagesByPostId(postId: number) {
     const images = await this.imageRepository.findByPostId(postId);
     images.sort((a, b) => a.fileUrl.localeCompare(b.fileUrl));
-    return images;
+    return images.map((image) => {
+      if (image.mimetype.includes('video')) {
+        return { ...image, isThumb: true };
+      }
+      return { ...image, isThumb: false };
+    });
   }
 
   async createThumbnail(
@@ -83,7 +88,7 @@ export class ImageService {
     filename: string,
   ) {
     if (!existsSync('./temp')) {
-      console.log('시작하기 전 없음');
+      // console.log('시작하기 전 없음');
       await promises.mkdir('./temp/video', { recursive: true });
       await promises.mkdir('./temp/thumbnail', { recursive: true });
     }
