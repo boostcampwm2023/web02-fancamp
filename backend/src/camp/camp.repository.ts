@@ -4,6 +4,7 @@ import { Camp } from './entities/camp.entity';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { Subscription } from './entities/subscription.entity';
 import { Post } from 'src/post/entities/post.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CampRepository {
@@ -17,7 +18,7 @@ export class CampRepository {
     return this.campRepository.save(createCampDto);
   }
 
-  findAll() {
+  findAll(cursor: number) {
     return this.campRepository
       .createQueryBuilder('camp')
       .leftJoin(
@@ -25,11 +26,17 @@ export class CampRepository {
         'subscription',
         'camp.masterId = subscription.masterId AND subscription.isSubscribe = true',
       )
+      .leftJoin(User, 'user', 'camp.masterId = user.id')
       .select([
         'camp.*',
-        'COUNT(subscription.subscriptionId) AS subscription_count',
+        'user.publicId AS masterPublicId',
+        'user.profileImage AS masterProfileImage',
+        'COUNT(subscription.subscriptionId) AS subscriptionCount',
       ])
+      .where('camp.campId > :cursor', { cursor })
+      .orderBy('subscriptionCount', 'DESC')
       .groupBy('camp.campId')
+      .limit(40)
       .getRawMany();
   }
 

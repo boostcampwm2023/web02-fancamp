@@ -25,8 +25,16 @@ export class CampService {
    * 모든 캠프 정보 가져오기
    * @returns 모든 캠프 정보
    */
-  findAll() {
-    return this.campRepository.findAll();
+  async findAll(cursor: number) {
+    const camps = await this.campRepository.findAll(cursor);
+    if (!camps.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+    return { cursor: cursor, nextCursor: camps.slice(-1)[0].campId, camps };
   }
 
   /**

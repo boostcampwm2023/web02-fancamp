@@ -11,6 +11,7 @@ import {
   Put,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { CampService } from './camp.service';
 import { CreateCampDto } from './dto/create-camp.dto';
@@ -31,8 +32,8 @@ export class CampController {
 
   // 전체 캠프 정보 가져오기
   @Get()
-  findAll() {
-    return this.campService.findAll();
+  findAll(@Query('cursor') cursor: string) {
+    return this.campService.findAll(+cursor);
   }
 
   // 로그인 한 사람의 구독하고 있는 모든 캠프 정보 찾기
