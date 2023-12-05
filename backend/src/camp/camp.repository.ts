@@ -34,7 +34,6 @@ export class CampRepository {
         'COUNT(subscription.subscriptionId) AS subscriptionCount',
       ])
       .where('camp.campId > :cursor', { cursor })
-      .orderBy('subscriptionCount', 'DESC')
       .groupBy('camp.campId')
       .limit(40)
       .getRawMany();
