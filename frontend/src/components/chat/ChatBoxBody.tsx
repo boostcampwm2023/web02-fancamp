@@ -2,8 +2,8 @@ import ChatBoxMessage from './ChatBoxMessage';
 import Spinner from '@components/loading/Spinner';
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
 import { useEffect, useRef, useMemo, Fragment } from 'react';
-import { Message } from './ChatBox';
 import { getFullDateString } from '@utils/date';
+import { Message } from '@type/api/chat';
 
 interface Props {
   messages: Message[];
@@ -81,6 +81,7 @@ export default function ChatBoxBody({
                 chatId,
                 stringContent,
                 createdAt,
+                profileImage,
                 chatName: senderChatName,
               }: Message,
               index: number
@@ -95,6 +96,7 @@ export default function ChatBoxBody({
                   ref={index === 0 ? topMessageRef : null}
                   stringContent={stringContent}
                   createdAt={createdAt}
+                  profileImage={profileImage}
                   senderChatName={senderChatName}
                 />
               </Fragment>
@@ -107,6 +109,7 @@ export default function ChatBoxBody({
               chatId,
               stringContent,
               createdAt,
+              profileImage,
               chatName: senderChatName,
             }: Message,
             index
@@ -122,6 +125,7 @@ export default function ChatBoxBody({
                 stringContent={stringContent}
                 createdAt={createdAt}
                 senderChatName={senderChatName}
+                profileImage={profileImage}
                 ref={index === messages.length - 1 ? newMessageRef : null}
               />
             </Fragment>

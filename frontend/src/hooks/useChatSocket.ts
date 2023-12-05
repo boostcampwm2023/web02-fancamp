@@ -1,7 +1,7 @@
-import { Message } from '@components/chat/ChatBox';
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { DefaultEventsMap } from '@socket.io/component-emitter';
+import { Message } from '@type/api/chat';
 
 interface Parameters {
   isMaster: boolean;
