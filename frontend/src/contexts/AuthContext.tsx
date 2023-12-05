@@ -46,6 +46,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     (function setLocalStorageOnAuthChange() {
+      if (isLoading) {
+        return;
+      }
+
       if (auth) {
         localStorage.setItem(IS_SIGNED_IN, TRUE);
         return;
