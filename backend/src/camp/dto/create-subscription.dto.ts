@@ -11,7 +11,7 @@ import {
 export class CreateSubscriptionDto {
   @IsString()
   @ApiProperty()
-  camperId: number;
+  publicId: string;
 
   @IsNumberString()
   @ApiProperty()

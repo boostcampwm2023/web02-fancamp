@@ -2,9 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 import { CampRepository } from './camp.repository';
-import { UserService } from 'src/user/user.service';
 import { SubscriptionService } from './subscription.service';
-import { resourceLimits } from 'worker_threads';
 import { ImageService } from 'src/image/image.service';
 
 @Injectable()
@@ -12,7 +10,6 @@ export class CampService {
   constructor(
     private readonly campRepository: CampRepository,
     private readonly subscriptionService: SubscriptionService,
-    private readonly userService: UserService,
     private readonly imageService: ImageService,
   ) {}
   async create(createCampDto: CreateCampDto) {
@@ -25,34 +22,19 @@ export class CampService {
 
   async findOne(campName: string) {
     const camp = await this.campRepository.findOneByCampName(campName);
-    const user = await this.userService.findUserByPublicId(campName);
-    const subscriptionCount = await this.subscriptionService.getCount(user.id);
+    const subscriptionCount = await this.subscriptionService.getCount(
+      camp.masterId,
+    );
     return { ...camp, subscriptionCount };
   }
 
   async subscribe(publicId: string, campName: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    const camperId = user.id;
-    const camp = await this.findOne(campName);
-    const masterId = camp.masterId;
+    const camp = await this.campRepository.findOneByCampName(campName);
     this.subscriptionService.create({
-      camperId: camperId,
-      masterId: masterId,
+      publicId: publicId,
+      masterId: camp.masterId,
       isSubscribe: true,
     });
-  }
-
-  async getSubscriptions(publicId: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    return await this.subscriptionService.findAll(user.id);
-  }
-
-  async getSubscription(publicId: string, campName: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    const camperId = user.id;
-    const camp = await this.findOne(campName);
-    const masterId = camp.masterId;
-    return await this.subscriptionService.findOne(camperId, masterId);
   }
 
   async update(
@@ -70,12 +52,5 @@ export class CampService {
       camp.content = updateCampDto.content;
     }
     return this.campRepository.update(camp);
-  }
-
-  async remove(publicId: string, campName: string) {
-    const user = await this.userService.findUserByPublicId(publicId);
-    const camp = await this.campRepository.findOneByCampName(campName);
-
-    return this.subscriptionService.remove(user.id, camp.masterId);
   }
 }

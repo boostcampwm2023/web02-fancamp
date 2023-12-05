@@ -6,7 +6,6 @@ import { CampRepository } from './camp.repository';
 import { Camp } from './entities/camp.entity';
 import { SubscriptionRepository } from './subscription.repository';
 import { Subscription } from './entities/subscription.entity';
-import { UserModule } from 'src/user/user.module';
 import { SubscriptionService } from './subscription.service';
 import { AuthModule } from 'src/auth/auth.module';
 import { ImageModule } from 'src/image/image.module';
@@ -14,9 +13,7 @@ import { ImageModule } from 'src/image/image.module';
 @Module({
   imports: [
     forwardRef(() => AuthModule),
-    TypeOrmModule.forFeature([Camp]),
-    TypeOrmModule.forFeature([Subscription]),
-    UserModule,
+    TypeOrmModule.forFeature([Camp, Subscription]),
     ImageModule,
   ],
   controllers: [CampController],
