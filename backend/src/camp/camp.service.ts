@@ -25,8 +25,16 @@ export class CampService {
    * 모든 캠프 정보 가져오기
    * @returns 모든 캠프 정보
    */
-  findAll() {
-    return this.campRepository.findAll();
+  async findAll(cursor: number) {
+    const camps = await this.campRepository.findAll(cursor);
+    if (!camps.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+    return { cursor: cursor, nextCursor: camps.slice(-1)[0].campId, camps };
   }
 
   /**
@@ -34,11 +42,7 @@ export class CampService {
    * @returns 캠프 정보와 구독자 수
    */
   async findOne(campName: string) {
-    const camp = await this.campRepository.findOneByCampName(campName);
-    const subscriptionCount = await this.subscriptionService.getCount(
-      camp.masterId,
-    );
-    return { ...camp, subscriptionCount };
+    return this.campRepository.findOneByCampNameWithJoin(campName);
   }
 
   /**
@@ -78,10 +82,6 @@ export class CampService {
    * keyword로 검색하기
    * @returns
    */
-  search(keyword: string) {
-    return this.campRepository.search(keyword);
-  }
-
   search(keyword: string) {
     return this.campRepository.search(keyword);
   }

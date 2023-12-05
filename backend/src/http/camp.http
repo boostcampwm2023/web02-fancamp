@@ -14,11 +14,11 @@ Content-Type: application/json
 }
 
 
-### 캠프 전부 가져오기   
-GET {{server}}/camps
+### 캠프 전부 가져오기    
+GET {{server}}/camps?cursor=2
 
 ### 캠프 정보 가져오기
-GET {{server}}/camps/master2
+GET {{server}}/camps/master1
 
 ### 구독하기  
 POST {{server}}/camps/master2/subscriptions

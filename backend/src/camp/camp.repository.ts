@@ -3,6 +3,8 @@ import { DataSource, Repository } from 'typeorm';
 import { Camp } from './entities/camp.entity';
 import { CreateCampDto } from './dto/create-camp.dto';
 import { Subscription } from './entities/subscription.entity';
+import { Post } from 'src/post/entities/post.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class CampRepository {
@@ -16,8 +18,25 @@ export class CampRepository {
     return this.campRepository.save(createCampDto);
   }
 
-  findAll() {
-    return this.campRepository.find();
+  findAll(cursor: number) {
+    return this.campRepository
+      .createQueryBuilder('camp')
+      .leftJoin(
+        Subscription,
+        'subscription',
+        'camp.masterId = subscription.masterId AND subscription.isSubscribe = true',
+      )
+      .leftJoin(User, 'user', 'camp.masterId = user.id')
+      .select([
+        'camp.*',
+        'user.publicId AS masterPublicId',
+        'user.profileImage AS masterProfileImage',
+        'COUNT(subscription.subscriptionId) AS subscriptionCount',
+      ])
+      .where('camp.campId > :cursor', { cursor })
+      .groupBy('camp.campId')
+      .limit(40)
+      .getRawMany();
   }
 
   findOneByMasterId(masterId: number) {
@@ -36,18 +55,33 @@ export class CampRepository {
    * @returns
    */
   async findOneByCampNameWithJoin(campName: string) {
-    return await this.campRepository
+    const result = await this.campRepository
       .createQueryBuilder('camp')
-      .innerJoin(
+      .leftJoin(
         Subscription,
         'subscription',
-        'camp.masterId = subscription.masterId',
+        'camp.masterId = subscription.masterId AND subscription.isSubscribe = true',
       )
-      .select(['camp.*', 'COUNT(*) AS subscription_count'])
+      .select([
+        'camp.*',
+        'COUNT(subscription.subscriptionId) AS subscriptionCount',
+      ])
       .where({ campName })
-      .andWhere('subscription.isSubscribe = true')
       .groupBy('camp.campId') // 그룹화할 열 추가
       .getRawOne();
+
+    const postCount = await this.campRepository
+      .createQueryBuilder('camp')
+      .innerJoin(
+        Post,
+        'post',
+        'camp.campId = post.campId AND post.isDeleted = false',
+      )
+      .select(['COUNT(*) AS postCount'])
+      .where({ campName })
+      .groupBy('camp.campId') // 그룹화할 열 추가
+      .getRawOne();
+    return { ...result, ...postCount };
   }
 
   /**

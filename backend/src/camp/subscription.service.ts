@@ -36,11 +36,9 @@ export class SubscriptionService {
         campName,
       ))
     ) {
-      throw new HttpException(
-        ERR_MESSAGE.NOT_SUBSCRIBED,
-        HttpStatus.BAD_REQUEST,
-      );
+      return { isSubscribe: false };
     }
+    return { isSubscribe: true };
   }
 
   /**
