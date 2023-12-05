@@ -31,7 +31,7 @@ function CommentCard({ comment }: CommentProps) {
         weight={300}
         className="break-all pl-sm pr-sm"
         style={{
-          background: `linear-gradient(90deg, ${setimentColorHex}40 0%, ${setimentColorHex}50 86.15%, ${setimentColorHex}70 100%)`,
+          background: `linear-gradient(90deg, ${setimentColorHex}40 0%, ${setimentColorHex}50 80%, ${setimentColorHex}70 100%)`,
         }}
       >
         {content}
