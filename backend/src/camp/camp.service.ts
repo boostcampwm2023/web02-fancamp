@@ -78,4 +78,8 @@ export class CampService {
 
     return this.subscriptionService.remove(user.id, camp.masterId);
   }
+
+  search(keyword: string) {
+    return this.campRepository.search(keyword);
+  }
 }

@@ -30,4 +30,11 @@ export class CampRepository {
   async update(camp: Camp) {
     return this.campRepository.save(camp);
   }
+  search(keyword: string) {
+    return this.campRepository
+      .createQueryBuilder()
+      .where(`MATCH (campName) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+      .orWhere(`MATCH (content) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
+      .getMany();
+  }
 }

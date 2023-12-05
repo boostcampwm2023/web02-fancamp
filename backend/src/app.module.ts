@@ -27,7 +27,7 @@ import { NoticeModule } from './notice/notice.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
-      logging: true,
+      // logging: true,
       entities: [User],
       autoLoadEntities: true,
     }),
