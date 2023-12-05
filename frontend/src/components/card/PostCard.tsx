@@ -39,7 +39,7 @@ function PostCard({
       onClick={() => handleOnClick(postId)}
     >
       {imageSrc ? (
-        <Image src="" className={cardImageClassName} alt="" />
+        <Image src={imageSrc} className={cardImageClassName} alt="" />
       ) : (
         <div className={cardTextClassName}>
           <Text color="text-secondary">{content}</Text>

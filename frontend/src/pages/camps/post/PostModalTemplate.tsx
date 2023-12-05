@@ -1,3 +1,6 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-curly-brace-presence */
+
 import Text from '@components/ui/Text';
 import CommentCard from '@components/card/CommentCard';
 import { Post } from '@type/api/post';
@@ -6,7 +9,7 @@ import { Comment } from '@type/api/comment';
 import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
 
@@ -89,21 +92,25 @@ function PostModalTemplate({
             </Text>
           </Hr>
           <ul className="flex flex-col gap-lg p-md">
-            {newComments.map((comment: Comment) => (
-              <CommentCard
-                comment={comment}
-                key={`comment-${comment.commentId}`}
-              />
-            ))}
-            {comments.pages.map((commentPage: any) =>
-              commentPage.result.map((comment: any) => (
+            {newComments.map((comment: Comment) => {
+              return (
                 <CommentCard
                   comment={comment}
-                  key={`comment-${comment.commentId}`}
+                  key={`new-comment-${comment.commentId}`}
                 />
-              ))
-            )}
-            <div ref={observerRef} className="h-sm" />
+              );
+            })}
+            {comments.pages.map((commentPage: any, index: number) => (
+              <Fragment key={index}>
+                {commentPage.result.map((comment: any) => (
+                  <CommentCard
+                    comment={comment}
+                    key={`comment-${comment.commentId}`}
+                  />
+                ))}
+              </Fragment>
+            ))}
+            <div ref={observerRef} className="h-[0.0625rem]" />
           </ul>
         </div>
         <InputComment
