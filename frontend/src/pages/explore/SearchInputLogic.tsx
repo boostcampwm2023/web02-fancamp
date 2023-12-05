@@ -1,4 +1,4 @@
-import { useDebounce } from '@hooks/api/useDebounce';
+import { useDebounce } from '@hooks/useDebounce';
 import { searchCampsMutation } from '@hooks/api/useSearchQuery';
 import { Camp } from '@type/api/camp';
 import { highlightText } from '@utils/text';
