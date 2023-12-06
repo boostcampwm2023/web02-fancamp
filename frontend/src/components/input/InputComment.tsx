@@ -7,7 +7,7 @@ import EditIcon from '@assets/icons/editIcon.svg?react';
 interface InputCommentProps {
   comment: string;
   setComment: React.Dispatch<React.SetStateAction<string>>;
-  handleCommentSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  handleCommentSubmit: (event: any) => void;
   status: {
     isError: boolean;
     isPending: boolean;
@@ -43,7 +43,6 @@ function InputComment({
                 ? '!bg-point-green'
                 : '!bg-point-yellow'
           }
-          onClick={handleCommentSubmit}
         >
           {status.isError ? (
             <ErrorIcon width={16} height={16} />
