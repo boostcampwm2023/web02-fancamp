@@ -11,12 +11,10 @@ export const getCampSubscriptionQuery = (campName: string) => {
   const { data, isError, isLoading } = useSuspenseQuery<any>({
     queryKey: ['camp', 'subscription', campName],
     queryFn: () =>
-      fetch(`${BASE_URL}/camps/${campName}/subscriptions`, {
+      useFetch(`${BASE_URL}/camps/${campName}/subscriptions`, {
         method: 'GET',
         credentials: 'include',
-      })
-        .then((res) => res.ok)
-        .catch(),
+      }),
     gcTime: 0,
     staleTime: 0,
   });
@@ -27,10 +25,10 @@ export const getCampSubscriptionQuery = (campName: string) => {
 export const subscribeMutation = ({ onSuccess, onError }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ campId }: SubscribeMutation) =>
-      useFetch(`${BASE_URL}/camps/${campId}/subscriptions`, {
+      fetch(`${BASE_URL}/camps/${campId}/subscriptions`, {
         method: 'POST',
         credentials: 'include',
-      }),
+      }).then((res) => res.ok),
     onSuccess,
     onError,
   });

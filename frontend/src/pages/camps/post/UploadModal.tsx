@@ -4,6 +4,7 @@ import TextArea from '@components/ui/TextArea';
 import SubmitButton from '@components/button/SubmitButton';
 import UploadArea from '@components/file/UploadArea';
 import { postPostMutation } from '@hooks/api/usePostQuery';
+import { useParams } from 'react-router-dom';
 
 interface UploadModalProps {
   handleCloseModal: () => void;
@@ -12,6 +13,7 @@ interface UploadModalProps {
 function UploadModal({ handleCloseModal }: UploadModalProps) {
   const [content, setContent] = useState<string>('');
   const [files, setFiles] = useState<File[]>([]);
+  const { campId } = useParams();
 
   const {
     mutate: postPost,
@@ -31,6 +33,7 @@ function UploadModal({ handleCloseModal }: UploadModalProps) {
       formData.append('files', file);
     });
     formData.append('content', content);
+    formData.append('campName', campId!);
     postPost({ formData });
   };
 
