@@ -12,6 +12,7 @@ import useAuth from '@hooks/useAuth';
 import SubscribeButton from '@components/button/SubscribeButton';
 import CheckIcon from '@assets/icons/checkIcon.svg?react';
 import { useState } from 'react';
+import Image from '@components/ui/Image';
 
 function CampInfo() {
   const { campId } = useParams();
@@ -43,48 +44,66 @@ function CampInfo() {
   };
 
   return (
-    <div className="mb-xl flex w-full items-center gap-xl">
-      <ProfileImage src={profileImage} />
-      <div className="flex flex-1 items-center justify-between">
-        <div className="flex flex-col justify-evenly gap-md">
-          <Text size={20} color="text-primary">
-            {camp.campName}
-          </Text>
-          <Text size={14} color="point-lavender">
-            JUST DO IT.
-          </Text>
-          <div className="flex gap-sm">
-            <Text size={13} color="text-primary">
-              포스트&nbsp;&nbsp;{camp.subscriptionCount}개
+    <div className="relative flex h-[16rem] flex-col justify-end">
+      <div className="absolute top-[0] h-[16rem] w-full">
+        <Image
+          src={camp.bannerImage}
+          className="absolute top-[0] z-0 h-full w-full object-cover"
+        />
+        <div
+          className="absolute top-[0] z-10 h-full w-full"
+          style={{
+            background:
+              'linear-gradient(180deg, #11111100 0%, #11111150 70%, #111111 100%)',
+          }}
+        />
+      </div>
+      <div className="relative z-20 flex w-full items-center gap-xl  p-xl">
+        <ProfileImage src={profileImage} />
+        <div className="flex flex-1 items-center justify-between">
+          <div className="flex flex-col justify-evenly gap-md">
+            <Text size={20} color="surface-primary">
+              {camp.campName}
             </Text>
-            <Text size={13} color="text-primary">
-              ·
-            </Text>
-            <Text size={13} color="text-primary">
-              구독자&nbsp;&nbsp;{camp.subscriptionCount}명
-            </Text>
-          </div>
-        </div>
-        <div>
-          {!auth?.isMaster && (
-            <SubscribeButton
-              subscribed={isSubscribed}
-              onClick={handleSubscribe}
-            >
-              <Text
-                size={14}
-                color={isSubscribed ? 'text-secondary' : 'point-blue'}
-                className="flex items-center"
-              >
-                {isSubscribed ? (
-                  <CheckIcon className="[&>path]:stroke-text-secondary" />
-                ) : (
-                  '+ '
-                )}
-                {isSubscribed ? '구독중' : '구독하기'}
+            {camp.content && (
+              <Text size={14} color="point-lavender">
+                {camp.content}
               </Text>
-            </SubscribeButton>
-          )}
+            )}
+
+            <div className="flex gap-sm">
+              <Text size={13} color="surface-primary">
+                포스트&nbsp;&nbsp;{camp.subscriptionCount}개
+              </Text>
+              <Text size={13} color="surface-primary">
+                ·
+              </Text>
+              <Text size={13} color="surface-primary">
+                구독자&nbsp;&nbsp;{camp.subscriptionCount}명
+              </Text>
+            </div>
+          </div>
+          <div>
+            {!auth?.isMaster && (
+              <SubscribeButton
+                subscribed={isSubscribed}
+                onClick={handleSubscribe}
+              >
+                <Text
+                  size={16}
+                  color={isSubscribed ? 'text-secondary' : 'surface-primary'}
+                  className="flex items-center"
+                >
+                  {isSubscribed ? (
+                    <CheckIcon className="[&>path]:stroke-text-secondary" />
+                  ) : (
+                    '+ '
+                  )}
+                  {isSubscribed ? '구독중' : '구독하기'}
+                </Text>
+              </SubscribeButton>
+            )}
+          </div>
         </div>
       </div>
     </div>

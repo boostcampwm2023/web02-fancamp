@@ -14,9 +14,7 @@ export default function Layout() {
           pathname.endsWith('chat') ? fixScroll : ''
         }`}
       >
-        <div
-          className={`content ${pathname !== '/feed' ? 'py-2xl' : 'px-2xl'}`}
-        >
+        <div className={`content ${pathname !== '/feed' ? '' : 'px-2xl'}`}>
           <Outlet />
         </div>
       </main>
