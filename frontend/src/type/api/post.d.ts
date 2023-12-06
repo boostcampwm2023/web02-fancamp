@@ -16,4 +16,8 @@ export interface Post {
   postId: number;
   publicId: string;
   url: PostFile[];
+  translation?: {
+    languageCode: 'en' | 'ko' | 'ja';
+    content: string;
+  }[];
 }

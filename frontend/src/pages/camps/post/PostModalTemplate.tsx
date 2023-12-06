@@ -13,6 +13,7 @@ import { Fragment, useEffect, useRef } from 'react';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
 import useAuth from '@hooks/useAuth';
+import useLanguage from '@hooks/useLanguage';
 
 interface PostModalTemplateProps {
   camp: Camp;
@@ -55,6 +56,7 @@ function PostModalTemplate({
   deleteComment,
 }: PostModalTemplateProps) {
   const { auth } = useAuth();
+  const { language } = useLanguage();
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
     fetchComments();
@@ -85,7 +87,10 @@ function PostModalTemplate({
           <PostConentCard
             profileImage={profileImage}
             campName={camp.campName}
-            content={post.content}
+            content={
+              post.translation?.find((item) => item.languageCode === language)
+                ?.content || post.content
+            }
             createdAt={post.createdAt}
             handleLike={handleLike}
             handlePostModalClose={handlePostModalClose}

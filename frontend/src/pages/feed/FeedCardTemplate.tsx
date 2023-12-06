@@ -9,6 +9,7 @@ import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
+import useLanguage from '@hooks/useLanguage';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -52,6 +53,7 @@ function FeedCardTemplate({
   const { observe } = useIntersectionObserver(() => {
     fetchComments();
   });
+  const { language } = useLanguage();
 
   useEffect(() => {
     if (observerRef.current) {
@@ -91,7 +93,10 @@ function FeedCardTemplate({
         <PostConentCard
           profileImage={profileImage}
           campName={camp.campName}
-          content={post.content}
+          content={
+            post.translation?.find((item) => item.languageCode === language)
+              ?.content || post.content
+          }
           createdAt={post.createdAt}
           handleLike={handleLike}
           isLike={isLike}
