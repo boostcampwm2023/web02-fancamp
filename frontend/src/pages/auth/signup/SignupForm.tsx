@@ -122,6 +122,7 @@ export default function SignupForm({
                     : ''
               }
               onBlur={handleBlurEmail}
+              autoFocus
             />
           ) : signupStatus === 'password' ? (
             <div className="flex flex-col gap-md">
@@ -134,7 +135,8 @@ export default function SignupForm({
                   !isPasswordOk ? AUTH_CONSTANTS.signup.error.password : ''
                 }
                 onBlur={handleBlurPassword}
-              />{' '}
+                autoFocus
+              />
               <Input
                 label="비밀번호 확인"
                 type="password"

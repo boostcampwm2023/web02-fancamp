@@ -59,6 +59,7 @@ export default function SigninForm({
             placeholder="fancamp@naver.com"
             errorMessage={!isEmailOk ? AUTH_CONSTANTS.signin.error.email : ''}
             onBlur={handleBlurEmail}
+            autoFocus
           />
           <Input
             label="비밀번호"

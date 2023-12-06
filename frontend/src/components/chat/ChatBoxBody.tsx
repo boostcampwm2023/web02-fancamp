@@ -61,7 +61,7 @@ export default function ChatBoxBody({
   });
 
   return (
-    <div className="flex h-[600px] flex-col-reverse overflow-y-scroll border-l border-r">
+    <div className="flex h-[calc(100vh-380px)] flex-col-reverse overflow-y-scroll border border-contour-primary">
       <ul className="flex flex-col gap-4 p-8">
         {isFetchingNextPage && (
           <>

@@ -49,7 +49,7 @@ export default function ChatBox() {
 
   return (
     <>
-      <div id="#chatbox" className="relative flex h-[900px] flex-col p-8">
+      <div id="#chatbox" className="relative flex flex-col">
         <ChatBoxNavBar isMaster={isMaster} isMasterOnline={isMasterOnline} />
         <ChatBoxBody
           messages={messages}

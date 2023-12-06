@@ -53,7 +53,7 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
               isMyMessage
                 ? 'rounded-br-none bg-point-yellow text-text-primary'
                 : 'rounded-tl-none bg-point-lavender text-text-primary'
-            } rounded-lg p-4 display-regular-16`}
+            } rounded-lg border p-4 display-regular-16`}
           >
             {isMyMessage ? stringContent : chatNameReplacedText}
           </span>

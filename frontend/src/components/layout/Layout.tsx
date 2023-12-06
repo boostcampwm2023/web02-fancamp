@@ -3,16 +3,19 @@ import SubscribedMenu from '@components/menu/SubscribedMenu';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export default function Layout() {
-  const location = useLocation();
+  const { pathname } = useLocation();
+  const fixScroll = 'h-screen overflow-y-hidden';
 
   return (
     <div className="relative flex w-full justify-between">
       <SideMenu />
-      <main className="min-w-[48rem] flex-1">
+      <main
+        className={`min-w-[48rem] flex-1 ${
+          pathname.endsWith('chat') ? fixScroll : ''
+        }`}
+      >
         <div
-          className={`content ${
-            location.pathname !== '/feed' ? 'py-2xl' : 'px-2xl'
-          }`}
+          className={`content ${pathname !== '/feed' ? 'py-2xl' : 'px-2xl'}`}
         >
           <Outlet />
         </div>

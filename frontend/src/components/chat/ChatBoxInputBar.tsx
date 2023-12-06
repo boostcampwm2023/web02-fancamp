@@ -55,10 +55,11 @@ export default function ChatBoxInputBar({
     <form onSubmit={handleMessageSubmit} className="flex border">
       <input
         name="inputText"
-        className="w-full bg-contour-primary p-4 display-regular-16"
+        className="w-full p-4 display-regular-16"
         onChange={handleInputTextChange}
         value={inputText}
         placeholder="메세지를 보내보세요! 😁"
+        autoFocus
       />
       <button
         className="w-[5rem] border-l bg-point-yellow p-2 display-regular-14 disabled:bg-text-secondary"
