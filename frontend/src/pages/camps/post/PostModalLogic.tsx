@@ -9,10 +9,12 @@ import {
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { Comment } from '@type/api/comment';
+import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
+import { commentSocket } from '@API/socket';
 import PostModalTemplate from './PostModalTemplate';
 
 interface PostModalLogicProps {
-  postId: string;
+  postId: number;
   handlePostModalClose: () => void;
 }
 
@@ -23,7 +25,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComments, setNewComments] = useState<Comment[]>([]);
 
   if (!campId) {
     navigate('/');
@@ -32,16 +34,18 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(campId);
-  const { data: commentsPages, fetchNextPage: fetchComments } =
+  const { data: comments, fetchNextPage: fetchComments } =
     getCommentsInfiniteQuery(postId);
+  const {
+    data: { profileImage },
+  } = getProfileByIdQuery(campId);
 
   const {
     mutate: postComment,
     isError: isPostCommentError,
     isPending: isPostCommentPending,
   } = postCommentMutation({
-    onSuccess: (newComment: Comment) => {
-      setComments([newComment, ...comments]);
+    onSuccess: () => {
       queryClient.setQueryData(['post', postId], {
         ...post,
         commentCount: post.commentCount + 1,
@@ -71,12 +75,24 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     });
 
   useEffect(() => {
-    setLike(post.isLike);
-  }, []);
+    const handleCreatePost = (data: any) => {
+      setNewComments((_) => [data, ..._]);
+    };
+
+    commentSocket.connect();
+
+    commentSocket.emit('enterCommentPage', { postId });
+    commentSocket.on('createComment', handleCreatePost);
+
+    return () => {
+      commentSocket.emit('leaveCommentPage', { postId });
+      commentSocket.off('createComment', handleCreatePost);
+    };
+  }, [postId]);
 
   useEffect(() => {
-    setComments([...comments, ...(commentsPages.pages.at(-1)?.result || [])]);
-  }, [commentsPages.pages.length]);
+    setLike(post.isLike);
+  }, []);
 
   useEffect(() => {
     if (scrollRef.current && isCommentsUpdated) {
@@ -107,8 +123,10 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     <PostModalTemplate
       camp={camp}
       post={post}
+      profileImage={profileImage}
       isLike={isLike}
       comments={comments}
+      newComments={newComments}
       inputComment={inputComment}
       setInputComment={setInputComment}
       handlePostModalClose={handlePostModalClose}

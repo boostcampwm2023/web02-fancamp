@@ -1,6 +1,11 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import { BASE_URL } from '@constants/URLs';
+import { MutationProps } from '@type/api/api';
 import useFetch from './useFetch';
+
+interface SubscribeMutation {
+  campId: string;
+}
 
 export const getCampSubscriptionQuery = (campName: string) => {
   const { data, isError, isLoading } = useSuspenseQuery<any>({
@@ -17,16 +22,30 @@ export const getCampSubscriptionQuery = (campName: string) => {
   return { data, isError, isLoading };
 };
 
-// export const deleteLikeMutation = ({ onSuccess, onError }: MutationProps) => {
-//   const { mutate, isPending, isError, isSuccess } = useMutation({
-//     mutationFn: ({ postId }: PostLikeMutationFnProps) =>
-//       useFetch(`${BASE_URL}/posts/${postId}/likes`, {
-//         method: 'DELETE',
-//         credentials: 'include',
-//       }),
-//     onSuccess,
-//     onError,
-//   });
+export const subscribeMutation = ({ onSuccess, onError }: MutationProps) => {
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: ({ campId }: SubscribeMutation) =>
+      fetch(`${BASE_URL}/camps/${campId}/subscriptions`, {
+        method: 'POST',
+        credentials: 'include',
+      }).then((res) => res.ok),
+    onSuccess,
+    onError,
+  });
 
-//   return { mutate, isPending, isError, isSuccess };
-// };
+  return { mutate, isPending, isError, isSuccess };
+};
+
+export const unsubscribeMutation = ({ onSuccess, onError }: MutationProps) => {
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: ({ campId }: SubscribeMutation) =>
+      useFetch(`${BASE_URL}/camps/${campId}/subscriptions`, {
+        method: 'DELETE',
+        credentials: 'include',
+      }),
+    onSuccess,
+    onError,
+  });
+
+  return { mutate, isPending, isError, isSuccess };
+};

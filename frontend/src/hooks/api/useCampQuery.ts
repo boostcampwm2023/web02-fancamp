@@ -1,4 +1,8 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import {
+  useMutation,
+  useSuspenseInfiniteQuery,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { Camp } from '@type/api/camp';
 import { Post } from '@type/api/post';
 import { MutationProps } from '@type/api/api';
@@ -53,4 +57,20 @@ export const updateCampMutation = ({ onSuccess, onError }: MutationProps) => {
   });
 
   return { mutate, isPending, isError, isSuccess };
+};
+
+export const getAllCampsInfiniteQuery = () => {
+  const { data, fetchNextPage, isFetching } = useSuspenseInfiniteQuery<any>({
+    queryKey: ['camps'],
+    queryFn: ({ pageParam = 0 }) =>
+      useFetch(`${BASE_URL}/camps?cursor=${pageParam}`, {
+        method: 'GET',
+      }),
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    initialPageParam: 0,
+    gcTime: 0,
+    staleTime: 0,
+  });
+
+  return { data, fetchNextPage, isFetching };
 };

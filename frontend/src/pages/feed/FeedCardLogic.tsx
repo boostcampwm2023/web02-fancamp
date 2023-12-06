@@ -9,10 +9,11 @@ import {
 } from '@hooks/api/useCommentQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
+import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
-  postId: string;
+  postId: number;
 }
 
 const FeedCard = memo(function FeedCard({ postId }: FeedCardProps) {
@@ -34,7 +35,7 @@ function FeedCardLogic({ postId }: FeedCardProps) {
   const [inputComment, setInputComment] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
-  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComments, setNewComments] = useState<Comment[]>([]);
 
   if (!postId) {
     return <div className="relative mb-[5vh] mt-[5vh] h-[70vh]" />;
@@ -42,8 +43,11 @@ function FeedCardLogic({ postId }: FeedCardProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(post.publicId);
-  const { data: commentsPages, fetchNextPage: fetchComments } =
+  const { data: comments, fetchNextPage: fetchComments } =
     getCommentsInfiniteQuery(postId);
+  const {
+    data: { profileImage },
+  } = getProfileByIdQuery(post.publicId);
 
   const {
     mutate: postComment,
@@ -51,7 +55,7 @@ function FeedCardLogic({ postId }: FeedCardProps) {
     isPending: isPostCommentPending,
   } = postCommentMutation({
     onSuccess: (newComment: Comment) => {
-      setComments([newComment, ...comments]);
+      setNewComments([newComment, ...newComments]);
       queryClient.setQueryData(['post', postId], {
         ...post,
         commentCount: post.commentCount + 1,
@@ -85,10 +89,6 @@ function FeedCardLogic({ postId }: FeedCardProps) {
   }, []);
 
   useEffect(() => {
-    setComments([...comments, ...(commentsPages.pages.at(-1)?.result || [])]);
-  }, [commentsPages.pages.length]);
-
-  useEffect(() => {
     if (scrollRef.current && isCommentsUpdated) {
       scrollRef.current.scrollTo({ top: 0, behavior: 'smooth' });
       setCommentsUpdated(false);
@@ -117,8 +117,10 @@ function FeedCardLogic({ postId }: FeedCardProps) {
     <FeedCardTemplate
       camp={camp}
       post={post}
+      profileImage={profileImage}
       isLike={isLike}
       comments={comments}
+      newComments={newComments}
       inputComment={inputComment}
       setInputComment={setInputComment}
       handleCommentSubmit={handleCommentSubmit}

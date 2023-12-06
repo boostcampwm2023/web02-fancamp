@@ -13,8 +13,10 @@ import MediaSlider from '@components/slider/MediaSlider';
 interface FeedCardTemplateProps {
   camp: Camp;
   post: Post;
+  profileImage: string;
   isLike: boolean;
-  comments: Comment[];
+  comments: any;
+  newComments: Comment[];
   inputComment: string;
   setInputComment: React.Dispatch<React.SetStateAction<string>>;
   handleCommentSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -30,8 +32,10 @@ interface FeedCardTemplateProps {
 function FeedCardTemplate({
   camp,
   post,
+  profileImage,
   isLike,
   comments,
+  newComments,
   inputComment,
   setInputComment,
   handleCommentSubmit,
@@ -67,12 +71,12 @@ function FeedCardTemplate({
 
   return (
     <div
-      className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col gap-[0.0625rem] border-sm border-text-primary bg-text-primary"
+      className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col border-sm border-text-primary bg-text-primary"
       onTransitionEnd={(e) => e.stopPropagation()}
     >
       {post.url.length !== 0 && (
         <div className="h-[18rem] w-full">
-          <MediaSlider width={27} medias={post.url} />
+          <MediaSlider width={32} medias={post.url} />
         </div>
       )}
       <div
@@ -81,6 +85,7 @@ function FeedCardTemplate({
         ref={scrollRef}
       >
         <PostConentCard
+          profileImage={profileImage}
           campName={camp.campName}
           content={post.content}
           createdAt={post.createdAt}
@@ -89,19 +94,28 @@ function FeedCardTemplate({
           likeCount={post.likeCount}
         />
         <Hr color="text-secondary">
-          <Text size={12} color="point-blue">
+          <Text size={13} color="point-blue">
             {post.commentCount}개의 코멘트
           </Text>
         </Hr>
-        <ul className="flex flex-col gap-lg p-md">
-          {comments.map((comment) => (
+        <ul className="flex flex-col gap-lg p-lg">
+          {newComments.map((comment: Comment) => (
             <CommentCard
               comment={comment}
               key={`comment-${comment.commentId}`}
             />
           ))}
+          {comments.pages.map((commentPage: any) =>
+            commentPage.result.map((comment: any) => (
+              <CommentCard
+                comment={comment}
+                key={`comment-${comment.commentId}`}
+              />
+            ))
+          )}
+
+          <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
-        <div ref={observerRef} className="h-sm" />
       </div>
       <InputComment
         comment={inputComment}

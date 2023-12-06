@@ -1,4 +1,7 @@
+/* eslint-disable react/button-has-type */
+
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  type?: 'button' | 'submit' | 'reset';
   children?: React.ReactNode;
 }
 
@@ -8,12 +11,12 @@ const buttonClassName =
   'transition-all duration-200 ';
 
 function Button(props: ButtonProps) {
-  const { children, className, ...buttonProps } = props;
+  const { type = 'button', children, className, ...buttonProps } = props;
 
   return (
     <button
       {...buttonProps}
-      type="button"
+      type={type}
       className={buttonClassName + (className || '')}
     >
       {children}

@@ -40,3 +40,18 @@ export const updateProfileMutation = ({
 
   return { mutate, isPending, isError, isSuccess };
 };
+
+export const getProfileByIdQuery = (publicId: string) => {
+  const { data, isError, isLoading } = useSuspenseQuery<User>({
+    queryKey: ['user', publicId],
+    queryFn: () =>
+      useFetch(`${BASE_URL}/auth/users/profileImage/${publicId}`, {
+        method: 'GET',
+        credentials: 'include',
+      }),
+    gcTime: 0,
+    staleTime: 0,
+  });
+
+  return { data, isError, isLoading };
+};

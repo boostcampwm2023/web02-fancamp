@@ -26,13 +26,13 @@ function LikeButton({
   return (
     <div className="flex justify-between">
       {isMaster ? (
-        <Text size={12}>좋아요 {numberToString(likeCount)}</Text>
+        <Text size={13}>좋아요 {numberToString(likeCount)}</Text>
       ) : (
         <Button liked={isLike} onClick={handleLike}>
-          <Text size={12}>좋아요 {numberToString(likeCount)}</Text>
+          <Text size={13}>좋아요 {numberToString(likeCount)}</Text>
         </Button>
       )}
-      <Text size={12} color="text-secondary" className="text-end">
+      <Text size={13} color="text-secondary" className="text-end">
         {formatDate(createdAt)}
       </Text>
     </div>

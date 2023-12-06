@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { EmailStatus, SignupStatus } from '@type/client/auth';
+import { SignupStatus, ValidateStatus } from '@type/client/auth';
 import { FetchStatus } from '@type/api/status';
 import useAuth from '@hooks/useAuth';
 import { validateSign } from '@utils/validate';
-import { signup } from '@API/auth';
+import {
+  createUserMutate,
+  validateEmailMutate,
+  validatePublicIdMutate,
+} from '@hooks/api/useAuthQuery';
 import SignupForm from './SignupForm';
 
 export default function SignupPage() {
@@ -16,14 +22,49 @@ export default function SignupPage() {
   const [publicId, setPublicId] = useState<string>('');
   const [profileImage] = useState<string>('');
   const [isMaster, setMaster] = useState<boolean>(false);
-  const [isEmailOk, setEmailOk] = useState<EmailStatus>('ok');
-  const [signStatus, setSignStatus] = useState<FetchStatus>({
+  const [isEmailOk, setEmailOk] = useState<ValidateStatus>('ok');
+  const [_, setPublicIdOk] = useState<ValidateStatus>('ok');
+  const [signStatus] = useState<FetchStatus>({
     isPending: false,
     isError: false,
     isSuccess: false,
   });
   const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
+
+  const { mutate: createUser } = createUserMutate({
+    onSuccess: (data) => {
+      setAuth(data);
+      setStatus('finish');
+    },
+  });
+  const { mutate: validateEmail } = validateEmailMutate({
+    onSuccess: (data) => {
+      const { duplicateEmail } = data;
+      if (duplicateEmail) {
+        setEmailOk('duplicatedError');
+        return;
+      }
+      setStatus('password');
+    },
+  });
+  const { mutate: validatePublicId } = validatePublicIdMutate({
+    onSuccess: (data) => {
+      const { duplicatePublicId } = data;
+      if (duplicatePublicId) {
+        setPublicIdOk('duplicatedError');
+        return;
+      }
+      createUser({
+        email,
+        password,
+        chatName,
+        publicId,
+        profileImage,
+        isMaster,
+      });
+    },
+  });
 
   useEffect(() => {
     if (auth) {
@@ -36,32 +77,7 @@ export default function SignupPage() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (signupStatus === 'email') {
-      const validateEmail = validateSign.isEmailOk(email);
-      if (!validateEmail) {
-        setEmailOk('formatError');
-        return;
-      }
-      setSignStatus({
-        isPending: true,
-        isError: false,
-        isSuccess: false,
-      });
-      try {
-        // await checkEmail(email);
-        setStatus('password');
-        setSignStatus({
-          isPending: false,
-          isError: false,
-          isSuccess: true,
-        });
-      } catch (error) {
-        setEmailOk('duplicatedError');
-        setSignStatus({
-          isPending: false,
-          isError: true,
-          isSuccess: false,
-        });
-      }
+      validateEmail({ email });
     } else if (signupStatus === 'password') {
       const validatePassword = validateSign.isPasswordOk(password);
       const validateConfirmPassword = password === confirmPassword;
@@ -69,35 +85,7 @@ export default function SignupPage() {
         setStatus('profile');
       }
     } else if (signupStatus === 'profile') {
-      // 관련 상태 검증 규칙 추가하기
-      setSignStatus({
-        isPending: true,
-        isError: false,
-        isSuccess: false,
-      });
-      try {
-        const resAuth = await signup(
-          email,
-          password,
-          chatName,
-          publicId,
-          profileImage,
-          isMaster
-        );
-        setAuth(resAuth);
-        setStatus('finish');
-        setSignStatus({
-          isPending: false,
-          isError: false,
-          isSuccess: true,
-        });
-      } catch (error) {
-        setSignStatus({
-          isPending: false,
-          isError: true,
-          isSuccess: false,
-        });
-      }
+      validatePublicId({ publicId });
     } else if (signupStatus === 'finish') {
       navigate('/');
     }

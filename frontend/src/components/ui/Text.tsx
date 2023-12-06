@@ -2,26 +2,26 @@ import { COLORS } from '@constants/colors';
 import React from 'react';
 
 interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
-  children: React.ReactNode;
-  size?: 12 | 14 | 20;
-  weight?: 400 | 300;
+  children?: React.ReactNode;
+  size?: 13 | 14 | 16 | 20;
+  weight?: 100 | 300 | 400;
   color?: keyof typeof COLORS;
   className?: string;
 }
 
 const font = {
-  12: {
-    300: 'display-light-12',
-    400: 'display-regular-12',
-  },
-  14: {
-    300: 'display-light-14',
-    400: 'display-regular-14',
-  },
-  20: {
-    300: 'display-light-20',
-    400: 'display-regular-20',
-  },
+  '13/100': 'display-thin-13',
+  '13/300': 'display-light-13',
+  '13/400': 'display-regular-13',
+  '14/100': 'display-thin-14',
+  '14/300': 'display-light-14',
+  '14/400': 'display-regular-14',
+  '16/100': 'display-thin-16',
+  '16/300': 'display-light-16',
+  '16/400': 'display-regular-16',
+  '20/100': 'display-thin-20',
+  '20/300': 'display-light-20',
+  '20/400': 'display-regular-20',
 };
 
 const fontColors = {
@@ -38,12 +38,20 @@ const fontColors = {
 };
 
 function Text(props: TextProps) {
-  const { children, size, weight, color, className, ...textProps } = props;
+  const {
+    children,
+    size = 14,
+    weight = 400,
+    color,
+    className,
+    ...textProps
+  } = props;
+  const fontClass = font[`${size}/${weight}`];
 
   return (
     <span
       {...textProps}
-      className={`w-fit smooth-transition ${font[size || 14][weight || 400]} ${
+      className={`w-fit smooth-transition ${fontClass} ${
         fontColors[color || 'text-primary']
       } ${className || ''} `}
     >

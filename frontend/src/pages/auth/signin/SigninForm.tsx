@@ -79,11 +79,11 @@ export default function SigninForm({
             errorMessage="이메일 또는 비밀번호가 일치하지 않습니다."
           />
           <div className="flex justify-center gap-sm">
-            <Text size={12} color="text-secondary">
+            <Text size={13} color="text-secondary">
               {AUTH_CONSTANTS.signin.induce.signup.text}
             </Text>
             <Link to="/auth/signup" className="flex">
-              <Text size={12} color="point-blue">
+              <Text size={13} color="point-blue">
                 {AUTH_CONSTANTS.signin.induce.signup.link}
               </Text>
             </Link>

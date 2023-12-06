@@ -1,23 +1,19 @@
 import { signout } from '@API/auth';
-import { noticeSocket } from '@API/socket';
 import useAuth from '@hooks/useAuth';
-import useSubscriptions from '@hooks/useSubscriptions';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
-  authMenu,
-  camperMenu,
-  mainMenu,
-  masterMenu,
+  AUTH_MENU,
+  CAMPER_MENU,
+  COMMON_MENU,
+  DOC_MENU,
+  MASTER_MENU,
 } from '@constants/sideMenu';
-import useNoticeSocket from '@hooks/useNotice';
+import Image from '@components/ui/Image';
+import SignoutIcon from '@assets/icons/signoutIcon.svg?react';
+import { SideMenuButton, SideMenuLinkButton } from './SideMenuButton';
 
 export default function SideMenu() {
   const { auth } = useAuth();
-  const { subscribedCamps } = useSubscriptions();
-  const { campsWithChatNotice, campsWithPostNotice } = useNoticeSocket(
-    noticeSocket,
-    auth
-  );
 
   const handleSignout = async () => {
     await signout();
@@ -25,86 +21,79 @@ export default function SideMenu() {
   };
 
   return (
-    <aside className="m-2xl min-w-[12.5rem]">
+    <aside className="flex w-[5rem] flex-col border-r-sm border-text-primary xl:w-[18.75rem]">
       <Link to="/">
-        <img
-          src="https://kr.object.ncloudstorage.com/fancamp/static/logo.png"
-          alt="메인 로고"
-        />
+        <div className="flex h-[6.25rem] w-full overflow-x-hidden">
+          <Image
+            className="block h-full w-full xl:hidden"
+            src="https://kr.object.ncloudstorage.com/fancamp/static/smallLogo.png"
+            alt="작은 메인 로고"
+          />
+          <Image
+            className="hidden xl:block"
+            src="https://kr.object.ncloudstorage.com/fancamp/static/bigLogo.png"
+            height={100}
+            alt="큰 메인 로고"
+          />
+        </div>
       </Link>
-      <Hr />
-      <div className="flex flex-col gap-sm py-sm">
-        {mainMenu.map(({ to, text }) => (
-          <SideMenuNavLink key={text} to={to} text={text} />
-        ))}
-      </div>
-      <Hr />
-      <div className="flex flex-col gap-sm py-sm">
-        {auth ? (
-          <button type="button" className="flex" onClick={handleSignout}>
-            <span className="px-md py-sm text-text-secondary display-regular-14">
-              로그아웃
-            </span>
-          </button>
-        ) : (
-          authMenu.map(({ to, text }) => (
-            <SideMenuNavLink key={text} to={to} text={text} />
-          ))
-        )}
-        {auth?.isMaster &&
-          masterMenu.map(({ to, text }) => {
-            const campIdTo = to.replace(':campId', auth.publicId);
-            return <SideMenuNavLink key={text} to={campIdTo} text={text} />;
-          })}
-        {auth?.isMaster === false &&
-          camperMenu.map(({ to, text }) => (
-            <SideMenuNavLink key={text} to={to} text={text} />
+      <div className="flex flex-1 flex-col justify-between">
+        <div>
+          {COMMON_MENU.map(({ to, text, icon }) => (
+            <SideMenuLinkButton
+              key={`side-menu-${text}`}
+              to={to}
+              text={text}
+              icon={icon}
+            />
           ))}
-        {subscribedCamps?.map(({ campName, bannerImage }) => (
-          <div className="flex items-center px-md" key={campName}>
-            <div className="overflow-hidden rounded">
-              <img
-                className="h-[36px] w-[36px] object-cover"
-                width={36}
-                height={36}
-                src={bannerImage}
+          {auth?.isMaster
+            ? MASTER_MENU.map(({ to, text }) => {
+                const campIdTo = to.replace(':campId', auth.publicId);
+                return (
+                  <SideMenuLinkButton
+                    key={`side-menu-${text}`}
+                    to={campIdTo}
+                    text={text}
+                  />
+                );
+              })
+            : CAMPER_MENU.map(({ to, text, icon }) => (
+                <SideMenuLinkButton
+                  key={`side-menu-${text}`}
+                  to={to}
+                  text={text}
+                  icon={icon}
+                />
+              ))}
+          {auth ? (
+            <SideMenuButton
+              onClick={handleSignout}
+              text="로그아웃"
+              icon={<SignoutIcon width={28} />}
+            />
+          ) : (
+            AUTH_MENU.map(({ to, text, icon }) => (
+              <SideMenuLinkButton
+                key={`side-menu-${text}`}
+                to={to}
+                text={text}
+                icon={icon}
               />
-            </div>
-            <SideMenuNavLink to={`/camps/${campName}`} text={campName} />
-            {campsWithPostNotice.includes(campName) ? (
-              <span className="animate-bounce display-regular-12">🔵</span>
-            ) : (
-              ''
-            )}
-            {campsWithChatNotice.includes(campName) ? (
-              <span className="animate-bounce display-regular-12">🟡</span>
-            ) : (
-              ''
-            )}
-          </div>
-        ))}
+            ))
+          )}
+        </div>
+        <div className="mb-lg">
+          {DOC_MENU.map(({ to, text, icon }) => (
+            <SideMenuLinkButton
+              key={`side-menu-${text}`}
+              to={to}
+              text={text}
+              icon={icon}
+            />
+          ))}
+        </div>
       </div>
     </aside>
-  );
-}
-
-function Hr() {
-  return <hr className="h-[0.0625rem] border-0 bg-contour-primary" />;
-}
-
-function SideMenuNavLink({ to, text }: { to: string; text: string }) {
-  return (
-    <NavLink
-      to={to}
-      className={({ isActive }) =>
-        [
-          isActive ? 'text-text-primary' : 'text-text-secondary',
-          'display-regular-14',
-          'px-md py-sm',
-        ].join(' ')
-      }
-    >
-      {text}
-    </NavLink>
   );
 }

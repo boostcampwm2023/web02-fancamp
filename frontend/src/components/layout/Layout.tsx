@@ -1,16 +1,23 @@
 import SideMenu from '@components/menu/SideMenu';
+import SubscribedMenu from '@components/menu/SubscribedMenu';
 import { Outlet, useLocation } from 'react-router-dom';
 
 export default function Layout() {
   const location = useLocation();
+
   return (
-    <main className="relative flex w-[67.5rem] justify-between h-center">
+    <div className="relative flex w-full justify-between">
       <SideMenu />
-      <div
-        className={`${location.pathname === '/feed' ? 'w-[55rem]' : 'content'}`}
-      >
-        <Outlet />
-      </div>
-    </main>
+      <main className="min-w-[48rem] flex-1">
+        <div
+          className={`content ${
+            location.pathname !== '/feed' ? 'py-2xl' : 'px-2xl'
+          }`}
+        >
+          <Outlet />
+        </div>
+      </main>
+      <SubscribedMenu />
+    </div>
   );
 }

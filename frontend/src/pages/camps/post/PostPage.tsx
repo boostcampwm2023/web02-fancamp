@@ -1,8 +1,6 @@
 import ModalSipnner from '@components/loading/ModalSpinner';
 import Modal from '@components/modal/Modal';
-import useAuth from '@hooks/useAuth';
 import { Suspense, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import Spinner from '@components/loading/Spinner';
 import UploadModal from './UploadModal';
 import PostPageGrid from './PostGrid';
@@ -11,16 +9,9 @@ import PostModalLogic from './PostModalLogic';
 function PostPage() {
   const [showPostModal, setPostModal] = useState(false);
   const [showUploadModal, setUploadModal] = useState(false);
-  const [showPostId, setPostId] = useState<string | null>(null);
-  const { auth } = useAuth();
-  const navigate = useNavigate();
+  const [showPostId, setPostId] = useState<number | null>(null);
 
-  if (!auth) {
-    navigate('/auth/signin');
-    return null;
-  }
-
-  const handlePostModalOpen = (postId: string) => {
+  const handlePostModalOpen = (postId: number) => {
     setPostId(postId);
     setPostModal(true);
   };

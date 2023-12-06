@@ -1,8 +1,10 @@
 export interface Camp {
   bannerImage: string;
-  campid: number;
+  campId: number;
   campName: string;
+  content: string | null;
   masterId: number;
+  subscriptionCount: number;
 }
 
 export interface CampEditable {

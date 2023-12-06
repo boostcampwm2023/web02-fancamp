@@ -20,6 +20,9 @@ function CampPage() {
 
   useEffect(() => {
     const { path } = CAMP_CATEGORIES[categoryIndex];
+    if (categoryIndex === 0 && location.pathname === `/camps/${campId}/post`) {
+      return;
+    }
     navigate(`/camps/${campId}/${path}`);
   }, [categoryIndex]);
 
@@ -27,7 +30,7 @@ function CampPage() {
     <div className="flex min-h-full flex-col gap-md">
       <Suspense
         fallback={
-          <div className="h-[10rem] w-full">
+          <div className="mb-xl h-[6.25rem] w-full">
             <Spinner className="center" />
           </div>
         }

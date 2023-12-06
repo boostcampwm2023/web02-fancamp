@@ -11,7 +11,7 @@ function CommentCard({ comment }: CommentProps) {
   const { profileImage, createdAt, content, setimentColorHex, publicId } =
     comment;
   return (
-    <li className="gamd flex flex-col gap-md">
+    <li className="flex flex-col gap-md">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-sm">
           <ProfileImage
@@ -20,9 +20,9 @@ function CommentCard({ comment }: CommentProps) {
             height={24}
             className="border-xs rounded-full border-text-primary"
           />
-          <Text size={12}>{publicId}</Text>
+          <Text size={13}>{publicId}</Text>
         </div>
-        <Text size={12} color="text-secondary" className="text-end">
+        <Text size={13} color="text-secondary" className="text-end">
           {formatDate(createdAt)}
         </Text>
       </div>
@@ -31,7 +31,7 @@ function CommentCard({ comment }: CommentProps) {
         weight={300}
         className="break-all pl-sm pr-sm"
         style={{
-          background: `linear-gradient(90deg, ${setimentColorHex}40 0%, ${setimentColorHex}50 86.15%, ${setimentColorHex}70 100%)`,
+          background: `linear-gradient(90deg, ${setimentColorHex}40 0%, ${setimentColorHex}50 80%, ${setimentColorHex}70 100%)`,
         }}
       >
         {content}

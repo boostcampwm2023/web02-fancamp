@@ -5,16 +5,16 @@ interface PostCardProps {
   imageSrc: string;
   likeCount: number;
   commentCount: number;
-  postId: string;
+  postId: number;
   content: string;
-  handleOnClick: (postId: string) => void;
+  handleOnClick: (postId: number) => void;
 }
 
 const cardClassName =
   'group relative aspect-square h-full w-full ' +
   'cursor-pointer overflow-hidden border-sm border-text-primary';
 const cardImageClassName =
-  'smooth-transition aspect-square object-cover ' +
+  'w-full smooth-transition aspect-square object-cover ' +
   'group-hover:scale-[1.1] group-hover:blur-[0.125rem] group-hover:brightness-[30%]';
 const cardTextClassName =
   'smooth-transition relative h-full w-full overflow-hidden p-xl ' +
@@ -46,10 +46,10 @@ function PostCard({
         </div>
       )}
       <div className={cardHoverClassName}>
-        <Text size={12} color="surface-primary">
+        <Text size={13} color="surface-primary">
           좋아요 {likeCount}
         </Text>
-        <Text size={12} color="surface-primary">
+        <Text size={13} color="surface-primary">
           코멘트 {commentCount}
         </Text>
       </div>

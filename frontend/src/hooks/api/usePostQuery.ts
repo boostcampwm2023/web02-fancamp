@@ -8,7 +8,7 @@ interface PostPostMutationFnProps {
   formData: FormData;
 }
 
-export const getPostQuery = (postId: string) => {
+export const getPostQuery = (postId: number) => {
   const { data, isError, isLoading } = useSuspenseQuery<Post>({
     queryKey: ['post', postId],
     queryFn: () =>
@@ -17,20 +17,22 @@ export const getPostQuery = (postId: string) => {
         credentials: 'include',
       }),
     gcTime: 0,
-    staleTime: 0,
+    staleTime: 3000,
   });
-
   return { data, isError, isLoading };
 };
 
 export const postPostMutation = ({ onSuccess, onError }: MutationProps) => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: ({ formData }: PostPostMutationFnProps) =>
-      useFetch(`${BASE_URL}/posts/`, {
+      fetch(`${BASE_URL}/posts`, {
         method: 'POST',
+        headers: {
+          Accept: 'multipart/form-data',
+        },
         body: formData,
         credentials: 'include',
-      }),
+      }).then((res) => res.ok),
     onSuccess,
     onError,
   });

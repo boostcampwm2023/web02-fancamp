@@ -1,2 +1,2 @@
 export type SignupStatus = 'email' | 'password' | 'profile' | 'finish';
-export type EmailStatus = 'ok' | 'formatError' | 'duplicatedError';
+export type ValidateStatus = 'ok' | 'formatError' | 'duplicatedError';

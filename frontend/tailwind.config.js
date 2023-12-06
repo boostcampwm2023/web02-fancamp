@@ -29,7 +29,7 @@ export default {
     colors: {
       'text-primary': '#111111',
       'text-secondary': '#777777',
-      'contour-primary': '#DFDFDF',
+      'contour-primary': '#DBDBDB',
       'point-green': '#ADFF00',
       'point-yellow': '#FFC044',
       'point-blue': '#0087E9',
@@ -43,6 +43,13 @@ export default {
       white: '#FFFFFF',
       error: '#ff4d4d',
     },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
   },
   plugins: [
     ({ addBase, addComponents, addUtilities }) => {
@@ -50,10 +57,19 @@ export default {
         body: {
           '@apply overflow-y-scroll': {},
         },
+        main: {
+          '@apply h-[100vh] overflow-y-auto cool-scrollbar': {},
+        },
+        aside: {
+          '@apply h-[100vh]': {},
+        },
+        mark: {
+          background: `linear-gradient(90deg, #FFB82F70 0%, #FFB82F80 80%, #FFB82F90 100%)`,
+        },
       });
       addComponents({
         '.content': {
-          '@apply w-[55rem] pl-[5.3125rem] pr-[5.3125rem] pt-2xl pb-2xl': {},
+          '@apply relative w-[48rem] h-center px-xl': {},
         },
       });
       addUtilities({
@@ -69,20 +85,40 @@ export default {
           '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[400]':
             {},
         },
-        '.display-regular-12': {
-          '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[400]':
+        '.display-regular-13': {
+          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[400]':
             {},
         },
         '.display-light-20': {
           '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[300]':
             {},
         },
+        '.display-light-16': {
+          '@apply font-[TheJamsil] text-[1rem] leading-[1.185rem] font-[300]':
+            {},
+        },
         '.display-light-14': {
           '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[300]':
             {},
         },
-        '.display-light-12': {
-          '@apply font-[TheJamsil] text-[0.75rem] leading-[0.875rem] font-[300]':
+        '.display-light-13': {
+          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[300]':
+            {},
+        },
+        '.display-thin-20': {
+          '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[100]':
+            {},
+        },
+        '.display-thin-16': {
+          '@apply font-[TheJamsil] text-[1rem] leading-[1.185rem] font-[100]':
+            {},
+        },
+        '.display-thin-14': {
+          '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[100]':
+            {},
+        },
+        '.display-thin-13': {
+          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[100]':
             {},
         },
         '.center': {

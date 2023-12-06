@@ -1,3 +1,6 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable react/jsx-curly-brace-presence */
+
 import Text from '@components/ui/Text';
 import CommentCard from '@components/card/CommentCard';
 import { Post } from '@type/api/post';
@@ -6,15 +9,17 @@ import { Comment } from '@type/api/comment';
 import InputComment from '@components/input/InputComment';
 import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
-import { useEffect, useRef } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
 
 interface PostModalTemplateProps {
   camp: Camp;
   post: Post;
+  profileImage: string;
   isLike: boolean;
-  comments: Comment[];
+  comments: any;
+  newComments: Comment[];
   inputComment: string;
   setInputComment: React.Dispatch<React.SetStateAction<string>>;
   handlePostModalClose: () => void;
@@ -31,8 +36,10 @@ interface PostModalTemplateProps {
 function PostModalTemplate({
   camp,
   post,
+  profileImage,
   isLike,
   comments,
+  newComments,
   inputComment,
   setInputComment,
   handlePostModalClose,
@@ -61,7 +68,7 @@ function PostModalTemplate({
         </div>
       )}
       <div
-        className={`flex w-[17.5rem] flex-col justify-between ${
+        className={`flex w-[20rem] flex-col justify-between ${
           post.url.length !== 0 && 'border-l-sm border-text-primary'
         }`}
       >
@@ -70,6 +77,7 @@ function PostModalTemplate({
           ref={scrollRef}
         >
           <PostConentCard
+            profileImage={profileImage}
             campName={camp.campName}
             content={post.content}
             createdAt={post.createdAt}
@@ -79,19 +87,31 @@ function PostModalTemplate({
             likeCount={post.likeCount}
           />
           <Hr color="text-secondary">
-            <Text size={12} color="point-blue">
+            <Text size={13} color="point-blue">
               {post.commentCount}개의 코멘트
             </Text>
           </Hr>
-          <ul className="flex flex-col gap-lg p-md">
-            {comments.map((comment) => (
-              <CommentCard
-                comment={comment}
-                key={`comment-${comment.commentId}`}
-              />
+          <ul className="flex flex-col gap-lg p-lg">
+            {newComments.map((comment: Comment) => {
+              return (
+                <CommentCard
+                  comment={comment}
+                  key={`new-comment-${comment.commentId}`}
+                />
+              );
+            })}
+            {comments.pages.map((commentPage: any, index: number) => (
+              <Fragment key={index}>
+                {commentPage.result.map((comment: any) => (
+                  <CommentCard
+                    comment={comment}
+                    key={`comment-${comment.commentId}`}
+                  />
+                ))}
+              </Fragment>
             ))}
+            <div ref={observerRef} className="h-[0.0625rem]" />
           </ul>
-          <div ref={observerRef} className="h-sm" />
         </div>
         <InputComment
           comment={inputComment}
