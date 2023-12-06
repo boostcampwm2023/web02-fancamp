@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { DataSource, LessThan, Repository } from 'typeorm';
-import { concatMap } from 'rxjs';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post } from './entities/post.entity';
 import { UpdatePostDto } from './dto/update-post.dto';
-import { ERR_MESSAGE } from 'src/utils/constants';
 
 @Injectable()
 export class PostRepository {
@@ -32,7 +30,10 @@ export class PostRepository {
   }
 
   findOne(postId: number) {
-    return this.postRepository.findOneBy({ postId });
+    return this.postRepository.findOne({
+      where: { postId },
+      relations: ['translation'],
+    });
   }
   findAllByMasterId(masterId: number) {
     return this.postRepository
