@@ -3,7 +3,7 @@ import { formatDate } from '@utils/date';
 import { numberToString } from '@utils/unit';
 
 interface LikeButtonProps {
-  isMaster: boolean;
+  canLike: boolean;
   isLike: boolean;
   createdAt: string;
   likeCount: number;
@@ -17,7 +17,7 @@ interface ButtonProps {
 }
 
 function LikeButton({
-  isMaster,
+  canLike,
   isLike,
   createdAt,
   likeCount,
@@ -25,12 +25,12 @@ function LikeButton({
 }: LikeButtonProps) {
   return (
     <div className="flex justify-between">
-      {isMaster ? (
-        <Text size={13}>좋아요 {numberToString(likeCount)}</Text>
-      ) : (
+      {canLike ? (
         <Button liked={isLike} onClick={handleLike}>
           <Text size={13}>좋아요 {numberToString(likeCount)}</Text>
         </Button>
+      ) : (
+        <Text size={13}>좋아요 {numberToString(likeCount)}</Text>
       )}
       <Text size={13} color="text-secondary" className="text-end">
         {formatDate(createdAt)}

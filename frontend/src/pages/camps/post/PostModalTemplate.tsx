@@ -12,6 +12,7 @@ import Hr from '@components/ui/Hr';
 import { Fragment, useEffect, useRef } from 'react';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
+import useAuth from '@hooks/useAuth';
 
 interface PostModalTemplateProps {
   camp: Camp;
@@ -53,6 +54,7 @@ function PostModalTemplate({
   publicId,
   deleteComment,
 }: PostModalTemplateProps) {
+  const { auth } = useAuth();
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
     fetchComments();
@@ -121,12 +123,14 @@ function PostModalTemplate({
             <div ref={observerRef} className="h-[0.0625rem]" />
           </ul>
         </div>
-        <InputComment
-          comment={inputComment}
-          setComment={setInputComment}
-          handleCommentSubmit={handleCommentSubmit}
-          status={commentStatus}
-        />
+        {auth && (
+          <InputComment
+            comment={inputComment}
+            setComment={setInputComment}
+            handleCommentSubmit={handleCommentSubmit}
+            status={commentStatus}
+          />
+        )}
       </div>
     </div>
   );
