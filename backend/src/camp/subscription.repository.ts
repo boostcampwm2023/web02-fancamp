@@ -45,7 +45,10 @@ export class SubscriptionRepository {
       .createQueryBuilder('subscription')
       .innerJoin(User, 'user', 'user.id = subscription.camperId')
       .innerJoin(Camp, 'camp', 'camp.masterId = subscription.masterId')
-      .select(['camp.*'])
+      .leftJoin(User, 'master', 'master.id = camp.masterId')
+      .select([
+        'camp.*, master.publicId AS masterPublicId, master.profileImage AS masterProfileImage',
+      ])
       .where('user.publicId = :publicId', { publicId })
       .andWhere('subscription.isSubscribe = true')
       .getRawMany();

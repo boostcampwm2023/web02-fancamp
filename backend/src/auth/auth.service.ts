@@ -21,12 +21,14 @@ export class AuthService {
     const { id, publicId, email, isMaster, chatName } =
       await this.userRepository.createUser(createUserAuthDto);
     this.sessions.push(publicId);
-    await this.campService.create({
-      campName: publicId,
-      bannerImage: '',
-      masterId: id,
-      content: '',
-    });
+    if (isMaster) {
+      await this.campService.create({
+        campName: publicId,
+        bannerImage: '',
+        masterId: id,
+        content: '',
+      });
+    }
     return {
       publicId,
       email,
