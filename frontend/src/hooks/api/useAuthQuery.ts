@@ -77,7 +77,7 @@ export const createUserMutate = ({ onSuccess, onError }: MutationProps) => {
           password,
           chatName,
           isMaster,
-          profileImage: '',
+          profileImage: profileImage || '',
           publicId,
         }),
       }),

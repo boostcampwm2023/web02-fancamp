@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 import LineProgress from '@components/progress/LineProgress';
 import Text from '@components/ui/Text';
-import { EmailStatus, SignupStatus } from '@type/client/auth';
+import { SignupStatus, ValidateStatus } from '@type/client/auth';
 import { validateSign } from '@utils/validate';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -21,7 +21,7 @@ interface SignupFormProps {
   publicId: string;
   // profileImage: string;
   isMaster: boolean;
-  isEmailOk: EmailStatus;
+  isEmailOk: ValidateStatus;
   status: {
     isPending: boolean;
     isError: boolean;
@@ -34,7 +34,7 @@ interface SignupFormProps {
   setPublicId: React.Dispatch<React.SetStateAction<string>>;
   // setProfileImage: React.Dispatch<React.SetStateAction<string>>;
   setMaster: React.Dispatch<React.SetStateAction<boolean>>;
-  setEmailOk: React.Dispatch<React.SetStateAction<EmailStatus>>;
+  setEmailOk: React.Dispatch<React.SetStateAction<ValidateStatus>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 

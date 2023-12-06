@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SignupStatus, ValidateStatus } from '@type/client/auth';
 import { FetchStatus } from '@type/api/status';
 import useAuth from '@hooks/useAuth';
 import { validateSign } from '@utils/validate';
-import { signup } from '@API/auth';
 import {
   createUserMutate,
   validateEmailMutate,
-  validateEmailQuery,
   validatePublicIdMutate,
 } from '@hooks/api/useAuthQuery';
 import SignupForm from './SignupForm';
@@ -23,8 +23,8 @@ export default function SignupPage() {
   const [profileImage] = useState<string>('');
   const [isMaster, setMaster] = useState<boolean>(false);
   const [isEmailOk, setEmailOk] = useState<ValidateStatus>('ok');
-  const [isPublicIdOk, setPublicIdOk] = useState<ValidateStatus>('ok');
-  const [signStatus, setSignStatus] = useState<FetchStatus>({
+  const [_, setPublicIdOk] = useState<ValidateStatus>('ok');
+  const [signStatus] = useState<FetchStatus>({
     isPending: false,
     isError: false,
     isSuccess: false,
