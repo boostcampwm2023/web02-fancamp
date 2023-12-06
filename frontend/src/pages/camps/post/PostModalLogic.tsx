@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { getPostQuery } from '@hooks/api/usePostQuery';
 import { getCampQuery } from '@hooks/api/useCampQuery';
 import {
+  deleteCommentMutation,
   getCommentsInfiniteQuery,
   postCommentMutation,
 } from '@hooks/api/useCommentQuery';
@@ -11,6 +12,7 @@ import { queryClient } from '@contexts/QueryProvider';
 import { Comment } from '@type/api/comment';
 import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
 import { commentSocket } from '@API/socket';
+import useAuth from '@hooks/useAuth';
 import PostModalTemplate from './PostModalTemplate';
 
 interface PostModalLogicProps {
@@ -26,6 +28,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
   const [newComments, setNewComments] = useState<Comment[]>([]);
+  const { auth } = useAuth();
 
   if (!campId) {
     navigate('/');
@@ -34,8 +37,11 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(campId);
-  const { data: comments, fetchNextPage: fetchComments } =
-    getCommentsInfiniteQuery(postId);
+  const {
+    data: comments,
+    fetchNextPage: fetchComments,
+    updateQueryData: updateComments,
+  } = getCommentsInfiniteQuery(postId);
   const {
     data: { profileImage },
   } = getProfileByIdQuery(campId);
@@ -73,6 +79,25 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
         });
       },
     });
+  const { mutate: deleteComment } = deleteCommentMutation({
+    onSuccess: (_, variables) => {
+      const { commentId } = variables;
+      setNewComments((currNewComment) =>
+        currNewComment.filter((comment) => comment.commentId !== commentId)
+      );
+      queryClient.setQueryData(['post', postId], {
+        ...post,
+        commentCount: post.commentCount - 1,
+      });
+
+      updateComments(commentId);
+
+      //   setQueryData(data => ({
+      //     ...data,
+      //     pages: data.pages.map(page => page.map(todo => todo.id === id ? { ...todo, name: 'new name' } : todo ))
+      // })
+    },
+  });
 
   useEffect(() => {
     const handleCreatePost = (data: any) => {
@@ -138,6 +163,8 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
       }}
       scrollRef={scrollRef}
       fetchComments={fetchComments}
+      publicId={auth?.publicId || null}
+      deleteComment={deleteComment}
     />
   );
 }
