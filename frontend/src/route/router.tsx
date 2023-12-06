@@ -10,17 +10,17 @@ import UserProfileEditPage from '@pages/user/edit/profile/UserProfileEditPage';
 import UserPasswordEditPage from '@pages/user/edit/password/UserPasswordEditPage';
 import UserPage from '@pages/user/UserPage';
 import CampProfileEditPage from '@pages/camps/edit/CampProfileEditPage';
-import HomePage from '../pages/home/HomePage';
-import SearchPage from '../pages/search/SearchPage';
-import ExplorePage from '../pages/explore/ExplorePage';
-import SignupPage from '../pages/auth/signup/SignupPage';
-import ChatPage from '../pages/camps/chat/ChatPage';
-import PostPage from '../pages/camps/post/PostPage';
-import CampPage from '../pages/camps/CampPage';
-import ErrorPage from '../pages/error/ErrorPage';
+import ErrorPage from '@pages/error/ErrorPage';
+import SigninPage from '@pages/auth/signin/SigninPage';
+import SignupPage from '@pages/auth/signup/SignupPage';
+import HomePage from '@pages/home/HomePage';
+import SearchPage from '@pages/search/SearchPage';
+import ExplorePage from '@pages/explore/ExplorePage';
 import AuthProtectedRoute from './AuthProtectedRoute';
-import SubscriptionsPage from '../pages/subscriptions/SubscriptionsPage';
-import SigninPage from '../pages/auth/signin/SigninPage';
+import SubscriptionsPage from '@pages/subscriptions/SubscriptionsPage';
+import CampPage from '@pages/camps/CampPage';
+import PostPage from '@pages/camps/post/PostPage';
+import ChatPage from '@pages/camps/chat/ChatPage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -35,11 +35,11 @@ const router = createBrowserRouter(
         <Route path="explore" element={<ExplorePage />} />
         <Route path="feed" element={<FeedPage />} />
         <Route element={<AuthProtectedRoute />}>
-          <Route path="camps/:campId/chat" element={<ChatPage />} />
           <Route path="subscriptions" element={<SubscriptionsPage />} />
           <Route path="camps" element={<CampPage />}>
             <Route path=":campId">
               <Route path="post" element={<PostPage />} />
+              <Route path="chat" element={<ChatPage />} />
             </Route>
           </Route>
           <Route path="camps/edit" element={<CampProfileEditPage />} />
