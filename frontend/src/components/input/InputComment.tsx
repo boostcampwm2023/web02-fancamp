@@ -2,6 +2,7 @@ import Button from '@components/ui/Button';
 import SendIcon from '@assets/icons/sendIcon.svg?react';
 import ErrorIcon from '@assets/icons/errorIcon.svg?react';
 import Spinner from '@components/loading/Spinner';
+import EditIcon from '@assets/icons/editIcon.svg?react';
 
 interface InputCommentProps {
   comment: string;
@@ -21,9 +22,10 @@ function InputComment({
 }: InputCommentProps) {
   return (
     <form
-      className="relative flex gap-sm bg-surface-primary p-sm"
+      className="relative flex items-center gap-md border-t-sm border-text-primary bg-surface-primary px-md py-sm"
       onSubmit={handleCommentSubmit}
     >
+      <EditIcon width={20} />
       <input
         type="text"
         className="flex-1 bg-transparent display-regular-14 placeholder:display-regular-14 focus:outline-none"
@@ -41,6 +43,7 @@ function InputComment({
                 ? '!bg-point-green'
                 : '!bg-point-yellow'
           }
+          onClick={handleCommentSubmit}
         >
           {status.isError ? (
             <ErrorIcon width={16} height={16} />

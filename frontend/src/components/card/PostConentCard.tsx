@@ -29,7 +29,7 @@ function PostConentCard({
   const { auth } = useAuth();
 
   return (
-    <div className="flex flex-col gap-md p-md">
+    <div className="flex flex-col gap-md p-lg">
       <div className="flex items-center justify-between">
         <Link to={`/camps/${campName}/post`}>
           <div className="flex items-center gap-sm">

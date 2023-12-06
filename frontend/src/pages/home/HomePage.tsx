@@ -1,6 +1,8 @@
+import ExplorePage from '@pages/explore/ExplorePage';
 import { Link } from 'react-router-dom';
 
 export default function HomePage() {
+  return <ExplorePage />;
   return (
     <section className="flex w-full justify-center py-2xl">
       <div>

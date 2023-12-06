@@ -11,7 +11,7 @@ function CommentCard({ comment }: CommentProps) {
   const { profileImage, createdAt, content, setimentColorHex, publicId } =
     comment;
   return (
-    <li className="gamd flex flex-col gap-md">
+    <li className="flex flex-col gap-md">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-sm">
           <ProfileImage

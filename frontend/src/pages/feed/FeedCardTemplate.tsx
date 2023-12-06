@@ -71,7 +71,7 @@ function FeedCardTemplate({
 
   return (
     <div
-      className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col gap-[0.0625rem] border-sm border-text-primary bg-text-primary"
+      className="relative mb-[5vh] mt-[5vh] flex h-[70vh] flex-col border-sm border-text-primary bg-text-primary"
       onTransitionEnd={(e) => e.stopPropagation()}
     >
       {post.url.length !== 0 && (
@@ -98,7 +98,7 @@ function FeedCardTemplate({
             {post.commentCount}개의 코멘트
           </Text>
         </Hr>
-        <ul className="flex flex-col gap-lg p-md">
+        <ul className="flex flex-col gap-lg p-lg">
           {newComments.map((comment: Comment) => (
             <CommentCard
               comment={comment}

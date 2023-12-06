@@ -68,7 +68,7 @@ function PostModalTemplate({
         </div>
       )}
       <div
-        className={`flex w-[17.5rem] flex-col justify-between ${
+        className={`flex w-[20rem] flex-col justify-between ${
           post.url.length !== 0 && 'border-l-sm border-text-primary'
         }`}
       >
@@ -91,7 +91,7 @@ function PostModalTemplate({
               {post.commentCount}개의 코멘트
             </Text>
           </Hr>
-          <ul className="flex flex-col gap-lg p-md">
+          <ul className="flex flex-col gap-lg p-lg">
             {newComments.map((comment: Comment) => {
               return (
                 <CommentCard
