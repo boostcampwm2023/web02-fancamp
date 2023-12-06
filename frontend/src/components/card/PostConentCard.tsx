@@ -51,7 +51,7 @@ function PostConentCard({
         <Text>{content}</Text>
       </div>
       <LikeButton
-        isMaster={auth?.isMaster || false}
+        canLike={!!(auth && !auth.isMaster)}
         isLike={isLike}
         createdAt={createdAt}
         likeCount={likeCount}
