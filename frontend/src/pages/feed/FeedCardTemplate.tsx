@@ -76,7 +76,7 @@ function FeedCardTemplate({
     >
       {post.url.length !== 0 && (
         <div className="h-[18rem] w-full">
-          <MediaSlider width={27} medias={post.url} />
+          <MediaSlider width={32} medias={post.url} />
         </div>
       )}
       <div
