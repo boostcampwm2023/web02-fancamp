@@ -2,31 +2,55 @@ import Card from '@components/card/Card';
 import Spinner from '@components/loading/Spinner';
 import Image from '@components/ui/Image';
 import Text from '@components/ui/Text';
-import { getAllCampsQuery } from '@hooks/api/useCampQuery';
-import { Suspense } from 'react';
+import { getAllCampsInfiniteQuery } from '@hooks/api/useCampQuery';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Camp } from '@type/api/camp';
+import useIntersectionObserver from '@hooks/useObserver';
 import SearchInputLogic from './SearchInputLogic';
 
 export default function ExplorePage() {
   return (
-    <div className="flex min-h-full flex-col gap-md">
+    <div className="flex h-full flex-col gap-xl">
       <SearchInputLogic />
-      <Text size={20}>모든 캠프</Text>
-      <Suspense
-        fallback={
-          <div className="h-[10rem] w-full">
-            <Spinner className="center" />
-          </div>
-        }
-      >
-        <ExplorePageLogic />
-      </Suspense>
+      <div className="flex h-full flex-col gap-md">
+        <Text size={20}>모든 캠프</Text>
+        <Suspense
+          fallback={
+            <div className="h-[10rem] w-full">
+              <Spinner className="center" />
+            </div>
+          }
+        >
+          <ExplorePageLogic />
+        </Suspense>
+      </div>
     </div>
   );
 }
 
 function ExplorePageLogic() {
-  const { data: camps } = getAllCampsQuery();
+  const { data: campsData, fetchNextPage: fetchCamps } =
+    getAllCampsInfiniteQuery();
+  const [camps, setCamps] = useState<Camp[]>([]);
+  const observerRef = useRef<HTMLDivElement>(null);
+
+  const { observe } = useIntersectionObserver(() => {
+    fetchCamps();
+  });
+
+  useEffect(() => {
+    if (observerRef.current) {
+      observe(observerRef.current);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!campsData.pages.at(-1).camps) {
+      return;
+    }
+    setCamps((_) => [..._, ...campsData.pages.at(-1).camps]);
+  }, [campsData.pages.length]);
 
   return (
     <div className="grid grid-cols-4 gap-md">
@@ -46,6 +70,7 @@ function ExplorePageLogic() {
           </Link>
         );
       })}
+      <div ref={observerRef} />
     </div>
   );
 }
