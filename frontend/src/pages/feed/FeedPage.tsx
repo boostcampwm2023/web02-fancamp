@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import useInfiniteSlider from '@hooks/useInfiniteSlider';
 import { getFeedInfiniteQuery } from '@hooks/api/useFeedQuery';
 import FeedCard from './FeedCardLogic';
 
 function FeedPage() {
+  return (
+    <Suspense>
+      <FeedPagea />
+    </Suspense>
+  );
+}
+
+function FeedPagea() {
   const { data: postIdsData, fetchNextPage: fetchPostIds } =
     getFeedInfiniteQuery();
   const [postIds, setPostIds] = useState<number[]>([]);
-
-  useEffect(() => {
-    setPostIds((_) => [..._, ...postIdsData.pages.at(-1).result]);
-  }, [postIdsData.pages.length]);
 
   const {
     ref: sliderRef,
@@ -22,16 +26,24 @@ function FeedPage() {
   } = useInfiniteSlider<number>(postIds);
 
   useEffect(() => {
+    document.querySelector('main')!.addEventListener('wheel', handleWheel);
+    return () => {
+      document.querySelector('main')!.removeEventListener('wheel', handleWheel);
+    };
+  });
+
+  useEffect(() => {
+    setPostIds((_) => [..._, ...postIdsData.pages.at(-1).result]);
+  }, [postIdsData.pages.length]);
+
+  useEffect(() => {
     if (index === postIds.length - 1) {
       fetchPostIds();
     }
   }, [index]);
 
   return (
-    <div
-      className="relative h-[100vh] overflow-y-hidden pl-[14rem] pr-[14rem]"
-      onWheel={handleWheel}
-    >
+    <div className="relative h-[100vh] overflow-y-hidden pl-[4rem] pr-[4rem]">
       <div
         className="relative h-[100vh] w-full"
         style={{

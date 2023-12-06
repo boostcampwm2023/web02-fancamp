@@ -1,4 +1,4 @@
-import { WheelEvent, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useThrottle from './useThrottle';
 
 const useInfiniteSlider = <Item>(items: Item[]) => {
@@ -11,7 +11,7 @@ const useInfiniteSlider = <Item>(items: Item[]) => {
   const ref = useRef<HTMLDivElement>(null);
   const callThrottle = useThrottle(500);
 
-  const handleWheel = (event: WheelEvent<HTMLDivElement>) => {
+  const handleWheel = (event: WheelEvent) => {
     callThrottle(() => {
       if (event.deltaY > 0 && slidePage < items.length - 1) {
         setIndex(index + 1);
