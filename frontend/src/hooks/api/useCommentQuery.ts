@@ -24,7 +24,7 @@ export const getCommentsInfiniteQuery = (postId: number) => {
       },
       getNextPageParam: (lastPage) => lastPage.nextCursor,
       initialPageParam: new Date(),
-      gcTime: 0,
+      gcTime: 3000,
       staleTime: 0,
     });
 
