@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import useAuth from '@hooks/useAuth';
 import useNoticeSocket from '@hooks/useNotice';
 import useSubscriptions from '@hooks/useSubscriptions';
@@ -30,12 +32,12 @@ function SubscribedMenu() {
       <div className="relative mb-sm mt-lg block xl:hidden">
         <SubscribeIcon className="relative h-center" width={28} />
       </div>
-      {subscribedCamps?.map(({ campName, bannerImage }) => (
+      {subscribedCamps?.map(({ campName, masterProfileImage }) => (
         <SubscribeMenuButton
           key={`subscribed-camp-card-${campName}`}
           to={`/camps/${campName}/post`}
           text={campName}
-          image={bannerImage}
+          image={masterProfileImage}
           hasPostNotice={campsWithPostNotice.includes(campName)}
           hasChatNotice={campsWithChatNotice.includes(campName)}
         />

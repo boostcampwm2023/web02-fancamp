@@ -22,7 +22,7 @@ function SubscribeMenuButton({
         <>
           <Image
             src={image}
-            className="border-sm border-text-primary"
+            className="aspect-square border-sm border-text-primary"
             width={32}
             height={32}
           />
