@@ -1,11 +1,28 @@
 import { BASE_URL } from '@constants/URLs';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
+import { MutationProps } from '@type/api/api';
 import useFetch from './useFetch';
 
-export const validateEmailQuery = (email: string) => {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ['email', email],
-    queryFn: () =>
+interface ValidateEmailMutateProps {
+  email: string;
+}
+
+interface ValidatePublicIdMutateProps {
+  publicId: string;
+}
+
+interface CreateUserMutateProps {
+  email: string;
+  password: string;
+  chatName: string;
+  publicId: string;
+  profileImage: string;
+  isMaster: boolean;
+}
+
+export const validateEmailMutate = ({ onSuccess, onError }: MutationProps) => {
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: ({ email }: ValidateEmailMutateProps) =>
       useFetch(`${BASE_URL}/auth/users/duplicateEmail`, {
         method: 'POST',
         headers: {
@@ -13,17 +30,19 @@ export const validateEmailQuery = (email: string) => {
         },
         body: JSON.stringify({ email }),
       }),
-    gcTime: 0,
-    staleTime: 0,
+    onSuccess,
+    onError,
   });
 
-  return { data, isError, isLoading };
+  return { mutate, isPending, isError, isSuccess };
 };
 
-export const validatePublicIdQuery = (publicId: string) => {
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ['publicId', publicId],
-    queryFn: () =>
+export const validatePublicIdMutate = ({
+  onSuccess,
+  onError,
+}: MutationProps) => {
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: ({ publicId }: ValidatePublicIdMutateProps) =>
       useFetch(`${BASE_URL}/auth/users/duplicatePublicId`, {
         method: 'POST',
         headers: {
@@ -31,9 +50,40 @@ export const validatePublicIdQuery = (publicId: string) => {
         },
         body: JSON.stringify({ publicId }),
       }),
-    gcTime: 0,
-    staleTime: 0,
+    onSuccess,
+    onError,
   });
 
-  return { data, isError, isLoading };
+  return { mutate, isPending, isError, isSuccess };
+};
+
+export const createUserMutate = ({ onSuccess, onError }: MutationProps) => {
+  const { mutate, isPending, isError, isSuccess } = useMutation({
+    mutationFn: ({
+      email,
+      password,
+      chatName,
+      isMaster,
+      profileImage,
+      publicId,
+    }: CreateUserMutateProps) =>
+      useFetch(`${BASE_URL}/auth/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+          chatName,
+          isMaster,
+          profileImage: '',
+          publicId,
+        }),
+      }),
+    onSuccess,
+    onError,
+  });
+
+  return { mutate, isPending, isError, isSuccess };
 };
