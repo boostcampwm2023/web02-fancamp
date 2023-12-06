@@ -21,7 +21,9 @@ function CampInfo() {
   const {
     data: { profileImage },
   } = getProfileByIdQuery(campId!);
-  const { data: subscribed } = getCampSubscriptionQuery(campId!);
+  const { data: subscribed } = auth
+    ? getCampSubscriptionQuery(campId!)
+    : { data: { isSubscribe: false } };
   const { mutate: subscribeMutate } = subscribeMutation({
     onSuccess: () => {
       setSubscribed(true);
@@ -84,7 +86,7 @@ function CampInfo() {
             </div>
           </div>
           <div>
-            {!auth?.isMaster && (
+            {auth && !auth.isMaster && (
               <SubscribeButton
                 subscribed={isSubscribed}
                 onClick={handleSubscribe}

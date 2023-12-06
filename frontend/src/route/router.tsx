@@ -16,11 +16,11 @@ import SignupPage from '@pages/auth/signup/SignupPage';
 import HomePage from '@pages/home/HomePage';
 import SearchPage from '@pages/search/SearchPage';
 import ExplorePage from '@pages/explore/ExplorePage';
-import AuthProtectedRoute from './AuthProtectedRoute';
 import SubscriptionsPage from '@pages/subscriptions/SubscriptionsPage';
 import CampPage from '@pages/camps/CampPage';
 import PostPage from '@pages/camps/post/PostPage';
 import ChatPage from '@pages/camps/chat/ChatPage';
+import AuthProtectedRoute from './AuthProtectedRoute';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,8 +42,8 @@ const router = createBrowserRouter(
               <Route path="chat" element={<ChatPage />} />
             </Route>
           </Route>
-          <Route path="camps/edit" element={<CampProfileEditPage />} />
         </Route>
+        <Route path="camps/edit" element={<CampProfileEditPage />} />
         <Route element={<AuthProtectedRoute />}>
           <Route path="user" element={<UserPage />} />
           <Route path="user/edit" element={<UserEditPage />}>
