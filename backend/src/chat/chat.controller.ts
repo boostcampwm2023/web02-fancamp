@@ -40,12 +40,31 @@ export class ChatController {
     @Query('cursor') cursor: string,
     @Req() request: Request,
   ) {
-    const result = await this.chatService.getPreviousChats(
+    // MySQL
+    let startQueryTime = new Date();
+
+    let result = await this.chatService.getPreviousChats(
       campName,
       request.cookies['publicId'],
       cursor,
     );
-    return result;
+    let endQueryTime = new Date();
+    let executionTime = endQueryTime.getTime() - startQueryTime.getTime();
+
+    console.log(`MySQL Query execution time: ${executionTime} milliseconds`);
+    // MongoDB
+    let startQueryTime2 = new Date();
+
+    let result2 = await this.chatService.getPreviousChats2(
+      campName,
+      request.cookies['publicId'],
+      cursor,
+    );
+    let endQueryTime2 = new Date();
+    let executionTime2 = endQueryTime2.getTime() - startQueryTime2.getTime();
+
+    console.log(`MongoDB Query execution time: ${executionTime2} milliseconds`);
+    // return result;
   }
 
   // @Patch(':id')

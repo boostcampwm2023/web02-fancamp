@@ -10,7 +10,7 @@ export class Chat {
   @PrimaryGeneratedColumn()
   chatId: number;
 
-  @UpdateDateColumn({ name: 'updated _at' })
+  @UpdateDateColumn({ name: 'createdAt' })
   createdAt: Date; //TODO: time type으로 바꾸기
 
   @Column({ type: 'varchar', nullable: true })

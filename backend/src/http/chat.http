@@ -30,8 +30,8 @@ Content-Type: application/json
 ### 이전메세지 가져오기?
 GET {{server}}/chats/master1
 
-### 이전메세지 가져오기 - 페이지  
-GET {{server}}/chats/master1?cursor=2023-11-29T02:36:43.152Z
+### 이전메세지 가져오기 - 페이지     
+GET {{server}}/chats/master1?cursor=2023-12-29T02:36:43.152Z
 
 
 ### 이전메세지 가져오기 - 페이지 

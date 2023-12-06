@@ -90,7 +90,9 @@ export class CampRepository {
    */
   search(keyword: string) {
     return this.campRepository
-      .createQueryBuilder()
+      .createQueryBuilder('camp')
+      .innerJoin(User, 'user', 'camp.masterId = user.id')
+      .select(['camp.*', 'user.publicId', 'user.profileImage'])
       .where(`MATCH (campName) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
       .orWhere(`MATCH (content) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
       .getMany();

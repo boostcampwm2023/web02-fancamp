@@ -13,9 +13,10 @@ import { ChatModule } from './chat/chat.module';
 import { PostModule } from './post/post.module';
 import { ImageModule } from './image/image.module';
 import { NoticeModule } from './notice/notice.module';
-
+import { MongooseModule } from '@nestjs/mongoose';
 @Module({
   imports: [
+    MongooseModule.forRoot('mongodb://localhost:27017'),
     PrometheusModule.register(),
     ConfigModule.forRoot({
       isGlobal: true,

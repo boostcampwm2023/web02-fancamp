@@ -9,6 +9,8 @@ import { UserModule } from 'src/user/user.module';
 import { CampModule } from 'src/camp/camp.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { NoticeModule } from 'src/notice/notice.module';
+import { ChatMongoDB, ChatSchema } from './schemas/chat.schemas';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -17,9 +19,10 @@ import { NoticeModule } from 'src/notice/notice.module';
     CampModule,
     AuthModule,
     NoticeModule,
+    MongooseModule.forFeature([{ name: ChatMongoDB.name, schema: ChatSchema }]),
   ],
   controllers: [ChatController],
-  providers: [ChatService, ChatRepository, ChatGateway],
+  providers: [ChatService, ChatRepository, ChatGateway, ChatMongoDB],
   exports: [ChatService, ChatGateway],
 })
 export class ChatModule {}

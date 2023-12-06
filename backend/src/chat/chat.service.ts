@@ -7,6 +7,9 @@ import { CampService } from '../camp/camp.service';
 import { ERR_MESSAGE } from 'src/utils/constants';
 import { Chat } from './entities/chat.entity';
 import { NoticeGateway } from 'src/notice/notice.gateway';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { ChatDocument, ChatMongoDB } from './schemas/chat.schemas';
 
 @Injectable()
 export class ChatService {
@@ -15,6 +18,8 @@ export class ChatService {
     private readonly userService: UserService,
     private readonly campService: CampService,
     private readonly noticeGateway: NoticeGateway,
+    @InjectModel(ChatMongoDB.name)
+    private readonly chatModel: Model<ChatMongoDB>,
   ) {}
   create(createChatDto: CreateChatDto) {
     return this.chatRepository.createChat(createChatDto);
@@ -60,7 +65,6 @@ export class ChatService {
         result: [],
       };
     }
-
     const chatsWithSender = await Promise.all(
       chats.map(async (chat) => {
         return this.getChatWithSender(chat);
@@ -74,6 +78,32 @@ export class ChatService {
     };
   }
 
+  async getPreviousChats2(campName: string, publicId: string, cursor: string) {
+    const cursorDate = new Date(cursor);
+    const camp = await this.campService.findOne(campName);
+    const user = await this.userService.findUserByPublicId(publicId);
+
+    const chats = await this.chatRepository.findChatsByUserIdOrMasterId2(
+      user.id,
+      camp.masterId,
+      cursorDate,
+    );
+
+    if (!chats.length) {
+      return {
+        cursor: cursor,
+        nextCursor: null,
+        result: [],
+      };
+    }
+
+    return {
+      cursor: cursor,
+      nextCursor: chats.slice(-1)[0].createdAt,
+      result: chats,
+    };
+  }
+
   async getChatWithSender(chat: Chat) {
     const sender = await this.userService.findUserByUserId(chat.senderId);
     return {
@@ -82,6 +112,18 @@ export class ChatService {
       publicId: sender.publicId,
       profileImage: sender.profileImage,
     };
+  }
+
+  async getChatWithSender2(createChatDto: CreateChatDto) {
+    const sender = await this.userService.findUserByUserId(
+      createChatDto.senderId,
+    );
+    return await this.chatModel.create({
+      ...createChatDto,
+      senderChatName: sender.chatName,
+      senderPublicId: sender.publicId,
+      senderProfileImage: sender.profileImage,
+    });
   }
 
   async noticeMasterMessage(campId: number, campName: string) {

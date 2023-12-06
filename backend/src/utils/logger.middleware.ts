@@ -5,6 +5,9 @@ import { Request, Response, NextFunction } from 'express';
 export class LoggerMiddleware implements NestMiddleware {
   use(req: Request, res: Response, next: NextFunction) {
     const domain = req.headers.host;
+    if (req.method === 'GET') {
+      return next();
+    }
     // console.log(`Requested domain: ${domain}`, new Date());
     console.log(`Request time:`, new Date(), `IP: ${req.ip}`);
     console.log(`Request ${req.method} ${JSON.stringify(req.originalUrl)}`);
