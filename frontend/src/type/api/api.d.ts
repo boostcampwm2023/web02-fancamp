@@ -1,4 +1,4 @@
 export interface MutationProps {
-  onSuccess?: (response: any) => void;
-  onError?: (error: any) => void;
+  onSuccess?: (...props: any) => void;
+  onError?: (...props: any) => void;
 }

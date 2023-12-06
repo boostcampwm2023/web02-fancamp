@@ -27,6 +27,8 @@ interface FeedCardTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
+  publicId: string | null;
+  deleteComment: any;
 }
 
 function FeedCardTemplate({
@@ -43,6 +45,8 @@ function FeedCardTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
+  publicId,
+  deleteComment,
 }: FeedCardTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
@@ -103,6 +107,8 @@ function FeedCardTemplate({
             <CommentCard
               comment={comment}
               key={`comment-${comment.commentId}`}
+              isMine={comment.publicId === publicId}
+              deleteComment={deleteComment}
             />
           ))}
           {comments.pages.map((commentPage: any) =>
@@ -110,6 +116,8 @@ function FeedCardTemplate({
               <CommentCard
                 comment={comment}
                 key={`comment-${comment.commentId}`}
+                isMine={comment.publicId === publicId}
+                deleteComment={deleteComment}
               />
             ))
           )}

@@ -4,12 +4,14 @@ import { Comment } from '@type/api/comment';
 import { getPostQuery } from '@hooks/api/usePostQuery';
 import { getCampQuery } from '@hooks/api/useCampQuery';
 import {
+  deleteCommentMutation,
   getCommentsInfiniteQuery,
   postCommentMutation,
 } from '@hooks/api/useCommentQuery';
 import { queryClient } from '@contexts/QueryProvider';
 import { deleteLikeMutation, postLikeMutation } from '@hooks/api/useLikeQuery';
 import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
+import useAuth from '@hooks/useAuth';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
@@ -36,6 +38,7 @@ function FeedCardLogic({ postId }: FeedCardProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isCommentsUpdated, setCommentsUpdated] = useState<boolean>(false);
   const [newComments, setNewComments] = useState<Comment[]>([]);
+  const { auth } = useAuth();
 
   if (!postId) {
     return <div className="relative mb-[5vh] mt-[5vh] h-[70vh]" />;
@@ -43,8 +46,11 @@ function FeedCardLogic({ postId }: FeedCardProps) {
 
   const { data: post } = getPostQuery(postId);
   const { data: camp } = getCampQuery(post.publicId);
-  const { data: comments, fetchNextPage: fetchComments } =
-    getCommentsInfiniteQuery(postId);
+  const {
+    data: comments,
+    fetchNextPage: fetchComments,
+    updateQueryData: updateComments,
+  } = getCommentsInfiniteQuery(postId);
   const {
     data: { profileImage },
   } = getProfileByIdQuery(post.publicId);
@@ -83,6 +89,25 @@ function FeedCardLogic({ postId }: FeedCardProps) {
         });
       },
     });
+  const { mutate: deleteComment } = deleteCommentMutation({
+    onSuccess: (_, variables) => {
+      const { commentId } = variables;
+      setNewComments((currNewComment) =>
+        currNewComment.filter((comment) => comment.commentId !== commentId)
+      );
+      queryClient.setQueryData(['post', postId], {
+        ...post,
+        commentCount: post.commentCount - 1,
+      });
+
+      updateComments(commentId);
+
+      //   setQueryData(data => ({
+      //     ...data,
+      //     pages: data.pages.map(page => page.map(todo => todo.id === id ? { ...todo, name: 'new name' } : todo ))
+      // })
+    },
+  });
 
   useEffect(() => {
     setLike(post.isLike);
@@ -131,6 +156,8 @@ function FeedCardLogic({ postId }: FeedCardProps) {
       }}
       scrollRef={scrollRef}
       fetchComments={fetchComments}
+      publicId={auth?.publicId || null}
+      deleteComment={deleteComment}
     />
   );
 }

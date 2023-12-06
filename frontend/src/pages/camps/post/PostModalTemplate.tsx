@@ -31,6 +31,8 @@ interface PostModalTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
+  publicId: string | null;
+  deleteComment: any;
 }
 
 function PostModalTemplate({
@@ -48,6 +50,8 @@ function PostModalTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
+  publicId,
+  deleteComment,
 }: PostModalTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
@@ -91,12 +95,14 @@ function PostModalTemplate({
               {post.commentCount}개의 코멘트
             </Text>
           </Hr>
-          <ul className="flex flex-col gap-lg p-lg">
+          <ul className="flex flex-col pb-lg">
             {newComments.map((comment: Comment) => {
               return (
                 <CommentCard
-                  comment={comment}
                   key={`new-comment-${comment.commentId}`}
+                  comment={comment}
+                  isMine={comment.publicId === publicId}
+                  deleteComment={deleteComment}
                 />
               );
             })}
@@ -106,6 +112,8 @@ function PostModalTemplate({
                   <CommentCard
                     comment={comment}
                     key={`comment-${comment.commentId}`}
+                    isMine={comment.publicId === publicId}
+                    deleteComment={deleteComment}
                   />
                 ))}
               </Fragment>
