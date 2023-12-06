@@ -11,7 +11,7 @@ import SearchInputLogic from './SearchInputLogic';
 
 export default function ExplorePage() {
   return (
-    <div className="flex h-full flex-col gap-xl">
+    <div className="flex h-full flex-col gap-xl py-2xl">
       <SearchInputLogic />
       <div className="flex h-full flex-col gap-md">
         <Text size={20}>모든 캠프</Text>

@@ -10,9 +10,7 @@ export default function Layout() {
       <SideMenu />
       <main className="min-w-[48rem] flex-1">
         <div
-          className={`content ${
-            location.pathname !== '/feed' ? 'py-2xl' : 'px-2xl'
-          }`}
+          className={`content ${location.pathname !== '/feed' ? '' : 'px-2xl'}`}
         >
           <Outlet />
         </div>
