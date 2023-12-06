@@ -46,12 +46,12 @@ export const MASTER_MENU = [
 
 export const DOC_MENU = [
   {
-    to: 'https://www.naver.com',
+    to: 'https://github.com/boostcampwm2023/web02-fancamp/wiki',
     text: '개발 문서',
     icon: <NotionIcon width={28} />,
   },
   {
-    to: 'https://www.naver.com',
+    to: 'https://github.com/boostcampwm2023/web02-fancamp',
     text: '깃허브',
     icon: <GithubIcon width={28} />,
   },
