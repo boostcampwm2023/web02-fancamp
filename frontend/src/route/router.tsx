@@ -34,16 +34,14 @@ const router = createBrowserRouter(
         <Route path="search" element={<SearchPage />} />
         <Route path="explore" element={<ExplorePage />} />
         <Route path="feed" element={<FeedPage />} />
-        <Route element={<AuthProtectedRoute />}>
-          <Route path="camps/:campId/chat" element={<ChatPage />} />
-          <Route path="subscriptions" element={<SubscriptionsPage />} />
-          <Route path="camps" element={<CampPage />}>
-            <Route path=":campId">
-              <Route path="post" element={<PostPage />} />
-            </Route>
+        <Route path="camps/:campId/chat" element={<ChatPage />} />
+        <Route path="subscriptions" element={<SubscriptionsPage />} />
+        <Route path="camps" element={<CampPage />}>
+          <Route path=":campId">
+            <Route path="post" element={<PostPage />} />
           </Route>
-          <Route path="camps/edit" element={<CampProfileEditPage />} />
         </Route>
+        <Route path="camps/edit" element={<CampProfileEditPage />} />
         <Route element={<AuthProtectedRoute />}>
           <Route path="user" element={<UserPage />} />
           <Route path="user/edit" element={<UserEditPage />}>
