@@ -1,9 +1,11 @@
 import {
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PostTranslation } from './postTranslation.entity';
 
 @Entity()
 export class Post {
@@ -30,4 +32,7 @@ export class Post {
 
   @Column({ type: 'boolean', nullable: true })
   isDeleted: boolean = false;
+
+  @OneToMany(() => PostTranslation, (postTranslation) => postTranslation.post)
+  translation: PostTranslation[];
 }
