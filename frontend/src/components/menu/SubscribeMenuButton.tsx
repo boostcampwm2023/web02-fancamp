@@ -34,12 +34,10 @@ function SubscribeMenuButton({
             >
               {text}
             </span>
-            {hasPostNotice && (
-              <span className="display-regular-12 animate-bounce">🔵</span>
-            )}
-            {hasChatNotice && (
-              <span className="display-regular-12 animate-bounce">🟡</span>
-            )}
+            <div className="display-regular-12 animate-bounce">
+              {hasPostNotice && <span>🔵</span>}
+              {hasChatNotice && <span>🟡</span>}
+            </div>
           </div>
         </>
       )}
