@@ -102,7 +102,7 @@ function FeedCardTemplate({
             {post.commentCount}개의 코멘트
           </Text>
         </Hr>
-        <ul className="flex flex-col gap-lg p-lg">
+        <ul className="flex flex-col gap-lg pb-lg">
           {newComments.map((comment: Comment) => (
             <CommentCard
               comment={comment}

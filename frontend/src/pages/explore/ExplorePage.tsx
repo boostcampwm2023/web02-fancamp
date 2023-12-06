@@ -7,7 +7,12 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Camp } from '@type/api/camp';
 import useIntersectionObserver from '@hooks/useObserver';
+import ProfileImage from '@components/profile/ProfileImage';
 import SearchInputLogic from './SearchInputLogic';
+
+interface CampWithProfile extends Camp {
+  masterProfileImage: string;
+}
 
 export default function ExplorePage() {
   return (
@@ -32,7 +37,7 @@ export default function ExplorePage() {
 function ExplorePageLogic() {
   const { data: campsData, fetchNextPage: fetchCamps } =
     getAllCampsInfiniteQuery();
-  const [camps, setCamps] = useState<Camp[]>([]);
+  const [camps, setCamps] = useState<CampWithProfile[]>([]);
   const observerRef = useRef<HTMLDivElement>(null);
 
   const { observe } = useIntersectionObserver(() => {
@@ -54,23 +59,39 @@ function ExplorePageLogic() {
 
   return (
     <div className="grid grid-cols-4 gap-md">
-      {camps.map((camp) => {
-        const { campName, bannerImage, content } = camp;
-        return (
-          <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
-            <Card className="w-full border-sm border-text-primary">
-              <Image src={bannerImage} className="aspect-[4/3] w-full" />
-              <div className="flex h-2xl flex-col items-center justify-evenly p-sm">
-                <Text size={14}>{campName}</Text>
-                <Text size={13} color="text-secondary">
-                  {content || '상세 정보'}
-                </Text>
-              </div>
-            </Card>
-          </Link>
-        );
-      })}
+      {camps.map((camp) => (
+        <ExploreCampCard
+          key={`explore-camp-card-${camp.campName}`}
+          camp={camp}
+        />
+      ))}
       <div ref={observerRef} />
     </div>
+  );
+}
+
+function ExploreCampCard({ camp }: { camp: CampWithProfile }) {
+  const { campName, bannerImage, content, masterProfileImage } = camp;
+  return (
+    <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
+      <Card className="w-full border-sm border-text-primary">
+        <div className="relative">
+          <Image src={bannerImage} className="aspect-[4/3] w-full" />
+        </div>
+        <div className="flex h-2xl items-center gap-md px-md py-sm">
+          {masterProfileImage && (
+            <ProfileImage src={masterProfileImage} className="w-xl" />
+          )}
+          <div className="flex flex-1 flex-col">
+            <Text size={14}>{campName}</Text>
+            {content && (
+              <Text size={13} color="text-secondary">
+                {content}
+              </Text>
+            )}
+          </div>
+        </div>
+      </Card>
+    </Link>
   );
 }
