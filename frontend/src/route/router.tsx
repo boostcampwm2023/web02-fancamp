@@ -8,7 +8,6 @@ import FeedPage from '@pages/feed/FeedPage';
 import UserEditPage from '@pages/user/edit/ProfileEditPage';
 import UserProfileEditPage from '@pages/user/edit/profile/UserProfileEditPage';
 import UserPasswordEditPage from '@pages/user/edit/password/UserPasswordEditPage';
-import UserPage from '@pages/user/UserPage';
 import CampProfileEditPage from '@pages/camps/edit/CampProfileEditPage';
 import ErrorPage from '@pages/error/ErrorPage';
 import SigninPage from '@pages/auth/signin/SigninPage';
@@ -44,13 +43,12 @@ const router = createBrowserRouter(
           </Route>
         </Route>
         <Route path="camps/edit" element={<CampProfileEditPage />} />
-        <Route element={<AuthProtectedRoute />}>
-          <Route path="user" element={<UserPage />} />
-          <Route path="user/edit" element={<UserEditPage />}>
-            <Route path="profile" element={<UserProfileEditPage />} />
-            <Route path="password" element={<UserPasswordEditPage />} />
-          </Route>
+        <Route path="user/edit" element={<UserEditPage />}>
+          <Route path="profile" element={<UserProfileEditPage />} />
+          <Route path="password" element={<UserPasswordEditPage />} />
         </Route>
+      </Route>
+      <Route element={<AuthProtectedRoute />}>
         <Route path="error" element={<ErrorPage />} />
       </Route>
     </Route>

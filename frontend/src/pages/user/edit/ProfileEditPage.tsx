@@ -14,7 +14,7 @@ function UserEditPage() {
   }, [categoryIndex]);
 
   return (
-    <div className="flex min-h-full flex-col gap-md">
+    <div className="mt-8 flex min-h-full flex-col gap-md">
       <ContentMenu
         menuIndex={categoryIndex}
         setMenuIndex={setCategoryIndex}

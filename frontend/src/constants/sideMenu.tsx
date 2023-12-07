@@ -18,7 +18,7 @@ export const AUTH_MENU = [
 
 export const CAMPER_MENU = [
   {
-    to: '/user',
+    to: '/user/edit',
     text: '마이페이지',
     icon: <ProfileIcon width={28} />,
   },
@@ -29,18 +29,15 @@ export const MASTER_MENU = [
     to: `/camps/:campId/post`,
     text: '캠프',
   },
-  { to: `/camps/:campId/chat`, text: '> 채팅' },
   {
     to: `/camps/:campId/post`,
     text: '> 포스트',
   },
+  { to: `/camps/:campId/chat`, text: '> 채팅' },
+
   {
     to: `/camps/edit`,
     text: '> 캠프 수정',
-  },
-  {
-    to: `/camps/:campId/upload`,
-    text: '> 캠프 업로드',
   },
 ];
 

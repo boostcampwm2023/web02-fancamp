@@ -5,6 +5,7 @@ export interface Camp {
   content: string | null;
   masterId: number;
   subscriptionCount: number;
+  masterProfileImage: string;
 }
 
 export interface CampEditable {
