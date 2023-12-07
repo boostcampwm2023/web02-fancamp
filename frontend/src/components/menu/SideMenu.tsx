@@ -49,13 +49,14 @@ export default function SideMenu() {
           ))}
           {auth
             ? auth.isMaster
-              ? MASTER_MENU.map(({ to, text }) => {
+              ? MASTER_MENU.map(({ to, text, icon }) => {
                   const campIdTo = to.replace(':campId', auth.publicId);
                   return (
                     <SideMenuLinkButton
                       key={`side-menu-${text}`}
                       to={campIdTo}
                       text={text}
+                      icon={icon}
                     />
                   );
                 })

@@ -44,7 +44,10 @@ function SubscribedMenu() {
           />
         ))}
         {auth?.isMaster ? (
-          <div className="m-4 display-regular-16">{`마스터 ${auth?.publicId}로 접속중입니다!`}</div>
+          <Text
+            size={16}
+            className="m-lg hidden xl:inline"
+          >{`마스터 ${auth?.publicId}로 접속중입니다!`}</Text>
         ) : subscribedCamps && subscribedCamps?.length > 0 ? (
           <SideMenuLinkButton text="전체 구독 보기" to="/subscriptions" />
         ) : (
