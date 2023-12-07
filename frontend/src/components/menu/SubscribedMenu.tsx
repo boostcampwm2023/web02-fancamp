@@ -43,7 +43,9 @@ function SubscribedMenu() {
           hasChatNotice={campsWithChatNotice.includes(campName)}
         />
       ))}
-      {subscribedCamps && subscribedCamps?.length > 0 ? (
+      {auth?.isMaster ? (
+        <div className="m-4 display-regular-16">{`마스터 ${auth?.publicId}로 접속중입니다!`}</div>
+      ) : subscribedCamps && subscribedCamps?.length > 0 ? (
         <SideMenuLinkButton text={'전체 구독 보기'} to="/subscriptions" />
       ) : (
         <div className="m-4 display-regular-16">캠프를 구독해보세요!</div>
