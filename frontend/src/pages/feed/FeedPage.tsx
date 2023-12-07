@@ -6,12 +6,12 @@ import FeedCard from './FeedCardLogic';
 function FeedPage() {
   return (
     <Suspense>
-      <FeedPagea />
+      <FeedPageSuspense />
     </Suspense>
   );
 }
 
-function FeedPagea() {
+function FeedPageSuspense() {
   const { data: postIdsData, fetchNextPage: fetchPostIds } =
     getFeedInfiniteQuery();
   const [postIds, setPostIds] = useState<number[]>([]);
@@ -61,6 +61,7 @@ function FeedPagea() {
             return (
               <FeedCard
                 postId={postId}
+                isCurrnet={i === 2}
                 key={`fead-card-${postId || `udf-${id}`}`}
               />
             );

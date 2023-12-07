@@ -9,6 +9,7 @@ import { checkFileType } from '@utils/file';
 interface ImageSliderProps {
   width?: number;
   medias: PostFile[];
+  isCurrnet: boolean;
 }
 
 const preButtonClassName =
@@ -21,7 +22,7 @@ const indexClassName =
   'absolute bottom-sm mb-[-0.25rem] flex justify-center border-sm border-text-primary bg-surface-primary p-xs ' +
   'smooth-transition opacity-0 h-center group-hover:mb-[0] group-hover:flex group-hover:opacity-100';
 
-function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
+function MediaSlider({ width = 37.5, medias, isCurrnet }: ImageSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -62,8 +63,7 @@ function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
                 className="z-50 w-[100%] object-cover"
                 style={{ width: `${width}rem` }}
                 key={`image-slider-${media.fileUrl}`}
-                controls
-                autoPlay
+                controls={false || isCurrnet}
               />
             );
           }
