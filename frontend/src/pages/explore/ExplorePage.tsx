@@ -78,7 +78,7 @@ function ExploreCampCard({ camp }: { camp: CampWithProfile }) {
         <div className="relative">
           <Image
             src={bannerImage ? `${bannerImage}?${new Date()}` : ''}
-            className="aspect-[4/3] w-full"
+            className="aspect-[4/3] w-full object-cover"
           />
         </div>
         <div className="relative flex flex-col items-center gap-md px-md py-md">
