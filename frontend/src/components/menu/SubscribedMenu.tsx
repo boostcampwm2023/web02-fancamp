@@ -2,16 +2,16 @@
 
 import useAuth from '@hooks/useAuth';
 import useNoticeSocket from '@hooks/useNotice';
-import useSubscriptions from '@hooks/useSubscriptions';
 import Text from '@components/ui/Text';
 import SubscribeIcon from '@assets/icons/subscribeIcon.svg?react';
 import SubscribeMenuButton from './SubscribeMenuButton';
 import { noticeSocket } from '@API/socket';
 import { SideMenuLinkButton } from './SideMenuButton';
+import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
 
 function SubscribedMenu() {
   const { auth } = useAuth();
-  const { subscribedCamps } = useSubscriptions();
+  const { subscribedCamps } = useSubscriptionQuery(auth);
   const { campsWithChatNotice, campsWithPostNotice } = useNoticeSocket(
     noticeSocket,
     auth

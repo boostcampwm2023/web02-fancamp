@@ -1,8 +1,10 @@
 import useFetch from './useFetch';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { BASE_URL } from '@constants/URLs';
 import { queryClient } from '@contexts/QueryProvider';
 import { SUBSCRIBED_CAMPS } from '@constants/queryKeys';
+import { Auth } from '@type/api/auth';
+import { fetchSubscribedCamps } from '@API/subscriptions';
 
 interface MutationFn {
   campId: string;
@@ -10,6 +12,28 @@ interface MutationFn {
 
 interface SubscribeMutation {
   publicId: string | undefined;
+}
+
+export default function useSubscriptionQuery(auth: Auth | null) {
+  const { data: subscribedCamps } = useQuery({
+    queryKey: [SUBSCRIBED_CAMPS, auth?.publicId],
+    queryFn: fetchSubscribedCamps,
+    staleTime: 1000 * 60 * 5,
+    enabled: !!(auth !== null && !auth?.isMaster),
+  });
+
+  const isSubscribedCampName = (campName: string): boolean => {
+    if (
+      subscribedCamps?.some(
+        ({ campName: subscribedCampName }) => subscribedCampName === campName
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  return { subscribedCamps, isSubscribedCampName };
 }
 
 export const subscribeMutation = ({ publicId }: SubscribeMutation) => {

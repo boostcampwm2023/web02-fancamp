@@ -1,11 +1,13 @@
 /* eslint-disable no-nested-ternary */
 
 import ProfileImage from '@components/profile/ProfileImage';
-import useSubscriptions from '@hooks/useSubscriptions';
+import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
+import useAuth from '@hooks/useAuth';
 import { Link } from 'react-router-dom';
 
 export default function SubscriptionsPage() {
-  const { subscribedCamps } = useSubscriptions();
+  const { auth } = useAuth();
+  const { subscribedCamps } = useSubscriptionQuery(auth);
 
   return (
     <>

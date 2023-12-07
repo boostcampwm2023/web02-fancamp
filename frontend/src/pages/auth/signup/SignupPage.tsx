@@ -68,9 +68,7 @@ export default function SignupPage() {
 
   useEffect(() => {
     if (auth) {
-      navigate('/error', {
-        state: { error: '회원가입을 하시려면 로그아웃을 먼저 해주세요! 😉' },
-      });
+      navigate('/');
     }
   }, []);
 

@@ -4,7 +4,6 @@ import ChatBoxInputBar from './ChatBoxInputBar';
 import ChatBoxToast from './ChatBoxToast';
 import useChatSocket from '@hooks/useChatSocket';
 import useAuth from '@hooks/useAuth';
-import useSubscriptions from '@hooks/useSubscriptions';
 import ChatBoxSubscription from './ChatBoxSubscribe';
 import { useParams } from 'react-router';
 import { chatSocket as socket } from '@API/socket';
@@ -12,12 +11,13 @@ import {
   CHAT_CONNECT_TOAST_MESSAGE,
   CHAT_CONNECT_TOAST_DELAY,
 } from '@constants/chat';
+import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
 
 export default function ChatBox() {
   const { auth } = useAuth();
   const { publicId, isMaster } = auth!;
   const { campId: campName } = useParams();
-  const { isSubscribedCampName } = useSubscriptions();
+  const { isSubscribedCampName } = useSubscriptionQuery(auth);
 
   const {
     messages,

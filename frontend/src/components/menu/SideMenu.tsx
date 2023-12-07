@@ -12,6 +12,7 @@ import Image from '@components/ui/Image';
 import SignoutIcon from '@assets/icons/signoutIcon.svg?react';
 import useLanguage from '@hooks/useLanguage';
 import { SideMenuButton, SideMenuLinkButton } from './SideMenuButton';
+import { IS_SIGNED_IN } from '@constants/localStorageKeys';
 
 export default function SideMenu() {
   const { auth } = useAuth();
@@ -19,6 +20,7 @@ export default function SideMenu() {
 
   const handleSignout = async () => {
     await signout();
+    localStorage.setItem(IS_SIGNED_IN, 'false');
     window.location.reload();
   };
 

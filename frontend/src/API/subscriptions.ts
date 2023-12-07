@@ -3,6 +3,7 @@ import { Camp } from '@type/api/camp';
 
 export async function fetchSubscribedCamps(): Promise<Camp[]> {
   const response = await fetch(`${BASE_URL}/camps/subscriptions`, {
+    method: 'GET',
     credentials: 'include',
   });
   if (!response.ok) {
