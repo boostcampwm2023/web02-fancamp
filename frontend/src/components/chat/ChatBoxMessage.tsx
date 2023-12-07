@@ -58,7 +58,7 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
           </span>
         </div>
       </div>
-      <span className="self-end text-sm text-text-secondary display-light-14">
+      <span className="self-end text-sm text-text-secondary display-regular-14">
         {localeTimeString}
       </span>
     </li>
