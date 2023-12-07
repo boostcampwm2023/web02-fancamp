@@ -27,7 +27,7 @@ function CampPage() {
   }, [categoryIndex]);
 
   return (
-    <div className="flex min-h-full flex-col gap-md">
+    <div className="flex min-h-full flex-col gap-md pb-2xl">
       <Suspense
         fallback={
           <div className="mb-xl h-[6.25rem] w-full">

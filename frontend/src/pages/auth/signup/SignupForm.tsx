@@ -152,10 +152,7 @@ export default function SignupForm({
             </div>
           ) : signupStatus === 'profile' ? (
             <div className="flex flex-col gap-md">
-              <ProfileImage
-                className="relative h-center"
-                src="https://i.namu.wiki/i/KrUJMMXswt0EEr9HwEVQmDpsVxQtbidLBC1Wj_B7NlJuH2CYa2lRBMqHJPuA8a-Q0hpSZ6YV_RR684e961T0Cw.webp"
-              />
+              <ProfileImage className="relative rounded-full h-center" />
               <Input
                 label="닉네임"
                 type="text"

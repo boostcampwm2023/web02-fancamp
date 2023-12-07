@@ -22,6 +22,7 @@ import { getSentiment, getSentimentColor } from 'src/utils/sentiment';
 import { NoticeGateway } from 'src/notice/notice.gateway';
 import { CommentGateway } from './comment.gateway';
 import { PostGateway } from './post.gateway';
+import { PostTranslationService } from './postTranslation.service';
 
 @Injectable()
 export class PostService {
@@ -35,6 +36,7 @@ export class PostService {
     private readonly noticeGateway: NoticeGateway,
     private readonly commentGateway: CommentGateway,
     private readonly postGateway: PostGateway,
+    private readonly postTransactionService: PostTranslationService,
   ) {}
 
   /* Post */
@@ -81,7 +83,15 @@ export class PostService {
       user.isMaster,
       pictureCount,
     );
-    await this.imageService.uploadPostFiles(files, post.postId, post.campId);
+
+    await Promise.all([
+      this.postTransactionService.createPostTranslation({
+        content: createPostDto.content,
+        postId: post.postId,
+      }),
+      this.imageService.uploadPostFiles(files, post.postId, post.campId),
+    ]);
+
     const urls = this.imageService.findImagesByPostId(post.postId);
     if (urls[0] && !urls[0].mimetype.startsWith('image')) {
       urls[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;

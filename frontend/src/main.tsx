@@ -2,9 +2,10 @@ import './styles/index.css';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router-dom';
 import QueryProvider from '@contexts/QueryProvider';
+import { SubscriptionProvider } from '@contexts/SubscriptionContext';
+import LanguageProvider from '@contexts/LanguageContext';
 import router from './route/router';
 import { AuthProvider } from './contexts/AuthContext';
-import { SubscriptionProvider } from '@contexts/SubscriptionContext';
 
 async function enableMocking() {
   if (import.meta.env.VITE_NODE_ENV !== 'development') {
@@ -22,7 +23,9 @@ enableMocking().then(() => {
     <AuthProvider>
       <QueryProvider>
         <SubscriptionProvider>
-          <RouterProvider router={router} />
+          <LanguageProvider>
+            <RouterProvider router={router} />
+          </LanguageProvider>
         </SubscriptionProvider>
       </QueryProvider>
     </AuthProvider>

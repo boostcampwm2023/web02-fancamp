@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Post } from './entities/post.entity';
 import { Like } from './entities/like.entity';
 import { Comment } from './entities/comment.entity';
+import { PostTranslation } from './entities/postTranslation.entity';
 import { PostRepository } from './post.repository';
 import { CampModule } from 'src/camp/camp.module';
 import { UserModule } from 'src/user/user.module';
@@ -16,10 +17,11 @@ import { NoticeModule } from 'src/notice/notice.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { CommentGateway } from './comment.gateway';
 import { PostGateway } from './post.gateway';
+import { PostTranslationService } from './postTranslation.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Post, Like, Comment]),
+    TypeOrmModule.forFeature([Post, Like, Comment, PostTranslation]),
     CampModule,
     UserModule,
     ImageModule,
@@ -35,6 +37,7 @@ import { PostGateway } from './post.gateway';
     CommentRepository,
     CommentGateway,
     PostGateway,
+    PostTranslationService,
   ],
 })
 export class PostModule {}

@@ -12,6 +12,8 @@ import Hr from '@components/ui/Hr';
 import { Fragment, useEffect, useRef } from 'react';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
+import useAuth from '@hooks/useAuth';
+import useLanguage from '@hooks/useLanguage';
 
 interface PostModalTemplateProps {
   camp: Camp;
@@ -31,6 +33,8 @@ interface PostModalTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
+  publicId: string | null;
+  deleteComment: any;
 }
 
 function PostModalTemplate({
@@ -48,7 +52,11 @@ function PostModalTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
+  publicId,
+  deleteComment,
 }: PostModalTemplateProps) {
+  const { auth } = useAuth();
+  const { language } = useLanguage();
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
     fetchComments();
@@ -79,7 +87,10 @@ function PostModalTemplate({
           <PostConentCard
             profileImage={profileImage}
             campName={camp.campName}
-            content={post.content}
+            content={
+              post.translation?.find((item) => item.languageCode === language)
+                ?.content || post.content
+            }
             createdAt={post.createdAt}
             handleLike={handleLike}
             handlePostModalClose={handlePostModalClose}
@@ -91,12 +102,14 @@ function PostModalTemplate({
               {post.commentCount}개의 코멘트
             </Text>
           </Hr>
-          <ul className="flex flex-col gap-lg p-lg">
+          <ul className="flex flex-col pb-lg">
             {newComments.map((comment: Comment) => {
               return (
                 <CommentCard
-                  comment={comment}
                   key={`new-comment-${comment.commentId}`}
+                  comment={comment}
+                  isMine={comment.publicId === publicId}
+                  deleteComment={deleteComment}
                 />
               );
             })}
@@ -106,6 +119,8 @@ function PostModalTemplate({
                   <CommentCard
                     comment={comment}
                     key={`comment-${comment.commentId}`}
+                    isMine={comment.publicId === publicId}
+                    deleteComment={deleteComment}
                   />
                 ))}
               </Fragment>
@@ -113,12 +128,14 @@ function PostModalTemplate({
             <div ref={observerRef} className="h-[0.0625rem]" />
           </ul>
         </div>
-        <InputComment
-          comment={inputComment}
-          setComment={setInputComment}
-          handleCommentSubmit={handleCommentSubmit}
-          status={commentStatus}
-        />
+        {auth && (
+          <InputComment
+            comment={inputComment}
+            setComment={setInputComment}
+            handleCommentSubmit={handleCommentSubmit}
+            status={commentStatus}
+          />
+        )}
       </div>
     </div>
   );

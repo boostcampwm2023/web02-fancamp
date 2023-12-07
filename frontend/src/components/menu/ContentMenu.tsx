@@ -15,7 +15,7 @@ interface ContentMenuButtonProps {
 
 function ContentMenu({ categorys, menuIndex, setMenuIndex }: ContentMenuProps) {
   return (
-    <div className="flex w-full flex-col items-center border-t-sm border-contour-primary">
+    <div className="flex w-full flex-col items-center">
       <div style={{ width: `${5 * categorys.length}rem` }}>
         <div
           className="m-[-0.065rem] h-[0.125rem] w-[5rem] bg-text-primary smooth-transition"

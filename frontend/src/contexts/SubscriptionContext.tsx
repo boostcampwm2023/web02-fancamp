@@ -3,9 +3,15 @@ import useAuth from '@hooks/useAuth';
 import { Camp } from '@type/api/camp';
 import { createContext, useEffect, useState } from 'react';
 
+interface CampWithProfile extends Camp {
+  masterProfileImage: string;
+}
+
 interface AuthContextType {
-  subscribedCamps: Camp[] | null;
-  setSubscribedCamps: React.Dispatch<React.SetStateAction<Camp[] | null>>;
+  subscribedCamps: CampWithProfile[] | null;
+  setSubscribedCamps: React.Dispatch<
+    React.SetStateAction<CampWithProfile[] | null>
+  >;
 }
 
 const SubscriptionContext = createContext<AuthContextType | null>(null);
@@ -15,7 +21,9 @@ export function SubscriptionProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [subscribedCamps, setSubscribedCamps] = useState<Camp[] | null>(null);
+  const [subscribedCamps, setSubscribedCamps] = useState<
+    CampWithProfile[] | null
+  >(null);
   const [isLoading, setIsLoading] = useState(true);
   const { auth } = useAuth();
 

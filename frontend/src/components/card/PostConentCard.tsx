@@ -33,7 +33,12 @@ function PostConentCard({
       <div className="flex items-center justify-between">
         <Link to={`/camps/${campName}/post`}>
           <div className="flex items-center gap-sm">
-            <ProfileImage src={profileImage} width={32} height={32} />
+            <ProfileImage
+              src={profileImage}
+              width={32}
+              height={32}
+              className="rounded-full"
+            />
             <Text>{campName}</Text>
           </div>
         </Link>
@@ -51,7 +56,7 @@ function PostConentCard({
         <Text>{content}</Text>
       </div>
       <LikeButton
-        isMaster={auth?.isMaster || false}
+        canLike={!!(auth && !auth.isMaster)}
         isLike={isLike}
         createdAt={createdAt}
         likeCount={likeCount}

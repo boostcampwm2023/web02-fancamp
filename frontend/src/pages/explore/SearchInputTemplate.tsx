@@ -14,14 +14,17 @@ function SearchInputTemplate({ camps, keyword, setKeyword }: any) {
         {camps.map((camp: any) => {
           const {
             campName,
-            bannerImage,
+            masterProfileImage,
             highlightedCampName,
             highlightedContent,
           } = camp;
           return (
             <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
               <div className="relative flex h-[3.5rem] w-full items-center gap-md border-sm border-text-primary">
-                <Image src={bannerImage} className="aspect-square h-full" />
+                <Image
+                  src={masterProfileImage}
+                  className="aspect-square h-full"
+                />
                 <Text
                   size={14}
                   dangerouslySetInnerHTML={{

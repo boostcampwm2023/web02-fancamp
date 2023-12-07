@@ -90,9 +90,11 @@ export class CampRepository {
    */
   search(keyword: string) {
     return this.campRepository
-      .createQueryBuilder()
+      .createQueryBuilder('camp')
+      .leftJoin(User, 'user', 'camp.masterId = user.id')
+      .select(['camp.*', 'user.profileImage AS masterProfileImage'])
       .where(`MATCH (campName) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
       .orWhere(`MATCH (content) AGAINST ('${keyword}' IN BOOLEAN MODE)`)
-      .getMany();
+      .getRawMany();
   }
 }

@@ -15,7 +15,7 @@ function ProfileImage(props: ProfileImageProps) {
       }
       width={width || 100}
       height={height || 100}
-      className={`aspect-square rounded-full border-sm border-text-primary object-cover ${
+      className={`aspect-square border-sm border-text-primary object-cover ${
         className || ''
       }`}
     />

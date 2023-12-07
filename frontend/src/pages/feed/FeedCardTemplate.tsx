@@ -9,6 +9,7 @@ import PostConentCard from '@components/card/PostConentCard';
 import Hr from '@components/ui/Hr';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
+import useLanguage from '@hooks/useLanguage';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -27,6 +28,8 @@ interface FeedCardTemplateProps {
   };
   scrollRef: React.RefObject<HTMLDivElement>;
   fetchComments: () => Promise<any>;
+  publicId: string | null;
+  deleteComment: any;
 }
 
 function FeedCardTemplate({
@@ -43,11 +46,14 @@ function FeedCardTemplate({
   commentStatus,
   scrollRef,
   fetchComments,
+  publicId,
+  deleteComment,
 }: FeedCardTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
     fetchComments();
   });
+  const { language } = useLanguage();
 
   useEffect(() => {
     if (observerRef.current) {
@@ -81,13 +87,16 @@ function FeedCardTemplate({
       )}
       <div
         className="cool-scrollbar flex flex-1 flex-col overflow-y-auto bg-surface-primary"
-        onWheel={handleWheel}
+        onWheelCapture={handleWheel}
         ref={scrollRef}
       >
         <PostConentCard
           profileImage={profileImage}
           campName={camp.campName}
-          content={post.content}
+          content={
+            post.translation?.find((item) => item.languageCode === language)
+              ?.content || post.content
+          }
           createdAt={post.createdAt}
           handleLike={handleLike}
           isLike={isLike}
@@ -98,11 +107,13 @@ function FeedCardTemplate({
             {post.commentCount}개의 코멘트
           </Text>
         </Hr>
-        <ul className="flex flex-col gap-lg p-lg">
+        <ul className="flex flex-col pb-lg">
           {newComments.map((comment: Comment) => (
             <CommentCard
               comment={comment}
               key={`comment-${comment.commentId}`}
+              isMine={comment.publicId === publicId}
+              deleteComment={deleteComment}
             />
           ))}
           {comments.pages.map((commentPage: any) =>
@@ -110,10 +121,11 @@ function FeedCardTemplate({
               <CommentCard
                 comment={comment}
                 key={`comment-${comment.commentId}`}
+                isMine={comment.publicId === publicId}
+                deleteComment={deleteComment}
               />
             ))
           )}
-
           <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
       </div>

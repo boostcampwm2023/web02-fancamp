@@ -2,29 +2,53 @@ import ProfileImage from '@components/profile/ProfileImage';
 import Text from '@components/ui/Text';
 import { Comment } from '@type/api/comment';
 import { formatDate } from '@utils/date';
+import DeleteIcon from '@assets/icons/deleteIcon.svg?react';
 
 interface CommentProps {
   comment: Comment;
+  isMine: boolean;
+  deleteComment: any;
 }
 
-function CommentCard({ comment }: CommentProps) {
-  const { profileImage, createdAt, content, setimentColorHex, publicId } =
-    comment;
+function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
+  const {
+    profileImage,
+    createdAt,
+    content,
+    setimentColorHex,
+    publicId,
+    postId,
+    commentId,
+  } = comment;
   return (
-    <li className="flex flex-col gap-md">
+    <li className="group flex flex-col gap-md px-lg py-md">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-sm">
+        <div className="flex items-center gap-md">
           <ProfileImage
             src={profileImage}
             width={24}
             height={24}
-            className="border-xs rounded-full border-text-primary"
+            className="rounded-full"
           />
-          <Text size={13}>{publicId}</Text>
+          <Text size={13} color={isMine ? 'point-blue' : 'contour-primary'}>
+            {publicId}
+          </Text>
         </div>
-        <Text size={13} color="text-secondary" className="text-end">
-          {formatDate(createdAt)}
-        </Text>
+        <div className="flex items-center gap-md">
+          <Text size={13} color="text-secondary" className="text-end">
+            {formatDate(createdAt)}
+          </Text>
+          {isMine && (
+            <button
+              type="button"
+              aria-label="comment-delete-button"
+              className="hidden group-hover:block"
+              onClick={() => deleteComment({ postId, commentId })}
+            >
+              <DeleteIcon width={16} />
+            </button>
+          )}
+        </div>
       </div>
       <Text
         size={14}
