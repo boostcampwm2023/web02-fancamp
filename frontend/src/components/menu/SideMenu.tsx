@@ -10,12 +10,10 @@ import {
 } from '@constants/sideMenu';
 import Image from '@components/ui/Image';
 import SignoutIcon from '@assets/icons/signoutIcon.svg?react';
-import useLanguage from '@hooks/useLanguage';
 import { SideMenuButton, SideMenuLinkButton } from './SideMenuButton';
 
 export default function SideMenu() {
   const { auth } = useAuth();
-  const { language, setLanguage } = useLanguage();
 
   const handleSignout = async () => {
     await signout();
@@ -87,7 +85,7 @@ export default function SideMenu() {
             ))
           )}
         </div>
-        <div className="mb-lg">
+        <div className="mb-lg flex flex-col">
           {DOC_MENU.map(({ to, text, icon }) => (
             <SideMenuLinkButton
               key={`side-menu-${text}`}
@@ -96,18 +94,6 @@ export default function SideMenu() {
               icon={icon}
             />
           ))}
-        </div>
-        <div className="flex justify-evenly">
-          {language}
-          <button type="button" onClick={() => setLanguage('ko')}>
-            한국어
-          </button>
-          <button type="button" onClick={() => setLanguage('en')}>
-            English
-          </button>
-          <button type="button" onClick={() => setLanguage('ja')}>
-            日本語
-          </button>
         </div>
       </div>
     </aside>

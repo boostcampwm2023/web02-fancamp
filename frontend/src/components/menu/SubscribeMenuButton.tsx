@@ -29,7 +29,7 @@ function SubscribeMenuButton({
           <div className="flex w-full items-center justify-between">
             <span
               className={`hidden text-text-primary xl:inline ${
-                isActive ? 'display-regular-16' : 'display-light-16'
+                isActive ? 'display-regular-16' : 'display-regular-16'
               }`}
             >
               {text}
