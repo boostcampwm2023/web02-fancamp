@@ -21,19 +21,18 @@ function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
     commentId,
   } = comment;
   return (
-    <li
-      className="group flex flex-col gap-md px-lg py-md"
-      style={{ backgroundColor: isMine ? '#f7f4d3' : '#ffffff' }}
-    >
+    <li className="group flex flex-col gap-md px-lg py-md">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-sm">
+        <div className="flex items-center gap-md">
           <ProfileImage
             src={profileImage}
             width={24}
             height={24}
-            className="border-xs rounded-full border-text-primary"
+            className="rounded-full"
           />
-          <Text size={13}>{publicId}</Text>
+          <Text size={13} color={isMine ? 'point-blue' : 'contour-primary'}>
+            {publicId}
+          </Text>
         </div>
         <div className="flex items-center gap-md">
           <Text size={13} color="text-secondary" className="text-end">
