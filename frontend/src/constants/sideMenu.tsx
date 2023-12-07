@@ -18,7 +18,7 @@ export const AUTH_MENU = [
 
 export const CAMPER_MENU = [
   {
-    to: '/user',
+    to: '/user/edit',
     text: '마이페이지',
     icon: <ProfileIcon width={28} />,
   },
