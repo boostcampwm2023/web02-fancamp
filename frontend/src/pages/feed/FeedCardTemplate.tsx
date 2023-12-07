@@ -87,7 +87,7 @@ function FeedCardTemplate({
       )}
       <div
         className="cool-scrollbar flex flex-1 flex-col overflow-y-auto bg-surface-primary"
-        onWheel={handleWheel}
+        onWheelCapture={handleWheel}
         ref={scrollRef}
       >
         <PostConentCard
@@ -107,7 +107,7 @@ function FeedCardTemplate({
             {post.commentCount}개의 코멘트
           </Text>
         </Hr>
-        <ul className="flex flex-col gap-lg pb-lg">
+        <ul className="flex flex-col pb-lg">
           {newComments.map((comment: Comment) => (
             <CommentCard
               comment={comment}
@@ -126,7 +126,6 @@ function FeedCardTemplate({
               />
             ))
           )}
-
           <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
       </div>
