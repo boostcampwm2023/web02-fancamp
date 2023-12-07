@@ -32,6 +32,8 @@
     "@nestjs/swagger": "^7.1.15",
     "@nestjs/typeorm": "^10.0.0",
     "@nestjs/websockets": "^10.2.8",
+    "@socket.io/cluster-adapter": "^0.2.2",
+    "@socket.io/sticky": "^1.0.4",
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.6",
     "@willsoto/nestjs-prometheus": "^6.0.0",
