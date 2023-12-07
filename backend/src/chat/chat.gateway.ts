@@ -21,7 +21,7 @@ export class ChatGateway {
     const { roomName, detailRoomName } =
       await this.chatService.getRoomName(campName);
     socket.join(roomName);
-    if (this.campNamesInChat.has(campName)) {
+    if (this.campNamesInChat.has(roomName)) {
       socket.emit('masterIn');
     }
   }
