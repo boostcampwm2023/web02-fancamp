@@ -1,6 +1,5 @@
 import ProfileImage from '@components/profile/ProfileImage';
 import Text from '@components/ui/Text';
-import useSubscriptions from '@hooks/useSubscriptions';
 import useAuth from '@hooks/useAuth';
 import SubscribeButton from '@components/button/SubscribeButton';
 import CheckIcon from '@assets/icons/checkIcon.svg?react';
@@ -8,7 +7,7 @@ import Image from '@components/ui/Image';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getCampQuery } from '@hooks/api/useCampQuery';
 import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
-import {
+import useSubscriptionQuery, {
   subscribeMutation,
   unsubscribeMutation,
 } from '@hooks/api/useSubscriptionQuery';
@@ -22,7 +21,7 @@ function CampInfo() {
   } = getProfileByIdQuery(campId!);
   const navigate = useNavigate();
 
-  const { isSubscribedCampName } = useSubscriptions();
+  const { isSubscribedCampName } = useSubscriptionQuery(auth);
   const isSubscribed = isSubscribedCampName(campId!);
   const { subscribeMutate } = subscribeMutation({
     publicId: auth?.publicId,
