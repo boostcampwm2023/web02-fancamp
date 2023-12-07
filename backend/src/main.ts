@@ -24,7 +24,11 @@ async function bootstrap() {
     .build();
 
   app.enableCors({
-    origin: ['http://localhost:5173', 'http://223.130.133.168'], //origin이 *가 있으면 fetch옵션에 credential이 include일때 요청이 안옴.
+    origin: [
+      'http://localhost:5173',
+      'http://223.130.133.168',
+      'http://fancamp.site',
+    ], //origin이 *가 있으면 fetch옵션에 credential이 include일때 요청이 안옴.
     credentials: true, // 인증 정보를 서버로 전송할 수 있도록 허용
   });
 
