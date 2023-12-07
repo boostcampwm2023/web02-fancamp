@@ -30,6 +30,7 @@ interface FeedCardTemplateProps {
   fetchComments: () => Promise<any>;
   publicId: string | null;
   deleteComment: any;
+  isCurrnet: boolean;
 }
 
 function FeedCardTemplate({
@@ -48,6 +49,7 @@ function FeedCardTemplate({
   fetchComments,
   publicId,
   deleteComment,
+  isCurrnet,
 }: FeedCardTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
@@ -82,7 +84,7 @@ function FeedCardTemplate({
     >
       {post.url.length !== 0 && (
         <div className="h-[18rem] w-full">
-          <MediaSlider width={32} medias={post.url} />
+          <MediaSlider width={32} medias={post.url} isCurrnet={isCurrnet} />
         </div>
       )}
       <div

@@ -5,13 +5,13 @@ import { Link } from 'react-router-dom';
 
 function SearchInputTemplate({ camps, keyword, setKeyword }: any) {
   return (
-    <div className="relative">
+    <div className="relative z-10">
       <SearchInput value={keyword} setValue={setKeyword} />
       <div
-        className="absolute w-full bg-surface-primary"
+        className="absolute flex w-full flex-col gap-[0.0625rem] border-sm border-text-primary bg-text-primary"
         style={{ top: `calc(100% - 0.0625rem)` }}
       >
-        {camps.map((camp: any) => {
+        {camps.slice(0, 5).map((camp: any) => {
           const {
             campName,
             masterProfileImage,
@@ -20,7 +20,7 @@ function SearchInputTemplate({ camps, keyword, setKeyword }: any) {
           } = camp;
           return (
             <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
-              <div className="relative flex h-[3.5rem] w-full items-center gap-md border-sm border-text-primary">
+              <div className="relative flex h-[3.5rem] w-full items-center gap-md bg-surface-primary">
                 <Image
                   src={masterProfileImage}
                   className="aspect-square h-full"

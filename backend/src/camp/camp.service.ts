@@ -4,6 +4,7 @@ import { UpdateCampDto } from './dto/update-camp.dto';
 import { CampRepository } from './camp.repository';
 import { SubscriptionService } from './subscription.service';
 import { ImageService } from 'src/image/image.service';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class CampService {
@@ -67,7 +68,8 @@ export class CampService {
     updateCampDto: UpdateCampDto,
   ) {
     const camp = await this.findOne(campName);
-    const fileName = `${camp.campId}_banner`;
+    const uuid = randomUUID();
+    const fileName = `${camp.campId}_banner_${uuid}`;
     if (file) {
       const fileUrl = await this.imageService.uploadFile(file, fileName);
       camp.bannerImage = fileUrl;

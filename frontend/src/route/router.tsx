@@ -33,11 +33,11 @@ const router = createBrowserRouter(
         <Route path="search" element={<SearchPage />} />
         <Route path="explore" element={<ExplorePage />} />
         <Route path="feed" element={<FeedPage />} />
-        <Route element={<AuthProtectedRoute />}>
-          <Route path="subscriptions" element={<SubscriptionsPage />} />
-          <Route path="camps" element={<CampPage />}>
-            <Route path=":campId">
-              <Route path="post" element={<PostPage />} />
+        <Route path="subscriptions" element={<SubscriptionsPage />} />
+        <Route path="camps" element={<CampPage />}>
+          <Route path=":campId">
+            <Route path="post" element={<PostPage />} />
+            <Route element={<AuthProtectedRoute />}>
               <Route path="chat" element={<ChatPage />} />
             </Route>
           </Route>

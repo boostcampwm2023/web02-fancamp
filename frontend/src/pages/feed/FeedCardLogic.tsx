@@ -15,10 +15,11 @@ import useAuth from '@hooks/useAuth';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
+  isCurrnet: boolean;
   postId: number;
 }
 
-const FeedCard = memo(function FeedCard({ postId }: FeedCardProps) {
+function FeedCard({ isCurrnet, postId }: FeedCardProps) {
   return (
     <Suspense
       fallback={
@@ -27,12 +28,15 @@ const FeedCard = memo(function FeedCard({ postId }: FeedCardProps) {
         </div>
       }
     >
-      <FeedCardLogic postId={postId} />
+      <FeedCardLogic isCurrnet={isCurrnet} postId={postId} />
     </Suspense>
   );
-});
+}
 
-function FeedCardLogic({ postId }: FeedCardProps) {
+const FeedCardLogic = memo(function FeedCardLogic({
+  isCurrnet,
+  postId,
+}: FeedCardProps) {
   const [isLike, setLike] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -99,13 +103,7 @@ function FeedCardLogic({ postId }: FeedCardProps) {
         ...post,
         commentCount: post.commentCount - 1,
       });
-
       updateComments(commentId);
-
-      //   setQueryData(data => ({
-      //     ...data,
-      //     pages: data.pages.map(page => page.map(todo => todo.id === id ? { ...todo, name: 'new name' } : todo ))
-      // })
     },
   });
 
@@ -158,8 +156,9 @@ function FeedCardLogic({ postId }: FeedCardProps) {
       fetchComments={fetchComments}
       publicId={auth?.publicId || null}
       deleteComment={deleteComment}
+      isCurrnet={isCurrnet}
     />
   );
-}
+});
 
 export default FeedCard;

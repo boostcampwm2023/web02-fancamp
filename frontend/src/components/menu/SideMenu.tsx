@@ -49,25 +49,27 @@ export default function SideMenu() {
               icon={icon}
             />
           ))}
-          {auth?.isMaster
-            ? MASTER_MENU.map(({ to, text }) => {
-                const campIdTo = to.replace(':campId', auth.publicId);
-                return (
+          {auth
+            ? auth.isMaster
+              ? MASTER_MENU.map(({ to, text }) => {
+                  const campIdTo = to.replace(':campId', auth.publicId);
+                  return (
+                    <SideMenuLinkButton
+                      key={`side-menu-${text}`}
+                      to={campIdTo}
+                      text={text}
+                    />
+                  );
+                })
+              : CAMPER_MENU.map(({ to, text, icon }) => (
                   <SideMenuLinkButton
                     key={`side-menu-${text}`}
-                    to={campIdTo}
+                    to={to}
                     text={text}
+                    icon={icon}
                   />
-                );
-              })
-            : CAMPER_MENU.map(({ to, text, icon }) => (
-                <SideMenuLinkButton
-                  key={`side-menu-${text}`}
-                  to={to}
-                  text={text}
-                  icon={icon}
-                />
-              ))}
+                ))
+            : null}
           {auth ? (
             <SideMenuButton
               onClick={handleSignout}

@@ -92,7 +92,7 @@ export class PostService {
       this.imageService.uploadPostFiles(files, post.postId, post.campId),
     ]);
 
-    const urls = this.imageService.findImagesByPostId(post.postId);
+    const urls = await this.imageService.findImagesByPostId(post.postId);
     if (urls[0] && !urls[0].mimetype.startsWith('image')) {
       urls[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
       urls[0].mimetype = 'image/png';

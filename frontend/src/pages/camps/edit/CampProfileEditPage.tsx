@@ -26,8 +26,7 @@ function CampProfileEditPage() {
 
 function CampProfileEditPageTemplate() {
   const { auth } = useAuth();
-  const chatName = auth?.chatName as string;
-  const { data: camp } = getCampQuery(chatName);
+  const { data: camp } = getCampQuery(auth?.publicId || '');
   const { data: profile } = getProfileQuery();
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
   const [newBannerImage, setNewBannerImage] = useState<File | null>(null);

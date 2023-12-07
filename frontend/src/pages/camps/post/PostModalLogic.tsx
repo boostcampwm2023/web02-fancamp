@@ -94,15 +94,15 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
   });
 
   useEffect(() => {
-    const handleCreatePost = (data: any) => {
+    const handleCreateComment = (data: any) => {
       setNewComments((_) => [data, ..._]);
     };
     commentSocket.connect();
     commentSocket.emit('enterCommentPage', { postId });
-    commentSocket.on('createComment', handleCreatePost);
+    commentSocket.on('createComment', handleCreateComment);
     return () => {
       commentSocket.emit('leaveCommentPage', { postId });
-      commentSocket.off('createComment', handleCreatePost);
+      commentSocket.off('createComment', handleCreateComment);
     };
   }, [postId]);
 
