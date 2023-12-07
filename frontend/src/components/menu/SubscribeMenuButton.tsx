@@ -1,4 +1,4 @@
-import Image from '@components/ui/Image';
+import ProfileImage from '@components/profile/ProfileImage';
 import { NavLink } from 'react-router-dom';
 
 interface SideMenuLinkButtonProps {
@@ -20,9 +20,9 @@ function SubscribeMenuButton({
     <NavLink to={to} className="group flex items-center gap-md px-lg py-md">
       {({ isActive }) => (
         <>
-          <Image
+          <ProfileImage
             src={image}
-            className="aspect-square border-sm border-text-primary"
+            className="rounded-full"
             width={32}
             height={32}
           />

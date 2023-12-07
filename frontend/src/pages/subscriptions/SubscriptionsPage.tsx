@@ -27,13 +27,17 @@ export default function SubscriptionsPage() {
         </div>
       ) : subscribedCamps.length > 0 ? (
         <ul className="mb-8 grid grid-cols-5 gap-8 text-text-primary display-regular-16">
-          {subscribedCamps.map(({ campId, campName }) => (
+          {subscribedCamps.map(({ campId, campName, masterProfileImage }) => (
             <Link
               key={campId}
               to={`/camps/${campName}`}
               className="flex flex-col items-center gap-2"
             >
-              <ProfileImage src="https://picsum.photos/72/72" alt={campName} />
+              <ProfileImage
+                src={masterProfileImage}
+                alt={campName}
+                className="rounded-full"
+              />
               {campName}
             </Link>
           ))}

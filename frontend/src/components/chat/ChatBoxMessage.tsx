@@ -28,11 +28,10 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
       {!isMyMessage && (
         <div className="flex items-center">
           <ProfileImage
-            src={`${
-              profileImage ? profileImage : '/profileImagePlaceholder.png'
-            }`}
+            src={profileImage}
             width="60"
             height="60"
+            className="rounded-full"
             alt="profile image"
           />
         </div>

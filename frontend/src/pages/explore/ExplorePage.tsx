@@ -76,11 +76,17 @@ function ExploreCampCard({ camp }: { camp: CampWithProfile }) {
     <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
       <Card className="w-full border-sm border-text-primary">
         <div className="relative">
-          <Image src={bannerImage} className="aspect-[4/3] w-full" />
+          <Image
+            src={bannerImage ? `${bannerImage}?${new Date()}` : ''}
+            className="aspect-[4/3] w-full"
+          />
         </div>
         <div className="flex h-2xl items-center gap-md px-md py-sm">
           {masterProfileImage && (
-            <ProfileImage src={masterProfileImage} className="w-xl" />
+            <ProfileImage
+              src={masterProfileImage}
+              className="w-xl rounded-full"
+            />
           )}
           <div className="flex flex-1 flex-col">
             <Text size={14}>{campName}</Text>

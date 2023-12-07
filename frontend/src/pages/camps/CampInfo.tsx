@@ -49,7 +49,7 @@ function CampInfo() {
     <div className="relative flex h-[16rem] flex-col justify-end">
       <div className="absolute top-[0] h-[16rem] w-full">
         <Image
-          src={camp.bannerImage}
+          src={camp.bannerImage || ''}
           className="absolute top-[0] z-0 h-full w-full object-cover"
         />
         <div
@@ -61,7 +61,7 @@ function CampInfo() {
         />
       </div>
       <div className="relative z-20 flex w-full items-center gap-xl  p-xl">
-        <ProfileImage src={profileImage} />
+        <ProfileImage src={profileImage} className="rounded-full" />
         <div className="flex flex-1 items-center justify-between">
           <div className="flex flex-col justify-evenly gap-md">
             <Text size={20} color="surface-primary">
