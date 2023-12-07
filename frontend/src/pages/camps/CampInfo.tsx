@@ -1,18 +1,17 @@
-import { useParams } from 'react-router-dom';
 import ProfileImage from '@components/profile/ProfileImage';
 import Text from '@components/ui/Text';
-import { getCampQuery } from '@hooks/api/useCampQuery';
-import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
-import {
-  getCampSubscriptionQuery,
-  subscribeMutation,
-  unsubscribeMutation,
-} from '@hooks/api/useSubscriptionQuery';
+import useSubscriptions from '@hooks/useSubscriptions';
 import useAuth from '@hooks/useAuth';
 import SubscribeButton from '@components/button/SubscribeButton';
 import CheckIcon from '@assets/icons/checkIcon.svg?react';
-import { useState } from 'react';
 import Image from '@components/ui/Image';
+import { useNavigate, useParams } from 'react-router-dom';
+import { getCampQuery } from '@hooks/api/useCampQuery';
+import { getProfileByIdQuery } from '@hooks/api/useUserQuery';
+import {
+  subscribeMutation,
+  unsubscribeMutation,
+} from '@hooks/api/useSubscriptionQuery';
 
 function CampInfo() {
   const { campId } = useParams();
@@ -21,23 +20,22 @@ function CampInfo() {
   const {
     data: { profileImage },
   } = getProfileByIdQuery(campId!);
-  const { data: subscribed } = auth
-    ? getCampSubscriptionQuery(campId!)
-    : { data: { isSubscribe: false } };
-  const { mutate: subscribeMutate } = subscribeMutation({
-    onSuccess: () => {
-      setSubscribed(true);
-    },
-  });
-  const { mutate: unsubscribeMutate } = unsubscribeMutation({
-    onSuccess: () => {
-      setSubscribed(false);
-    },
-  });
+  const navigate = useNavigate();
 
-  const [isSubscribed, setSubscribed] = useState(subscribed.isSubscribe);
+  const { isSubscribedCampName } = useSubscriptions();
+  const isSubscribed = isSubscribedCampName(campId!);
+  const { subscribeMutate } = subscribeMutation({
+    publicId: auth?.publicId,
+  });
+  const { unsubscribeMutate } = unsubscribeMutation({
+    publicId: auth?.publicId,
+  });
 
   const handleSubscribe = () => {
+    if (!auth) {
+      return navigate('/auth/signin');
+    }
+
     if (isSubscribed) {
       unsubscribeMutate({ campId: String(campId) });
     } else {

@@ -1,46 +1,45 @@
-import { getSubscribedCamps } from '@API/camp';
 import useAuth from '@hooks/useAuth';
 import { Camp } from '@type/api/camp';
-import { createContext, useEffect, useState } from 'react';
+import { fetchSubscribedCamps } from '@API/camp';
+import { createContext } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { SUBSCRIBED_CAMPS } from '@constants/queryKeys';
 
-interface CampWithProfile extends Camp {
-  masterProfileImage: string;
+interface SubscriptionContext {
+  subscribedCamps: Camp[] | undefined;
+  isSubscribedCampName: (campName: string) => boolean;
 }
 
-interface AuthContextType {
-  subscribedCamps: CampWithProfile[] | null;
-  setSubscribedCamps: React.Dispatch<
-    React.SetStateAction<CampWithProfile[] | null>
-  >;
-}
-
-const SubscriptionContext = createContext<AuthContextType | null>(null);
+const SubscriptionContext = createContext<SubscriptionContext | null>(null);
 
 export function SubscriptionProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [subscribedCamps, setSubscribedCamps] = useState<
-    CampWithProfile[] | null
-  >(null);
-  const [isLoading, setIsLoading] = useState(true);
   const { auth } = useAuth();
 
-  useEffect(() => {
-    if (!auth) {
-      setIsLoading(false);
-      return;
-    }
+  const { isLoading, data: subscribedCamps } = useQuery({
+    queryKey: [SUBSCRIBED_CAMPS, auth?.publicId],
+    queryFn: fetchSubscribedCamps,
+    staleTime: 1000 * 60 * 5,
+    enabled: !!(auth && !auth.isMaster),
+  });
 
-    getSubscribedCamps()
-      .then(setSubscribedCamps)
-      .finally(() => setIsLoading(false));
-  }, [auth]);
+  const isSubscribedCampName = (campName: string): boolean => {
+    if (
+      subscribedCamps?.some(
+        ({ campName: subscribedCampName }) => subscribedCampName === campName
+      )
+    ) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <SubscriptionContext.Provider
-      value={{ subscribedCamps, setSubscribedCamps }}
+      value={{ subscribedCamps, isSubscribedCampName }}
     >
       {!isLoading && children}
     </SubscriptionContext.Provider>

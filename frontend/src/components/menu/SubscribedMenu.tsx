@@ -3,10 +3,11 @@
 import useAuth from '@hooks/useAuth';
 import useNoticeSocket from '@hooks/useNotice';
 import useSubscriptions from '@hooks/useSubscriptions';
-import { noticeSocket } from '@API/socket';
 import Text from '@components/ui/Text';
 import SubscribeIcon from '@assets/icons/subscribeIcon.svg?react';
 import SubscribeMenuButton from './SubscribeMenuButton';
+import { noticeSocket } from '@API/socket';
+import { SideMenuLinkButton } from './SideMenuButton';
 
 function SubscribedMenu() {
   const { auth } = useAuth();
@@ -42,6 +43,11 @@ function SubscribedMenu() {
           hasChatNotice={campsWithChatNotice.includes(campName)}
         />
       ))}
+      {subscribedCamps && subscribedCamps?.length > 0 ? (
+        <SideMenuLinkButton text={'전체 구독 보기'} to="/subscriptions" />
+      ) : (
+        <div className="m-4 display-regular-16">캠프를 구독해보세요!</div>
+      )}
     </aside>
   );
 }

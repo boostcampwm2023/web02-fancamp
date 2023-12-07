@@ -1,51 +1,55 @@
-import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { BASE_URL } from '@constants/URLs';
-import { MutationProps } from '@type/api/api';
 import useFetch from './useFetch';
+import { useMutation } from '@tanstack/react-query';
+import { BASE_URL } from '@constants/URLs';
+import { queryClient } from '@contexts/QueryProvider';
+import { SUBSCRIBED_CAMPS } from '@constants/queryKeys';
 
-interface SubscribeMutation {
+interface MutationFn {
   campId: string;
 }
 
-export const getCampSubscriptionQuery = (campName: string) => {
-  const { data, isError, isLoading } = useSuspenseQuery<any>({
-    queryKey: ['camp', 'subscription', campName],
-    queryFn: () =>
-      useFetch(`${BASE_URL}/camps/${campName}/subscriptions`, {
-        method: 'GET',
-        credentials: 'include',
-      }),
-    gcTime: 0,
-    staleTime: 0,
-  });
+interface SubscribeMutation {
+  publicId: string | undefined;
+}
 
-  return { data, isError, isLoading };
-};
-
-export const subscribeMutation = ({ onSuccess, onError }: MutationProps) => {
-  const { mutate, isPending, isError, isSuccess } = useMutation({
-    mutationFn: ({ campId }: SubscribeMutation) =>
+export const subscribeMutation = ({ publicId }: SubscribeMutation) => {
+  const {
+    mutate: subscribeMutate,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: ({ campId }: MutationFn) =>
       fetch(`${BASE_URL}/camps/${campId}/subscriptions`, {
         method: 'POST',
         credentials: 'include',
       }).then((res) => res.ok),
-    onSuccess,
-    onError,
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [SUBSCRIBED_CAMPS, publicId],
+      }),
   });
 
-  return { mutate, isPending, isError, isSuccess };
+  return { subscribeMutate, isPending, isError, isSuccess };
 };
 
-export const unsubscribeMutation = ({ onSuccess, onError }: MutationProps) => {
-  const { mutate, isPending, isError, isSuccess } = useMutation({
-    mutationFn: ({ campId }: SubscribeMutation) =>
+export const unsubscribeMutation = ({ publicId }: SubscribeMutation) => {
+  const {
+    mutate: unsubscribeMutate,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
+    mutationFn: ({ campId }: MutationFn) =>
       useFetch(`${BASE_URL}/camps/${campId}/subscriptions`, {
         method: 'DELETE',
         credentials: 'include',
       }),
-    onSuccess,
-    onError,
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: [SUBSCRIBED_CAMPS, publicId],
+      }),
   });
 
-  return { mutate, isPending, isError, isSuccess };
+  return { unsubscribeMutate, isPending, isError, isSuccess };
 };
