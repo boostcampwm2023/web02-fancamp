@@ -32,7 +32,7 @@ export default function ChatBox() {
     socket,
   });
 
-  if (!isSubscribedCampName(campName!)) {
+  if (!isSubscribedCampName(campName!) && !auth?.isMaster) {
     return <ChatBoxSubscription />;
   }
 
