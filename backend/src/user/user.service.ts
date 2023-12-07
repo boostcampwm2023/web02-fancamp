@@ -4,6 +4,7 @@ import { UserRepository } from './user.repository';
 import { CreateUserAuthDto } from 'src/auth/dto/create-auth.dto';
 import { ImageService } from 'src/image/image.service';
 import { User } from './entities/user.entity';
+import { randomUUID } from 'crypto';
 
 @Injectable()
 export class UserService {
@@ -32,7 +33,8 @@ export class UserService {
     updateUserDto: UpdateUserDto,
   ) {
     const user = await this.findUserByPublicId(publicId);
-    const fileName = `${user.publicId}`;
+    const uuid = randomUUID();
+    const fileName = `${user.id}_${uuid}`;
     if (file) {
       const fileUrl = await this.imageService.uploadFile(file, fileName);
       user.profileImage = fileUrl;
