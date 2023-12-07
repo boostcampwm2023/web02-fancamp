@@ -89,13 +89,7 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
         ...post,
         commentCount: post.commentCount - 1,
       });
-
       updateComments(commentId);
-
-      //   setQueryData(data => ({
-      //     ...data,
-      //     pages: data.pages.map(page => page.map(todo => todo.id === id ? { ...todo, name: 'new name' } : todo ))
-      // })
     },
   });
 
@@ -103,12 +97,9 @@ function PostModalLogic({ postId, handlePostModalClose }: PostModalLogicProps) {
     const handleCreatePost = (data: any) => {
       setNewComments((_) => [data, ..._]);
     };
-
     commentSocket.connect();
-
     commentSocket.emit('enterCommentPage', { postId });
     commentSocket.on('createComment', handleCreatePost);
-
     return () => {
       commentSocket.emit('leaveCommentPage', { postId });
       commentSocket.off('createComment', handleCreatePost);

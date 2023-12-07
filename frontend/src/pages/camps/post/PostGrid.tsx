@@ -31,7 +31,7 @@ function PostPageGrid({
 
   useEffect(() => {
     const handleCreatePost = (data: any) => {
-      setNewPosts([data, ...newPosts]);
+      setNewPosts((_) => [data, ..._]);
     };
 
     postSocket.connect();
