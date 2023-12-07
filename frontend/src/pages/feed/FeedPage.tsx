@@ -61,7 +61,6 @@ function FeedPageSuspense() {
             return (
               <FeedCard
                 postId={postId}
-                isCurrnet={i === 2}
                 key={`fead-card-${postId || `udf-${id}`}`}
               />
             );

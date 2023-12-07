@@ -15,11 +15,10 @@ import useAuth from '@hooks/useAuth';
 import FeedCardTemplate from './FeedCardTemplate';
 
 interface FeedCardProps {
-  isCurrnet: boolean;
   postId: number;
 }
 
-function FeedCard({ isCurrnet, postId }: FeedCardProps) {
+function FeedCard({ postId }: FeedCardProps) {
   return (
     <Suspense
       fallback={
@@ -28,15 +27,12 @@ function FeedCard({ isCurrnet, postId }: FeedCardProps) {
         </div>
       }
     >
-      <FeedCardLogic isCurrnet={isCurrnet} postId={postId} />
+      <FeedCardLogic postId={postId} />
     </Suspense>
   );
 }
 
-const FeedCardLogic = memo(function FeedCardLogic({
-  isCurrnet,
-  postId,
-}: FeedCardProps) {
+const FeedCardLogic = memo(function FeedCardLogic({ postId }: FeedCardProps) {
   const [isLike, setLike] = useState<boolean>(false);
   const [inputComment, setInputComment] = useState<string>('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -156,7 +152,6 @@ const FeedCardLogic = memo(function FeedCardLogic({
       fetchComments={fetchComments}
       publicId={auth?.publicId || null}
       deleteComment={deleteComment}
-      isCurrnet={isCurrnet}
     />
   );
 });
