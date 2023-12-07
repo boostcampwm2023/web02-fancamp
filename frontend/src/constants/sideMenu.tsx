@@ -29,18 +29,15 @@ export const MASTER_MENU = [
     to: `/camps/:campId/post`,
     text: '캠프',
   },
-  { to: `/camps/:campId/chat`, text: '> 채팅' },
   {
     to: `/camps/:campId/post`,
     text: '> 포스트',
   },
+  { to: `/camps/:campId/chat`, text: '> 채팅' },
+
   {
     to: `/camps/edit`,
     text: '> 캠프 수정',
-  },
-  {
-    to: `/camps/:campId/upload`,
-    text: '> 캠프 업로드',
   },
 ];
 
