@@ -73,7 +73,7 @@ function CampInfo() {
 
             <div className="flex gap-sm">
               <Text size={13} color="surface-primary">
-                포스트&nbsp;&nbsp;{camp.subscriptionCount}개
+                포스트&nbsp;&nbsp;{camp.postCount}개
               </Text>
               <Text size={13} color="surface-primary">
                 ·
