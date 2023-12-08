@@ -72,7 +72,7 @@ function PostModalTemplate({
     <div className="flex h-[31.25rem] border-sm border-text-primary">
       {post.url.length !== 0 && (
         <div className="w-[37.5rem]">
-          <MediaSlider width={37.5} medias={post.url} isCurrnet />
+          <MediaSlider width={37.5} medias={post.url} />
         </div>
       )}
       <div

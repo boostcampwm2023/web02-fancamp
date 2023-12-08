@@ -14,13 +14,13 @@ interface ImageSliderProps {
 }
 
 const preButtonClassName =
-  'absolute left-[0] ml-[-0.25rem] flex justify-center opacity-0 v-center ' +
+  'absolute left-[0] ml-[-0.25rem] flex justify-center opacity-0 v-center z-10' +
   'smooth-transition group-hover:ml-[0] group-hover:opacity-100';
 const nextButtonClassName =
-  'absolute right-[0] mr-[-0.25rem] flex justify-center opacity-0 v-center ' +
+  'absolute right-[0] mr-[-0.25rem] flex justify-center opacity-0 v-center z-10' +
   'smooth-transition group-hover:mr-[0] group-hover:opacity-100';
 const indexClassName =
-  'absolute bottom-sm mb-[-0.25rem] flex justify-center border-sm border-text-primary bg-surface-primary p-xs ' +
+  'absolute bottom-sm mb-[-0.25rem] flex justify-center border-sm border-text-primary bg-surface-primary p-xs z-10' +
   'smooth-transition opacity-0 h-center group-hover:mb-[0] group-hover:flex group-hover:opacity-100';
 
 function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
@@ -44,7 +44,7 @@ function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
         className="relative flex h-full w-max select-none smooth-transition"
         style={{ transform: `translateX(${-imageIndex * width}rem)` }}
       >
-        {medias.map((media) => {
+        {medias.map((media, i) => {
           const fileType = checkFileType(media.mimetype);
           if (fileType === 'image') {
             return (
@@ -72,7 +72,7 @@ function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
                   className="relative h-full w-full object-contain center"
                   style={{ width: `${width}rem` }}
                   key={`image-slider-${media.fileUrl}`}
-                  controls
+                  controls={i === imageIndex}
                 />
               </div>
             );

@@ -6,6 +6,7 @@ export interface Camp {
   masterId: number;
   subscriptionCount: number;
   masterProfileImage: string;
+  postCount: string;
 }
 
 export interface CampEditable {
