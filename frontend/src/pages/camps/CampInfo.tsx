@@ -32,9 +32,9 @@ function CampInfo() {
 
   const handleSubscribe = () => {
     if (!auth) {
-      return navigate('/auth/signin');
+      navigate('/auth/signin');
+      return;
     }
-
     if (isSubscribed) {
       unsubscribeMutate({ campId: String(campId) });
     } else {
@@ -65,7 +65,7 @@ function CampInfo() {
               {camp.campName}
             </Text>
             {camp.content && (
-              <Text size={14} color="point-lavender">
+              <Text size={14} color="surface-primary">
                 {camp.content}
               </Text>
             )}

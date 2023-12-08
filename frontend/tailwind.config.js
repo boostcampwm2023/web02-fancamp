@@ -14,6 +14,9 @@ export default {
         lg: '0.25rem', // 4px
       },
     },
+    fontFamily: {
+      sans: ['Noto Sans KR', 'sans-serif'],
+    },
     spacing: {
       2: '0.5rem',
       4: '1rem',
@@ -74,52 +77,28 @@ export default {
       });
       addUtilities({
         '.display-regular-20': {
-          '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[400]':
-            {},
+          '@apply font-sans text-[1.25rem] leading-[1.375rem] font-[400]': {},
         },
         '.display-regular-16': {
-          '@apply font-[TheJamsil] text-[1rem] leading-[1.185rem] font-[400]':
-            {},
+          '@apply font-sans text-[1rem] leading-[1.185rem] font-[400]': {},
         },
         '.display-regular-14': {
-          '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[400]':
-            {},
+          '@apply font-sans text-[0.875rem] leading-[1rem] font-[400]': {},
         },
         '.display-regular-13': {
-          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[400]':
-            {},
+          '@apply font-sans text-[0.8125rem] leading-[0.875rem] font-[400]': {},
         },
         '.display-light-20': {
-          '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[300]':
-            {},
+          '@apply font-sans text-[1.25rem] leading-[1.375rem] font-[300]': {},
         },
         '.display-light-16': {
-          '@apply font-[TheJamsil] text-[1rem] leading-[1.185rem] font-[300]':
-            {},
+          '@apply font-sans text-[1rem] leading-[1.185rem] font-[300]': {},
         },
         '.display-light-14': {
-          '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[300]':
-            {},
+          '@apply font-sans text-[0.875rem] leading-[1rem] font-[300]': {},
         },
         '.display-light-13': {
-          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[300]':
-            {},
-        },
-        '.display-thin-20': {
-          '@apply font-[TheJamsil] text-[1.25rem] leading-[1.375rem] font-[100]':
-            {},
-        },
-        '.display-thin-16': {
-          '@apply font-[TheJamsil] text-[1rem] leading-[1.185rem] font-[100]':
-            {},
-        },
-        '.display-thin-14': {
-          '@apply font-[TheJamsil] text-[0.875rem] leading-[1rem] font-[100]':
-            {},
-        },
-        '.display-thin-13': {
-          '@apply font-[TheJamsil] text-[0.8125rem] leading-[0.875rem] font-[100]':
-            {},
+          '@apply font-sans text-[0.8125rem] leading-[0.875rem] font-[300]': {},
         },
         '.center': {
           '@apply left-[50%] top-[50%]': {},

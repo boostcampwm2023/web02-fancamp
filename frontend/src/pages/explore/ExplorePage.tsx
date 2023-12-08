@@ -78,24 +78,28 @@ function ExploreCampCard({ camp }: { camp: CampWithProfile }) {
         <div className="relative">
           <Image
             src={bannerImage ? `${bannerImage}?${new Date()}` : ''}
-            className="aspect-[4/3] w-full"
+            className="aspect-[4/3] w-full object-cover"
           />
         </div>
-        <div className="flex h-2xl items-center gap-md px-md py-sm">
-          {masterProfileImage && (
-            <ProfileImage
-              src={masterProfileImage}
-              className="w-xl rounded-full"
-            />
-          )}
-          <div className="flex flex-1 flex-col">
-            <Text size={14}>{campName}</Text>
-            {content && (
-              <Text size={13} color="text-secondary">
-                {content}
-              </Text>
+        <div className="relative flex flex-col items-center gap-md px-md py-md">
+          <div className="flex items-center gap-sm">
+            {masterProfileImage && (
+              <ProfileImage
+                src={masterProfileImage}
+                className="w-lg rounded-full"
+              />
             )}
+            <Text size={16}>{campName}</Text>
           </div>
+          {content && (
+            <Text
+              size={13}
+              color="text-secondary"
+              className="line-clamp-2 w-full"
+            >
+              {content}
+            </Text>
+          )}
         </div>
       </Card>
     </Link>

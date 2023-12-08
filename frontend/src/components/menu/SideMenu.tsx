@@ -10,13 +10,11 @@ import {
 } from '@constants/sideMenu';
 import Image from '@components/ui/Image';
 import SignoutIcon from '@assets/icons/signoutIcon.svg?react';
-import useLanguage from '@hooks/useLanguage';
 import { SideMenuButton, SideMenuLinkButton } from './SideMenuButton';
 import { IS_SIGNED_IN } from '@constants/localStorageKeys';
 
 export default function SideMenu() {
   const { auth } = useAuth();
-  const { language, setLanguage } = useLanguage();
 
   const handleSignout = async () => {
     await signout();
@@ -53,13 +51,14 @@ export default function SideMenu() {
           ))}
           {auth
             ? auth.isMaster
-              ? MASTER_MENU.map(({ to, text }) => {
+              ? MASTER_MENU.map(({ to, text, icon }) => {
                   const campIdTo = to.replace(':campId', auth.publicId);
                   return (
                     <SideMenuLinkButton
                       key={`side-menu-${text}`}
                       to={campIdTo}
                       text={text}
+                      icon={icon}
                     />
                   );
                 })
@@ -89,7 +88,7 @@ export default function SideMenu() {
             ))
           )}
         </div>
-        <div className="mb-lg">
+        <div className="mb-lg flex flex-col">
           {DOC_MENU.map(({ to, text, icon }) => (
             <SideMenuLinkButton
               key={`side-menu-${text}`}
@@ -98,18 +97,6 @@ export default function SideMenu() {
               icon={icon}
             />
           ))}
-        </div>
-        <div className="flex justify-evenly">
-          {language}
-          <button type="button" onClick={() => setLanguage('ko')}>
-            한국어
-          </button>
-          <button type="button" onClick={() => setLanguage('en')}>
-            English
-          </button>
-          <button type="button" onClick={() => setLanguage('ja')}>
-            日本語
-          </button>
         </div>
       </div>
     </aside>

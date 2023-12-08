@@ -5,6 +5,9 @@ import SigninIcon from '@assets/icons/signinIcon.svg?react';
 import SignupIcon from '@assets/icons/signupIcon.svg?react';
 import NotionIcon from '@assets/icons/notionIcon.svg?react';
 import GithubIcon from '@assets/icons/githubIcon.svg?react';
+import CampIcon from '@assets/icons/campIcon.svg?react';
+import EditIcon from '@assets/icons/editIcon.svg?react';
+import ChatIcon from '@assets/icons/chatIcon.svg?react';
 
 export const COMMON_MENU = [
   { to: '/', text: '홈', icon: <HomeIcon width={28} /> },
@@ -27,17 +30,13 @@ export const CAMPER_MENU = [
 export const MASTER_MENU = [
   {
     to: `/camps/:campId/post`,
-    text: '캠프',
+    text: '내 캠프',
+    icon: <CampIcon width={28} />,
   },
-  {
-    to: `/camps/:campId/post`,
-    text: '> 포스트',
-  },
-  { to: `/camps/:campId/chat`, text: '> 채팅' },
-
   {
     to: `/camps/edit`,
-    text: '> 캠프 수정',
+    text: '캠프 수정',
+    icon: <EditIcon width={28} />,
   },
 ];
 

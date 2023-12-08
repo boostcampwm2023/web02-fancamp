@@ -4,8 +4,10 @@ import useAuth from '@hooks/useAuth';
 import useNoticeSocket from '@hooks/useNotice';
 import Text from '@components/ui/Text';
 import SubscribeIcon from '@assets/icons/subscribeIcon.svg?react';
-import SubscribeMenuButton from './SubscribeMenuButton';
 import { noticeSocket } from '@API/socket';
+import Radio from '@components/radio/radio';
+import useLanguage from '@hooks/useLanguage';
+import SubscribeMenuButton from './SubscribeMenuButton';
 import { SideMenuLinkButton } from './SideMenuButton';
 import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
 
@@ -16,40 +18,67 @@ function SubscribedMenu() {
     noticeSocket,
     auth
   );
+  const { setLanguage } = useLanguage();
 
   return (
-    <aside
-      className={`flex w-[5rem] flex-col border-text-primary xl:w-[18.75rem] ${
-        auth ? 'border-l-sm opacity-100' : 'opacity-0'
-      }`}
-    >
-      <Text
-        size={16}
-        weight={400}
-        className="hidden px-lg pb-sm pt-lg xl:block"
-      >
-        구독한 캠프
-      </Text>
-      <div className="relative mb-sm mt-lg block xl:hidden">
-        <SubscribeIcon className="relative h-center" width={28} />
+    <aside className="flex w-[5rem] flex-col justify-between border-l-sm xl:w-[18.75rem]">
+      <div className="flex flex-1 flex-col">
+        <Text
+          size={16}
+          weight={400}
+          className="hidden px-lg pb-sm pt-lg xl:block"
+        >
+          {auth ? '구독한 캠프' : '캠프를 구독해보세요!'}
+        </Text>
+        <div className="relative mb-sm mt-lg block xl:hidden">
+          <SubscribeIcon className="relative h-center" width={28} />
+        </div>
+        {subscribedCamps?.map(({ campName, masterProfileImage }) => (
+          <SubscribeMenuButton
+            key={`subscribed-camp-card-${campName}`}
+            to={`/camps/${campName}/post`}
+            text={campName}
+            image={masterProfileImage}
+            hasPostNotice={campsWithPostNotice.includes(campName)}
+            hasChatNotice={campsWithChatNotice.includes(campName)}
+          />
+        ))}
+        {auth?.isMaster ? (
+          <Text
+            size={16}
+            className="m-lg hidden xl:inline"
+          >{`마스터 ${auth?.publicId}로 접속중입니다!`}</Text>
+        ) : subscribedCamps && subscribedCamps?.length > 0 ? (
+          <SideMenuLinkButton text="전체 구독 보기" to="/subscriptions" />
+        ) : (
+          <></>
+        )}
       </div>
-      {subscribedCamps?.map(({ campName, masterProfileImage }) => (
-        <SubscribeMenuButton
-          key={`subscribed-camp-card-${campName}`}
-          to={`/camps/${campName}/post`}
-          text={campName}
-          image={masterProfileImage}
-          hasPostNotice={campsWithPostNotice.includes(campName)}
-          hasChatNotice={campsWithChatNotice.includes(campName)}
-        />
-      ))}
-      {auth?.isMaster ? (
-        <div className="m-4 display-regular-16">{`마스터 ${auth?.publicId}로 접속중입니다!`}</div>
-      ) : subscribedCamps && subscribedCamps?.length > 0 ? (
-        <SideMenuLinkButton text={'전체 구독 보기'} to="/subscriptions" />
-      ) : (
-        <div className="m-4 display-regular-16">캠프를 구독해보세요!</div>
-      )}
+      <Radio
+        items={[
+          {
+            text: '한국어',
+            value: 'ko',
+            onClick: () => {
+              setLanguage('ko');
+            },
+          },
+          {
+            text: 'English',
+            value: 'en',
+            onClick: () => {
+              setLanguage('en');
+            },
+          },
+          {
+            text: '日本語',
+            value: 'ja',
+            onClick: () => {
+              setLanguage('ja');
+            },
+          },
+        ]}
+      />
     </aside>
   );
 }

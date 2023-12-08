@@ -10,16 +10,12 @@ interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
 }
 
 const font = {
-  '13/100': 'display-thin-13',
   '13/300': 'display-light-13',
   '13/400': 'display-regular-13',
-  '14/100': 'display-thin-14',
   '14/300': 'display-light-14',
   '14/400': 'display-regular-14',
-  '16/100': 'display-thin-16',
   '16/300': 'display-light-16',
   '16/400': 'display-regular-16',
-  '20/100': 'display-thin-20',
   '20/300': 'display-light-20',
   '20/400': 'display-regular-20',
 };

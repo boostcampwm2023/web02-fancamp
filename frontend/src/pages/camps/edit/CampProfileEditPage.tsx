@@ -9,6 +9,7 @@ import {
   getProfileQuery,
   updateProfileMutation,
 } from '@hooks/api/useUserQuery';
+import Input from '@components/input/Input';
 
 function CampProfileEditPage() {
   return (
@@ -31,6 +32,7 @@ function CampProfileEditPageTemplate() {
   const [newProfileImage, setNewProfileImage] = useState<File | null>(null);
   const [newBannerImage, setNewBannerImage] = useState<File | null>(null);
   const [newCampName] = useState<string>(camp.campName);
+  const [content, setContent] = useState<string>(camp.content || '');
 
   const {
     mutate: updateProfile,
@@ -67,6 +69,9 @@ function CampProfileEditPageTemplate() {
     }
     if (newBannerImage) {
       campFormData.append('file', newBannerImage);
+    }
+    if (content) {
+      campFormData.append('content', content);
     }
     const isCampFormDataEmpty = campFormData.keys().next().done;
     if (!isUpdateProfilePending && !isUpdateCampPending) {
@@ -107,21 +112,13 @@ function CampProfileEditPageTemplate() {
             height={100}
             className="relative aspect-square rounded-full border-sm border-text-primary h-center"
           />
-          {/* <Input
-            label="캠프명"
-            type="text"
-            setValue={setNewCampName}
-            value={newCampName}
-            placeholder="캠프명을 입력해주세요."
-          /> */}
-          {/* <Input
+          <Input
             label="상태 메시지"
             type="text"
-            setValue={setNewUserName}
-            value={newUserName}
+            setValue={setContent}
+            value={content}
             placeholder="상태 메시지를 입력해주세요."
-          /> */}
-
+          />
           <SubmitButton
             text="프로필 변경"
             isPending={isUpdateProfilePending || isUpdateCampPending}

@@ -1,4 +1,6 @@
-import { useRef, useState } from 'react';
+/* eslint-disable jsx-a11y/media-has-caption */
+
+import { memo, useRef, useState } from 'react';
 import Image from '@components/ui/Image';
 import Text from '@components/ui/Text';
 import LeftArrowIcon from '@assets/icons/leftArrowIcon.svg?react';
@@ -9,7 +11,6 @@ import { checkFileType } from '@utils/file';
 interface ImageSliderProps {
   width?: number;
   medias: PostFile[];
-  isCurrnet: boolean;
 }
 
 const preButtonClassName =
@@ -22,7 +23,7 @@ const indexClassName =
   'absolute bottom-sm mb-[-0.25rem] flex justify-center border-sm border-text-primary bg-surface-primary p-xs ' +
   'smooth-transition opacity-0 h-center group-hover:mb-[0] group-hover:flex group-hover:opacity-100';
 
-function MediaSlider({ width = 37.5, medias, isCurrnet }: ImageSliderProps) {
+function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
   const [imageIndex, setImageIndex] = useState(0);
   const sliderRef = useRef<HTMLDivElement>(null);
 
@@ -47,52 +48,66 @@ function MediaSlider({ width = 37.5, medias, isCurrnet }: ImageSliderProps) {
           const fileType = checkFileType(media.mimetype);
           if (fileType === 'image') {
             return (
-              <Image
-                src={media.fileUrl}
-                className="w-[100%] object-cover"
-                style={{ width: `${width}rem` }}
+              <div
+                className="bg-text-primary"
                 key={`image-slider-${media.fileUrl}`}
-              />
+                style={{ width: `${width}rem` }}
+              >
+                <Image
+                  src={media.fileUrl}
+                  className="relative h-full w-full object-contain center"
+                />
+              </div>
             );
           }
           if (fileType === 'video') {
             return (
-              // eslint-disable-next-line jsx-a11y/media-has-caption
-              <video
-                src={media.fileUrl}
-                className="z-50 w-[100%] object-cover"
-                style={{ width: `${width}rem` }}
+              <div
+                className="bg-text-primary"
                 key={`image-slider-${media.fileUrl}`}
-                controls={false || isCurrnet}
-              />
+                style={{ width: `${width}rem` }}
+              >
+                <video
+                  src={media.fileUrl}
+                  className="relative h-full w-full object-contain center"
+                  style={{ width: `${width}rem` }}
+                  key={`image-slider-${media.fileUrl}`}
+                  controls
+                />
+              </div>
             );
           }
           return null;
         })}
       </div>
-      <button
-        type="button"
-        className={preButtonClassName}
-        onClick={() => handleImageIndex('PRE')}
-        aria-label="slide previous button"
-      >
-        <LeftArrowIcon />
-      </button>
-      <button
-        type="button"
-        className={nextButtonClassName}
-        onClick={() => handleImageIndex('NEXT')}
-        aria-label="slide next button"
-      >
-        <RightArrowIcon />
-      </button>
-      <div className={indexClassName}>
-        <Text size={13} color="text-primary">
-          {imageIndex + 1}/{medias.length}
-        </Text>
-      </div>
+
+      {medias.length > 1 && (
+        <>
+          <button
+            type="button"
+            className={preButtonClassName}
+            onClick={() => handleImageIndex('PRE')}
+            aria-label="slide previous button"
+          >
+            <LeftArrowIcon />
+          </button>
+          <button
+            type="button"
+            className={nextButtonClassName}
+            onClick={() => handleImageIndex('NEXT')}
+            aria-label="slide next button"
+          >
+            <RightArrowIcon />
+          </button>
+          <div className={indexClassName}>
+            <Text size={13} color="text-primary">
+              {imageIndex + 1}/{medias.length}
+            </Text>
+          </div>
+        </>
+      )}
     </div>
   );
 }
 
-export default MediaSlider;
+export default memo(MediaSlider);

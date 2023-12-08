@@ -52,7 +52,7 @@ function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
       </div>
       <Text
         size={14}
-        weight={300}
+        weight={400}
         className="break-all pl-sm pr-sm"
         style={{
           background: `linear-gradient(90deg, ${setimentColorHex}40 0%, ${setimentColorHex}50 80%, ${setimentColorHex}70 100%)`,

@@ -28,7 +28,7 @@ export function SideMenuLinkButton({
           )}
           <span
             className={`hidden text-text-primary xl:inline ${
-              isActive ? 'display-regular-16' : 'display-light-16'
+              isActive ? 'display-regular-16' : 'display-regular-16'
             }`}
           >
             {text}
@@ -49,7 +49,7 @@ export function SideMenuButton({ text, onClick, icon }: SideMenuButtonProps) {
       {icon && (
         <div className="flex h-xl w-xl items-center justify-center">{icon}</div>
       )}
-      <span className="hidden text-text-primary display-light-16 xl:inline">
+      <span className="hidden text-text-primary display-regular-16 xl:inline">
         {text}
       </span>
     </button>

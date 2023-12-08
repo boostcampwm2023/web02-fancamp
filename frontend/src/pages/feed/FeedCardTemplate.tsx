@@ -10,6 +10,7 @@ import Hr from '@components/ui/Hr';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
 import useLanguage from '@hooks/useLanguage';
+import useAuth from '@hooks/useAuth';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -30,7 +31,6 @@ interface FeedCardTemplateProps {
   fetchComments: () => Promise<any>;
   publicId: string | null;
   deleteComment: any;
-  isCurrnet: boolean;
 }
 
 function FeedCardTemplate({
@@ -49,13 +49,13 @@ function FeedCardTemplate({
   fetchComments,
   publicId,
   deleteComment,
-  isCurrnet,
 }: FeedCardTemplateProps) {
   const observerRef = useRef<HTMLDivElement>(null);
   const { observe } = useIntersectionObserver(() => {
     fetchComments();
   });
   const { language } = useLanguage();
+  const { auth } = useAuth();
 
   useEffect(() => {
     if (observerRef.current) {
@@ -84,7 +84,7 @@ function FeedCardTemplate({
     >
       {post.url.length !== 0 && (
         <div className="h-[18rem] w-full">
-          <MediaSlider width={32} medias={post.url} isCurrnet={isCurrnet} />
+          <MediaSlider width={32} medias={post.url} />
         </div>
       )}
       <div
@@ -131,12 +131,14 @@ function FeedCardTemplate({
           <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
       </div>
-      <InputComment
-        comment={inputComment}
-        setComment={setInputComment}
-        handleCommentSubmit={handleCommentSubmit}
-        status={commentStatus}
-      />
+      {auth && (
+        <InputComment
+          comment={inputComment}
+          setComment={setInputComment}
+          handleCommentSubmit={handleCommentSubmit}
+          status={commentStatus}
+        />
+      )}
     </div>
   );
 }
