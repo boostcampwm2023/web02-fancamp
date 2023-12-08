@@ -10,6 +10,7 @@ import Hr from '@components/ui/Hr';
 import useIntersectionObserver from '@hooks/useObserver';
 import MediaSlider from '@components/slider/MediaSlider';
 import useLanguage from '@hooks/useLanguage';
+import useAuth from '@hooks/useAuth';
 
 interface FeedCardTemplateProps {
   camp: Camp;
@@ -54,6 +55,7 @@ function FeedCardTemplate({
     fetchComments();
   });
   const { language } = useLanguage();
+  const { auth } = useAuth();
 
   useEffect(() => {
     if (observerRef.current) {
@@ -129,12 +131,14 @@ function FeedCardTemplate({
           <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
       </div>
-      <InputComment
-        comment={inputComment}
-        setComment={setInputComment}
-        handleCommentSubmit={handleCommentSubmit}
-        status={commentStatus}
-      />
+      {auth && (
+        <InputComment
+          comment={inputComment}
+          setComment={setInputComment}
+          handleCommentSubmit={handleCommentSubmit}
+          status={commentStatus}
+        />
+      )}
     </div>
   );
 }
