@@ -72,6 +72,7 @@ export const createUserMutate = ({ onSuccess, onError }: MutationProps) => {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           email,
           password,
