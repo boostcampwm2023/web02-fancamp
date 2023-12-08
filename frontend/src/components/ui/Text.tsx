@@ -4,7 +4,7 @@ import React from 'react';
 interface TextProps extends React.HtmlHTMLAttributes<HTMLSpanElement> {
   children?: React.ReactNode;
   size?: 13 | 14 | 16 | 20;
-  weight?: 100 | 300 | 400;
+  weight?: 300 | 400;
   color?: keyof typeof COLORS;
   className?: string;
 }

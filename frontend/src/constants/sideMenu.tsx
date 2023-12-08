@@ -7,7 +7,6 @@ import NotionIcon from '@assets/icons/notionIcon.svg?react';
 import GithubIcon from '@assets/icons/githubIcon.svg?react';
 import CampIcon from '@assets/icons/campIcon.svg?react';
 import EditIcon from '@assets/icons/editIcon.svg?react';
-import ChatIcon from '@assets/icons/chatIcon.svg?react';
 
 export const COMMON_MENU = [
   { to: '/', text: '홈', icon: <HomeIcon width={28} /> },
