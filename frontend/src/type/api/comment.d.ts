@@ -8,6 +8,10 @@ export interface Comment {
   publicId: string;
   profileImage: string;
   setimentColorHex: string;
+  translation: {
+    languageCode: 'en' | 'ko' | 'ja';
+    content: string;
+  }[];
 }
 
 export interface CommentResponse {

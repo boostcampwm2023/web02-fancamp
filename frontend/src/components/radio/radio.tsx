@@ -2,7 +2,7 @@
 
 import Text from '@components/ui/Text';
 import useLanguage from '@hooks/useLanguage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface RadioProps {
   items: {
@@ -19,8 +19,12 @@ const languageText = {
 };
 
 function Radio({ items }: RadioProps) {
-  const [index, setIndex] = useState(0);
   const { language } = useLanguage();
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    setIndex(Object.keys(languageText).findIndex((key) => key === language));
+  }, [language]);
 
   return (
     <>
