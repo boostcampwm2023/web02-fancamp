@@ -36,11 +36,17 @@ export class PostRepository {
     });
   }
   findAllByMasterId(masterId: number) {
-    return this.postRepository
-      .createQueryBuilder('post')
-      .where('post.userId = :masterId', { masterId })
-      .orderBy('post.createdAt', 'DESC') // 역순으로 정렬
-      .getMany();
+    return this.postRepository.find({
+      where: [
+        {
+          userId: masterId,
+        },
+      ],
+      relations: ['translation'],
+      order: {
+        createdAt: 'DESC',
+      },
+    });
   }
 
   findAll(cursorDate: Date) {
@@ -55,6 +61,7 @@ export class PostRepository {
         createdAt: 'DESC', // 내림차순 정렬하여 최신글이 먼저 오도록 함
       },
       take: 20, // 최대 20개의 결과만 가져오도록 제한
+      relations: ['translation'],
     });
   }
 

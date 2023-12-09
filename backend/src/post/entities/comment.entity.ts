@@ -1,9 +1,11 @@
 import {
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CommentTranslation } from './translation.entity';
 
 @Entity()
 export class Comment {
@@ -27,4 +29,10 @@ export class Comment {
 
   @Column({ type: 'varchar', nullable: false })
   setimentColorHex: string;
+
+  @OneToMany(
+    () => CommentTranslation,
+    (commentTranslation) => commentTranslation.comment,
+  )
+  translation: CommentTranslation[];
 }
