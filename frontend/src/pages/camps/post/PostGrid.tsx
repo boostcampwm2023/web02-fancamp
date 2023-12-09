@@ -7,6 +7,7 @@ import { getCampPostsQuery } from '@hooks/api/useCampQuery';
 import { Post } from '@type/api/post';
 import { useEffect, useState } from 'react';
 import { postSocket } from '@API/socket';
+import useLanguage from '@hooks/useLanguage';
 
 interface PostGridProps {
   handlePostModalOpen: (postId: number) => void;
@@ -21,6 +22,7 @@ function PostPageGrid({
   const { campId } = useParams();
   const { auth } = useAuth();
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   if (!campId) {
     navigate('/');
@@ -48,28 +50,36 @@ function PostPageGrid({
     <PostGrid>
       {auth?.isMaster && <UploadCard onClick={handleUploadModalOpen} />}
       {newPosts.map((post) => {
-        const { postId, content, url, likeCount, commentCount } = post;
+        const { postId, content, url, likeCount, commentCount, translation } =
+          post;
         return (
           <PostCard
             postId={postId}
             likeCount={likeCount}
             commentCount={commentCount}
             handleOnClick={handlePostModalOpen}
-            content={content}
+            content={
+              translation?.find((item) => item.languageCode === language)
+                ?.content || content
+            }
             key={`new-post-card-${postId}`}
             imageSrc={url.length ? url[0].fileUrl : ''}
           />
         );
       })}
       {posts.map((post) => {
-        const { postId, content, url, likeCount, commentCount } = post;
+        const { postId, content, url, likeCount, commentCount, translation } =
+          post;
         return (
           <PostCard
             postId={postId}
             likeCount={likeCount}
             commentCount={commentCount}
             handleOnClick={handlePostModalOpen}
-            content={content}
+            content={
+              translation?.find((item) => item.languageCode === language)
+                ?.content || content
+            }
             key={`post-card-${postId}`}
             imageSrc={url.length ? url[0].fileUrl : ''}
           />
