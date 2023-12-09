@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { PostTranslation } from './postTranslation.entity';
+import { PostTranslation } from './translation.entity';
 
 @Entity()
 export class Post {
