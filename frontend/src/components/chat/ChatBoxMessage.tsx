@@ -1,6 +1,7 @@
 import ProfileImage from '@components/profile/ProfileImage';
 import useAuth from '@hooks/useAuth';
 import { getLocaleString } from '@utils/date';
+import { optimizedImageURL } from '@utils/imageURL';
 import { ForwardedRef, forwardRef } from 'react';
 
 interface Props {
@@ -28,7 +29,7 @@ const ChatBoxMessage = forwardRef(function ChatBoxMessage(
       {!isMyMessage && (
         <div className="flex items-center">
           <ProfileImage
-            src={profileImage}
+            src={optimizedImageURL(profileImage, 'profile-small')}
             width="60"
             height="60"
             className="rounded-full"
