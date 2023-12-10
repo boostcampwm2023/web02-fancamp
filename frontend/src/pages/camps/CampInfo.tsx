@@ -11,6 +11,7 @@ import useSubscriptionQuery, {
   subscribeMutation,
   unsubscribeMutation,
 } from '@hooks/api/useSubscriptionQuery';
+import { optimizedImageURL } from '@utils/imageURL';
 
 function CampInfo() {
   const { campId } = useParams();
@@ -46,8 +47,9 @@ function CampInfo() {
     <div className="relative flex h-[16rem] flex-col justify-end">
       <div className="absolute top-[0] h-[16rem] w-full">
         <Image
-          src={camp.bannerImage || ''}
+          src={optimizedImageURL(camp.bannerImage, 'banner-medium')}
           className="absolute top-[0] z-0 h-full w-full object-cover"
+          alt={`${campId}'s banner`}
         />
         <div
           className="absolute top-[0] z-10 h-full w-full"
@@ -58,7 +60,11 @@ function CampInfo() {
         />
       </div>
       <div className="relative z-20 flex w-full items-center gap-xl  p-xl">
-        <ProfileImage src={profileImage} className="rounded-full" />
+        <ProfileImage
+          src={optimizedImageURL(profileImage, 'profile-medium')}
+          className="rounded-full"
+          alt={`${campId}'s profile`}
+        />
         <div className="flex flex-1 items-center justify-between">
           <div className="flex flex-col justify-evenly gap-md">
             <Text size={20} color="surface-primary">

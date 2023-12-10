@@ -4,6 +4,7 @@ import ProfileImage from '@components/profile/ProfileImage';
 import Text from '@components/ui/Text';
 import useAuth from '@hooks/useAuth';
 import { Link } from 'react-router-dom';
+import { optimizedImageURL } from '@utils/imageURL';
 
 interface PostConentCardProps {
   profileImage: string;
@@ -34,10 +35,11 @@ function PostConentCard({
         <Link to={`/camps/${campName}/post`}>
           <div className="flex items-center gap-sm">
             <ProfileImage
-              src={profileImage}
+              src={optimizedImageURL(profileImage, 'profile-small')}
               width={32}
               height={32}
               className="rounded-full"
+              alt={`${campName}'s profile`}
             />
             <Text>{campName}</Text>
           </div>

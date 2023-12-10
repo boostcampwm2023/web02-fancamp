@@ -20,7 +20,6 @@ function Image(props: ImageProps) {
       }
       className={`opacity-0 ${className || ''}`}
       onLoad={handleImageLoaded}
-      alt=""
       {...imageProps}
     />
   );
