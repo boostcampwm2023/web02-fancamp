@@ -3,6 +3,7 @@ import Text from '@components/ui/Text';
 import { Comment } from '@type/api/comment';
 import { formatDate } from '@utils/date';
 import DeleteIcon from '@assets/icons/deleteIcon.svg?react';
+import { optimizedImageURL } from '@utils/imageURL';
 
 interface CommentProps {
   comment: Comment;
@@ -25,7 +26,7 @@ function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-md">
           <ProfileImage
-            src={profileImage}
+            src={optimizedImageURL(profileImage, 'profile-small')}
             width={24}
             height={24}
             className="rounded-full"

@@ -3,6 +3,7 @@
 import ProfileImage from '@components/profile/ProfileImage';
 import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
 import useAuth from '@hooks/useAuth';
+import { optimizedImageURL } from '@utils/imageURL';
 import { Link } from 'react-router-dom';
 
 export default function SubscriptionsPage() {
@@ -23,7 +24,7 @@ export default function SubscriptionsPage() {
               className="flex flex-col items-center gap-2"
             >
               <ProfileImage
-                src={masterProfileImage}
+                src={optimizedImageURL(masterProfileImage, 'profile-medium')}
                 alt={campName}
                 className="rounded-full"
               />

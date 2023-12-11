@@ -1,5 +1,6 @@
 import Image from '@components/ui/Image';
 import Text from '@components/ui/Text';
+import { optimizedImageURL } from '@utils/imageURL';
 
 interface PostCardProps {
   imageSrc: string;
@@ -39,7 +40,11 @@ function PostCard({
       onClick={() => handleOnClick(postId)}
     >
       {imageSrc ? (
-        <Image src={imageSrc} className={cardImageClassName} alt="" />
+        <Image
+          src={optimizedImageURL(imageSrc, 'post-medium')}
+          className={cardImageClassName}
+          alt={`${postId}`}
+        />
       ) : (
         <div className={cardTextClassName}>
           <Text color="text-secondary">{content}</Text>

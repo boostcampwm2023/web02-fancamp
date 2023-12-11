@@ -1,6 +1,7 @@
 import SearchInput from '@components/input/SearchInput';
 import Image from '@components/ui/Image';
 import Text from '@components/ui/Text';
+import { optimizedImageURL } from '@utils/imageURL';
 import { Link } from 'react-router-dom';
 
 function SearchInputTemplate({ camps, keyword, setKeyword }: any) {
@@ -22,7 +23,7 @@ function SearchInputTemplate({ camps, keyword, setKeyword }: any) {
             <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
               <div className="relative flex h-[3.5rem] w-full items-center gap-md bg-surface-primary">
                 <Image
-                  src={masterProfileImage}
+                  src={optimizedImageURL(masterProfileImage, 'profile-small')}
                   className="aspect-square h-full"
                 />
                 <Text

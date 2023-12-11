@@ -9,6 +9,7 @@ import { Camp } from '@type/api/camp';
 import useIntersectionObserver from '@hooks/useObserver';
 import ProfileImage from '@components/profile/ProfileImage';
 import SearchInputLogic from './SearchInputLogic';
+import { optimizedImageURL } from '@utils/imageURL';
 
 interface CampWithProfile extends Camp {
   masterProfileImage: string;
@@ -72,20 +73,22 @@ function ExplorePageLogic() {
 
 function ExploreCampCard({ camp }: { camp: CampWithProfile }) {
   const { campName, bannerImage, content, masterProfileImage } = camp;
+
   return (
     <Link to={`/camps/${campName}/post`} key={`camp-card-${campName}`}>
       <Card className="w-full border-sm border-text-primary">
         <div className="relative">
           <Image
-            src={bannerImage ? `${bannerImage}?${new Date()}` : ''}
+            src={optimizedImageURL(bannerImage, 'banner-small')}
             className="aspect-[4/3] w-full object-cover"
+            alt={`${campName}'s banner`}
           />
         </div>
         <div className="relative flex flex-col items-center gap-md px-md py-md">
           <div className="flex items-center gap-sm">
             {masterProfileImage && (
               <ProfileImage
-                src={masterProfileImage}
+                src={optimizedImageURL(masterProfileImage, 'profile-small')}
                 className="w-lg rounded-full"
               />
             )}

@@ -7,6 +7,7 @@ import LeftArrowIcon from '@assets/icons/leftArrowIcon.svg?react';
 import RightArrowIcon from '@assets/icons/rightArrowIcon.svg?react';
 import { PostFile } from '@type/api/post';
 import { checkFileType } from '@utils/file';
+import { optimizedImageURL } from '@utils/imageURL';
 
 interface ImageSliderProps {
   width?: number;
@@ -54,8 +55,12 @@ function MediaSlider({ width = 37.5, medias }: ImageSliderProps) {
                 style={{ width: `${width}rem` }}
               >
                 <Image
-                  src={media.fileUrl}
+                  src={optimizedImageURL(media.fileUrl, 'post-large')}
                   className="relative h-full w-full object-contain center"
+                  loading={`${
+                    i === 0 || imageIndex + 1 === i ? 'eager' : 'lazy'
+                  }`}
+                  alt={`media image ${i}`}
                 />
               </div>
             );
