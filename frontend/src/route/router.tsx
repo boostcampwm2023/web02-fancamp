@@ -13,7 +13,6 @@ import ErrorPage from '@pages/error/ErrorPage';
 import SigninPage from '@pages/auth/signin/SigninPage';
 import SignupPage from '@pages/auth/signup/SignupPage';
 import HomePage from '@pages/home/HomePage';
-import SearchPage from '@pages/search/SearchPage';
 import ExplorePage from '@pages/explore/ExplorePage';
 import SubscriptionsPage from '@pages/subscriptions/SubscriptionsPage';
 import CampPage from '@pages/camps/CampPage';
@@ -30,7 +29,6 @@ const router = createBrowserRouter(
       </Route>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
-        <Route path="search" element={<SearchPage />} />
         <Route path="explore" element={<ExplorePage />} />
         <Route path="feed" element={<FeedPage />} />
         <Route path="subscriptions" element={<SubscriptionsPage />} />
