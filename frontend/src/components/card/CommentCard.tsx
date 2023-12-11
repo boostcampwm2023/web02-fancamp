@@ -3,8 +3,8 @@ import Text from '@components/ui/Text';
 import { Comment } from '@type/api/comment';
 import { formatDate } from '@utils/date';
 import DeleteIcon from '@assets/icons/deleteIcon.svg?react';
-import useLanguage from '@hooks/useLanguage';
 import { optimizedImageURL } from '@utils/imageURL';
+import useLanguage from '@hooks/useLanguage';
 
 interface CommentProps {
   comment: Comment;
