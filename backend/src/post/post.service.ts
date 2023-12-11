@@ -2,7 +2,6 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
-  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -39,8 +38,6 @@ export class PostService {
     private readonly postGateway: PostGateway,
     private readonly translationService: TranslationService,
   ) {}
-
-  private logger = new Logger('PostService');
 
   /* Post */
   async findAllCampsPosts(cursor: string) {
@@ -87,7 +84,7 @@ export class PostService {
       pictureCount,
     );
 
-    const [translation] = await Promise.all([
+    const [translation, firstImage] = await Promise.all([
       this.translationService.createPostTranslation({
         content: createPostDto.content,
         postId: post.postId,
@@ -95,13 +92,10 @@ export class PostService {
       this.imageService.uploadPostFiles(files, post.postId, post.campId),
     ]);
 
-    const urls = await this.imageService.findImagesByPostId(post.postId);
-    if (urls[0] && !urls[0].mimetype.startsWith('image')) {
-      urls[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
-      urls[0].mimetype = 'image/png';
+    if (firstImage && !firstImage.mimetype.startsWith('image')) {
+      firstImage[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
+      firstImage[0].mimetype = 'image/png';
     }
-    const thumbnail = urls[0] ? [urls[0]] : [];
-
     this.noticeGateway.noticePost(camp.campId, camp.campName);
     this.postGateway.handleCreatePost({
       campName: camp.campName,
@@ -110,7 +104,7 @@ export class PostService {
         publicId: publicId,
         likeCount: 0,
         commentCount: 0,
-        url: thumbnail,
+        url: firstImage,
         translation,
       },
     });
@@ -264,8 +258,6 @@ export class PostService {
       postId,
       cursorDate,
     );
-
-    this.logger.log(comments);
 
     if (!comments.length) {
       return {
