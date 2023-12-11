@@ -7,6 +7,7 @@ import { CommentResponse } from '@type/api/comment';
 import { MutationProps } from '@type/api/api';
 import { BASE_URL } from '@constants/URLs';
 import { queryClient } from '@contexts/QueryProvider';
+import { useCallback } from 'react';
 import useFetch from './useFetch';
 
 interface PostCommentMutationFnProps {
@@ -78,7 +79,12 @@ export const deleteCommentMutation = ({
   onError,
   onSuccess,
 }: MutationProps) => {
-  const { mutate, isPending, isError, isSuccess } = useMutation({
+  const {
+    mutate: oldMutate,
+    isPending,
+    isError,
+    isSuccess,
+  } = useMutation({
     mutationFn: ({ postId, commentId }: DeleteCommentMutationFnProps) =>
       useFetch(`${BASE_URL}/posts/${postId}/comments/${commentId}`, {
         method: 'DELETE',
@@ -87,5 +93,8 @@ export const deleteCommentMutation = ({
     onSuccess,
     onError,
   });
+
+  const mutate = useCallback(oldMutate, [oldMutate]);
+
   return { mutate, isPending, isError, isSuccess };
 };

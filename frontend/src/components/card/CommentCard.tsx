@@ -5,6 +5,7 @@ import { formatDate } from '@utils/date';
 import DeleteIcon from '@assets/icons/deleteIcon.svg?react';
 import { optimizedImageURL } from '@utils/imageURL';
 import useLanguage from '@hooks/useLanguage';
+import { memo } from 'react';
 
 interface CommentProps {
   comment: Comment;
@@ -69,4 +70,4 @@ function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
   );
 }
 
-export default CommentCard;
+export default memo(CommentCard);
