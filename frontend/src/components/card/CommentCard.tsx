@@ -4,6 +4,7 @@ import { Comment } from '@type/api/comment';
 import { formatDate } from '@utils/date';
 import DeleteIcon from '@assets/icons/deleteIcon.svg?react';
 import { optimizedImageURL } from '@utils/imageURL';
+import useLanguage from '@hooks/useLanguage';
 
 interface CommentProps {
   comment: Comment;
@@ -20,7 +21,9 @@ function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
     publicId,
     postId,
     commentId,
+    translation,
   } = comment;
+  const { language } = useLanguage();
   return (
     <li className="group flex flex-col gap-md px-lg py-md">
       <div className="flex items-center justify-between">
@@ -59,7 +62,8 @@ function CommentCard({ comment, isMine, deleteComment }: CommentProps) {
           background: `linear-gradient(90deg, ${setimentColorHex}40 0%, ${setimentColorHex}50 80%, ${setimentColorHex}70 100%)`,
         }}
       >
-        {content}
+        {translation?.find((item) => item.languageCode === language)?.content ||
+          content}
       </Text>
     </li>
   );

@@ -41,19 +41,20 @@ export class CommentRepository {
     return this.commentRepository.save(comment);
   }
 
-  findByPostId(postId: number, curosr: Date): Promise<Comment[]> {
+  findByPostId(postId: number, cursor: Date): Promise<Comment[]> {
     return this.commentRepository.find({
       where: [
         {
           postId,
           isDeleted: false,
-          createdAt: LessThan(curosr), // cursor 이후의 댓글 가져오기
+          createdAt: LessThan(cursor), // cursor 이후의 댓글 가져오기
         },
       ],
       order: {
         createdAt: 'DESC', // 내림 정렬하여 먼저 친 댓글이 먼저 오도록 함
       },
       take: 10, // 최대 20개의 결과만 가져오도록 제한
+      relations: ['translation'],
     });
   }
 

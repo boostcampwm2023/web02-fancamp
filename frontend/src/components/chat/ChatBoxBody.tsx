@@ -1,5 +1,4 @@
 import useIntersectionObserver from '@hooks/useIntersectionObserver';
-import ChatBoxMessage from './ChatBoxMessage';
 import Spinner from '@components/loading/Spinner';
 import { useParams } from 'react-router-dom';
 import { Message } from '@type/api/chat';
@@ -8,6 +7,7 @@ import { fetchInfiniteMessages } from '@API/chat';
 import { getCurrentDateString, getFullDateString } from '@utils/date';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { CHAT_MESSAGES } from '@constants/queryKeys';
+import ChatBoxMessage from './ChatBoxMessage';
 
 interface Props {
   messages: Message[];
@@ -42,7 +42,6 @@ export default function ChatBoxBody({ messages }: Props) {
     queryFn: ({ pageParam }) => fetchInfiniteMessages({ campName, pageParam }),
     getNextPageParam: (lastPage) => lastPage.nextCursor,
     initialPageParam: getCurrentDateString(),
-    staleTime: 1000 * 60 * 1,
     retry: false,
   });
 

@@ -7,9 +7,9 @@ import SubscribeIcon from '@assets/icons/subscribeIcon.svg?react';
 import { noticeSocket } from '@API/socket';
 import Radio from '@components/radio/radio';
 import useLanguage from '@hooks/useLanguage';
+import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
 import SubscribeMenuButton from './SubscribeMenuButton';
 import { SideMenuLinkButton } from './SideMenuButton';
-import useSubscriptionQuery from '@hooks/api/useSubscriptionQuery';
 
 function SubscribedMenu() {
   const { auth } = useAuth();

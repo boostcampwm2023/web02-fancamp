@@ -2,6 +2,7 @@ import {
   HttpException,
   HttpStatus,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -22,7 +23,7 @@ import { getSentiment, getSentimentColor } from 'src/utils/sentiment';
 import { NoticeGateway } from 'src/notice/notice.gateway';
 import { CommentGateway } from './comment.gateway';
 import { PostGateway } from './post.gateway';
-import { PostTranslationService } from './postTranslation.service';
+import { TranslationService } from './translation.service';
 
 @Injectable()
 export class PostService {
@@ -36,8 +37,10 @@ export class PostService {
     private readonly noticeGateway: NoticeGateway,
     private readonly commentGateway: CommentGateway,
     private readonly postGateway: PostGateway,
-    private readonly postTransactionService: PostTranslationService,
+    private readonly translationService: TranslationService,
   ) {}
+
+  private logger = new Logger('PostService');
 
   /* Post */
   async findAllCampsPosts(cursor: string) {
@@ -84,8 +87,8 @@ export class PostService {
       pictureCount,
     );
 
-    await Promise.all([
-      this.postTransactionService.createPostTranslation({
+    const [translation] = await Promise.all([
+      this.translationService.createPostTranslation({
         content: createPostDto.content,
         postId: post.postId,
       }),
@@ -108,6 +111,7 @@ export class PostService {
         likeCount: 0,
         commentCount: 0,
         url: thumbnail,
+        translation,
       },
     });
   }
@@ -218,15 +222,21 @@ export class PostService {
       user.id,
       setimentColorHex,
     );
+    const translation = await this.translationService.createCommentTranslation({
+      content,
+      commentId: comment.commentId,
+    });
     this.commentGateway.handleCreateComment({
       ...comment,
       publicId: user.publicId,
       profileImage: user.profileImage,
+      translation,
     });
     return {
       ...comment,
       publicId: user.publicId,
       profileImage: user.profileImage,
+      translation,
     };
   }
 
@@ -254,6 +264,8 @@ export class PostService {
       postId,
       cursorDate,
     );
+
+    this.logger.log(comments);
 
     if (!comments.length) {
       return {
