@@ -42,6 +42,7 @@ export class ImageService {
     if (!files) {
       return;
     }
+    let firstImage = null;
     await Promise.all(
       files.map(async (file, index) => {
         // INDEX가 0이고, 이게 비디오면, thumbnail 만든다.
@@ -50,9 +51,16 @@ export class ImageService {
         }
         const fileName = `${campId}/${postId}_${index}`;
         const fileUrl = await this.uploadFile(file, fileName);
+        if (index === 0) {
+          firstImage = {
+            fileUrl,
+            mimetype: file.mimetype,
+          };
+        }
         this.createImage(file.mimetype, fileUrl, postId);
       }),
     );
+    return firstImage;
   }
 
   async uploadFile(file: Express.Multer.File, fileName: string) {

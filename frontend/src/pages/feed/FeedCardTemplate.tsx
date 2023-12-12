@@ -1,7 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+
 import Text from '@components/ui/Text';
 import { Camp } from '@type/api/camp';
 import { Post } from '@type/api/post';
-import { WheelEvent, useEffect, useRef } from 'react';
+import { Fragment, WheelEvent, useEffect, useRef } from 'react';
 import CommentCard from '@components/card/CommentCard';
 import { Comment } from '@type/api/comment';
 import InputComment from '@components/input/InputComment';
@@ -118,16 +120,19 @@ function FeedCardTemplate({
               deleteComment={deleteComment}
             />
           ))}
-          {comments.pages.map((commentPage: any) =>
-            commentPage.result.map((comment: any) => (
-              <CommentCard
-                comment={comment}
-                key={`comment-${comment.commentId}`}
-                isMine={comment.publicId === publicId}
-                deleteComment={deleteComment}
-              />
-            ))
-          )}
+
+          {comments.pages.map((commentPage: any, index: number) => (
+            <Fragment key={index}>
+              {commentPage.result.map((comment: any) => (
+                <CommentCard
+                  comment={comment}
+                  key={`comment-${comment.commentId}`}
+                  isMine={comment.publicId === publicId}
+                  deleteComment={deleteComment}
+                />
+              ))}
+            </Fragment>
+          ))}
           <div ref={observerRef} className="h-[0.0625rem]" />
         </ul>
       </div>
