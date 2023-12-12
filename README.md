@@ -36,7 +36,7 @@ SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검
     
 3. 채팅
 
-![채팅.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/cab981a9-c0dc-43f5-8963-f9cc1120eca8/cec7f65b-d2c4-45e1-9894-e104a67e9bd2/%EC%B1%84%ED%8C%85.png)
+    ![채팅](https://github.com/boostcampwm2023/web02-fancamp/assets/54917836/f6f36eec-c795-4f5e-b318-48bd8709b041)
 
 ### 전체 기능
 <details>
