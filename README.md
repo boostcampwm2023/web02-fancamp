@@ -50,23 +50,17 @@ SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검
 - 이미지를 업로드할 수 있어요.
 - 동영상을 업로드하고 썸네일을 볼 수 있어요.
 - 새로운 포스트가 올라오면 실시간으로 확인할 수 있어요.
-    
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/cab981a9-c0dc-43f5-8963-f9cc1120eca8/842cd70d-0938-4b8d-a68c-bacd994109ca/Untitled.gif)
-    
 - 이전 코멘트을 무한 스크롤로 더 가져올 수 있어요.
 - 좋아요 버튼을 누르고 코멘트을 달 수 있어요.
 - AI로 코멘트의 감정을 분석해서 감정에 따라다 색을 다르게 보여줘요. 긍정적이면 초록, 부정적이면 빨강, 중립이면 파란색으로 표현이 돼요.
 - 포스트 내용과 코멘트가 한글/영어/일본어로 볼 수 있어요.
-    
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/cab981a9-c0dc-43f5-8963-f9cc1120eca8/19b2481c-ba09-47e0-bbde-933fae41d1ca/Untitled.gif)
+  ![translation](https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/a598ab70-4ddd-43fa-911e-cbe7b8878134)
+
     
 
 **피드**
 
 - Youtube Shorts처럼 무한 슬라이더로 최근 포스트를 이동하며 볼 수 있어요.
-    
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/cab981a9-c0dc-43f5-8963-f9cc1120eca8/bbb2e23a-d769-444e-b9a6-7c9573a259d2/Untitled.gif)
-    
 
 **채팅**
 ![채팅](https://github.com/boostcampwm2023/web02-fancamp/assets/101859033/b9dc7d46-f9ba-400e-ac27-d13c5752f2d2)
@@ -88,7 +82,7 @@ SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검
     
 
 </details>
----
+
 
 ## 기술  소개 (이유 + 적용 사례, 해결한 문제)
 
