@@ -93,8 +93,8 @@ export class PostService {
     ]);
 
     if (firstImage && !firstImage.mimetype.startsWith('image')) {
-      firstImage[0].fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
-      firstImage[0].mimetype = 'image/png';
+      firstImage.fileUrl = `https://kr.object.ncloudstorage.com/fancamp-images/${camp.campId}/${post.postId}_thumbnail`;
+      firstImage.mimetype = 'image/png';
     }
     this.noticeGateway.noticePost(camp.campId, camp.campName);
     this.postGateway.handleCreatePost({
@@ -104,7 +104,7 @@ export class PostService {
         publicId: publicId,
         likeCount: 0,
         commentCount: 0,
-        url: firstImage,
+        url: [firstImage],
         translation,
       },
     });
