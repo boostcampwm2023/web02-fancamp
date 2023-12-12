@@ -28,16 +28,16 @@ SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검
 
 1. 포스트 및 코멘트 실시간 업데이트
 
-    ![update](https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/f6cd7a23-f454-4d93-ad89-788dc90deec9)
+    <img src="https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/f6cd7a23-f454-4d93-ad89-788dc90deec9" width="60%" />
 
-    ![notice](https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/44a35c98-f860-476e-a9e1-a0cfda66ee88)
+    <img src="https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/44a35c98-f860-476e-a9e1-a0cfda66ee88" width="60%" />
 
     
 3. 피드
 
-    ![feed](https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/b5fb634a-8434-4760-b41e-658ddbfaf38a)
+    <img src="https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/b5fb634a-8434-4760-b41e-658ddbfaf38a" width="30%" />
     
-4. 채팅
+5. 채팅
 
     ![채팅](https://github.com/boostcampwm2023/web02-fancamp/assets/54917836/f6f36eec-c795-4f5e-b318-48bd8709b041)
 
