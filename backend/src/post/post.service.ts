@@ -104,7 +104,7 @@ export class PostService {
         publicId: publicId,
         likeCount: 0,
         commentCount: 0,
-        url: [firstImage],
+        url: firstImage ? [firstImage] : [],
         translation,
       },
     });
