@@ -1,22 +1,18 @@
 # ![title](https://github.com/boostcampwm2023/web02-fancamp/assets/101859033/5f3d3cab-f39a-496b-bfc0-22ea663e2796) fancamp
 
-> **인플루언서와 팬과 소통하는 커뮤니티**
-> 
+> **인플루언서와 팬이 소통하는 커뮤니티**
+>
 
 ## 프로젝트 소개
 
 ```
-영상으로만 보던 인플루언서분들과 실시간으로 소통을 해보세요. 
-인플루언서라면 팬분들과 일상을 공유하며 친밀감을 올릴 수 있어요. 😊
+인플루언서와 실시간으로 소통을 해보세요!
+인플루언서라면 팬들과 일상을 공유하며 친밀감을 올릴 수 있어요. 😊
 ```
 
 ### 주제 선정 이유
 
 ```
-저희 팀 잼버리는 멤버 전원이 웹 개발 협업이 처음이었어요.
-그래서 기획에 신경을 덜 쓰고 싶어 새로운 서비스를 만들기보다는
-이미 존재하는 서비스인 Weverse와 bubble을 참고했어요.
-
 SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검색 기능은
 웹 서비스에서 흔히 사용되어 이번 기회에 학습하고 구현해보면 추후에 도움이
 될 것 같아 이 주제를 선택하게 되었어요. 😎
@@ -33,96 +29,53 @@ SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검
     <img src="https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/44a35c98-f860-476e-a9e1-a0cfda66ee88" width="60%" />
 
     
-3. 피드
+2. 피드
 
     <img src="https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/b5fb634a-8434-4760-b41e-658ddbfaf38a" width="30%" />
     
-5. 채팅
+3. 채팅
 
     ![채팅](https://github.com/boostcampwm2023/web02-fancamp/assets/54917836/f6f36eec-c795-4f5e-b318-48bd8709b041)
 
-### 전체 기능
-<details>
-<summary>기능 리스트</summary>
+📢 더 자세히 확인해보세요 → [여기](https://github.com/boostcampwm2023/web02-fancamp/wiki/%EA%B8%B0%EB%8A%A5-%EC%86%8C%EA%B0%9C)로!
 
-**포스트**
+---
 
-- 이미지를 업로드할 수 있어요.
-- 동영상을 업로드하고 썸네일을 볼 수 있어요.
-- 새로운 포스트가 올라오면 실시간으로 확인할 수 있어요.
-- 이전 코멘트을 무한 스크롤로 더 가져올 수 있어요.
-- 좋아요 버튼을 누르고 코멘트을 달 수 있어요.
-- AI로 코멘트의 감정을 분석해서 감정에 따라다 색을 다르게 보여줘요. 긍정적이면 초록, 부정적이면 빨강, 중립이면 파란색으로 표현이 돼요.
-- 포스트 내용과 코멘트가 한글/영어/일본어로 볼 수 있어요.
-  ![translation](https://github.com/boostcampwm2023/web02-fancamp/assets/99123542/a598ab70-4ddd-43fa-911e-cbe7b8878134)
+## 기술  소개
 
-    
-
-**피드**
-
-- Youtube Shorts처럼 무한 슬라이더로 최근 포스트를 이동하며 볼 수 있어요.
-
-**채팅**
-![채팅](https://github.com/boostcampwm2023/web02-fancamp/assets/101859033/b9dc7d46-f9ba-400e-ac27-d13c5752f2d2)
-
-- 실시간으로 채팅을 나눌 수 있어요.
-- 무한 스크롤로 이전 메시지를 불러올 수 있어요.
-- 마스터가 현재 채팅에 접속 중인지 알 수 있어요.
-- 마스터가 채팅에 `(닉네임)` 을 적을 경우 캠퍼의 화면에서는 캠퍼의 닉네임으로 변경돼서 마치 1 대 1로 채팅을 하는 느낌을 받을 수 있어요.
-
-**캠프**
-
-- 캠프 목록에서 관심 있는 인플루언서의 캠프로 이동할 수 있어요.
-- 캠프를 검색할 수 있어요.
-
-**알림**
-
-- 마스터가 채팅을 보낼 때 알림을 받아볼 수 있어요.
-- 마스터가 새로운 포스트 등록 시 알림을 받아볼 수 있어요.
-    
-
-</details>
-
-
-## 기술  소개 (이유 + 적용 사례, 해결한 문제)
+📢 자세한 내용은 [여기](https://github.com/boostcampwm2023/web02-fancamp/wiki/%EA%B8%B0%EC%88%A0-%EC%84%A0%EC%A0%95-%EC%9D%B4%EC%9C%A0)를 봐주세요
 
 ### React
 
-JavaScript의 DOM API를 사용해서 UI를 만들면 어떻게 표현할 것인가에 대한 로직의 코드의 상당 부분을 차지하게 됩니다. 리액트에서 제공하는 상태 관리 API와 JSX 문법을 이용하면 `선언적`으로 `무엇을` 표현할 것인가를 나타낼 수 있어 코드가 간결해집니다. 뷰를 컴포넌트 단위로 나누어 `재사용 성과 유지 보수`가 쉬워집니다.
+선언적으로 뷰 표현 가능. 뷰를 컴포넌트 단위로 관리.
 
 ### Tailwind CSS
 
-CSS를 작성할 때 더 이상 `클래스 네임` 때문에 고민하지 않아도 됩니다. JSX의 CSS를 작성할 때 파일을 바꾸면서 작성하지 않고 JSX 한 파일 내에서 해당하는 HTML 태그의 CSS를 바로 확인할 수 있습니다. 사이즈, 색깔, 폰트 등 `디자인 시스템`을 정의하기 간편합니다.
+직관적인 CSS 프로퍼티 사용. CSS 클래스 네임 고려 불필요. 
 
 ### TanStack Query
 
-`비동기 상태 관리` 라이브러리로써 비동기 상태의 loading, error, success를 간결하게 UI에 표현할 수 있고 caching, refetching, retry, enabled, pagination, infinite scroll, optimistic UI 등 여러 기능 및 옵션을 지원합니다. 비동기 상태를 Query Key로 관리하여 커스텀 훅으로 만들면 어떤 컴포넌트 내에서도 일정한 결과를 얻을 수 있고 mutation API를 사용하면 서버 상태와 클라이언트 상태와의 동기화도 간단합니다.
+`비동기 상태 관리` 라이브러리로써 비동기 상태 관리의 복잡성 낮춤. 
 
 ### Nest.js
 
-> node.js 기반의 프레임워크를 사용한다. 언어는 JavaScript 또는 TypeScript를 사용한다.
-
-앞선 요구사항을 만족하는 프레임워크 중에서 `Nest.js`를 선택한 이유는 정해진 구조로 협업 효율을 높이고, 만들어진 데코레이터를 쉽게 사용해서 효율적으로 개발하기 위함이었습니다.
-
-이에 더하여 의존성 검증을 해줘서 오류를 보고 해결을 편하게 할 수 있었습니다.
-
-🔄[의존성 순환](https://www.notion.so/42c31f729cea4fbb82f55ac90f7822c0?pvs=21) 
+정해진 구조, 데코레이터로 효율적으로 개발.
 
 ### MySQL
 
-서비스에서 사용하는 데이터가 유저, 구독, 캠프, 포스트 등 대부분 연관되어 있고, 자주 변경이 일어날 수 있어서 RDBMS 사용했습니다. 
+데이터가 대부분 연관, 자주 변경 일어나서 RDBMS 사용.
 
 ### Socket.IO
 
-polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.IO를 사용한 이유는 `namespace`와 `room` 기능을 사용해서 빠르게 개발하고자 했기 때문입니다.
+`namespace`와 `room` 기능을 이용한 빠르게 개발.
 
 ### PM2, Prometheus, Grafana
 
-다양한 이유로 갑자기 프로세스가 종료될 때 바로 재시작하기 위해서 `PM2` 도입했습니다. 이후 추가적인 코드 작성 없이 로그를 관리할 수 있었고, cluster 모드를 활용해 멀티 스레드를 구현할 수 있었습니다.
+`PM2`: 프로세스 종료 시 재시작, 로그, cluster
 
-최적화할 부분을 찾기 위해 모니터링이 필요했습니다. 그래서 시각화를 위해 `Grafana`를, 호스트 머신 레벨 데이터와 Node 애플리케이션 데이터를 얻기 위해 `Prometheus` 도입했습니다. 이후 `k6`로 부하 테스트를 진행하면서 `Grafana`로 실시간으로 결과를 보면서 분석했습니다.
+`Grafana`: 모니터링을 위한 시각화
 
-📊[성능 테스트 part 1 - 도입](https://www.notion.so/part-1-e29517c82db1495385200f872fc07b81?pvs=21) 📊[성능 테스트 part 2](https://www.notion.so/part-2-ef7cddcf49da4ee99f3a5eb0f23097de?pvs=21) 
+`Prometheus`: 서버, 노드 어플리케이션 별 metric 수집.
 
 ---
 
@@ -134,13 +87,13 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 
 코드의 중복을 막기 위해 함수로 분리하는 것처럼, 요소의 중복 또한 컴포넌트로 분리해야 된다고 생각합니다. 그리고 컴포넌트로 분리할 때 가장 중요한 점은 그 컴포넌트의 목적을 명확하게 하고, 다양한 상황에 사용할 수 있도록 만드는 것이라고 생각했습니다.
 
-🎨[[FE] ****공통 컴포넌트 만들기****](https://www.notion.so/FE-e641dd4dbf754288a6fb74f1d55c647d?pvs=21)
+[🎨[FE] ****공통 컴포넌트 만들기****](https://www.notion.so/FE-e641dd4dbf754288a6fb74f1d55c647d?pvs=21)
 
 **무한 스크롤 및 무한 슬라이더**
 
 무한 스크롤과 무한 슬라이더를 만들면서, 동시에 확장성과 최적화를 고민했습니다. 재사용을 위해 필요한 로직을 커스텀 훅으로 분리하고, 최적화를 위해 컴포넌트의 구조와 동작 자체를 다시 설계하는 등 많은 기술적 고민을 했습니다.
 
-🎨[[FE] 유튜브 쇼츠 같은 컴포넌트 만들기](https://www.notion.so/FE-2fbc3d8c47b942078eb8890d46505aba?pvs=21)
+[🎨[FE] 유튜브 쇼츠 같은 컴포넌트 만들기](https://www.notion.so/FE-2fbc3d8c47b942078eb8890d46505aba?pvs=21)
 
 ### 백엔드
 
@@ -148,7 +101,7 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 
 테스트가 처음이라서 최적화할 지표를 찾는 것이 고민이었습니다. 그래서 실시간으로 변하는 그래프를 보면 빠르게 찾을 것 같아서 Grafana와 Prometheus를 도입했습니다. Prometheus 서버와 exporter 등의 개념을 이해하고 적용했고, 테스트를 하면서 CPU 사용률과 이벤트 루프 시간을 개선하기로 결정했습니다.
 
-📊[성능 테스트 part 1 - 도입](https://www.notion.so/part-1-e29517c82db1495385200f872fc07b81?pvs=21) [성능 테스트 part 2 (작성중)](https://www.notion.so/part-2-ef7cddcf49da4ee99f3a5eb0f23097de?pvs=21) 
+[📊성능 테스트 part 1](https://www.notion.so/part-1-e29517c82db1495385200f872fc07b81?pvs=21) [📊성능 테스트 part 2](https://www.notion.so/part-2-ef7cddcf49da4ee99f3a5eb0f23097de?pvs=21) 
 
 **채팅과 알림**
 
@@ -159,11 +112,11 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 <details>
 <summary>댓글, 포스트 생성 Flow</summary>
 
- ![사용자가 댓글 작성 → `Clova Sentiment`로 감정 분석 후 색깔 생성 → `DB`에 저장 → `socket` 해당 페이지에 있는 사람들에게 `Comment Update`](https://github.com/boostcampwm2023/web02-fancamp/assets/101859033/f773b6a4-d5bc-49c6-b277-0cb83151e61f)
-사용자가 댓글 작성 → `Clova Sentiment`로 감정 분석 후 색깔 생성 → `DB`에 저장 → `socket` 해당 페이지에 있는 사람들에게 `Comment Update`
+ ![사용자가 댓글 작성 → `Clova Sentiment`로 감정 분석 후 색깔 생성 → `DB`에 저장 → `socket` 해당 페이지에 있는 사람들에게 `Comment Update`](https://github.com/boostcampwm2023/web02-fancamp/assets/58136348/d856843a-10ea-48ec-8809-5f6b9a55c2c6)
+    사용자가 댓글 작성 → `Clova Sentiment`로 감정 분석 후 색깔 생성 → `DB`에 저장 → `socket` 해당 페이지에 있는 사람들에게 `Comment Update`
 
-![포스트](https://github.com/boostcampwm2023/web02-fancamp/assets/101859033/339a2a5d-c9ca-4872-8ec4-ad5254a5a6f0)
-사용자가 포스트 작성 → `PaPago`로 번역, `ncloud storge`에 업로드 → `DB`에 저장 → `socket` 해당 페이지에 있는 사람들에게 `Post emit`, 구독 중인 사용자에게 `Notice emit`
+![포스트](https://github.com/boostcampwm2023/web02-fancamp/assets/58136348/760d9c2a-ab03-4ea3-8c2e-cfb28d2bdc70)
+    사용자가 포스트 작성 → `PaPago`로 번역, `ncloud storge`에 업로드 → `DB`에 저장 → `socket` 해당 페이지에 있는 사람들에게 `Post emit`, 구독 중인 사용자에게 `Notice emit`
 
 </details>
     
@@ -177,7 +130,7 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 
 ---
 
-## 협업방식
+## 원활한 협업을 위한 노력들
 
 ### Notion
 
@@ -217,7 +170,7 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 </details>
 
 <details>
-<summary>스프린트, 백로그 : 매주 월요일 스프린트 회의를 하면서 백로그에서 이번 스프린트에 할 이슈를 선택하고, 개발할  백로그나 보드를 참고해서 개발했습니다.</summary>
+<summary>스프린트, 백로그 : 매주 월요일 스프린트 회의를 하면서 백로그에서 이번 스프린트에 할 이슈를 선택하고, 개발할 이슈만 있는 백로그나 보드를 참고해서 개발했습니다.</summary>
 
 ![백로](https://github.com/boostcampwm2023/web02-fancamp/assets/101859033/5423ac12-9e48-4ee6-8ce5-1e38e8d16e56)
 스프린트가 완료되어서 지금은 비어있지만, 스프린트 세션에서 올라온 이슈를 완료 처리 하면서 개발했습니다.
@@ -233,9 +186,7 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 
 </details>  
 
-[JIRA 컨벤션](https://www.notion.so/JIRA-15eb21e81fbd49c5b7bec1af816ffff5?pvs=21)  
-
-[JIRA](https://www.notion.so/JIRA-ec7d64b09b104bdc972a5caa0814c5f4?pvs=21) 
+📌[지라 컨벤션 위키](https://github.com/boostcampwm2023/web02-fancamp/wiki/JIRA-%EC%BB%A8%EB%B2%A4%EC%85%98)    📌[지라 위키](https://github.com/boostcampwm2023/web02-fancamp/wiki/JIRA)
 
 ### 페어프로그래밍
 
@@ -243,6 +194,6 @@ polling, long-polling, WebSocket 등 여러 실시간 통신 기술 중 Socket.I
 
 ---
 
-## 더 많이 알고 싶다면?
+## 더 자세한 정보
 
 📌[깃허브 위키](https://github.com/boostcampwm2023/web02-fancamp/wiki)    📌[노션 홈](https://www.notion.so/fancamp-682cf45967304ffb9ff40227b4274e33?pvs=21)
