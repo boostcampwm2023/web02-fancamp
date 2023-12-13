@@ -28,7 +28,12 @@ function FeedPageSuspense() {
   useEffect(() => {
     document.querySelector('main')!.addEventListener('wheel', handleWheel);
     return () => {
-      document.querySelector('main')!.removeEventListener('wheel', handleWheel);
+      try {
+        document
+          .querySelector('main')!
+          .removeEventListener('wheel', handleWheel);
+        // eslint-disable-next-line no-empty
+      } catch (error) {}
     };
   });
 
