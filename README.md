@@ -95,6 +95,18 @@ SNS 서비스에 공통적으로 있는 포스트, 피드, 실시간 채팅, 검
 
 [🎨[FE] 유튜브 쇼츠 같은 컴포넌트 만들기](https://www.notion.so/FE-2fbc3d8c47b942078eb8890d46505aba?pvs=21)
 
+**그 외 고민들**
+
+[🎨[FE] 이미지 최적화](https://coli-pasta.notion.site/FE-1acc599950f74bdabef14b3e60bba3f2?pvs=4)
+
+[🎨[FE] 무한 스크롤](https://coli-pasta.notion.site/FE-3-3-3ac8b2d1dbe347acbc418b1c6ad1e159?pvs=4)
+
+[🎨[FE] Socket.IO를 이용한 채팅 초기 구현](https://coli-pasta.notion.site/FE-1-3-socket-IO-6255be3d6ace409289f3febc88803307?pvs=4)
+
+[🎨[FE] 유저 Context 구현기 1/2](https://coli-pasta.notion.site/FE-1-2-AuthContext-bde97edd23de47389ef0c2e67dcb1c7f?pvs=4)
+
+[🎨[FE] 유저 Context 구현기 2/2](https://coli-pasta.notion.site/FE-2-2-AuthContext-891957ceb4f44a8da522a7045fd3aa80?pvs=4)
+
 ### 백엔드
 
 **모니터링**
