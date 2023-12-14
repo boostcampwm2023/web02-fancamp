@@ -1,7 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CreateImageDto } from './dto/create-image.dto';
-import { UpdateImageDto } from './dto/update-image.dto';
-
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';
 import { ImageRepository } from './image.repository';
 import * as ffmpeg from 'fluent-ffmpeg';
@@ -12,7 +9,6 @@ ffmpeg.setFfprobePath(ffprobePath.path);
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 
 import {
-  createReadStream,
   existsSync,
   promises,
   readFileSync,
@@ -96,7 +92,6 @@ export class ImageService {
     filename: string,
   ) {
     if (!existsSync('./temp')) {
-      // console.log('시작하기 전 없음');
       await promises.mkdir('./temp/video', { recursive: true });
       await promises.mkdir('./temp/thumbnail', { recursive: true });
     }

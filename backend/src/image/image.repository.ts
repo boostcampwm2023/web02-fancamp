@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { concatAll, concatMap } from 'rxjs';
 import { Image } from './entities/image.entity';
 import { CreateImageDto } from './dto/create-image.dto';
 @Injectable()

@@ -31,24 +31,4 @@ export class UserRepository {
     await this.usersRepository.save(user);
     return user;
   }
-
-  // async updateUserImage(id: number, fileUrl: string): Promise<User> {
-  //   const user = await this.usersRepository.findOneBy({ id });
-  //   if (!user) {
-  //     throw new NotFoundException(`User with id ${id} not found`);
-  //   }
-  //   user.profileImage = fileUrl;
-  //   await this.usersRepository.save(user);
-  //   return user;
-  // }
-
-  // async updateUserChatName(id: number, chatName: string) {
-  //   const user = await this.usersRepository.findOneBy({ id });
-  //   if (!user) {
-  //     throw new NotFoundException(`User with id ${id} not found`);
-  //   }
-  //   user.chatName = chatName;
-  //   await this.usersRepository.save(user);
-  //   return user;
-  // }
 }

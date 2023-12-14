@@ -1,7 +1,6 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { SubscriptionRepository } from './subscription.repository';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
-import { ERR_MESSAGE } from 'src/utils/constants';
 
 @Injectable()
 export class SubscriptionService {

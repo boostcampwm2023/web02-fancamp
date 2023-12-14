@@ -8,7 +8,6 @@ import {
   Delete,
   Req,
   UseGuards,
-  Put,
   UploadedFiles,
   UseInterceptors,
   Query,

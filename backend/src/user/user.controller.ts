@@ -1,11 +1,7 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
-  Patch,
-  Param,
-  Delete,
   Put,
   Req,
   UploadedFile,
@@ -14,7 +10,6 @@ import {
 import { Request } from 'express';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { CreateUserAuthDto } from 'src/auth/dto/create-auth.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users')
@@ -39,28 +34,4 @@ export class UserController {
       updateUserDto,
     );
   }
-
-  // @Get('profile')
-  // getPorfile(@Req() request: Request) {
-  //   return this.userService.profile(request.cookies['publicId']);
-  // }
-  // @Get()
-  // findAll() {
-  //   return this.userService.findAll();
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.userService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-  //   return this.userService.update(+id, updateUserDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.userService.remove(+id);
-  // }
 }
