@@ -5,15 +5,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 //TODO: 클라이언트 연결되면 삭제 ->
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { join } from 'path';
-//<-
+
 
 async function bootstrap() {
-  // const app = await NestFactory.create(AppModule); //TODO: 클라이언트 연결되면 주석 해제
-  //TODO: 클라이언트 연결되면 삭제 ->
   const app = await NestFactory.create<NestExpressApplication>(AppModule); //express 사용하는 인스턴스 생성
-  app.useStaticAssets(join(__dirname, 'static')); //정적 파일 경로 지정
-  //<-
   app.use(cookieParser());
 
   const config = new DocumentBuilder()

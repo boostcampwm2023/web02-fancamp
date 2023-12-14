@@ -14,9 +14,6 @@ export class AuthGuard implements CanActivate {
     const publicId = request.cookies && request.cookies['publicId'];
     if (!publicId) return false;
 
-    const socket = context.switchToWs().getClient();
-    // console.log(socket);
-
     // 여기에 실제 인증 로직을 추가하고 authService를 사용할 수 있습니다.
     const isAuthorized = this.authService.validateUser(publicId);
     return isAuthorized;

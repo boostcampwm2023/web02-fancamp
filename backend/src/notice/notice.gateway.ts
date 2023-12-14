@@ -10,7 +10,6 @@ import { SubscriptionService } from 'src/camp/subscription.service';
 @WebSocketGateway({ cors: true, namespace: 'notice' })
 export class NoticeGateway {
   constructor(
-    private readonly campService: CampService,
     private readonly subscriptionService: SubscriptionService,
   ) {}
 

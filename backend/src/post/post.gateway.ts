@@ -36,7 +36,7 @@ export class PostGateway {
 
   handleCreatePost(data: any) {
     const { campName, res } = data;
-    console.log(`Post ${res.postId}, Comment ${res.content}`);
+    console.log(`Post ${res.postId}, Post ${res.content}`);
     this.server.to(`${campName}-page`).emit('createPost', res);
   }
 }

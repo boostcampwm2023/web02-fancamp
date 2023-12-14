@@ -15,7 +15,6 @@ import { UserModule } from 'src/user/user.module';
 import { LikeRepository } from './like.repository';
 import { CommentRepository } from './comment.repository';
 import { ImageModule } from 'src/image/image.module';
-import { NoticeGateway } from 'src/notice/notice.gateway';
 import { NoticeModule } from 'src/notice/notice.module';
 import { AuthModule } from 'src/auth/auth.module';
 import { CommentGateway } from './comment.gateway';

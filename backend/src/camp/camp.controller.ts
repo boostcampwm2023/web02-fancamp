@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Req,
@@ -14,7 +13,6 @@ import {
   Query,
 } from '@nestjs/common';
 import { CampService } from './camp.service';
-import { CreateCampDto } from './dto/create-camp.dto';
 import { UpdateCampDto } from './dto/update-camp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
